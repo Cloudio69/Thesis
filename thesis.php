@@ -19,6 +19,6 @@ define('THESIS_URL', plugin_dir_url(__FILE__));
 
 // Caricamento dei vendor **COMPOSER**
 require_once(THESIS_DIR . 'app/vendor/autoload.php');
-require_once(THESIS_DIR . 'app/includes/Thesis.php');
+require_once(THESIS_DIR . 'app/includes/init.php');
 
 $init = new Thesis();

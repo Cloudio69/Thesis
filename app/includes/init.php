@@ -44,6 +44,6 @@ class Thesis
     }
     public function thesis_render_admin_page()
     {
-        include_once(THESIS_DIR . 'app/views/admin/admin.php');
+        include_once(THESIS_DIR . 'app/views/admin/init.php');
     }
 }
