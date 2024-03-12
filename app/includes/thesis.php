@@ -2,6 +2,7 @@
 
 class Thesis
 {
+
     public function __construct()
     {
         $this->thesis_hooks();
@@ -12,13 +13,13 @@ class Thesis
     public function thesis_hooks()
     {
         // Inizializza pagina admin
-        add_action('admin_menu', array($this, 'thesis_admin_page'), 9);
+        add_action('admin_menu', array($this, 'thesis_admin_page'));
         add_action('admin_enqueue_scripts', array($this, 'thesis_scripts'));
     }
 
     public function thesis_scripts()
     {
-        wp_enqueue_style( 'thesis-admin', THESIS_DIR . "app/assets/css/thesis.admin.css", array(), null );
+        wp_enqueue_style( 'thesis-admin', THESIS_URL . "/app/assets/css/thesis.admin.css" ); 
     }
 
     public function thesis_widgets()
