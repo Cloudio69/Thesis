@@ -1,7 +1,5 @@
 <?php
 
-include_once(THESIS_DIR . "app/includes/db.php");
-
 class Thesis
 {
 
@@ -17,12 +15,6 @@ class Thesis
         /* Admin - Menu e Scripts */
         add_action('admin_menu', array($this, 'thesis_admin_page'));
         add_action('admin_enqueue_scripts', array($this, 'thesis_scripts'));
-
-        /* Database */
-        add_action('plugins_loaded', function () {
-            register_activation_hook(THESIS_URL . "app/includes/db.php", array('ThesisDatabase', 'init'));
-            register_uninstall_hook(THESIS_URL . "app/includes/db.php", array('ThesisDatabase', 'delete_tables'));
-        });
     }
 
     public function thesis_scripts()

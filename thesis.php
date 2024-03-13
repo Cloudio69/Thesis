@@ -19,6 +19,13 @@ define('THESIS_URL', plugin_dir_url(__FILE__));
 
 // Caricamento dei vendor **COMPOSER**
 require_once(THESIS_DIR . 'app/vendor/autoload.php');
+
+// Inizializza le classi principali
 require_once(THESIS_DIR . 'app/includes/init.php');
+require_once(THESIS_DIR . "app/includes/db.php");
+
+// Inizializza hook di attivazione e disinstallazione
+register_activation_hook(__FILE__, array('ThesisDatabase', 'create_tables'));
+register_uninstall_hook(__FILE__, array('ThesisDatabase', 'delete_tables'));
 
 $init = new Thesis();
