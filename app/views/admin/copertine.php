@@ -10,9 +10,13 @@
                 </div>
             </div>
             <div class="thesis--manager flex flex-1 flex-col rounded-md bg-white w-full border border-slate-200 p-4">
-                <h3 class="font-bold text-xl">Lista delle copertine</h3>
+                <h3 class="font-bold text-xl flex items-center justify-between"><span>Lista delle copertine</span><button id="aggiungi--copertina"><span class="material-symbols-outlined rounded-full bg-cyan-500 text-white transition-all hover:bg-slate-500">add</span></button></h3>
                 <div>Non ci sono copertine.</div>
             </div>
         </div>
     </section>
 </div>
+<?php
+/* Script per Copertine */
+wp_enqueue_script('thesis-copertine', THESIS_URL . "app/assets/js/thesis-copertine.admin.js"); 
+?>

@@ -1,4 +1,4 @@
-<div class="thesis--heading flex justify-between items-center rounded-md bg-white overflow-hidden border border-slate-200">
+<div class="thesis--heading flex justify-between items-center rounded-md bg-white overflow-hidden border border-slate-200 w-full">
     <nav class="thesis--nav flex items-center text-[12px] uppercase font-bold divide-x divide-slate-200">
         <a href="<?php echo menu_page_url('thesis', false) ?>" class="flex gap-2 items-center justify-center py-3 px-3 transition-all hover:bg-slate-500 hover:text-white hover:shadow-inner"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">dashboard</span><span class="">Dashboard</span></a>
         <a href="<?php echo menu_page_url('thesis-ordini', false) ?>" class="flex gap-2 items-center justify-center p-3 transition-all hover:bg-slate-500 hover:text-white hover:shadow-inner"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">orders</span><span class="">Ordini</span></a>
