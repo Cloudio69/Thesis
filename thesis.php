@@ -26,6 +26,6 @@ require_once(THESIS_DIR . "app/includes/db.php");
 
 // Inizializza hook di attivazione e disinstallazione
 register_activation_hook(__FILE__, array('ThesisDatabase', 'create_tables'));
-register_uninstall_hook(__FILE__, array('ThesisDatabase', 'delete_tables'));
+// Dimesso: register_uninstall_hook(__FILE__, array('ThesisDatabase', 'delete_tables'));
 
 $init = new Thesis();
