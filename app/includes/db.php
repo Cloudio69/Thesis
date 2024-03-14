@@ -11,13 +11,14 @@ class ThesisDatabase
 
         $sql = 
         "CREATE TABLE " . $wpdb->prefix . "thesis_copertine (
-            id_copertina INT PRIMARY KEY,
+            id_copertina INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
             nome_copertina VARCHAR(50),
+            descrizione_copertina TEXT,
             anteprima_copertina TEXT
         ) $charset_collate;
 
         CREATE TABLE " . $wpdb->prefix . "thesis_variations (
-            id_variazione INT PRIMARY KEY,
+            id_variazione INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
             id_copertina INT,
             codice_colore VARCHAR(50),
             nome_variazione VARCHAR(50),
@@ -26,7 +27,7 @@ class ThesisDatabase
         ) $charset_collate;  
 
         CREATE TABLE " . $wpdb->prefix . "thesis_variations_chars (
-            id_colore_carattere INT PRIMARY KEY,
+            id_colore_carattere INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
             id_variazione INT,
             nome_colore VARCHAR(50),
             hex_colore VARCHAR(9),
@@ -34,7 +35,7 @@ class ThesisDatabase
         ) $charset_collate;
 
         CREATE TABLE " . $wpdb->prefix . "thesis_bookmarks (
-            id_segnalibro INT PRIMARY KEY,
+            id_segnalibro INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
             id_copertina INT,
             nome_colore VARCHAR(50),
             anteprima_segnalibro TEXT,
@@ -42,14 +43,15 @@ class ThesisDatabase
         ) $charset_collate;
 
         CREATE TABLE " . $wpdb->prefix . "thesis_paper_weights (
-            id_grammatura INT PRIMARY KEY,
+            id_grammatura INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
             id_copertina INT,
             nome_grammatura VARCHAR(50),
+            formato_grammatura VARCHAR(3),
             FOREIGN KEY (id_copertina) REFERENCES ". $wpdb->prefix ."thesis_copertine(id_copertina)
         ) $charset_collate;
 
         CREATE TABLE " . $wpdb->prefix . "thesis_corners (
-            id_angolo INT PRIMARY KEY,
+            id_angolo INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
             id_copertina INT,
             nome_angolo VARCHAR(50),
             hex_colore VARCHAR(9),
