@@ -50,6 +50,6 @@
 
     include_once THESIS_DIR . "app/includes/models/copertine.php";
 
-    $copertina = new Copertina("", "", "");
-    var_dump($copertina->get_copertine());
+    $copertina = $copertineDb->get_copertine();
+    var_dump($copertina);
 ?>
