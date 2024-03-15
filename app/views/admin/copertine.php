@@ -23,7 +23,7 @@
     </section>
     <section class="modal--body h-full">
         <form id="form--copertine" class="flex h-max divide-x">
-            <div class="attachment--copertina flex-1 flex flex-col gap-2 p-4"><span>Immagine Copertina</span><button class="select--copertina flex-1 border border-dashed border-slate-500 bg-slate-300 text-slate-500 rounded-md"><span class="material-symbols-outlined text-3xl">add</span><img id="selected--image" class="hidden w-[300px] h-[300px] object-contain" /></button></div>
+            <div class="attachment--copertina flex-1 flex flex-col gap-2 p-4"><span>Immagine Copertina</span><button class="select--copertina flex-1 border border-dashed border-slate-500 bg-slate-300 text-slate-500 rounded-md"><span class="material-symbols-outlined text-3xl">add</span><img id="selected--image" class="hidden w-[300px] h-[300px] object-contain p-2" /></button></div>
             <div class="inputs--copertina flex-1 flex flex-col gap-2 p-4">
                 <label for="nome_copertina">Nome copertina</label>
                 <input type="text" name="nome_copertina" class="w-full p-2"/>

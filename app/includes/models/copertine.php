@@ -2,20 +2,6 @@
 
 class Copertina
 {
-    private $nome_copertina;
-
-    private $anteprima_copertina;
-
-    private $descrizione_copertina;
-
-    private $varianti;
-
-    private $angoli;
-
-    private $segnalibri;
-
-    private $grammature;
-
     public function get_copertine($id = null)
     {
         global $wpdb;
@@ -31,10 +17,25 @@ class Copertina
         }
     }
 
-    public function create_copertina()
+    public function create_copertina($nome_copertina, $descrizione_copertina, $anteprima_copertina)
     {
+        global $wpdb;
 
+        try {
+            $data = array(
+                'nome_copertina' => $nome_copertina,
+                "descrizione_copertina" => $descrizione_copertina,
+                "anteprima_copertina" => $anteprima_copertina
+            );
 
+            $format = array("%s", "%s", "%s");
+
+            $wpdb->insert($wpdb->prefix . 'thesis_copertine', $data, $format);
+
+            return json_encode($wpdb->insert_id);
+        } catch (Exception $e) {
+            return json_encode(array("errore" => $e));
+        }
     }
 }
 
