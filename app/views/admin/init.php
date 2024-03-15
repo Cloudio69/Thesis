@@ -47,9 +47,5 @@
     /* Script per Dashboard */
     wp_enqueue_script('admin-js', THESIS_URL . "/app/assets/js/thesis.admin.js", array(), null, true);
     wp_enqueue_script('thesis-charts', THESIS_URL . "/app/assets/js/charts.admin.js", array(), null, true);
-
-    include_once THESIS_DIR . "app/includes/models/copertine.php";
-
-    $copertina = $copertineDb->get_copertine();
-    var_dump($copertina);
+    
 ?>
