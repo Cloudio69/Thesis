@@ -44,3 +44,16 @@
   padding: 0;
   height: 100%;
 }
+
+dialog {
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
+dialog[open] {
+  opacity: 1;
+  pointer-events: inherit;
+}

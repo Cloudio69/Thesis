@@ -22,15 +22,15 @@
         <form method="dialog"><button><span class="material-symbols-outlined text-xl">close</span></button></form>
     </section>
     <section class="modal--body h-full">
-        <form id="form--copertine" class="flex h-max divide-x">
-            <div class="attachment--copertina flex-1 flex flex-col gap-2 p-4"><span>Immagine Copertina</span><button class="select--copertina flex-1 border border-dashed border-slate-500 bg-slate-300 text-slate-500 rounded-md"><span class="material-symbols-outlined text-3xl">add</span><img id="selected--image" class="hidden w-[300px] h-[300px] object-contain p-2" /></button></div>
+        <form id="form--copertine" class="flex h-max">
+            <div class="attachment--copertina flex-1 flex flex-col gap-2 p-4"><span>Immagine Copertina</span><button class="select--copertina flex-1 border border-slate-200 border-dashed text-slate-500 rounded-md"><span class="material-symbols-outlined text-3xl">add</span><img id="selected--image" class="hidden w-[300px] h-[300px] object-contain p-2" /></button></div>
             <div class="inputs--copertina flex-1 flex flex-col gap-2 p-4">
                 <label for="nome_copertina">Nome copertina</label>
                 <input type="text" name="nome_copertina" class="w-full p-2"/>
                 <label for="descrizione_copertina">Descrizione copertina</label>
                 <textarea name="descrizione_copertina" class="full resize-none p-2" rows="10" ></textarea>
-                <button type="submit" id="submit--copertine" class="bg-cyan-500 text-white p-2 rounded-md mt-2">SALVA</button>
-                <button type="reset" id="reset--copertine" class="bg-cyan-500 text-white p-2 rounded-md mt-2">CANCELLA</button>
+                <button type="submit" id="submit--copertine" class="bg-cyan-800 text-white p-2 rounded-md mt-2">SALVA</button>
+                <button type="reset" id="reset--copertine" class="bg-cyan-800 text-white p-2 rounded-md mt-2">CANCELLA</button>
             </div>
         </form>
     </section>

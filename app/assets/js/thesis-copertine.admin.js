@@ -10,7 +10,7 @@ let mediaCopertina = document.querySelector(".select--copertina");
 
 mediaCopertina.onclick = (e) => {
   e.preventDefault();
-  mediaCopertina.querySelector("span").classList.add("hidden")
+  mediaCopertina.querySelector("span").classList.add("hidden");
   dialog.close();
   let options = {
     title: "Seleziona un file multimediale",
@@ -39,7 +39,7 @@ mediaCopertina.onclick = (e) => {
 let resetForm = document.querySelector("#reset--copertine");
 
 resetForm.onclick = () => {
-    img.removeAttribute("src")
-    img.classList.add("hidden");
-    mediaCopertina.querySelector("span").classList.remove("hidden")
+  img.removeAttribute("src");
+  img.classList.add("hidden");
+  mediaCopertina.querySelector("span").classList.remove("hidden");
 };

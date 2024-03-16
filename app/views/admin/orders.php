@@ -9,20 +9,36 @@
                     <p class="mt-2">Da qui puoi vedere un riepilogo degli ordini effettuati dai clienti</p>
                 </div>
             </div>
-            <div class="thesis--manager flex flex-1 rounded-md bg-white w-full">
-                <table class="table-auto border-collapse w-full">
-                    <tr class="divide-x rounded-md">
-                        <th class="border border-slate-200 px-4">Ordine #ID</th>
-                        <th class="border border-slate-200 px-4">Nome Cliente</th>
-                        <th class="border border-slate-200 px-4">File</th>
-                        <th class="border border-slate-200 px-4">Importo</th>
-                    </tr>
-                    <tr>
-                        <td class="border border-slate-200 px-4">Prova</td>
-                        <td class="border border-slate-200 px-4">Prova</td>
-                        <td class="border border-slate-200 px-4">Prova</td>
-                        <td class="border border-slate-200 px-4">Prova</td>
-                    </tr>
+            <div class="thesis--manager flex flex-1 bg-white w-full h-full">
+                <table class="table-auto border border-collapse w-full">
+                    <thead>
+                        <tr class="bg-slate-100">
+                            <th class="border border-slate-200 p-2">Ordine #ID</th>
+                            <th class="border border-slate-200 p-2">Nome Cliente</th>
+                            <th class="border border-slate-200 p-2">File</th>
+                            <th class="border border-slate-200 p-2">Importo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="">
+                            <td class="border border-slate-200 p-2">Prova</td>
+                            <td class="border border-slate-200 p-2">Prova</td>
+                            <td class="border border-slate-200 p-2">Prova</td>
+                            <td class="border border-slate-200 p-2">Prova</td>
+                        </tr>
+                        <tr class="">
+                            <td class="border border-slate-200 p-2">Prova</td>
+                            <td class="border border-slate-200 p-2">Prova</td>
+                            <td class="border border-slate-200 p-2">Prova</td>
+                            <td class="border border-slate-200 p-2">Prova</td>
+                        </tr>
+                        <tr class="">
+                            <td class="border border-slate-200 p-2">Prova</td>
+                            <td class="border border-slate-200 p-2">Prova</td>
+                            <td class="border border-slate-200 p-2">Prova</td>
+                            <td class="border border-slate-200 p-2">Prova</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
