@@ -37,5 +37,5 @@
 </dialog>
 <?php
 /* Script per Copertine */
-wp_enqueue_script('thesis-copertine', THESIS_URL . "app/assets/js/thesis-copertine.admin.js");
+wp_enqueue_script('thesis-copertine', THESIS_URL . "app/assets/js/thesis-copertine.admin.js", [ 'wp-util' ]);
 ?>

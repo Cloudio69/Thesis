@@ -1,5 +1,7 @@
 <?php
 
+include_once THESIS_DIR . "app/includes/ajax/init.php";
+
 class Thesis
 {
 
@@ -7,7 +9,6 @@ class Thesis
     {
         $this->thesis_hooks();
         $this->thesis_widgets();
-        $this->thesis_api_endpoints();
     }
 
     public function thesis_hooks()
@@ -33,11 +34,6 @@ class Thesis
     public function thesis_widgets()
     {
         /* Widget per Elementor */
-    }
-
-    public function thesis_api_endpoints()
-    {
-        /* Endpoints per i dati */
     }
 
     public function thesis_admin_page()
