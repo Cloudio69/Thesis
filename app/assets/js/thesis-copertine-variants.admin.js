@@ -1,6 +1,7 @@
 const nuovaVariante = document.querySelector("#aggiungi--variante");
 const dialogVariante = document.querySelector("#modal--variants");
 const selectCopertine = document.querySelector("#lista_copertine");
+const wrapperVarianti = document.querySelector("#list--varianti")
 
 const getVarianti = async () => {
   let options = {
@@ -22,7 +23,10 @@ const getVarianti = async () => {
   let response = JSON.parse(varianti.data);
   let results = JSON.parse(response.results);
 
-  console.log(results)
+  if(results.length === 0) {
+    wrapperVarianti.innerHTML = "Non ci sono varianti"
+    wrapperVarianti.removeAttribute("class")
+  }
 };
 
 const showGlobalToast = (response) => {
