@@ -89,3 +89,21 @@ function ajax_get_varianti()
         wp_send_json_error("Errore nella richiesta: {$e}", 500);
     }
 }
+
+function ajax_post_variante(){
+
+    $data = $_POST['data'];
+
+    try {
+        $varianti = new Variante;
+        $query = $varianti->create_variante(
+            sanitize_text_field($data['id_copertina']),
+            sanitize_text_field($data['nome_variante']),
+            sanitize_text_field($data['codice_colore']),
+            sanitize_text_field($data['url_variante'])
+        );
+        wp_send_json_success(json_encode(array("results" => $query, "message" => "Query effettuata.")), 200);
+    } catch (Exception $e) {
+        wp_send_json_error("Errore nella richiesta: {$e}", 500);
+    }
+}

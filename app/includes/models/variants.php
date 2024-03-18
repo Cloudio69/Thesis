@@ -10,6 +10,27 @@ class Variante
             return json_encode($query);
         }
     }
+    public function create_variante($id_copertina, $nome_variante, $codice_colore, $anteprima_variante)
+    {
+        global $wpdb;
+
+        try {
+            $data = array(
+                'id_copertina' => $id_copertina,
+                "codice_colore" => $codice_colore,
+                'nome_variazione' => $nome_variante,
+                "anteprima_variazione" => $anteprima_variante
+            );
+
+            $format = array("%d", "%s", "%s", "%s");
+
+            $wpdb->insert($wpdb->prefix . 'thesis_variations', $data, $format);
+
+            return json_encode($wpdb->insert_id);
+        } catch (Exception $e) {
+            return json_encode(array("errore" => $e));
+        }
+    }
 }
 
 

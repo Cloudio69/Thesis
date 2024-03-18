@@ -19,7 +19,7 @@
                     <div id="thesis--bookmarks">Non ci sono segnalibri.</div>
                 </section>
                 <section class="thesis--paper-weight border border-slate-200 p-4">
-                    <h3 class="font-bold text-xl flex items-center justify-between"><span>Grammture </span><button id="aggiungi--grammatura"><span class="material-symbols-outlined rounded-full bg-cyan-500 text-white transition-all hover:bg-slate-500">add</span></button></h3>
+                    <h3 class="font-bold text-xl flex items-center justify-between"><span>Grammature </span><button id="aggiungi--grammatura"><span class="material-symbols-outlined rounded-full bg-cyan-500 text-white transition-all hover:bg-slate-500">add</span></button></h3>
                     <div id="thesis--paper-weight">Non ci sono grammature.</div>
                 </section>
             </div>

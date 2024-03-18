@@ -55,7 +55,7 @@
         </form>
     </section>
 </dialog>
-<div id="toast" class="fixed hidden pointer-events-auto bg-green-700 text-white bottom-0 right-0 items-center justify-between p-2 m-4 z-50 gap-4 rounded-md">
+<div id="toast" class="fixed hidden pointer-events-auto bg-green-700 text-white bottom-0 right-0 items-center justify-between p-4 m-4 z-50 gap-4 rounded-md">
     <div class="icon flex items-center"></div>
     <div class="body text-sm flex items-center"></div>
 </div>

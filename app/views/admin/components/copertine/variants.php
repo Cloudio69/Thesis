@@ -22,9 +22,9 @@
                 <label for="id_copertina">ID Copertina</label>
                 <select id="lista_copertine"></select>
                 <label for="nome_variante">Nome variante</label>
-                <input type="text" name="nome_variante" class="w-full p-2" required/>
-                <label for="descrizione_variante">Descrizione variante</label>
-                <textarea name="descrizione_variante" class="full resize-none p-2" rows="10" required></textarea>
+                <input type="text" name="nome_variante" class="w-full p-2" required />
+                <label for="codice_colore">Codice variante</label>
+                <input type="text" name="codice_colore" class="full resize-none p-2" rows="10" required>
                 <button type="submit" id="submit--variante" class="bg-cyan-800 text-white p-2 rounded-md mt-2 disabled:opacity-25">SALVA</button>
                 <button type="reset" id="reset--variante" class="bg-cyan-800 text-white p-2 rounded-md mt-2">CANCELLA</button>
             </div>

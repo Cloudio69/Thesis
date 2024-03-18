@@ -1,7 +1,8 @@
 const nuovaVariante = document.querySelector("#aggiungi--variante");
 const dialogVariante = document.querySelector("#modal--variants");
 const selectCopertine = document.querySelector("#lista_copertine");
-const wrapperVarianti = document.querySelector("#list--varianti")
+const wrapperVarianti = document.querySelector("#list--varianti");
+const formVariante = document.querySelector("#form--variante");
 
 const getVarianti = async () => {
   let options = {
@@ -23,10 +24,43 @@ const getVarianti = async () => {
   let response = JSON.parse(varianti.data);
   let results = JSON.parse(response.results);
 
-  if(results.length === 0) {
-    wrapperVarianti.innerHTML = "Non ci sono varianti"
-    wrapperVarianti.removeAttribute("class")
+  if (results.length === 0) {
+    wrapperVarianti.innerHTML = "Non ci sono varianti";
+    wrapperVarianti.removeAttribute("class");
   }
+};
+
+let mediaVariante = document.querySelector(".select--variante");
+
+mediaVariante.onclick = (e) => {
+  e.preventDefault();
+
+  let img = document.querySelector("#selected--image-variante");
+
+  mediaVariante.querySelector("span").classList.add("hidden");
+  dialogVariante.close();
+  let options = {
+    title: "Seleziona un file multimediale",
+    multiple: false,
+    library: {
+      type: "image",
+    },
+  };
+
+  // Apri la finestra di media
+  let mediaFrame = wp.media(options);
+  mediaFrame.open();
+
+  mediaFrame.on("select", () => {
+    let attachment = mediaFrame.state().get("selection").first().toJSON();
+    img.src = attachment.url;
+    img.classList.remove("hidden");
+    dialogVariante.showModal();
+  });
+
+  mediaFrame.on("close", () => {
+    dialogVariante.showModal();
+  });
 };
 
 const showGlobalToast = (response) => {
@@ -62,6 +96,7 @@ const showGlobalToast = (response) => {
 };
 
 nuovaVariante.onclick = async () => {
+  selectCopertine.innerHTML = ""
   let options = {
     action: "get_copertine",
   };
@@ -97,5 +132,35 @@ nuovaVariante.onclick = async () => {
   dialogVariante.showModal();
 };
 
+formVariante.onsubmit = (e) => {
+  e.preventDefault();
+  
+  let img = document.querySelector("#selected--image-variante");
+  
+  const submit = document.querySelector("#submit--variante")
+  submit.disabled = true
 
-getVarianti()
+  let options = {
+    action: "post_variante",
+    data: {
+      id_copertina: e.currentTarget.lista_copertine.value,
+      nome_variante: e.currentTarget.nome_variante.value,
+      codice_colore: e.currentTarget.codice_colore.value,
+      url_variante: img.src,
+    },
+  };
+
+  jQuery.ajax({
+    dataType: "json",
+    method: "POST",
+    url: "admin-ajax.php",
+    data: options,
+    success: (response) => {
+      submit.removeAttribute("disabled");
+      dialogVariante.close();
+      showToast(response);
+    },
+  });
+};
+
+getVarianti();
