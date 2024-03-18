@@ -1,3 +1,6 @@
+const form = document.querySelector("#form--copertine");
+const submit = document.querySelector("#submit--copertine");
+
 const dialog = document.querySelector("#modal--thesis");
 const showButton = document.querySelector("#aggiungi--copertina");
 let img = document.querySelector("#selected--image");
@@ -43,3 +46,35 @@ resetForm.onclick = () => {
   img.classList.add("hidden");
   mediaCopertina.querySelector("span").classList.remove("hidden");
 };
+
+form.onsubmit = (e) => {
+  e.preventDefault();
+  submit.disabled = "true";
+
+  let options = {
+    action: "post_copertine",
+    data: {
+      nome_copertina: e.currentTarget.nome_copertina.value,
+      desc_copertina: e.currentTarget.descrizione_copertina.value,
+      url_copertina: img.src,
+    },
+  };
+
+  jQuery.ajax({
+    dataType: "json",
+    method: "POST",
+    url: "admin-ajax.php",
+    data: options,
+    success: (msg) => {
+      submit.removeAttribute("disabled");
+      dialog.close();
+      showToast(msg);
+    },
+  });
+};
+
+
+const showToast = (msg) => {
+  let messageJson = JSON.parse(msg.data)
+  console.log(messageJson)
+}

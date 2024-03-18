@@ -26,15 +26,19 @@
             <div class="attachment--copertina flex-1 flex flex-col gap-2 p-4"><span>Immagine Copertina</span><button class="select--copertina flex-1 border border-slate-200 border-dashed text-slate-500 rounded-md"><span class="material-symbols-outlined text-3xl">add</span><img id="selected--image" class="hidden w-[300px] h-[300px] object-contain p-2" /></button></div>
             <div class="inputs--copertina flex-1 flex flex-col gap-2 p-4">
                 <label for="nome_copertina">Nome copertina</label>
-                <input type="text" name="nome_copertina" class="w-full p-2"/>
+                <input type="text" name="nome_copertina" class="w-full p-2" required/>
                 <label for="descrizione_copertina">Descrizione copertina</label>
-                <textarea name="descrizione_copertina" class="full resize-none p-2" rows="10" ></textarea>
-                <button type="submit" id="submit--copertine" class="bg-cyan-800 text-white p-2 rounded-md mt-2">SALVA</button>
+                <textarea name="descrizione_copertina" class="full resize-none p-2" rows="10" required></textarea>
+                <button type="submit" id="submit--copertine" class="bg-cyan-800 text-white p-2 rounded-md mt-2 disabled:opacity-25">SALVA</button>
                 <button type="reset" id="reset--copertine" class="bg-cyan-800 text-white p-2 rounded-md mt-2">CANCELLA</button>
             </div>
         </form>
     </section>
 </dialog>
+<div id="toast" class="fixed hidden pointer-events-auto bg-green-700 text-white">
+    <div class="icon"></div>
+    <div class="body"></div>
+</div>
 <?php
 /* Script per Copertine */
 wp_enqueue_script('thesis-copertine', THESIS_URL . "app/assets/js/thesis-copertine.admin.js", [ 'wp-util' ]);
