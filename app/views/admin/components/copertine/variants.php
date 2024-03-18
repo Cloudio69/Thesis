@@ -7,7 +7,7 @@
     </div>
     <div class="thesis--manager flex flex-1 flex-col rounded-md bg-white w-full border border-slate-200 p-4">
         <h3 class="font-bold text-xl flex items-center justify-between mb-4"><span>Varianti colore</span><button id="aggiungi--variante"><span class="material-symbols-outlined rounded-full bg-cyan-500 text-white transition-all hover:bg-slate-500">add</span></button></h3>
-        <div id="list--varianti" class="w-full p-4 animate-pulse bg-gray-200 rounded-md h-10"></div>
+        <div id="list--varianti" class="w-full p-4 animate-pulse bg-gray-200 rounded-md h-60"></div>
     </div>
 </div>
 <dialog id="modal--variants" class="min-w-[30vw] min-h-[30vh] p-4 rounded-md">

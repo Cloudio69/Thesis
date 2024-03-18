@@ -45,6 +45,10 @@
   height: 100%;
 }
 
+#wpfooter{
+  position: relative !important;
+}
+
 dialog {
   pointer-events: none;
   opacity: 0;

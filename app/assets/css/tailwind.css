@@ -638,6 +638,10 @@ video {
   height: max-content;
 }
 
+.h-60 {
+  height: 15rem;
+}
+
 .min-h-\[30vh\] {
   min-height: 30vh;
 }
