@@ -19,7 +19,7 @@
 </div>
 <dialog id="modal--thesis" class="min-w-[30vw] min-h-[30vh] p-4 rounded-md">
     <section class="modal--heading flex justify-between items-center">
-        <h3 class="font-bold text-xl mb-4">Aggiungi copertina</h3>
+        <h3 class="font-bold text-xl">Aggiungi copertina</h3>
         <form method="dialog"><button><span class="material-symbols-outlined text-xl">close</span></button></form>
     </section>
     <section class="modal--body h-full">
@@ -38,7 +38,7 @@
 </dialog>
 <dialog id="update--thesis" class="min-w-[30vw] min-h-[30vh] p-4 rounded-md">
     <section class="modal--heading flex justify-between items-center">
-        <h3 class="font-bold text-xl mb-4">Modifica copertina</h3>
+        <h3 class="font-bold text-xl">Modifica copertina</h3>
         <form method="dialog"><button><span class="material-symbols-outlined text-xl">close</span></button></form>
     </section>
     <section class="modal--body h-full">

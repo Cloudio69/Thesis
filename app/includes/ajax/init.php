@@ -78,3 +78,14 @@ function ajax_update_copertina()
         wp_send_json_error("Errore nella richiesta: {$e}", 500);
     }
 }
+
+function ajax_get_varianti()
+{
+    try {
+        $varianti = new Variante;
+        $query = $varianti->get_varianti();
+        wp_send_json_success(json_encode(array("results" => $query, "message" => "Query effettuata.")), 200);
+    } catch (Exception $e) {
+        wp_send_json_error("Errore nella richiesta: {$e}", 500);
+    }
+}

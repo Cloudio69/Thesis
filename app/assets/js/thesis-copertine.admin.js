@@ -333,6 +333,8 @@ const showToast = (response) => {
 
   setTimeout(() => {
     toast.classList.add("hidden");
+    toast.querySelector(".icon").innerHTML = "";
+    toast.querySelector(".body").innerHTML = "";
   }, 5000);
 };
 

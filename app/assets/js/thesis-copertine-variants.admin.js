@@ -1,0 +1,97 @@
+const nuovaVariante = document.querySelector("#aggiungi--variante");
+const dialogVariante = document.querySelector("#modal--variants");
+const selectCopertine = document.querySelector("#lista_copertine");
+
+const getVarianti = async () => {
+  let options = {
+    action: "get_varianti",
+  };
+
+  let varianti = await jQuery.ajax({
+    dataType: "json",
+    method: "GET",
+    url: "admin-ajax.php",
+    data: options,
+    success: (response) => {
+      let parseData = JSON.parse(response.data);
+      let results = JSON.parse(parseData.results);
+      return results;
+    },
+  });
+
+  let response = JSON.parse(varianti.data);
+  let results = JSON.parse(response.results);
+
+  console.log(results)
+};
+
+const showGlobalToast = (response) => {
+  const toast = document.querySelector("#toast");
+  toast.classList.remove("hidden");
+  toast.classList.add("flex");
+
+  let icon = document.createElement("span");
+  icon.classList.add("material-symbols-outlined");
+
+  if (response.success) {
+    if (toast.classList.contains("bg-red-700")) {
+      toast.classList.remove("bg-red-700");
+      toast.classList.add("bg-green-700");
+    }
+
+    icon.innerHTML = "check";
+    toast.querySelector(".icon").appendChild(icon);
+    toast.querySelector(".body").innerHTML = response.message;
+  } else {
+    icon.innerHTML = "warning";
+    toast.classList.remove("bg-green-700");
+    toast.classList.add("bg-red-700");
+    toast.querySelector(".icon").appendChild(icon);
+    toast.querySelector(".body").innerHTML = response.message;
+  }
+
+  setTimeout(() => {
+    toast.querySelector(".icon").innerHTML = "";
+    toast.querySelector(".body").innerHTML = "";
+    toast.classList.add("hidden");
+  }, 5000);
+};
+
+nuovaVariante.onclick = async () => {
+  let options = {
+    action: "get_copertine",
+  };
+
+  let copertine = await jQuery.ajax({
+    dataType: "json",
+    method: "GET",
+    url: "admin-ajax.php",
+    data: options,
+    success: (response) => {
+      let parseData = JSON.parse(response.data);
+      let results = JSON.parse(parseData.results);
+      return results;
+    },
+  });
+
+  let response = JSON.parse(copertine.data);
+  let results = JSON.parse(response.results);
+
+  results.forEach((copertina) => {
+    let option = document.createElement("option");
+    option.value = copertina.id_copertina;
+    option.innerHTML =
+      copertina.id_copertina + " | " + copertina.nome_copertina;
+
+    selectCopertine.append(option);
+  });
+
+  if (results.length === 0) {
+    showGlobalToast({ message: "Crea prima una copertina!", success: false });
+    return;
+  }
+  dialogVariante.showModal();
+};
+
+
+getVarianti()

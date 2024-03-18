@@ -28,6 +28,7 @@ class Thesis
         wp_enqueue_media();
         wp_enqueue_style('thesis-admin', THESIS_URL . "/app/assets/css/thesis.admin.css");
         wp_enqueue_style('tailwind-css',  THESIS_URL . "/app/assets/css/tailwind.css");
+        wp_enqueue_script('admin-js', THESIS_URL . "/app/assets/js/thesis.admin.js", array(), null, true);
         wp_enqueue_script('chart-js', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js');
     }
 
