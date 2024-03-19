@@ -41,7 +41,7 @@ const createElementCopertina = (copertina) => {
     "option--list"
   );
 
-  nomeCopertina.classList.add("text-xl", "font-bold");
+  nomeCopertina.classList.add("text-xl", "font-bold", "overflow-anywhere", "text-center");
 
   nomeCopertina.innerHTML = copertina.nome_copertina;
   descrizioneCopertina.innerHTML = copertina.descrizione_copertina;
@@ -66,8 +66,8 @@ const createElementCopertina = (copertina) => {
     "p-4",
     "border",
     "justify-center",
+    "shadow-sm",
     "items-center",
-    "w-fit",
     "relative",
     "gap-2"
   );

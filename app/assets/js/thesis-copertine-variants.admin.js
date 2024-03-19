@@ -13,7 +13,7 @@ function creaElementiHTML(oggettiRaggruppati) {
     divGruppo.classList.add(
       "gruppo",
       "flex",
-      "flex-1",
+      "flex-col",
       "gap-4",
       "items-center",
       "w-full",
@@ -24,12 +24,12 @@ function creaElementiHTML(oggettiRaggruppati) {
 
     const titolo = document.createElement("h2");
     titolo.textContent = `${gruppo[gruppoCounter].nome_copertina}`;
-    titolo.classList.add("font-bold", "text-xl", "p-4", "flex-1");
+    titolo.classList.add("font-bold", "text-xl", "p-4");
     divGruppo.appendChild(titolo);
 
     const divList = document.createElement("div");
     divGruppo.appendChild(divList);
-    divList.classList.add("w-full", "flex", "flex-col", "gap-2", "flex-1");
+    divList.classList.add("w-full", "flex", "flex-col", "gap-2");
 
     gruppo.forEach((oggetto) => {
       const card = document.createElement("div");
@@ -40,17 +40,18 @@ function creaElementiHTML(oggettiRaggruppati) {
         "justify-between",
         "w-full",
         "p-4",
-        "border"
+        "border",
+        "shadow-md"
       );
 
       const nomeCopertina = document.createElement("p");
-      nomeCopertina.textContent = `${oggetto.nome_variazione}`;
+      nomeCopertina.innerHTML = `<div class='flex flex-col'><span class="opacity-50">NOME VARIANTE</span><span class="font-bold">${oggetto.nome_variazione}</span></div>`;
       nomeCopertina.classList.add("flex-1");
       card.appendChild(nomeCopertina);
 
       const idVariazione = document.createElement("p");
-      idVariazione.textContent = `${oggetto.codice_colore}`;
-      idVariazione.classList.add("flex-1", "text-end");
+      idVariazione.innerHTML = `<div class='flex flex-col'><span class="opacity-50">COD. COLORE</span><span class="font-bold">${oggetto.codice_colore}</span></div>`;
+      idVariazione.classList.add("flex-1");
       card.appendChild(idVariazione);
 
       const anteprima = document.createElement("a");

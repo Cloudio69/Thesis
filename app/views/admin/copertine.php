@@ -11,7 +11,7 @@
             </div>
             <div class="thesis--manager flex flex-1 flex-col rounded-md bg-white w-full border border-slate-200 p-4">
                 <h3 class="font-bold text-xl flex items-center justify-between mb-4"><span class="flex gap-4 items-center"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">book_2</span><span>Copertine</span></span><button id="aggiungi--copertina"><span class="material-symbols-outlined rounded-full bg-cyan-500 text-white transition-all hover:bg-slate-500">add</span></button></h3>
-                <div id="list--copertine" class="grid grid-cols-5w-full p-4 animate-pulse bg-gray-200 rounded-md h-60"></div>
+                <div id="list--copertine" class="grid auto-cols-fr w-full p-4 animate-pulse bg-gray-200 rounded-md h-60"></div>
             </div>
         </div>
         <?php include_once(THESIS_DIR . '/app/views/admin/components/copertine/variants.php'); ?>
