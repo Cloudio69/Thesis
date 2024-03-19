@@ -338,6 +338,11 @@ const modificaVariante = (e) => {
   formUpdate.onsubmit = (e) => {
     e.preventDefault();
 
+    let img = document.querySelector("#selected--image-variante-update");
+    let submit = document.querySelector("#submit--variante_update")
+
+    submit.disabled = "true"
+
     let options = {
       action: "update_variante",
       data: {
@@ -356,6 +361,7 @@ const modificaVariante = (e) => {
       url: "admin-ajax.php",
       data: options,
       success: (response) => {
+        submit.removeAttribute("disabled")
         dialogUpdate.close();
         getVarianti();
         showToast(response);
