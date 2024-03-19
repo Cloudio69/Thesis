@@ -4,7 +4,57 @@ const selectCopertine = document.querySelector("#lista_copertine");
 const wrapperVarianti = document.querySelector("#list--varianti");
 const formVariante = document.querySelector("#form--variante");
 
+function creaElementiHTML(oggettiRaggruppati) {
+  for (const id in oggettiRaggruppati) {
+    let gruppoCounter = 0
+    const gruppo = oggettiRaggruppati[id];
+
+    const divGruppo = document.createElement("div");
+    divGruppo.classList.add("gruppo", "flex", "flex-1", "gap-4", "items-center", "w-full", "p-4", "border", "rounded-md")
+
+    const titolo = document.createElement("h2");
+    titolo.textContent = `${gruppo[gruppoCounter].nome_copertina}`;
+    titolo.classList.add("font-bold", "text-xl", "p-4", "flex-1")
+    divGruppo.appendChild(titolo);
+
+    const divList = document.createElement("div")
+    divGruppo.appendChild(divList)
+    divList.classList.add("w-full", "flex", "flex-col", "gap-2", "flex-1")
+
+    gruppo.forEach((oggetto) => {
+      const card = document.createElement("div");
+      card.classList.add("rounded-md", "flex", "items-center", "justify-between", "w-full", "p-4", "border")
+
+      const nomeCopertina = document.createElement("p");
+      nomeCopertina.textContent = `Nome Variazione: ${oggetto.nome_variazione}`;
+      nomeCopertina.classList.add("flex-1");
+      card.appendChild(nomeCopertina);
+
+      const idVariazione = document.createElement("p");
+      idVariazione.textContent = `Codice Colore: ${oggetto.codice_colore}`;
+      idVariazione.classList.add("flex-1", "text-center");
+      card.appendChild(idVariazione);
+
+      const anteprima = document.createElement("a");
+      anteprima.classList.add("underline", "text-cyan-800", "text-end")
+      anteprima.textContent = "Vedi anteprima"
+      anteprima.href = oggetto.anteprima_variazione;
+      anteprima.target = "_blank"
+      card.appendChild(anteprima)
+
+      divList.appendChild(card);
+
+      gruppoCounter++
+    });
+
+    wrapperVarianti.classList.add("flex", "flex-col", "gap-4")
+
+    wrapperVarianti.appendChild(divGruppo);
+  }
+}
+
 const getVarianti = async () => {
+  wrapperVarianti.innerHTML = ""
   let options = {
     action: "get_varianti",
   };
@@ -27,6 +77,29 @@ const getVarianti = async () => {
   if (results.length === 0) {
     wrapperVarianti.innerHTML = "Non ci sono varianti";
     wrapperVarianti.removeAttribute("class");
+  } else {
+    wrapperVarianti.removeAttribute("class");
+
+    const raggruppaPerId = (array) => {
+      const raggruppato = {};
+
+      array.forEach((oggetto) => {
+        const { id_copertina } = oggetto;
+
+        if (!raggruppato[id_copertina]) {
+          raggruppato[id_copertina] = [];
+        }
+
+        raggruppato[id_copertina].push(oggetto);
+      });
+
+      return raggruppato;
+    };
+
+    // Utilizza la funzione per raggruppare gli oggetti
+    const oggettiRaggruppati = raggruppaPerId(results);
+
+    creaElementiHTML(oggettiRaggruppati);
   }
 };
 
@@ -96,7 +169,7 @@ const showGlobalToast = (response) => {
 };
 
 nuovaVariante.onclick = async () => {
-  selectCopertine.innerHTML = ""
+  selectCopertine.innerHTML = "";
   let options = {
     action: "get_copertine",
   };
@@ -134,11 +207,11 @@ nuovaVariante.onclick = async () => {
 
 formVariante.onsubmit = (e) => {
   e.preventDefault();
-  
+
   let img = document.querySelector("#selected--image-variante");
-  
-  const submit = document.querySelector("#submit--variante")
-  submit.disabled = true
+
+  const submit = document.querySelector("#submit--variante");
+  submit.disabled = true;
 
   let options = {
     action: "post_variante",
@@ -158,6 +231,7 @@ formVariante.onsubmit = (e) => {
     success: (response) => {
       submit.removeAttribute("disabled");
       dialogVariante.close();
+      getVarianti();
       showToast(response);
     },
   });

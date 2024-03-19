@@ -151,6 +151,7 @@ const showOptions = (e) => {
       data: options,
       success: () => {
         getCopertine();
+        getVarianti();
       },
     });
   };
@@ -182,6 +183,7 @@ const showOptions = (e) => {
         data: options,
         success: (response) => {
           getCopertine();
+          getVarianti();
           showToast(response);
         },
       });
