@@ -45,6 +45,11 @@
   height: 100%;
 }
 
+a:focus{
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 #wpfooter{
   position: relative !important;
 }

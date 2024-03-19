@@ -31,4 +31,23 @@
         </form>
     </section>
 </dialog>
+<dialog id="modal--variants-update" class="min-w-[30vw] min-h-[30vh] p-4 rounded-md">
+    <section class="modal--heading flex justify-between items-center">
+        <h3 class="font-bold text-xl">Aggiungi variante</h3>
+        <form method="dialog"><button><span class="material-symbols-outlined text-xl">close</span></button></form>
+    </section>
+    <section class="modal--body h-full">
+        <form id="form--variante-update" class="flex h-max">
+            <div class="attachment--variante flex-1 flex flex-col gap-2 p-4"><span>Immagine variante</span><button class="select--variante-update flex-1 border border-slate-200 border-dashed text-slate-500 rounded-md"><span class="material-symbols-outlined text-3xl">add</span><img id="selected--image-variante-update" class="hidden w-[300px] h-[300px] object-contain p-2" /></button></div>
+            <div class="inputs--variante flex-1 flex flex-col gap-2 p-4">
+                <label for="nome_variante_update">Nome variante</label>
+                <input type="text" name="nome_variante_update" class="w-full p-2" required />
+                <label for="codice_colore_update">Codice variante</label>
+                <input type="text" name="codice_colore_update" class="full resize-none p-2" rows="10" required>
+                <button type="submit" id="submit--variante_update" class="bg-cyan-800 text-white p-2 rounded-md mt-2 disabled:opacity-25">SALVA</button>
+                <button type="reset" id="reset--variante_update" class="bg-cyan-800 text-white p-2 rounded-md mt-2">CANCELLA</button>
+            </div>
+        </form>
+    </section>
+</dialog>
 <?php wp_enqueue_script('thesis-varianti', THESIS_URL . "app/assets/js/thesis-copertine-variants.admin.js"); ?>

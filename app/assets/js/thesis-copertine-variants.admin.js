@@ -6,55 +6,113 @@ const formVariante = document.querySelector("#form--variante");
 
 function creaElementiHTML(oggettiRaggruppati) {
   for (const id in oggettiRaggruppati) {
-    let gruppoCounter = 0
+    let gruppoCounter = 0;
     const gruppo = oggettiRaggruppati[id];
 
     const divGruppo = document.createElement("div");
-    divGruppo.classList.add("gruppo", "flex", "flex-1", "gap-4", "items-center", "w-full", "p-4", "border", "rounded-md")
+    divGruppo.classList.add(
+      "gruppo",
+      "flex",
+      "flex-1",
+      "gap-4",
+      "items-center",
+      "w-full",
+      "p-4",
+      "border",
+      "rounded-md"
+    );
 
     const titolo = document.createElement("h2");
     titolo.textContent = `${gruppo[gruppoCounter].nome_copertina}`;
-    titolo.classList.add("font-bold", "text-xl", "p-4", "flex-1")
+    titolo.classList.add("font-bold", "text-xl", "p-4", "flex-1");
     divGruppo.appendChild(titolo);
 
-    const divList = document.createElement("div")
-    divGruppo.appendChild(divList)
-    divList.classList.add("w-full", "flex", "flex-col", "gap-2", "flex-1")
+    const divList = document.createElement("div");
+    divGruppo.appendChild(divList);
+    divList.classList.add("w-full", "flex", "flex-col", "gap-2", "flex-1");
 
     gruppo.forEach((oggetto) => {
       const card = document.createElement("div");
-      card.classList.add("rounded-md", "flex", "items-center", "justify-between", "w-full", "p-4", "border")
+      card.classList.add(
+        "rounded-md",
+        "flex",
+        "items-center",
+        "justify-between",
+        "w-full",
+        "p-4",
+        "border"
+      );
 
       const nomeCopertina = document.createElement("p");
-      nomeCopertina.textContent = `Nome Variazione: ${oggetto.nome_variazione}`;
+      nomeCopertina.textContent = `${oggetto.nome_variazione}`;
       nomeCopertina.classList.add("flex-1");
       card.appendChild(nomeCopertina);
 
       const idVariazione = document.createElement("p");
-      idVariazione.textContent = `Codice Colore: ${oggetto.codice_colore}`;
-      idVariazione.classList.add("flex-1", "text-center");
+      idVariazione.textContent = `${oggetto.codice_colore}`;
+      idVariazione.classList.add("flex-1", "text-end");
       card.appendChild(idVariazione);
 
       const anteprima = document.createElement("a");
-      anteprima.classList.add("underline", "text-cyan-800", "text-end")
-      anteprima.textContent = "Vedi anteprima"
+      anteprima.classList.add(
+        "underline",
+        "text-cyan-800",
+        "text-end",
+        "flex-1",
+        "active:outline-none"
+      );
+      anteprima.textContent = "Vedi anteprima";
       anteprima.href = oggetto.anteprima_variazione;
-      anteprima.target = "_blank"
-      card.appendChild(anteprima)
+      anteprima.target = "_blank";
+
+      card.appendChild(anteprima);
+
+      const actions = document.createElement("div");
+      actions.classList.add(
+        "flex",
+        "gap-4",
+        "items-center",
+        "flex-1",
+        "justify-end"
+      );
+
+      card.appendChild(actions);
+
+      const modifica = document.createElement("button");
+      modifica.textContent = "edit";
+      modifica.dataset.id = oggetto.id_variazione;
+      modifica.classList.add(
+        "material-symbols-outlined",
+        "text-sky-900",
+        "drop-shadow-sm"
+      );
+      modifica.onclick = (e) => modificaVariante(e);
+
+      const cancella = document.createElement("button");
+      cancella.dataset.id = oggetto.id_variazione;
+      cancella.textContent = "delete";
+      cancella.classList.add(
+        "material-symbols-outlined",
+        "text-sky-900",
+        "drop-shadow-sm"
+      );
+      cancella.onclick = (e) => cancellaVariante(e);
+
+      actions.append(modifica, cancella);
 
       divList.appendChild(card);
 
-      gruppoCounter++
+      gruppoCounter++;
     });
 
-    wrapperVarianti.classList.add("flex", "flex-col", "gap-4")
+    wrapperVarianti.classList.add("flex", "flex-col", "gap-4");
 
     wrapperVarianti.appendChild(divGruppo);
   }
 }
 
 const getVarianti = async () => {
-  wrapperVarianti.innerHTML = ""
+  wrapperVarianti.innerHTML = "";
   let options = {
     action: "get_varianti",
   };
@@ -231,6 +289,95 @@ formVariante.onsubmit = (e) => {
     success: (response) => {
       submit.removeAttribute("disabled");
       dialogVariante.close();
+      getVarianti();
+      showToast(response);
+    },
+  });
+};
+
+const modificaVariante = (e) => {
+  let idVariante = e.currentTarget.dataset.id;
+
+  const dialogUpdate = document.querySelector("#modal--variants-update");
+  dialogUpdate.showModal();
+
+  const mediaUpdate = document.querySelector(".select--variante-update");
+  mediaUpdate.onclick = (e) => {
+    e.preventDefault();
+
+    let img = document.querySelector("#selected--image-variante-update");
+
+    mediaUpdate.querySelector("span").classList.add("hidden");
+    dialogUpdate.close();
+
+    let options = {
+      title: "Seleziona un file multimediale",
+      multiple: false,
+      library: {
+        type: "image",
+      },
+    };
+
+    // Apri la finestra di media
+    let mediaFrame = wp.media(options);
+    mediaFrame.open();
+
+    mediaFrame.on("select", () => {
+      let attachment = mediaFrame.state().get("selection").first().toJSON();
+      img.src = attachment.url;
+      img.classList.remove("hidden");
+      dialogUpdate.showModal();
+    });
+
+    mediaFrame.on("close", () => {
+      dialogUpdate.showModal();
+    });
+  };
+
+  const formUpdate = document.querySelector("#form--variante-update");
+  formUpdate.onsubmit = (e) => {
+    e.preventDefault();
+
+    let options = {
+      action: "update_variante",
+      data: {
+        id_variante: idVariante,
+        nome_variante: e.currentTarget.nome_variante_update.value,
+        codice_colore: e.currentTarget.codice_colore_update.value,
+        url_variante: img.src,
+      },
+    };
+
+    console.log(options)
+
+    jQuery.ajax({
+      dataType: "json",
+      method: "POST",
+      url: "admin-ajax.php",
+      data: options,
+      success: (response) => {
+        dialogUpdate.close();
+        getVarianti();
+        showToast(response);
+      },
+    });
+  };
+};
+
+const cancellaVariante = (e) => {
+  let idVariante = e.currentTarget.dataset.id;
+
+  let options = {
+    action: "delete_variante",
+    data: { id_variazione: idVariante },
+  };
+
+  jQuery.ajax({
+    dataType: "json",
+    method: "POST",
+    url: "admin-ajax.php",
+    data: options,
+    success: (response) => {
       getVarianti();
       showToast(response);
     },

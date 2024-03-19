@@ -107,3 +107,38 @@ function ajax_post_variante(){
         wp_send_json_error("Errore nella richiesta: {$e}", 500);
     }
 }
+
+function ajax_delete_variante()
+{
+    $data = $_POST['data'];
+
+    $id = $data['id_variazione'];
+
+    try {
+        $variante = new Variante;
+        $query = $variante->delete_variante($id);
+        wp_send_json_success(json_encode(array("results" => $query, "message" => "Query effettuata.")), 200);
+    } catch (Exception $e) {
+        wp_send_json_error("Errore nella richiesta: {$e}", 500);
+    }
+}
+
+function ajax_update_variante()
+{
+    $data = $_POST['data'];
+
+    $id = $data['id_variante'];
+
+    try {
+        $variante = new Variante;
+        $query = $variante->update_variante(
+            $id,
+            sanitize_text_field($data['nome_variante']),
+            sanitize_text_field($data['codice_colore']),
+            sanitize_text_field($data['url_variante'])
+        );
+        wp_send_json_success(json_encode(array("results" => $query, "message" => "Aggiornato con successo.")), 200);
+    } catch (Exception $e) {
+        wp_send_json_error("Errore nella richiesta: {$e}", 500);
+    }
+}

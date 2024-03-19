@@ -31,6 +31,50 @@ class Variante
             return json_encode(array("errore" => $e));
         }
     }
+    public function delete_variante($id_variazione)
+    {
+        global $wpdb;
+
+        try {
+            $wpdb->delete(
+                $wpdb->prefix . 'thesis_variations',
+                array('id_variazione' => $id_variazione),
+                array('%d')
+            );
+
+            return json_encode($wpdb->insert_id);
+        } catch (Exception $e) {
+            return json_encode(array("errore" => $e));
+        }
+    }
+
+    public function update_variante($id_variazione, $nome_variante, $codice_colore, $anteprima_variante)
+    {
+        global $wpdb;
+
+        try {
+
+            $format = array("%s", "%s", "%s");
+
+            $data = array(
+                'nome_variazione' => $nome_variante,
+                "codice_colore" => $codice_colore,
+                "anteprima_variazione" => $anteprima_variante
+            );
+
+            $wpdb->update(
+                $wpdb->prefix . 'thesis_variations',
+                $data,
+                array('id_variazione' => $id_variazione),
+                $format,
+                array('%d'),
+            );
+
+            return json_encode($wpdb->insert_id);
+        } catch (Exception $e) {
+            return json_encode(array("errore" => $e));
+        }
+    }
 }
 
 
