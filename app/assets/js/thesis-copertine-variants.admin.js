@@ -22,8 +22,8 @@ function creaElementiHTML(oggettiRaggruppati) {
     );
 
     const titolo = document.createElement("h2");
-    titolo.innerHTML = `<span class="opacity-50 text-sm">Copertina </span> ${gruppo[gruppoCounter].nome_copertina}`;
-    titolo.classList.add("font-bold", "text-xl", "p-4", "flex", "flex-col");
+    titolo.innerHTML = `<span class="opacity-50 font-semibold text-[12px]">Copertina </span> ${gruppo[gruppoCounter].nome_copertina}`;
+    titolo.classList.add("font-bold", "text-xl", "flex", "px-2", "flex-col");
     divGruppo.appendChild(titolo);
 
     const divList = document.createElement("div");
