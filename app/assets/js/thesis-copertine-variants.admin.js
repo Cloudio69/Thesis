@@ -105,7 +105,7 @@ function creaElementiHTML(oggettiRaggruppati) {
       gruppoCounter++;
     });
 
-    wrapperVarianti.classList.add("flex", "flex-col", "gap-4");
+    wrapperVarianti.classList.add("flex", "flex-col", "gap-4", "max-h-[60vh]", "overflow-auto");
 
     wrapperVarianti.appendChild(divGruppo);
   }

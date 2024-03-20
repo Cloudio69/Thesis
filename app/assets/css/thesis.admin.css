@@ -71,3 +71,21 @@ dialog[open] {
 .overflow-anywhere{
   overflow-wrap: anywhere;
 }
+
+div::-webkit-scrollbar{
+  width: 5px;
+}
+
+div::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+div::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+div::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
