@@ -7,7 +7,7 @@
     </div>
     <div class="thesis--manager flex flex-1 flex-col rounded-md bg-white w-full border border-slate-200 p-4">
         <h3 class="font-bold text-xl flex items-center justify-between mb-4"><span class="flex gap-4 items-center"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">border_color</span><span>Colori carattere</span></span></h3>
-        <div id="list--varianti" class="w-full p-4 animate-pulse bg-gray-200 rounded-md h-60"></div>
+        <div id="list--colors" class="w-full p-4 animate-pulse bg-gray-200 rounded-md h-60"></div>
     </div>
 </div>
 

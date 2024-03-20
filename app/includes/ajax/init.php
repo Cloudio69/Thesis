@@ -2,6 +2,7 @@
 
 include_once THESIS_DIR . "app/includes/models/copertine.php";
 include_once THESIS_DIR . "app/includes/models/variants.php";
+include_once THESIS_DIR . "app/includes/models/char-colors.php";
 
 add_action('wp_ajax_post_copertine', 'ajax_post_copertine');
 add_action('wp_ajax_get_copertine', 'ajax_get_copertine');
@@ -12,6 +13,8 @@ add_action('wp_ajax_post_variante', 'ajax_post_variante');
 add_action('wp_ajax_get_varianti', 'ajax_get_varianti');
 add_action('wp_ajax_delete_variante', 'ajax_delete_variante');
 add_action('wp_ajax_update_variante', 'ajax_update_variante');
+
+add_action('wp_ajax_get_char_colors', 'ajax_get_char_colors');
 
 function ajax_post_copertine()
 {
@@ -90,7 +93,8 @@ function ajax_get_varianti()
     }
 }
 
-function ajax_post_variante(){
+function ajax_post_variante()
+{
 
     $data = $_POST['data'];
 
@@ -138,6 +142,18 @@ function ajax_update_variante()
             sanitize_text_field($data['url_variante'])
         );
         wp_send_json_success(json_encode(array("results" => $query, "message" => "Aggiornato con successo.")), 200);
+    } catch (Exception $e) {
+        wp_send_json_error("Errore nella richiesta: {$e}", 500);
+    }
+}
+
+
+function ajax_get_char_colors()
+{
+    try {
+        $colori = new CharColors;
+        $query = $colori->get_char_colors();
+        wp_send_json_success(json_encode(array("results" => $query, "message" => "Query effettuata.")), 200);
     } catch (Exception $e) {
         wp_send_json_error("Errore nella richiesta: {$e}", 500);
     }

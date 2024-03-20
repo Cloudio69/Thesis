@@ -1,8 +1,6 @@
 const creaColoriHTML = (oggettiRaggruppati) => {
-    for (const id in oggettiRaggruppati) {
-      let gruppoCounter = 0;
-      const gruppo = oggettiRaggruppati[id];
-      console.log(gruppo)
+    for(const id in oggettiRaggruppati){
+      console.log(oggettiRaggruppati[id])
     }
 }
 
@@ -44,6 +42,7 @@ const getGlobalVarianti = async () => {
 
   // Utilizza la funzione per raggruppare gli oggetti
   const oggettiRaggruppati = raggruppaPerId(results);
+  if(!oggettiRaggruppati) console.log(true)
   creaColoriHTML(oggettiRaggruppati)
 };
 
