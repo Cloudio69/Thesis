@@ -15,7 +15,6 @@ function creaElementiHTML(oggettiRaggruppati) {
       "flex",
       "flex-col",
       "gap-4",
-      "items-center",
       "w-full",
       "p-4",
       "border",
@@ -23,8 +22,8 @@ function creaElementiHTML(oggettiRaggruppati) {
     );
 
     const titolo = document.createElement("h2");
-    titolo.textContent = `${gruppo[gruppoCounter].nome_copertina}`;
-    titolo.classList.add("font-bold", "text-xl", "p-4");
+    titolo.innerHTML = `<span class="opacity-50 text-sm">Copertina </span> ${gruppo[gruppoCounter].nome_copertina}`;
+    titolo.classList.add("font-bold", "text-xl", "p-4", "flex", "flex-col");
     divGruppo.appendChild(titolo);
 
     const divList = document.createElement("div");
