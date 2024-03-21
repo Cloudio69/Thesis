@@ -8,11 +8,14 @@
     <div class="thesis--manager flex flex-1 flex-col rounded-md bg-white w-full border border-slate-200 p-4">
         <h3 class="font-bold text-xl flex items-center justify-between mb-4"><span class="flex gap-4 items-center"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">border_color</span><span>Colori carattere</span></span></h3>
         <div class="thesis--chars-manager flex gap-4">
-            <div class="lista--colori border p-4 rounded-md w-1/3">
+            <div class="lista--colori border p-4 rounded-md w-3/5">
                 <h3 class="font-bold text-md flex items-center gap-4 justify-between mb-4"><span>Colori</span><span id="aggiungi--colore" class="material-symbols-outlined rounded-full bg-cyan-500 text-white transition-all hover:bg-slate-500 cursor-pointer">add</span></h3>
                 <div id="lista--colori" class="w-full p-4 animate-pulse bg-gray-200 rounded-md h-40 flex-1"></div>
             </div>
-            <div id="lista--colori-assegnati" class="w-full flex animate-pulse bg-gray-200 rounded-md h-60 flex-1"></div>
+            <div class="lista--colori-assegnati border p-4 rounded-md w-full">
+                <h3 class="font-bold text-md flex items-center gap-4 justify-between mb-4"><span>Colori associati</span><span id="associa--colore" class="material-symbols-outlined rounded-full bg-cyan-500 text-white transition-all hover:bg-slate-500 cursor-pointer">add</span></h3>
+                <div id="lista--colori-assegnati" class="w-full flex animate-pulse bg-gray-200 rounded-md h-60 flex-1"></div>
+            </div>
         </div>
     </div>
 </div>
@@ -25,11 +28,11 @@
         <form id="form--crea-colore" class="flex h-max">
             <div class="inputs--rilegatura flex-1 flex flex-col gap-2 p-4">
                 <label for="nome_colore">Nome colore</label>
-                <input type="text" name="nome_colore">
+                <input type="text" name="nome_colore" required>
                 <label for="hex_colore">Valore colore</label>
                 <div class="flex items-stretch border rounded-md p-4">
-                    <input type="color" name="hex_colore" class="active:!border-none !border-none w-[64px] h-[64px]">
-                    <code id="colore--scelto" class="flex-1 !bg-transparent flex items-center justify-center text-xl">#000000</code>
+                    <input type="color" id="hex_colore" name="hex_colore" class="active:!border-none !border-none w-[64px] h-[64px]">
+                    <span id="colore--scelto" class="flex-1 !bg-transparent flex items-center justify-center text-xl font-bold cursor-pointer">#000000</span>
                 </div>
 
                 <div class="flex gap-1">

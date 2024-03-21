@@ -93,6 +93,9 @@ const cancellaColore = async (e) => {
 formCreaColore.hex_colore.onchange = (e) => {
   coloreScelto.textContent = e.currentTarget.value
 }
+formCreaColore.hex_colore.oninput = (e) => {
+  coloreScelto.textContent = e.currentTarget.value
+}
 
 formCreaColore.onsubmit = async (e) => {
   e.preventDefault();
