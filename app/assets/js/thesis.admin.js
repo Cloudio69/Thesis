@@ -19,8 +19,8 @@ window.onload = () => {
     case "thesis-ordini":
       viewingPage.innerHTML = "Ordini";
       break;
-    case "thesis-prodotti":
-      viewingPage.innerHTML = "Prodotti";
+    case "thesis-accessori":
+      viewingPage.innerHTML = "Accessori";
       break;
     case "thesis-rilegature":
       viewingPage.innerHTML = "Rilegature";

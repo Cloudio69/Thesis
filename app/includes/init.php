@@ -76,12 +76,12 @@ class Thesis
 
         add_submenu_page(
             'thesis',
-            'Prodotti',
-            'Prodotti',
+            'Accessori',
+            'Accessori',
             'manage_options',
-            'thesis-prodotti',
+            'thesis-accessori',
             function () {
-                include_once(THESIS_DIR . 'app/views/admin/products.php');
+                include_once(THESIS_DIR . 'app/views/admin/accessori.php');
             },
             null
         );

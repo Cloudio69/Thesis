@@ -23,12 +23,12 @@
                     <h3 class="text-base font-bold flex justify-between items-center"><span class="flex items-center gap-2"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">orders</span>Ordini</span><span><a class="flex items-center gap-2 text-[12px]" href="<?php echo menu_page_url('thesis-ordini', false) ?>">VAI AGLI ORDINI <span class="material-symbols-outlined text-amber-300 text-sm drop-shadow-">east</span></a></span></h3>
                     <canvas id="thesis--orders" class="py-4 h-full">
                 </div>
-                <div class="thesis--products w-full bg-white p-4 rounded-md border border-slate-200">
-                    <h3 class="text-base font-bold mb-2">Prodotti</h3>
+                <div class="thesis--accessori w-full bg-white p-4 rounded-md border border-slate-200">
+                    <h3 class="text-base font-bold mb-2">Accessori</h3>
                     <div class="thesis--list flex items-center w-fit">
-                        <a href="<?php echo menu_page_url('thesis-prodotti', false) ?>#grammature" class="uppercase font-bold flex items-center gap-4 p-4 transition-all hover:bg-slate-500 hover:text-white hover:shadow-inner rounded-md"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">contract</span><span>Grammature</span></a>
-                        <a href="<?php echo menu_page_url('thesis-prodotti', false) ?>#segnalibri" class="uppercase font-bold flex items-center gap-4 p-4 transition-all hover:bg-slate-500 hover:text-white hover:shadow-inner rounded-md"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">bookmark</span><span>Segnalibri</span></a>
-                        <a href="<?php echo menu_page_url('thesis-prodotti', false) ?>#angoli" class="uppercase font-bold flex items-center gap-4 p-4 transition-all hover:bg-slate-500 hover:text-white hover:shadow-inner rounded-md"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">pageless</span><span>Angoli</span></a>
+                        <a href="<?php echo menu_page_url('thesis-accessori', false) ?>#grammature" class="uppercase font-bold flex items-center gap-4 p-4 transition-all hover:bg-slate-500 hover:text-white hover:shadow-inner rounded-md"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">contract</span><span>Grammature</span></a>
+                        <a href="<?php echo menu_page_url('thesis-accessori', false) ?>#segnalibri" class="uppercase font-bold flex items-center gap-4 p-4 transition-all hover:bg-slate-500 hover:text-white hover:shadow-inner rounded-md"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">bookmark</span><span>Segnalibri</span></a>
+                        <a href="<?php echo menu_page_url('thesis-accessori', false) ?>#angoli" class="uppercase font-bold flex items-center gap-4 p-4 transition-all hover:bg-slate-500 hover:text-white hover:shadow-inner rounded-md"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">pageless</span><span>Angoli</span></a>
                     </div>
                 </div>
                 <div class="thesis--rilegature w-full bg-white p-4 rounded-md border border-slate-200">
