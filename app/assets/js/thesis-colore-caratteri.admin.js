@@ -1,4 +1,8 @@
 const idListaColori = document.querySelector("#lista--colori");
+const dialogColore = document.querySelector("#crea--colore")
+const buttonCreaColore = document.querySelector("#aggiungi--colore")
+const formCreaColore = document.querySelector("#form--crea-colore")
+const coloreScelto = document.querySelector("#colore--scelto")
 
 const getColori = async () => {
   const options = {
@@ -22,6 +26,7 @@ const getColori = async () => {
   let results = JSON.parse(response.results);
 
   if (results.length === 0) {
+    idListaColori.removeAttribute("class")
     idListaColori.innerHTML = "Non ci sono varianti";
   } else {
     results.forEach((colore) => {
@@ -65,5 +70,15 @@ const getColori = async () => {
 const cancellaColore = (e) => {
     console.log(e.currentTarget.dataset.id)
 }
+
+formCreaColore.hex_colore.onchange = (e) => {
+  coloreScelto.textContent = e.currentTarget.value
+}
+
+
+buttonCreaColore.onclick = () => {
+  dialogColore.showModal();
+}
+
 
 getColori();

@@ -9,12 +9,36 @@
         <h3 class="font-bold text-xl flex items-center justify-between mb-4"><span class="flex gap-4 items-center"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">border_color</span><span>Colori carattere</span></span></h3>
         <div class="thesis--chars-manager flex gap-4">
             <div class="lista--colori border p-4 rounded-md w-1/3">
-                <h3 class="font-bold text-md flex items-center gap-4 justify-between mb-4"><span>Colori</span><span class="material-symbols-outlined rounded-full bg-cyan-500 text-white transition-all hover:bg-slate-500">add</span></h3>
-                <div id="lista--colori" class="grid grid-cols-4"></div>
+                <h3 class="font-bold text-md flex items-center gap-4 justify-between mb-4"><span>Colori</span><span id="aggiungi--colore" class="material-symbols-outlined rounded-full bg-cyan-500 text-white transition-all hover:bg-slate-500 cursor-pointer">add</span></h3>
+                <div id="lista--colori" class="w-full p-4 animate-pulse bg-gray-200 rounded-md h-40 flex-1"></div>
             </div>
-            <div id="lista--colori-assegnati" class="w-full p-4 animate-pulse bg-gray-200 rounded-md h-60 flex-1"></div>
+            <div id="lista--colori-assegnati" class="w-full flex animate-pulse bg-gray-200 rounded-md h-60 flex-1"></div>
         </div>
     </div>
 </div>
+<dialog id="crea--colore" class="min-w-[20vw] min-h-[20vh] p-4 rounded-md">
+    <section class="modal--heading flex justify-between items-center">
+        <h3 class="font-bold text-xl">Crea colore</h3>
+        <form method="dialog"><button><span class="material-symbols-outlined text-xl">close</span></button></form>
+    </section>
+    <section class="modal--body h-full">
+        <form id="form--crea-colore" class="flex h-max">
+            <div class="inputs--rilegatura flex-1 flex flex-col gap-2 p-4">
+                <label for="nome_colore">Nome colore</label>
+                <input type="text" name="nome_colore">
+                <label for="hex_colore">Valore colore</label>
+                <div class="flex items-stretch border rounded-md p-4">
+                    <input type="color" name="hex_colore" class="active:!border-none !border-none w-[64px] h-[64px]">
+                    <code id="colore--scelto" class="flex-1 !bg-transparent flex items-center justify-center text-xl">#000000</code>
+                </div>
+
+                <div class="flex gap-1">
+                    <button type="submit" id="submit--colore" class="bg-cyan-800 text-white p-2 rounded-md mt-2 disabled:opacity-25 flex-1">SALVA</button>
+                    <button type="reset" id="reset--colore" class="bg-cyan-800 text-white p-2 rounded-md mt-2 flex-1">CANCELLA</button>
+                </div>
+            </div>
+        </form>
+    </section>
+</dialog>
 
 <?php wp_enqueue_script('thesis-colore-caratteri', THESIS_URL . "app/assets/js/thesis-colore-caratteri.admin.js");
