@@ -29,6 +29,8 @@ const getColori = async () => {
     idListaColori.removeAttribute("class")
     idListaColori.innerHTML = "Non ci sono varianti";
   } else {
+    idListaColori.removeAttribute("class")
+    idListaColori.classList.add("grid", "grid-cols-3", "gap-4")
     results.forEach((colore) => {
       let wrapperColore = document.createElement("div");
       wrapperColore.classList.add(
@@ -67,14 +69,54 @@ const getColori = async () => {
   }
 };
 
-const cancellaColore = (e) => {
-    console.log(e.currentTarget.dataset.id)
+const cancellaColore = async (e) => {
+    let id = e.currentTarget.dataset.id;
+    const options = {
+      action: "delete_char_colors",
+      data: {
+        id_colore_carattere: id
+      }
+    };
+  
+    let colori = await jQuery.ajax({
+      dataType: "json",
+      method: "POST",
+      url: "admin-ajax.php",
+      data: options,
+      success: (response) => {
+        getColori();
+        showToast(response)
+      },
+    });
 }
 
 formCreaColore.hex_colore.onchange = (e) => {
   coloreScelto.textContent = e.currentTarget.value
 }
 
+formCreaColore.onsubmit = async (e) => {
+  e.preventDefault();
+
+  const options = {
+    action: "post_char_colors",
+    data: {
+      nome_colore: e.currentTarget.nome_colore.value,
+      hex_colore: e.currentTarget.hex_colore.value
+    }
+  }
+
+  let colori = await jQuery.ajax({
+    dataType: "json",
+    method: "POST",
+    url: "admin-ajax.php",
+    data: options,
+    success: (response) => {
+      getColori();
+      showToast(response)
+    },
+  });
+
+}
 
 buttonCreaColore.onclick = () => {
   dialogColore.showModal();
