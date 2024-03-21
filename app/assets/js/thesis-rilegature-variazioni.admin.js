@@ -1,5 +1,5 @@
 const nuovaVariante = document.querySelector("#aggiungi--variante");
-const dialogVariante = document.querySelector("#modal--variants");
+const dialogVariante = document.querySelector("#modal--variazioni");
 const selectRilegature = document.querySelector("#lista_rilegature");
 const wrapperVarianti = document.querySelector("#list--varianti");
 const formVariante = document.querySelector("#form--variante");
@@ -44,7 +44,7 @@ function creaElementiHTML(oggettiRaggruppati) {
       );
 
       const nomeRilegatura = document.createElement("p");
-      nomeRilegatura.innerHTML = `<div class='flex flex-col'><span class="opacity-50">NOME VARIANTE</span><span class="font-bold">${oggetto.nome_variazione}</span></div>`;
+      nomeRilegatura.innerHTML = `<div class='flex flex-col'><span class="opacity-50">NOME VARIANTE</span><span class="font-bold">${oggetto.nome_variante}</span></div>`;
       nomeRilegatura.classList.add("flex-1");
       card.appendChild(nomeRilegatura);
 
@@ -62,7 +62,7 @@ function creaElementiHTML(oggettiRaggruppati) {
         "active:outline-none"
       );
       anteprima.textContent = "Vedi anteprima";
-      anteprima.href = oggetto.anteprima_variazione;
+      anteprima.href = oggetto.anteprima_variante;
       anteprima.target = "_blank";
 
       card.appendChild(anteprima);
@@ -80,7 +80,7 @@ function creaElementiHTML(oggettiRaggruppati) {
 
       const modifica = document.createElement("button");
       modifica.textContent = "edit";
-      modifica.dataset.id = oggetto.id_variazione;
+      modifica.dataset.id = oggetto.id_variante;
       modifica.classList.add(
         "material-symbols-outlined",
         "text-sky-900",
@@ -89,7 +89,7 @@ function creaElementiHTML(oggettiRaggruppati) {
       modifica.onclick = (e) => modificaVariante(e);
 
       const cancella = document.createElement("button");
-      cancella.dataset.id = oggetto.id_variazione;
+      cancella.dataset.id = oggetto.id_variante;
       cancella.textContent = "delete";
       cancella.classList.add(
         "material-symbols-outlined",
@@ -298,7 +298,7 @@ formVariante.onsubmit = (e) => {
 const modificaVariante = (e) => {
   let idVariante = e.currentTarget.dataset.id;
 
-  const dialogUpdate = document.querySelector("#modal--variants-update");
+  const dialogUpdate = document.querySelector("#modal--variazioni-update");
   dialogUpdate.showModal();
 
   const mediaUpdate = document.querySelector(".select--variante-update");
@@ -375,7 +375,7 @@ const cancellaVariante = (e) => {
 
   let options = {
     action: "delete_variante",
-    data: { id_variazione: idVariante },
+    data: { id_variante: idVariante },
   };
 
   jQuery.ajax({

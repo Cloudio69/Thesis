@@ -10,13 +10,13 @@
                 </div>
             </div>
             <div class="thesis--manager flex flex-1 gap-4 flex-col rounded-md bg-white w-full border border-slate-200 p-4">
-                <section class="thesis--corners border border-slate-200 p-4">
+                <section class="thesis--angoli border border-slate-200 p-4">
                     <h3 class="font-bold text-xl flex items-center justify-between"><span>Angoli </span><button id="aggiungi--angolo"><span class="material-symbols-outlined rounded-full bg-cyan-500 text-white transition-all hover:bg-slate-500">add</span></button></h3>
-                    <div id="thesis--corners">Non ci sono angoli.</div>
+                    <div id="thesis--angoli">Non ci sono angoli.</div>
                 </section>
-                <section class="thesis--bookmarks border border-slate-200 p-4">
+                <section class="thesis--segnalibri border border-slate-200 p-4">
                     <h3 class="font-bold text-xl flex items-center justify-between"><span>Segnalibri </span><button id="aggiungi--segnalibro"><span class="material-symbols-outlined rounded-full bg-cyan-500 text-white transition-all hover:bg-slate-500">add</span></button></h3>
-                    <div id="thesis--bookmarks">Non ci sono segnalibri.</div>
+                    <div id="thesis--segnalibri">Non ci sono segnalibri.</div>
                 </section>
                 <section class="thesis--paper-weight border border-slate-200 p-4">
                     <h3 class="font-bold text-xl flex items-center justify-between"><span>Grammature </span><button id="aggiungi--grammatura"><span class="material-symbols-outlined rounded-full bg-cyan-500 text-white transition-all hover:bg-slate-500">add</span></button></h3>

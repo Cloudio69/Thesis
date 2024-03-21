@@ -10,7 +10,7 @@
         <div id="list--varianti" class="w-full p-4 animate-pulse bg-gray-200 rounded-md h-60"></div>
     </div>
 </div>
-<dialog id="modal--variants" class="min-w-[30vw] min-h-[30vh] p-4 rounded-md">
+<dialog id="modal--variazioni" class="min-w-[30vw] min-h-[30vh] p-4 rounded-md">
     <section class="modal--heading flex justify-between items-center">
         <h3 class="font-bold text-xl">Aggiungi variante</h3>
         <form method="dialog"><button><span class="material-symbols-outlined text-xl">close</span></button></form>
@@ -31,7 +31,7 @@
         </form>
     </section>
 </dialog>
-<dialog id="modal--variants-update" class="min-w-[30vw] min-h-[30vh] p-4 rounded-md">
+<dialog id="modal--variazioni-update" class="min-w-[30vw] min-h-[30vh] p-4 rounded-md">
     <section class="modal--heading flex justify-between items-center">
         <h3 class="font-bold text-xl">Aggiungi variante</h3>
         <form method="dialog"><button><span class="material-symbols-outlined text-xl">close</span></button></form>
@@ -50,4 +50,4 @@
         </form>
     </section>
 </dialog>
-<?php wp_enqueue_script('thesis-varianti', THESIS_URL . "app/assets/js/thesis-rilegature-variants.admin.js"); ?>
+<?php wp_enqueue_script('thesis-varianti', THESIS_URL . "app/assets/js/thesis-rilegature-variazioni.admin.js"); ?>

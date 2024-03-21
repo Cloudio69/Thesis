@@ -41,7 +41,12 @@ const createElementRilegatura = (rilegatura) => {
     "option--list"
   );
 
-  nomeRilegatura.classList.add("text-xl", "font-bold", "overflow-anywhere", "text-center");
+  nomeRilegatura.classList.add(
+    "text-xl",
+    "font-bold",
+    "overflow-anywhere",
+    "text-center"
+  );
 
   nomeRilegatura.innerHTML = rilegatura.nome_rilegatura;
   descrizioneRilegatura.innerHTML = rilegatura.descrizione_rilegatura;
@@ -172,6 +177,8 @@ const showOptions = (e) => {
           id_rilegatura: id,
           nome_rilegatura: e.currentTarget.nome_rilegatura.value,
           desc_rilegatura: e.currentTarget.descrizione_rilegatura.value,
+          prezzo_rilegatura: e.currentTarget.prezzo_rilegatura.value,
+          angoli: +e.currentTarget.angoli.value,
           url_rilegatura: img.src,
         },
       };
@@ -288,6 +295,8 @@ form.onsubmit = (e) => {
     data: {
       nome_rilegatura: e.currentTarget.nome_rilegatura.value,
       desc_rilegatura: e.currentTarget.descrizione_rilegatura.value,
+      prezzo_rilegatura: parseFloat(e.currentTarget.prezzo_rilegatura.value),
+      angoli: +e.currentTarget.angoli.value,
       url_rilegatura: img.src,
     },
   };

@@ -17,7 +17,7 @@ class Rilegatura
         }
     }
 
-    public function create_rilegatura($nome_rilegatura, $descrizione_rilegatura, $anteprima_rilegatura)
+    public function create_rilegatura($nome_rilegatura, $descrizione_rilegatura, $anteprima_rilegatura, $prezzo_rilegatura, $angoli)
     {
         global $wpdb;
 
@@ -25,14 +25,16 @@ class Rilegatura
             $data = array(
                 'nome_rilegatura' => $nome_rilegatura,
                 "descrizione_rilegatura" => $descrizione_rilegatura,
-                "anteprima_rilegatura" => $anteprima_rilegatura
+                "anteprima_rilegatura" => $anteprima_rilegatura,
+                "prezzo_rilegatura" => $prezzo_rilegatura,
+                "angoli" => $angoli
             );
 
-            $format = array("%s", "%s", "%s");
+            $format = array("%s", "%s", "%s", "%f", "%d");
 
             $wpdb->insert($wpdb->prefix . 'thesis_rilegature', $data, $format);
 
-            return json_encode($wpdb->insert_id);
+            return json_encode(array($wpdb->insert_id, $data));
         } catch (Exception $e) {
             return json_encode(array("errore" => $e));
         }
@@ -54,7 +56,7 @@ class Rilegatura
             return json_encode(array("errore" => $e));
         }
     }
-    public function update_rilegatura($id_rilegatura, $nome_rilegatura, $descrizione_rilegatura, $anteprima_rilegatura)
+    public function update_rilegatura($id_rilegatura, $nome_rilegatura, $descrizione_rilegatura, $anteprima_rilegatura, $prezzo_rilegatura, $angoli)
     {
         global $wpdb;
 
@@ -65,7 +67,9 @@ class Rilegatura
             $data = array(
                 'nome_rilegatura' => $nome_rilegatura,
                 "descrizione_rilegatura" => $descrizione_rilegatura,
-                "anteprima_rilegatura" => $anteprima_rilegatura
+                "anteprima_rilegatura" => $anteprima_rilegatura,
+                "prezzo_rilegatura" => $prezzo_rilegatura,
+                "angoli" => $angoli
             );
 
             $wpdb->update(

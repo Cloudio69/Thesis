@@ -17,4 +17,4 @@
     </div>
 </div>
 
-<?php wp_enqueue_script('thesis-char-colors', THESIS_URL . "app/assets/js/thesis-char-colors.admin.js");
+<?php wp_enqueue_script('thesis-colore-caratteri', THESIS_URL . "app/assets/js/thesis-colore-caratteri.admin.js");

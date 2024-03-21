@@ -6,7 +6,7 @@ class Variante
     {
         global $wpdb;
         if (!$id) {
-            $query = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "thesis_rilegature INNER JOIN " . $wpdb->prefix . "thesis_variations USING(id_rilegatura)");
+            $query = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "thesis_rilegature INNER JOIN " . $wpdb->prefix . "thesis_variazioni USING(id_rilegatura)");
             return json_encode($query);
         }
     }
@@ -18,27 +18,27 @@ class Variante
             $data = array(
                 'id_rilegatura' => $id_rilegatura,
                 "codice_colore" => $codice_colore,
-                'nome_variazione' => $nome_variante,
-                "anteprima_variazione" => $anteprima_variante
+                'nome_variante' => $nome_variante,
+                "anteprima_variante" => $anteprima_variante
             );
 
             $format = array("%d", "%s", "%s", "%s");
 
-            $wpdb->insert($wpdb->prefix . 'thesis_variations', $data, $format);
+            $wpdb->insert($wpdb->prefix . 'thesis_variazioni', $data, $format);
 
             return json_encode($wpdb->insert_id);
         } catch (Exception $e) {
             return json_encode(array("errore" => $e));
         }
     }
-    public function delete_variante($id_variazione)
+    public function delete_variante($id_variante)
     {
         global $wpdb;
 
         try {
             $wpdb->delete(
-                $wpdb->prefix . 'thesis_variations',
-                array('id_variazione' => $id_variazione),
+                $wpdb->prefix . 'thesis_variazioni',
+                array('id_variante' => $id_variante),
                 array('%d')
             );
 
@@ -48,7 +48,7 @@ class Variante
         }
     }
 
-    public function update_variante($id_variazione, $nome_variante, $codice_colore, $anteprima_variante)
+    public function update_variante($id_variante, $nome_variante, $codice_colore, $anteprima_variante)
     {
         global $wpdb;
 
@@ -57,15 +57,15 @@ class Variante
             $format = array("%s", "%s", "%s");
 
             $data = array(
-                'nome_variazione' => $nome_variante,
+                'nome_variante' => $nome_variante,
                 "codice_colore" => $codice_colore,
-                "anteprima_variazione" => $anteprima_variante
+                "anteprima_variante" => $anteprima_variante
             );
 
             $wpdb->update(
-                $wpdb->prefix . 'thesis_variations',
+                $wpdb->prefix . 'thesis_variazioni',
                 $data,
-                array('id_variazione' => $id_variazione),
+                array('id_variante' => $id_variante),
                 $format,
                 array('%d'),
             );
@@ -78,4 +78,4 @@ class Variante
 }
 
 
-$variationsDb = new Variante;
+$variazioniDb = new Variante;

@@ -14,30 +14,36 @@
                 <div id="list--rilegature" class="grid auto-cols-fr w-full p-4 animate-pulse bg-gray-200 rounded-md h-60"></div>
             </div>
         </div>
-        <?php include_once(THESIS_DIR . '/app/views/admin/components/rilegature/variants.php'); ?>
-        <?php include_once(THESIS_DIR . '/app/views/admin/components/rilegature/char-colors.php'); ?>
+        <?php include_once(THESIS_DIR . '/app/views/admin/components/rilegature/variazioni.php'); ?>
+        <?php include_once(THESIS_DIR . '/app/views/admin/components/rilegature/colore-caratteri.php'); ?>
     </section>
 </div>
-<dialog id="modal--thesis" class="min-w-[30vw] min-h-[30vh] p-4 rounded-md">
+<dialog id="modal--thesis" class="min-w-[50vw] min-h-[30vh] p-4 rounded-md">
     <section class="modal--heading flex justify-between items-center">
         <h3 class="font-bold text-xl">Aggiungi rilegatura</h3>
         <form method="dialog"><button><span class="material-symbols-outlined text-xl">close</span></button></form>
     </section>
     <section class="modal--body h-full">
         <form id="form--rilegature" class="flex h-max">
-            <div class="attachment--rilegatura flex-1 flex flex-col gap-2 p-4"><span>Immagine Rilegatura</span><button class="select--rilegatura flex-1 border border-slate-200 border-dashed text-slate-500 rounded-md"><span class="material-symbols-outlined text-3xl">add</span><img id="selected--image" class="hidden w-[300px] h-[300px] object-contain p-2" /></button></div>
+            <div class="attachment--rilegatura flex-1 flex flex-col gap-2 p-4"><span>Immagine Rilegatura</span><button class="select--rilegatura flex-1 border flex justify-center items-center border-slate-200 border-dashed text-slate-500 rounded-md"><span class="material-symbols-outlined text-3xl">add</span><img id="selected--image" class="hidden w-[300px] h-[300px] object-contain p-2" /></button></div>
             <div class="inputs--rilegatura flex-1 flex flex-col gap-2 p-4">
                 <label for="nome_rilegatura">Nome rilegatura</label>
-                <input type="text" name="nome_rilegatura" class="w-full p-2" required/>
+                <input type="text" name="nome_rilegatura" class="w-full p-2" required />
                 <label for="descrizione_rilegatura">Descrizione rilegatura</label>
                 <textarea name="descrizione_rilegatura" class="full resize-none p-2" rows="10" required></textarea>
+                <label for="prezzo_rilegatura">Prezzo rilegatura</label>
+                <input type="number" min="1" step="any" name="prezzo_rilegatura" placeholder="€" />
+                <div class="flex gap-4 items-center py-4">
+                    <label for="angoli" class="flex items-center gap-2">Angoli? <span class="text-[10px] opacity-50">Puoi scegliere se la copertina può essere associata agli angoli</span></label>
+                    <input type="checkbox" value="1" name="angoli" checked>
+                </div>
                 <button type="submit" id="submit--rilegature" class="bg-cyan-800 text-white p-2 rounded-md mt-2 disabled:opacity-25">SALVA</button>
                 <button type="reset" id="reset--rilegature" class="bg-cyan-800 text-white p-2 rounded-md mt-2">CANCELLA</button>
             </div>
         </form>
     </section>
 </dialog>
-<dialog id="update--thesis" class="min-w-[30vw] min-h-[30vh] p-4 rounded-md">
+<dialog id="update--thesis" class="min-w-[50vw] min-h-[30vh] p-4 rounded-md">
     <section class="modal--heading flex justify-between items-center">
         <h3 class="font-bold text-xl">Modifica rilegatura</h3>
         <form method="dialog"><button><span class="material-symbols-outlined text-xl">close</span></button></form>
@@ -47,9 +53,15 @@
             <div class="attachment--rilegatura flex-1 flex flex-col gap-2 p-4"><span>Immagine Rilegatura</span><button class="update--rilegatura flex-1 border border-slate-200 border-dashed text-slate-500 rounded-md"><span class="material-symbols-outlined text-3xl">add</span><img id="updated--image" class="hidden w-[300px] h-[300px] object-contain p-2" /></button></div>
             <div class="inputs--rilegatura flex-1 flex flex-col gap-2 p-4">
                 <label for="nome_rilegatura">Nome rilegatura</label>
-                <input type="text" name="nome_rilegatura" class="w-full p-2" required/>
+                <input type="text" name="nome_rilegatura" class="w-full p-2" required />
                 <label for="descrizione_rilegatura">Descrizione rilegatura</label>
                 <textarea name="descrizione_rilegatura" class="full resize-none p-2" rows="10" required></textarea>
+                <label for="prezzo_rilegatura">Prezzo rilegatura</label>
+                <input type="number" min="1" step="any" name="prezzo_rilegatura" placeholder="€" />
+                <div class="flex gap-4 items-center py-4">
+                    <label for="angoli" class="flex items-center gap-2">Angoli? <span class="text-[10px] opacity-50">Puoi scegliere se la copertina può essere associata agli angoli</span></label>
+                    <input type="checkbox" value="1" name="angoli" checked>
+                </div>
                 <button type="submit" id="submit--update" class="bg-cyan-800 text-white p-2 rounded-md mt-2 disabled:opacity-25">SALVA</button>
                 <button type="reset" id="reset--update" class="bg-cyan-800 text-white p-2 rounded-md mt-2">CANCELLA</button>
             </div>

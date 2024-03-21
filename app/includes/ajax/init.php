@@ -1,8 +1,8 @@
 <?php
 
 include_once THESIS_DIR . "app/includes/models/rilegature.php";
-include_once THESIS_DIR . "app/includes/models/variants.php";
-include_once THESIS_DIR . "app/includes/models/char-colors.php";
+include_once THESIS_DIR . "app/includes/models/variazioni.php";
+include_once THESIS_DIR . "app/includes/models/colore-caratteri.php";
 
 add_action('wp_ajax_post_rilegature', 'ajax_post_rilegature');
 add_action('wp_ajax_get_rilegature', 'ajax_get_rilegature');
@@ -20,15 +20,14 @@ function ajax_post_rilegature()
 {
     $data = $_POST['data'];
 
-    if (empty($data['nome_rilegatura']) || empty($data['desc_rilegatura']) || empty($data['url_rilegatura']))
-        return wp_send_json_error("Errore: alcuni campi sono vuoti" . var_dump($data), 400);
-
     try {
         $rilegatura = new Rilegatura;
         $query = $rilegatura->create_rilegatura(
             sanitize_text_field($data['nome_rilegatura']),
             sanitize_text_field($data['desc_rilegatura']),
-            sanitize_text_field($data['url_rilegatura'])
+            sanitize_text_field($data['url_rilegatura']),
+            sanitize_text_field($data['prezzo_rilegatura']),
+            sanitize_text_field($data['angoli'])
         );
         wp_send_json_success(json_encode(array("id_query" => $query, "message" => "Inserito correttamente")), 200);
     } catch (Exception $e) {
@@ -74,7 +73,9 @@ function ajax_update_rilegatura()
             $id,
             sanitize_text_field($data['nome_rilegatura']),
             sanitize_text_field($data['desc_rilegatura']),
-            sanitize_text_field($data['url_rilegatura'])
+            sanitize_text_field($data['url_rilegatura']),
+            sanitize_text_field($data['prezzo_rilegatura']),
+            sanitize_text_field($data['angoli'])
         );
         wp_send_json_success(json_encode(array("results" => $query, "message" => "Aggiornato con successo.")), 200);
     } catch (Exception $e) {
@@ -116,7 +117,7 @@ function ajax_delete_variante()
 {
     $data = $_POST['data'];
 
-    $id = $data['id_variazione'];
+    $id = $data['id_variante'];
 
     try {
         $variante = new Variante;

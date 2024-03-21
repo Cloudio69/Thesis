@@ -16,17 +16,18 @@ class ThesisDatabase
             nome_rilegatura VARCHAR(50),
             descrizione_rilegatura TEXT,
             anteprima_rilegatura TEXT,
-            angoli INT DEFAULT 1,
+            prezzo_rilegatura DECIMAL(10,2),
+            angoli INT DEFAULT 0,
             PRIMARY KEY (id_rilegatura)
         ) $charset_collate;
 
-        CREATE TABLE " . $wpdb->prefix . "thesis_variations (
-            id_variazione INT NOT NULL AUTO_INCREMENT,
+        CREATE TABLE " . $wpdb->prefix . "thesis_variazioni (
+            id_variante INT NOT NULL AUTO_INCREMENT,
             id_rilegatura INT,
             codice_colore VARCHAR(50),
-            nome_variazione VARCHAR(50),
-            anteprima_variazione TEXT,
-            PRIMARY KEY (id_variazione),
+            nome_variante VARCHAR(50),
+            anteprima_variante TEXT,
+            PRIMARY KEY (id_variante),
             FOREIGN KEY (id_rilegatura) REFERENCES " . $wpdb->prefix . "thesis_rilegature(id_rilegatura) ON DELETE CASCADE ON UPDATE CASCADE
         ) $charset_collate; 
 
@@ -46,7 +47,7 @@ class ThesisDatabase
             FOREIGN KEY (id_colore_carattere) REFERENCES " . $wpdb->prefix . "thesis_colori_carattere(id_colore_carattere) ON DELETE CASCADE ON UPDATE CASCADE
         ) $charset_collate;
 
-        CREATE TABLE " . $wpdb->prefix . "thesis_bookmarks (
+        CREATE TABLE " . $wpdb->prefix . "thesis_segnalibri (
             id_segnalibro INT NOT NULL AUTO_INCREMENT,
             id_rilegatura INT,
             nome_colore VARCHAR(50),
@@ -54,7 +55,7 @@ class ThesisDatabase
             PRIMARY KEY (id_segnalibro)
         ) $charset_collate;
 
-        CREATE TABLE " . $wpdb->prefix . "thesis_paper_weights (
+        CREATE TABLE " . $wpdb->prefix . "thesis_grammature (
             id_grammatura INT NOT NULL AUTO_INCREMENT,
             id_rilegatura INT,
             nome_grammatura VARCHAR(50),
@@ -62,7 +63,7 @@ class ThesisDatabase
             PRIMARY KEY (id_grammatura)
         ) $charset_collate;
 
-        CREATE TABLE " . $wpdb->prefix . "thesis_corners (
+        CREATE TABLE " . $wpdb->prefix . "thesis_angoli (
             id_angolo INT NOT NULL AUTO_INCREMENT,
             id_rilegatura INT,
             nome_angolo VARCHAR(50),
