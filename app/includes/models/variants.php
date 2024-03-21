@@ -6,17 +6,17 @@ class Variante
     {
         global $wpdb;
         if (!$id) {
-            $query = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "thesis_copertine INNER JOIN " . $wpdb->prefix . "thesis_variations USING(id_copertina)");
+            $query = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "thesis_rilegature INNER JOIN " . $wpdb->prefix . "thesis_variations USING(id_rilegatura)");
             return json_encode($query);
         }
     }
-    public function create_variante($id_copertina, $nome_variante, $codice_colore, $anteprima_variante)
+    public function create_variante($id_rilegatura, $nome_variante, $codice_colore, $anteprima_variante)
     {
         global $wpdb;
 
         try {
             $data = array(
-                'id_copertina' => $id_copertina,
+                'id_rilegatura' => $id_rilegatura,
                 "codice_colore" => $codice_colore,
                 'nome_variazione' => $nome_variante,
                 "anteprima_variazione" => $anteprima_variante

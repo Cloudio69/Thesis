@@ -1,6 +1,6 @@
 const nuovaVariante = document.querySelector("#aggiungi--variante");
 const dialogVariante = document.querySelector("#modal--variants");
-const selectCopertine = document.querySelector("#lista_copertine");
+const selectRilegature = document.querySelector("#lista_rilegature");
 const wrapperVarianti = document.querySelector("#list--varianti");
 const formVariante = document.querySelector("#form--variante");
 
@@ -22,7 +22,7 @@ function creaElementiHTML(oggettiRaggruppati) {
     );
 
     const titolo = document.createElement("h2");
-    titolo.innerHTML = `<span class="opacity-50 font-semibold text-[12px]">Copertina </span> ${gruppo[gruppoCounter].nome_copertina}`;
+    titolo.innerHTML = `<span class="opacity-50 font-semibold text-[12px]">Rilegatura </span> ${gruppo[gruppoCounter].nome_rilegatura}`;
     titolo.classList.add("font-bold", "text-xl", "flex", "px-2", "flex-col");
     divGruppo.appendChild(titolo);
 
@@ -43,10 +43,10 @@ function creaElementiHTML(oggettiRaggruppati) {
         "shadow-md"
       );
 
-      const nomeCopertina = document.createElement("p");
-      nomeCopertina.innerHTML = `<div class='flex flex-col'><span class="opacity-50">NOME VARIANTE</span><span class="font-bold">${oggetto.nome_variazione}</span></div>`;
-      nomeCopertina.classList.add("flex-1");
-      card.appendChild(nomeCopertina);
+      const nomeRilegatura = document.createElement("p");
+      nomeRilegatura.innerHTML = `<div class='flex flex-col'><span class="opacity-50">NOME VARIANTE</span><span class="font-bold">${oggetto.nome_variazione}</span></div>`;
+      nomeRilegatura.classList.add("flex-1");
+      card.appendChild(nomeRilegatura);
 
       const idVariazione = document.createElement("p");
       idVariazione.innerHTML = `<div class='flex flex-col'><span class="opacity-50">COD. COLORE</span><span class="font-bold">${oggetto.codice_colore}</span></div>`;
@@ -142,13 +142,13 @@ const getVarianti = async () => {
       const raggruppato = {};
 
       array.forEach((oggetto) => {
-        const { id_copertina } = oggetto;
+        const { id_rilegatura } = oggetto;
 
-        if (!raggruppato[id_copertina]) {
-          raggruppato[id_copertina] = [];
+        if (!raggruppato[id_rilegatura]) {
+          raggruppato[id_rilegatura] = [];
         }
 
-        raggruppato[id_copertina].push(oggetto);
+        raggruppato[id_rilegatura].push(oggetto);
       });
 
       return raggruppato;
@@ -227,12 +227,12 @@ const showGlobalToast = (response) => {
 };
 
 nuovaVariante.onclick = async () => {
-  selectCopertine.innerHTML = "";
+  selectRilegature.innerHTML = "";
   let options = {
-    action: "get_copertine",
+    action: "get_rilegature",
   };
 
-  let copertine = await jQuery.ajax({
+  let rilegature = await jQuery.ajax({
     dataType: "json",
     method: "GET",
     url: "admin-ajax.php",
@@ -244,20 +244,20 @@ nuovaVariante.onclick = async () => {
     },
   });
 
-  let response = JSON.parse(copertine.data);
+  let response = JSON.parse(rilegature.data);
   let results = JSON.parse(response.results);
 
-  results.forEach((copertina) => {
+  results.forEach((rilegatura) => {
     let option = document.createElement("option");
-    option.value = copertina.id_copertina;
+    option.value = rilegatura.id_rilegatura;
     option.innerHTML =
-      copertina.id_copertina + " | " + copertina.nome_copertina;
+      rilegatura.id_rilegatura + " | " + rilegatura.nome_rilegatura;
 
-    selectCopertine.append(option);
+    selectRilegature.append(option);
   });
 
   if (results.length === 0) {
-    showGlobalToast({ message: "Crea prima una copertina!", success: false });
+    showGlobalToast({ message: "Crea prima una rilegatura!", success: false });
     return;
   }
   dialogVariante.showModal();
@@ -274,7 +274,7 @@ formVariante.onsubmit = (e) => {
   let options = {
     action: "post_variante",
     data: {
-      id_copertina: e.currentTarget.lista_copertine.value,
+      id_rilegatura: e.currentTarget.lista_rilegature.value,
       nome_variante: e.currentTarget.nome_variante.value,
       codice_colore: e.currentTarget.codice_colore.value,
       url_variante: img.src,

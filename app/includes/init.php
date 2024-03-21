@@ -52,12 +52,12 @@ class Thesis
 
         add_submenu_page(
             'thesis',
-            'Copertine',
-            'Copertine',
+            'Rilegature',
+            'Rilegature',
             'manage_options',
-            'thesis-copertine',
+            'thesis-rilegature',
             function () {
-                include_once(THESIS_DIR . 'app/views/admin/copertine.php');
+                include_once(THESIS_DIR . 'app/views/admin/rilegature.php');
             },
             null
         );

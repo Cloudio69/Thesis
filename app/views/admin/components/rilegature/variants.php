@@ -1,4 +1,4 @@
-<div class="thesis--varianti-copertine flex gap-4">
+<div class="thesis--varianti-rilegature flex gap-4">
     <div class="thesis--sidebar flex flex-col gap-4 max-w-64">
         <div class="thesis--info bg-white p-4 rounded-md border border-slate-200">
             <h3 class="text-2xl font-bold flex items-center gap-2"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">info</span><span>Varianti Colore</span></h3>
@@ -19,8 +19,8 @@
         <form id="form--variante" class="flex h-max">
             <div class="attachment--variante flex-1 flex flex-col gap-2 p-4"><span>Immagine variante</span><button class="select--variante flex-1 border border-slate-200 border-dashed text-slate-500 rounded-md"><span class="material-symbols-outlined text-3xl">add</span><img id="selected--image-variante" class="hidden w-[300px] h-[300px] object-contain p-2" /></button></div>
             <div class="inputs--variante flex-1 flex flex-col gap-2 p-4">
-                <label for="id_copertina">ID Copertina</label>
-                <select id="lista_copertine"></select>
+                <label for="id_rilegatura">ID Rilegatura</label>
+                <select id="lista_rilegature"></select>
                 <label for="nome_variante">Nome variante</label>
                 <input type="text" name="nome_variante" class="w-full p-2" required />
                 <label for="codice_colore">Codice variante</label>
@@ -50,4 +50,4 @@
         </form>
     </section>
 </dialog>
-<?php wp_enqueue_script('thesis-varianti', THESIS_URL . "app/assets/js/thesis-copertine-variants.admin.js"); ?>
+<?php wp_enqueue_script('thesis-varianti', THESIS_URL . "app/assets/js/thesis-rilegature-variants.admin.js"); ?>

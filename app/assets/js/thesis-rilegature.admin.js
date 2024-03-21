@@ -1,23 +1,23 @@
-const form = document.querySelector("#form--copertine");
-const formUpdate = document.querySelector("#form--update-copertina");
-const submit = document.querySelector("#submit--copertine");
-const listCopertine = document.querySelector("#list--copertine");
+const form = document.querySelector("#form--rilegature");
+const formUpdate = document.querySelector("#form--update-rilegatura");
+const submit = document.querySelector("#submit--rilegature");
+const listRilegature = document.querySelector("#list--rilegature");
 
 const dialog = document.querySelector("#modal--thesis");
 const dialogUpdate = document.querySelector("#update--thesis");
-const showButton = document.querySelector("#aggiungi--copertina");
+const showButton = document.querySelector("#aggiungi--rilegatura");
 let img = document.querySelector("#selected--image");
 
-const createElementCopertina = (copertina) => {
-  listCopertine.classList.add("grid", "grid-cols-5", "gap-4");
+const createElementRilegatura = (rilegatura) => {
+  listRilegature.classList.add("grid", "grid-cols-5", "gap-4");
 
   let wrapper = document.createElement("div");
 
-  let nomeCopertina = document.createElement("h1");
-  let descrizioneCopertina = document.createElement("p");
-  let anteprimaCopertina = document.createElement("img");
+  let nomeRilegatura = document.createElement("h1");
+  let descrizioneRilegatura = document.createElement("p");
+  let anteprimaRilegatura = document.createElement("img");
 
-  let optionsCopertina = document.createElement("button");
+  let optionsRilegatura = document.createElement("button");
   let optionsButton = document.createElement("span");
   optionsButton.classList.add(
     "material-symbols-outlined",
@@ -31,9 +31,9 @@ const createElementCopertina = (copertina) => {
 
   optionsButton.innerHTML = "more_vert";
 
-  optionsCopertina.appendChild(optionsButton);
+  optionsRilegatura.appendChild(optionsButton);
 
-  optionsCopertina.classList.add(
+  optionsRilegatura.classList.add(
     "absolute",
     "top-0",
     "right-0",
@@ -41,22 +41,22 @@ const createElementCopertina = (copertina) => {
     "option--list"
   );
 
-  nomeCopertina.classList.add("text-xl", "font-bold", "overflow-anywhere", "text-center");
+  nomeRilegatura.classList.add("text-xl", "font-bold", "overflow-anywhere", "text-center");
 
-  nomeCopertina.innerHTML = copertina.nome_copertina;
-  descrizioneCopertina.innerHTML = copertina.descrizione_copertina;
-  anteprimaCopertina.src = copertina.anteprima_copertina;
-  optionsButton.dataset.id = copertina.id_copertina;
+  nomeRilegatura.innerHTML = rilegatura.nome_rilegatura;
+  descrizioneRilegatura.innerHTML = rilegatura.descrizione_rilegatura;
+  anteprimaRilegatura.src = rilegatura.anteprima_rilegatura;
+  optionsButton.dataset.id = rilegatura.id_rilegatura;
 
   optionsButton.onclick = (e) => showOptions(e);
 
-  anteprimaCopertina.classList.add("w-[300px]", "h-[300px]", "object-contain");
+  anteprimaRilegatura.classList.add("w-[300px]", "h-[300px]", "object-contain");
 
   wrapper.append(
-    anteprimaCopertina,
-    nomeCopertina,
-    descrizioneCopertina,
-    optionsCopertina
+    anteprimaRilegatura,
+    nomeRilegatura,
+    descrizioneRilegatura,
+    optionsRilegatura
   );
 
   wrapper.classList.add(
@@ -72,27 +72,27 @@ const createElementCopertina = (copertina) => {
     "gap-2"
   );
 
-  listCopertine.appendChild(wrapper);
+  listRilegature.appendChild(wrapper);
 };
 
-const showCopertine = (results) => {
-  const listCopertine = document.querySelector("#list--copertine");
+const showRilegature = (results) => {
+  const listRilegature = document.querySelector("#list--rilegature");
 
   if (results.length === 0) {
-    listCopertine.removeAttribute("class");
-    listCopertine.innerHTML = "Non ci sono copertine.";
+    listRilegature.removeAttribute("class");
+    listRilegature.innerHTML = "Non ci sono rilegature.";
   } else {
-    listCopertine.innerHTML = "";
-    listCopertine.removeAttribute("class");
-    results.forEach((copertina) => {
-      createElementCopertina(copertina);
+    listRilegature.innerHTML = "";
+    listRilegature.removeAttribute("class");
+    results.forEach((rilegatura) => {
+      createElementRilegatura(rilegatura);
     });
   }
 };
 
-const getCopertine = () => {
+const getRilegature = () => {
   let options = {
-    action: "get_copertine",
+    action: "get_rilegature",
   };
 
   jQuery.ajax({
@@ -103,7 +103,7 @@ const getCopertine = () => {
     success: (response) => {
       let parseData = JSON.parse(response.data);
       let results = JSON.parse(parseData.results);
-      showCopertine(results);
+      showRilegature(results);
     },
   });
 };
@@ -116,8 +116,8 @@ const showOptions = (e) => {
   const id = e.currentTarget.dataset.id;
 
   let options = {
-    action: "delete_copertina",
-    data: { id_copertina: id },
+    action: "delete_rilegatura",
+    data: { id_rilegatura: id },
   };
 
   let optionList = document.createElement("ul");
@@ -150,7 +150,7 @@ const showOptions = (e) => {
       url: "admin-ajax.php",
       data: options,
       success: () => {
-        getCopertine();
+        getRilegature();
         getVarianti();
       },
     });
@@ -167,12 +167,12 @@ const showOptions = (e) => {
       const img = document.querySelector("#updated--image");
 
       let options = {
-        action: "update_copertina",
+        action: "update_rilegatura",
         data: {
-          id_copertina: id,
-          nome_copertina: e.currentTarget.nome_copertina.value,
-          desc_copertina: e.currentTarget.descrizione_copertina.value,
-          url_copertina: img.src,
+          id_rilegatura: id,
+          nome_rilegatura: e.currentTarget.nome_rilegatura.value,
+          desc_rilegatura: e.currentTarget.descrizione_rilegatura.value,
+          url_rilegatura: img.src,
         },
       };
 
@@ -182,7 +182,7 @@ const showOptions = (e) => {
         url: "admin-ajax.php",
         data: options,
         success: (response) => {
-          getCopertine();
+          getRilegature();
           getVarianti();
           showToast(response);
         },
@@ -199,7 +199,7 @@ showButton.addEventListener("click", () => {
   dialog.showModal();
 });
 
-let mediaUpdate = document.querySelector(".update--copertina");
+let mediaUpdate = document.querySelector(".update--rilegatura");
 
 mediaUpdate.onclick = (e) => {
   e.preventDefault();
@@ -232,12 +232,12 @@ mediaUpdate.onclick = (e) => {
   });
 };
 
-let mediaCopertina = document.querySelector(".select--copertina");
+let mediaRilegatura = document.querySelector(".select--rilegatura");
 
-mediaCopertina.onclick = (e) => {
+mediaRilegatura.onclick = (e) => {
   e.preventDefault();
 
-  mediaCopertina.querySelector("span").classList.add("hidden");
+  mediaRilegatura.querySelector("span").classList.add("hidden");
   dialog.close();
   let options = {
     title: "Seleziona un file multimediale",
@@ -263,15 +263,15 @@ mediaCopertina.onclick = (e) => {
   });
 };
 
-let resetForm = document.querySelector("#reset--copertine");
+let resetForm = document.querySelector("#reset--rilegature");
 
 resetForm.onclick = () => {
   img.removeAttribute("src");
   img.classList.add("hidden");
-  mediaCopertina.querySelector("span").classList.remove("hidden");
+  mediaRilegatura.querySelector("span").classList.remove("hidden");
 };
 
-let resetUpdate = document.querySelector("#reset--copertine");
+let resetUpdate = document.querySelector("#reset--rilegature");
 
 resetUpdate.onclick = () => {
   img.removeAttribute("src");
@@ -284,11 +284,11 @@ form.onsubmit = (e) => {
   submit.disabled = "true";
 
   let options = {
-    action: "post_copertine",
+    action: "post_rilegature",
     data: {
-      nome_copertina: e.currentTarget.nome_copertina.value,
-      desc_copertina: e.currentTarget.descrizione_copertina.value,
-      url_copertina: img.src,
+      nome_rilegatura: e.currentTarget.nome_rilegatura.value,
+      desc_rilegatura: e.currentTarget.descrizione_rilegatura.value,
+      url_rilegatura: img.src,
     },
   };
 
@@ -300,7 +300,7 @@ form.onsubmit = (e) => {
     success: (response) => {
       submit.removeAttribute("disabled");
       dialog.close();
-      getCopertine();
+      getRilegature();
       showToast(response);
     },
   });
@@ -340,4 +340,4 @@ const showToast = (response) => {
   }, 5000);
 };
 
-getCopertine();
+getRilegature();

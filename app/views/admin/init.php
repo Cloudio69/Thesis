@@ -31,11 +31,11 @@
                         <a href="<?php echo menu_page_url('thesis-prodotti', false) ?>#angoli" class="uppercase font-bold flex items-center gap-4 p-4 transition-all hover:bg-slate-500 hover:text-white hover:shadow-inner rounded-md"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">pageless</span><span>Angoli</span></a>
                     </div>
                 </div>
-                <div class="thesis--copertine w-full bg-white p-4 rounded-md border border-slate-200">
-                    <h3 class="text-base font-bold mb-2">Copertine</h3>
+                <div class="thesis--rilegature w-full bg-white p-4 rounded-md border border-slate-200">
+                    <h3 class="text-base font-bold mb-2">Rilegature</h3>
                     <div class="thesis--list flex items-center w-fit">
-                        <a href="<?php echo menu_page_url('thesis-copertine', false) ?>#grammature" class="uppercase font-bold flex items-center gap-4 p-4 transition-all hover:bg-slate-500 hover:text-white hover:shadow-inner rounded-md"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">palette</span><span>Tipologie</span></a>
-                        <a href="<?php echo menu_page_url('thesis-copertine', false) ?>#segnalibri" class="uppercase font-bold flex items-center gap-4 p-4 transition-all hover:bg-slate-500 hover:text-white hover:shadow-inner rounded-md"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">border_color</span><span>Colori carattere</span></a>
+                        <a href="<?php echo menu_page_url('thesis-rilegature', false) ?>#grammature" class="uppercase font-bold flex items-center gap-4 p-4 transition-all hover:bg-slate-500 hover:text-white hover:shadow-inner rounded-md"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">palette</span><span>Tipologie</span></a>
+                        <a href="<?php echo menu_page_url('thesis-rilegature', false) ?>#segnalibri" class="uppercase font-bold flex items-center gap-4 p-4 transition-all hover:bg-slate-500 hover:text-white hover:shadow-inner rounded-md"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">border_color</span><span>Colori carattere</span></a>
                     </div>
                 </div>
             </div>
