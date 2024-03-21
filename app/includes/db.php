@@ -10,8 +10,8 @@ class ThesisDatabase
         $charset_collate = $wpdb->get_charset_collate();
 
 
-        $sql = 
-        "CREATE TABLE " . $wpdb->prefix . "thesis_copertine (
+        $sql =
+            "CREATE TABLE " . $wpdb->prefix . "thesis_copertine (
             id_copertina INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
             nome_copertina VARCHAR(50),
             descrizione_copertina TEXT,
@@ -24,15 +24,21 @@ class ThesisDatabase
             codice_colore VARCHAR(50),
             nome_variazione VARCHAR(50),
             anteprima_variazione TEXT,
-            FOREIGN KEY (id_copertina) REFERENCES ". $wpdb->prefix ."thesis_copertine(id_copertina) ON DELETE CASCADE ON UPDATE CASCADE
-        ) $charset_collate;  
+            FOREIGN KEY (id_copertina) REFERENCES " . $wpdb->prefix . "thesis_copertine(id_copertina) ON DELETE CASCADE ON UPDATE CASCADE
+        ) $charset_collate; 
 
-        CREATE TABLE " . $wpdb->prefix . "thesis_variations_chars (
+        CREATE TABLE " . $wpdb->prefix . "thesis_colori_carattere (
             id_colore_carattere INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-            id_variazione INT,
             nome_colore VARCHAR(50),
-            hex_colore VARCHAR(9),
-            FOREIGN KEY (id_variazione) REFERENCES ". $wpdb->prefix ."thesis_variations(id_variazione) ON DELETE CASCADE ON UPDATE CASCADE
+            hex_colore VARCHAR(9)
+        ) $charset_collate;
+
+        CREATE TABLE " . $wpdb->prefix . "thesis_color_assoc (
+            id_associazione INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+            id_copertina INT,
+            id_colore_carattere INT,
+            FOREIGN KEY (id_copertina) REFERENCES " . $wpdb->prefix . "thesis_copertine(id_copertina) ON DELETE CASCADE ON UPDATE CASCADE,
+            FOREIGN KEY (id_colore_carattere) REFERENCES " . $wpdb->prefix . "thesis_colori_carattere(id_colore_carattere) ON DELETE CASCADE ON UPDATE CASCADE
         ) $charset_collate;
 
         CREATE TABLE " . $wpdb->prefix . "thesis_bookmarks (
@@ -40,7 +46,7 @@ class ThesisDatabase
             id_copertina INT,
             nome_colore VARCHAR(50),
             anteprima_segnalibro TEXT,
-            FOREIGN KEY (id_copertina) REFERENCES ". $wpdb->prefix ."thesis_copertine(id_copertina) ON DELETE CASCADE ON UPDATE CASCADE
+            FOREIGN KEY (id_copertina) REFERENCES " . $wpdb->prefix . "thesis_copertine(id_copertina) ON DELETE CASCADE ON UPDATE CASCADE
         ) $charset_collate;
 
         CREATE TABLE " . $wpdb->prefix . "thesis_paper_weights (
@@ -48,7 +54,7 @@ class ThesisDatabase
             id_copertina INT,
             nome_grammatura VARCHAR(50),
             formato_grammatura VARCHAR(3),
-            FOREIGN KEY (id_copertina) REFERENCES ". $wpdb->prefix ."thesis_copertine(id_copertina) ON DELETE CASCADE ON UPDATE CASCADE
+            FOREIGN KEY (id_copertina) REFERENCES " . $wpdb->prefix . "thesis_copertine(id_copertina) ON DELETE CASCADE ON UPDATE CASCADE
         ) $charset_collate;
 
         CREATE TABLE " . $wpdb->prefix . "thesis_corners (
@@ -56,7 +62,7 @@ class ThesisDatabase
             id_copertina INT,
             nome_angolo VARCHAR(50),
             hex_colore VARCHAR(9),
-            FOREIGN KEY (id_copertina) REFERENCES ". $wpdb->prefix ."thesis_copertine(id_copertina) ON DELETE CASCADE ON UPDATE CASCADE
+            FOREIGN KEY (id_copertina) REFERENCES " . $wpdb->prefix . "thesis_copertine(id_copertina) ON DELETE CASCADE ON UPDATE CASCADE
         ) $charset_collate;
         
         ";
