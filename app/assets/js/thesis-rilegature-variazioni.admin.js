@@ -22,7 +22,7 @@ function creaElementiHTML(oggettiRaggruppati) {
     );
 
     const titolo = document.createElement("h2");
-    titolo.innerHTML = `<span class="opacity-50 font-semibold text-[12px]">Rilegatura </span> ${gruppo[gruppoCounter].nome_rilegatura}`;
+    titolo.innerHTML = `<span class="opacity-50 font-semibold text-[12px]">Rilegatura | ID: <code>${gruppo[gruppoCounter].id_rilegatura}</code></span> ${gruppo[gruppoCounter].nome_rilegatura}`;
     titolo.classList.add("font-bold", "text-xl", "flex", "px-2", "flex-col");
     divGruppo.appendChild(titolo);
 

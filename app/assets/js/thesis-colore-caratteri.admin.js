@@ -33,7 +33,8 @@ const getColori = async () => {
         "flex-col",
         "items-center",
         "justify-between",
-        "overflow-hidden"
+        "overflow-hidden",
+        "relative"
       );
       idListaColori.appendChild(wrapperColore);
 
@@ -47,8 +48,22 @@ const getColori = async () => {
       hexColore.classList.add("shadow-md", "w-full", "h-1")
 
       wrapperColore.appendChild(hexColore)
+
+      let deleteColore = document.createElement("span")
+      deleteColore.classList.add("material-symbols-outlined", "absolute", "top-0", "right-0", "text-sm", "px-0.5", "cursor-pointer");
+      deleteColore.textContent = "close"
+      deleteColore.dataset.id = colore.id_colore_carattere
+
+      deleteColore.onclick = (e) => cancellaColore(e)
+
+      wrapperColore.appendChild(deleteColore)
+
     });
   }
 };
+
+const cancellaColore = (e) => {
+    console.log(e.currentTarget.dataset.id)
+}
 
 getColori();
