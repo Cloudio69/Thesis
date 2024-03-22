@@ -13,8 +13,12 @@ const createElementRilegatura = (rilegatura) => {
 
   let wrapper = document.createElement("div");
 
+  let detailsRilegatura = document.createElement("div");
+
   let nomeRilegatura = document.createElement("h1");
   let descrizioneRilegatura = document.createElement("p");
+  let prezzoRilegatura = document.createElement("b");
+
   let anteprimaRilegatura = document.createElement("img");
 
   let optionsRilegatura = document.createElement("button");
@@ -26,6 +30,7 @@ const createElementRilegatura = (rilegatura) => {
     "text-black",
     "text-md",
     "p-1",
+    "border",
     "shadow-md"
   );
 
@@ -50,6 +55,7 @@ const createElementRilegatura = (rilegatura) => {
 
   nomeRilegatura.innerHTML = rilegatura.nome_rilegatura;
   descrizioneRilegatura.innerHTML = rilegatura.descrizione_rilegatura;
+  prezzoRilegatura.innerHTML = "€ " + rilegatura.prezzo_rilegatura;
   anteprimaRilegatura.src = rilegatura.anteprima_rilegatura;
   optionsButton.dataset.id = rilegatura.id_rilegatura;
 
@@ -57,10 +63,33 @@ const createElementRilegatura = (rilegatura) => {
 
   anteprimaRilegatura.classList.add("w-[300px]", "h-[300px]", "object-contain");
 
+  detailsRilegatura.append(nomeRilegatura, descrizioneRilegatura);
+
+  detailsRilegatura.classList.add(
+    "flex",
+    "flex-col",
+    "items-center",
+    "w-full",
+    "gap-2"
+  );
+
+  prezzoRilegatura.classList.add(
+    "absolute",
+    "top-0",
+    "left-0",
+    "m-4",
+    "p-2",
+    "bg-white",
+    "border",
+    "shadow-md",
+    "text-black",
+    "rounded-md"
+  );
+
   wrapper.append(
     anteprimaRilegatura,
-    nomeRilegatura,
-    descrizioneRilegatura,
+    detailsRilegatura,
+    prezzoRilegatura,
     optionsRilegatura
   );
 
@@ -74,7 +103,7 @@ const createElementRilegatura = (rilegatura) => {
     "shadow-sm",
     "items-center",
     "relative",
-    "gap-2"
+    "gap-2",
   );
 
   listRilegature.appendChild(wrapper);
