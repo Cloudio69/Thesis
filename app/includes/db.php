@@ -49,7 +49,6 @@ class ThesisDatabase
 
         CREATE TABLE " . $wpdb->prefix . "thesis_segnalibri (
             id_segnalibro INT NOT NULL AUTO_INCREMENT,
-            id_rilegatura INT,
             nome_colore VARCHAR(50),
             anteprima_segnalibro TEXT,
             PRIMARY KEY (id_segnalibro)
@@ -57,7 +56,6 @@ class ThesisDatabase
 
         CREATE TABLE " . $wpdb->prefix . "thesis_grammature (
             id_grammatura INT NOT NULL AUTO_INCREMENT,
-            id_rilegatura INT,
             nome_grammatura VARCHAR(50),
             formato_grammatura VARCHAR(3),
             PRIMARY KEY (id_grammatura)
@@ -65,9 +63,8 @@ class ThesisDatabase
 
         CREATE TABLE " . $wpdb->prefix . "thesis_angoli (
             id_angolo INT NOT NULL AUTO_INCREMENT,
-            id_rilegatura INT,
             nome_angolo VARCHAR(50),
-            hex_colore VARCHAR(9),
+            anteprima_angolo TEXT,
             PRIMARY KEY (id_angolo)
         ) $charset_collate;
         
