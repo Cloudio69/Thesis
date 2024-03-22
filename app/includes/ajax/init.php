@@ -18,6 +18,9 @@ add_action('wp_ajax_get_char_colors', 'ajax_get_char_colors');
 add_action('wp_ajax_post_char_colors', 'ajax_post_char_colors');
 add_action('wp_ajax_delete_char_colors', 'ajax_delete_char_colors');
 
+add_action('wp_ajax_get_char_assoc', 'ajax_get_char_assoc');
+add_action('wp_ajax_delete_char_assoc', "ajax_delete_char_assoc");
+
 function ajax_post_rilegature()
 {
     $data = $_POST['data'];
@@ -186,6 +189,37 @@ function ajax_delete_char_colors()
         $charcolors = new CharColors;
         $query = $charcolors->delete_char_colors(
             $data['id_colore_carattere']
+        );
+        wp_send_json_success(json_encode(array("results" => $query, "message" => "Query effettuata.")), 200);
+    } catch (Exception $e) {
+        wp_send_json_error("Errore nella richiesta: {$e}", 500);
+    }
+}
+
+
+function ajax_get_char_assoc()
+{
+    try {
+        $charcolors = new CharColors;
+        $query = $charcolors->get_char_assoc();
+        wp_send_json_success(json_encode(array("results" => $query, "message" => "Query effettuata.")), 200);
+    } catch (Exception $e) {
+        wp_send_json_error("Errore nella richiesta: {$e}", 500);
+    }
+}
+
+function ajax_post_char_assoc()
+{
+}
+
+function ajax_delete_char_assoc()
+{
+    $data = $_POST['data'];
+
+    try {
+        $charcolors = new CharColors;
+        $query = $charcolors->delete_char_assoc(
+            $data['id_associazione']
         );
         wp_send_json_success(json_encode(array("results" => $query, "message" => "Query effettuata.")), 200);
     } catch (Exception $e) {

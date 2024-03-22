@@ -49,4 +49,34 @@ class CharColors
             return json_encode(array("errore" => $e));
         }
     }
+
+    public function get_char_assoc($id = null)
+    {
+        global $wpdb;
+
+        if (!$id) {
+            $query = $wpdb->get_results(
+                "SELECT r.id_rilegatura, r.nome_rilegatura, tcc.id_colore_carattere, tcc.nome_colore, tcc.hex_colore, cca.id_associazione
+                FROM " . $wpdb->prefix . "thesis_rilegature r
+                JOIN " . $wpdb->prefix . "thesis_color_assoc cca ON r.id_rilegatura = cca.id_rilegatura
+                JOIN " . $wpdb->prefix . "thesis_colori_carattere tcc ON cca.id_colore_carattere = tcc.id_colore_carattere;"
+            );
+            return json_encode($query);
+        }
+    }
+
+    public function delete_char_assoc($id){
+        global $wpdb;
+
+        try {
+            $data = array('id_associazione' => $id);
+            $format = array("%d");
+
+            $wpdb->delete($wpdb->prefix . 'thesis_color_assoc', $data, $format);
+
+            return json_encode($data);
+        } catch (Exception $e) {
+            return json_encode(array("errore" => $e));
+        }
+    }
 }
