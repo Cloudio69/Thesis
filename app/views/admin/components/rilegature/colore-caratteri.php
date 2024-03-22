@@ -43,5 +43,24 @@
         </form>
     </section>
 </dialog>
+<dialog id="assoc--colore" class="min-w-[30vw] p-4 rounded-md">
+    <section class="modal--heading flex justify-between items-center">
+        <h3 class="font-bold text-xl">Associazione colore</h3>
+        <form method="dialog"><button><span class="material-symbols-outlined text-xl">close</span></button></form>
+    </section>
+    <section class="modal--body h-full">
+        <form id="form--assoc-colore" class="flex h-max">
+            <div class="inputs--rilegatura flex-1 flex flex-col gap-2 p-4">
+                <select id="select--rilegature-colori" class="w-full min-w-full !p-3 flex-1"></select>
+                <div id="color--list" class="grid grid-cols-3 gap-4 py-4">
+                </div>
+                <div class="flex gap-1">
+                    <button type="submit" id="submit--associazione" class="bg-cyan-800 text-white p-2 rounded-md mt-2 disabled:opacity-25 flex-1">SALVA</button>
+                    <button type="reset" id="reset--associazione" class="bg-cyan-800 text-white p-2 rounded-md mt-2 flex-1">CANCELLA</button>
+                </div>
+            </div>
+        </form>
+    </section>
+</dialog>
 
 <?php wp_enqueue_script('thesis-colore-caratteri', THESIS_URL . "app/assets/js/thesis-colore-caratteri.admin.js");

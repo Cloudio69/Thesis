@@ -1,6 +1,8 @@
 const idListaColori = document.querySelector("#lista--colori");
 const idAssegnati = document.querySelector("#lista--colori-assegnati");
+const associaColore = document.querySelector("#associa--colore");
 const dialogColore = document.querySelector("#crea--colore");
+const dialogAssoc = document.querySelector("#assoc--colore");
 const buttonCreaColore = document.querySelector("#aggiungi--colore");
 const formCreaColore = document.querySelector("#form--crea-colore");
 const coloreScelto = document.querySelector("#colore--scelto");
@@ -108,6 +110,8 @@ formCreaColore.hex_colore.oninput = (e) => {
 formCreaColore.onsubmit = async (e) => {
   e.preventDefault();
 
+  document.querySelector("#submit--colore").disabled = "true"
+
   const options = {
     action: "post_char_colors",
     data: {
@@ -122,6 +126,7 @@ formCreaColore.onsubmit = async (e) => {
     url: "admin-ajax.php",
     data: options,
     success: (response) => {
+      document.querySelector("#submit--colore").removeAttribute("disabled")
       dialogColore.close();
       getColori();
       getColoriAssegnati();
@@ -155,8 +160,6 @@ const getColoriAssegnati = async () => {
 
   let response = JSON.parse(colori.data);
   let results = JSON.parse(response.results);
-
-  console.log(results);
 
   const raggruppaPerId = (array) => {
     const raggruppato = {};
@@ -252,6 +255,104 @@ const creaAssocHTML = (oggetti) => {
 
     idAssegnati.appendChild(divGruppo);
   }
+};
+
+associaColore.onclick = async () => {
+  const formAssociazioni = associaColore.querySelector("#form--assoc-colore");
+  const colorList = document.querySelector("#color--list");
+  const rilegatureList = document.querySelector("#select--rilegature-colori");
+
+  const options = {
+    action: "get_char_colors",
+  };
+
+  let colori = await jQuery.ajax({
+    dataType: "json",
+    method: "GET",
+    url: "admin-ajax.php",
+    data: options,
+    success: (response) => {
+      colorList.innerHTML = "";
+      let parseData = JSON.parse(response.data);
+      let results = JSON.parse(parseData.results);
+      return results;
+    },
+  });
+
+  let response = JSON.parse(colori.data);
+  let results = JSON.parse(response.results);
+
+  dialogAssoc.showModal();
+
+  aggiungiListaRilegature();
+
+  results.forEach((colore) => {
+    let wrapperColore = document.createElement("label");
+    wrapperColore.setAttribute("for", "colore-" + colore.id_colore_carattere);
+    wrapperColore.classList.add(
+      "border",
+      "rounded-md",
+      "flex",
+      "flex-col",
+      "items-center",
+      "justify-between",
+      "overflow-hidden",
+      "relative"
+    );
+    colorList.appendChild(wrapperColore);
+
+    let nomeColore = document.createElement("h3");
+    nomeColore.classList.add("p-4", "text-center");
+    nomeColore.innerHTML = `${colore.nome_colore}<br><span class='font-bold uppercase'>${colore.hex_colore}</span>`;
+    wrapperColore.appendChild(nomeColore);
+
+    let hexColore = document.createElement("span");
+    hexColore.style.background = colore.hex_colore;
+    hexColore.classList.add("shadow-md", "w-full", "h-1");
+
+    wrapperColore.appendChild(hexColore);
+
+    let checkboxColore = document.createElement("input");
+    checkboxColore.classList.add("absolute", "top-0", "right-0", "!p-2", "!m-1");
+    checkboxColore.type = "checkbox";
+    checkboxColore.value = colore.id_colore_carattere;
+    checkboxColore.name = "colore-" + colore.id_colore_carattere;
+    checkboxColore.id = "colore-" + colore.id_colore_carattere;
+
+    wrapperColore.appendChild(checkboxColore);
+  });
+};
+
+const aggiungiListaRilegature = async () => {
+  const selectRilegature = document.querySelector("#select--rilegature-colori");
+
+  let options = {
+    action: "get_rilegature",
+  };
+
+  let rilegature = await jQuery.ajax({
+    dataType: "json",
+    method: "GET",
+    url: "admin-ajax.php",
+    data: options,
+    success: (response) => {
+      let parseData = JSON.parse(response.data);
+      let results = JSON.parse(parseData.results);
+      return results;
+    },
+  });
+
+  let response = JSON.parse(rilegature.data);
+  let results = JSON.parse(response.results);
+
+  results.forEach((rilegatura) => {
+    let option = document.createElement("option");
+    option.value = rilegatura.id_rilegatura;
+    option.innerHTML =
+      rilegatura.id_rilegatura + " | " + rilegatura.nome_rilegatura;
+
+    selectRilegature.append(option);
+  });
 };
 
 getColori();
