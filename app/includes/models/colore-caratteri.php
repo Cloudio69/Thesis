@@ -65,7 +65,8 @@ class CharColors
         }
     }
 
-    public function delete_char_assoc($id){
+    public function delete_char_assoc($id)
+    {
         global $wpdb;
 
         try {
@@ -75,6 +76,26 @@ class CharColors
             $wpdb->delete($wpdb->prefix . 'thesis_color_assoc', $data, $format);
 
             return json_encode($data);
+        } catch (Exception $e) {
+            return json_encode(array("errore" => $e));
+        }
+    }
+
+    public function post_char_assoc($id_rilegatura, $id_colore_carattere)
+    {
+        global $wpdb;
+
+        try {
+            $data = array(
+                'id_rilegatura' => $id_rilegatura,
+                "id_colore_carattere" => $id_colore_carattere
+            );
+
+            $format = array("%d", "%d");
+
+            $wpdb->insert($wpdb->prefix . 'thesis_color_assoc', $data, $format);
+
+            return json_encode(array($wpdb->insert_id, $data));
         } catch (Exception $e) {
             return json_encode(array("errore" => $e));
         }

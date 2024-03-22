@@ -5,6 +5,7 @@ const dialogColore = document.querySelector("#crea--colore");
 const dialogAssoc = document.querySelector("#assoc--colore");
 const buttonCreaColore = document.querySelector("#aggiungi--colore");
 const formCreaColore = document.querySelector("#form--crea-colore");
+const formAssociazioni = document.querySelector("#form--assoc-colore");
 const coloreScelto = document.querySelector("#colore--scelto");
 
 const getColori = async () => {
@@ -110,7 +111,7 @@ formCreaColore.hex_colore.oninput = (e) => {
 formCreaColore.onsubmit = async (e) => {
   e.preventDefault();
 
-  document.querySelector("#submit--colore").disabled = "true"
+  document.querySelector("#submit--colore").disabled = "true";
 
   const options = {
     action: "post_char_colors",
@@ -126,7 +127,7 @@ formCreaColore.onsubmit = async (e) => {
     url: "admin-ajax.php",
     data: options,
     success: (response) => {
-      document.querySelector("#submit--colore").removeAttribute("disabled")
+      document.querySelector("#submit--colore").removeAttribute("disabled");
       dialogColore.close();
       getColori();
       getColoriAssegnati();
@@ -211,6 +212,7 @@ const getColoriAssegnati = async () => {
 };
 
 const creaAssocHTML = (oggetti) => {
+  idAssegnati.innerHTML = ""
   idAssegnati.classList.add(
     "flex",
     "flex-col",
@@ -218,8 +220,8 @@ const creaAssocHTML = (oggetti) => {
     "overflow-auto",
     "max-h-[30vh]"
   );
+  let gruppoCounter = 0;
   for (const id in oggetti) {
-    let gruppoCounter = 0;
     const gruppo = oggetti[id];
 
     console.log(gruppo);
@@ -247,7 +249,7 @@ const creaAssocHTML = (oggetti) => {
 
     gruppo.forEach((oggetto) => {
       const coloreAssociato = document.createElement("p");
-      coloreAssociato.innerHTML = `<div class="border rounded-md flex flex-col items-center justify-between overflow-hidden relative"><h3 class="p-4 text-center">Rosso<br><span class="font-bold">${oggetto.hex_colore}</span></h3><span class="shadow-md w-full h-1" style="background-color: ${oggetto.hex_colore};"></span><span class="delete-assoc material-symbols-outlined absolute top-0 right-0 text-sm px-0.5 cursor-pointer" data-id="${oggetto.id_associazione}">close</span></div>`;
+      coloreAssociato.innerHTML = `<div class="border rounded-md flex flex-col items-center justify-between overflow-hidden relative"><h3 class="p-4 text-center">${oggetto.nome_colore}<br><span class="font-bold">${oggetto.hex_colore}</span></h3><span class="shadow-md w-full h-1" style="background-color: ${oggetto.hex_colore};"></span><span class="delete-assoc material-symbols-outlined absolute top-0 right-0 text-sm px-0.5 cursor-pointer" data-id="${oggetto.id_associazione}">close</span></div>`;
       coloreAssociato.classList.add("flex-1");
 
       divList.appendChild(coloreAssociato);
@@ -258,9 +260,7 @@ const creaAssocHTML = (oggetti) => {
 };
 
 associaColore.onclick = async () => {
-  const formAssociazioni = associaColore.querySelector("#form--assoc-colore");
   const colorList = document.querySelector("#color--list");
-  const rilegatureList = document.querySelector("#select--rilegature-colori");
 
   const options = {
     action: "get_char_colors",
@@ -313,7 +313,13 @@ associaColore.onclick = async () => {
     wrapperColore.appendChild(hexColore);
 
     let checkboxColore = document.createElement("input");
-    checkboxColore.classList.add("absolute", "top-0", "right-0", "!p-2", "!m-1");
+    checkboxColore.classList.add(
+      "absolute",
+      "top-0",
+      "right-0",
+      "!p-2",
+      "!m-1"
+    );
     checkboxColore.type = "checkbox";
     checkboxColore.value = colore.id_colore_carattere;
     checkboxColore.name = "colore-" + colore.id_colore_carattere;
@@ -336,6 +342,7 @@ const aggiungiListaRilegature = async () => {
     url: "admin-ajax.php",
     data: options,
     success: (response) => {
+      selectRilegature.innerHTML = "";
       let parseData = JSON.parse(response.data);
       let results = JSON.parse(parseData.results);
       return results;
@@ -352,6 +359,46 @@ const aggiungiListaRilegature = async () => {
       rilegatura.id_rilegatura + " | " + rilegatura.nome_rilegatura;
 
     selectRilegature.append(option);
+  });
+};
+
+formAssociazioni.onsubmit = (e) => {
+  e.preventDefault();
+
+  let submit = formAssociazioni.querySelector("#submit--associazione");
+  submit.disabled = "true";
+
+  let idRilegatura = e.currentTarget.select_colore.value;
+
+  let arr = [];
+  formAssociazioni
+    .querySelectorAll("input[type='checkbox']")
+    .forEach((checkbox) => {
+      arr = [...arr, checkbox.checked ? checkbox.value : ""];
+    });
+
+  let idsColori = arr.filter((id) => id !== "");
+
+  idsColori.forEach((id) => {
+    const data = { id_rilegatura: idRilegatura, id_colore_carattere: id };
+
+    const options = {
+      action: "post_color_assoc",
+      data: data,
+    };
+
+    jQuery.ajax({
+      dataType: "json",
+      method: "POST",
+      url: "admin-ajax.php",
+      data: options,
+      success: (response) => {
+        submit.removeAttribute("disabled")
+        dialogAssoc.close();
+        getColoriAssegnati();
+        showToast(response)
+      },
+    });
   });
 };
 

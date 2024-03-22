@@ -51,7 +51,7 @@
     <section class="modal--body h-full">
         <form id="form--assoc-colore" class="flex h-max">
             <div class="inputs--rilegatura flex-1 flex flex-col gap-2 p-4">
-                <select id="select--rilegature-colori" class="w-full min-w-full !p-3 flex-1"></select>
+                <select id="select--rilegature-colori" class="w-full min-w-full !p-3 flex-1" name="select_colore"></select>
                 <div id="color--list" class="grid grid-cols-3 gap-4 py-4">
                 </div>
                 <div class="flex gap-1">
