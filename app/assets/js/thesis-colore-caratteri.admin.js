@@ -212,7 +212,7 @@ const getColoriAssegnati = async () => {
 };
 
 const creaAssocHTML = (oggetti) => {
-  idAssegnati.innerHTML = ""
+  idAssegnati.innerHTML = "";
   idAssegnati.classList.add(
     "flex",
     "flex-col",
@@ -282,8 +282,6 @@ associaColore.onclick = async () => {
   let response = JSON.parse(colori.data);
   let results = JSON.parse(response.results);
 
-  dialogAssoc.showModal();
-
   aggiungiListaRilegature();
 
   results.forEach((colore) => {
@@ -352,14 +350,20 @@ const aggiungiListaRilegature = async () => {
   let response = JSON.parse(rilegature.data);
   let results = JSON.parse(response.results);
 
-  results.forEach((rilegatura) => {
-    let option = document.createElement("option");
-    option.value = rilegatura.id_rilegatura;
-    option.innerHTML =
-      rilegatura.id_rilegatura + " | " + rilegatura.nome_rilegatura;
+  if (results.length === 0) {
+    showGlobalToast({ message: "Crea prima una rilegatura!", success: false });
+    return;
+  } else {
+    dialogAssoc.showModal();
+    results.forEach((rilegatura) => {
+      let option = document.createElement("option");
+      option.value = rilegatura.id_rilegatura;
+      option.innerHTML =
+        rilegatura.id_rilegatura + " | " + rilegatura.nome_rilegatura;
 
-    selectRilegature.append(option);
-  });
+      selectRilegature.append(option);
+    });
+  }
 };
 
 formAssociazioni.onsubmit = (e) => {
@@ -393,10 +397,9 @@ formAssociazioni.onsubmit = (e) => {
       url: "admin-ajax.php",
       data: options,
       success: (response) => {
-        submit.removeAttribute("disabled")
+        submit.removeAttribute("disabled");
         dialogAssoc.close();
         getColoriAssegnati();
-        showToast(response)
       },
     });
   });
