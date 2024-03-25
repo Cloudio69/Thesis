@@ -7,6 +7,7 @@ class Thesis
 
     public function __construct()
     {
+        $this->thesis_options();
         $this->thesis_hooks();
         $this->thesis_widgets();
     }
@@ -16,6 +17,29 @@ class Thesis
         /* Admin - Menu e Scripts */
         add_action('admin_menu', array($this, 'thesis_admin_page'));
         add_action('admin_enqueue_scripts', array($this, 'thesis_scripts'));
+        add_action('wp_enqueue_scripts', array($this, 'thesis_public_scripts'));
+        add_filter('page_template', array($this, 'thesis_template_page'));
+        add_action('wp_footer', array($this, 'add_thesis_id_button'));
+    }
+
+    public function thesis_public_scripts()
+    {
+        global $pagename;
+        if ($pagename !== 'configuratore') { 
+            wp_enqueue_script('thesis-initialize', THESIS_URL . 'app/assets/js/frontend/thesis-initialize.js', array(), false, true);
+            wp_enqueue_style('tailwind-css',  THESIS_URL . "/app/assets/css/tailwind.css");
+        }
+    }
+
+    public function thesis_template_page()
+    {
+        if (is_page(get_option('pagina_configuratore'))) {
+            $page_template = THESIS_DIR . 'app/views/frontend/configuratore.php';
+        } else {
+            $page_template = '';
+        }
+
+        return $page_template;
     }
 
     public function thesis_scripts()
@@ -35,6 +59,36 @@ class Thesis
     public function thesis_widgets()
     {
         /* Widget per Elementor */
+    }
+
+    function add_thesis_id_button()
+    {
+    ?>
+        <script>
+            const init = document.querySelector("#<?php echo get_option('id_bottone'); ?>")
+            const nonce = "<?php echo wp_create_nonce( 'thesis-token' ); ?>"
+        </script>
+    <?php
+    }
+
+    public function thesis_options()
+    {
+        add_option(
+            'pagina_configuratore',
+            'configuratore'
+        );
+        add_option(
+            'id_bottone',
+            'configuratore'
+        );
+        register_setting(
+            'thesis_impostazioni',
+            'pagina_configuratore'
+        );
+        register_setting(
+            'thesis_impostazioni',
+            'id_bottone'
+        );
     }
 
     public function thesis_admin_page()
@@ -93,7 +147,7 @@ class Thesis
             'manage_options',
             'thesis-impostazioni',
             function () {
-                include_once(THESIS_DIR . 'app/views/admin/settings.php');
+                include_once(THESIS_DIR . 'app/views/admin/impostazioni.php');
             },
             null
         );

@@ -30,3 +30,10 @@ window.onload = () => {
       break;
   }
 };
+
+
+const success = document.querySelectorAll(".success")
+
+success.forEach((item) => {
+  item.querySelector("button").onclick = (e) => e.currentTarget.parentElement.remove()
+})
