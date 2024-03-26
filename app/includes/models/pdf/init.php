@@ -3,11 +3,12 @@
 class ThesisProcess
 {
 
-    public function process_frontespizio($file_name)
+    public function process_frontespizio($file_name, $dir)
     {
-        $im = new imagick($file_name . '[0]');
-        $im->setImageFormat('jpg');
-        header('Content-Type: image/jpeg');
-        echo $im;
+        $image = new Imagick($dir . "/" . $file_name . '[0]');
+        $image->setImageFormat('jpg');
+        $image->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
+        $image->setImageAlphaChannel(Imagick::ALPHACHANNEL_REMOVE);
+        $image->writeImage($dir . "/frontespizio.jpg");
     }
 }

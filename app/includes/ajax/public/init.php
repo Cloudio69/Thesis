@@ -38,7 +38,7 @@ function ajax_upload_file()
         if (move_uploaded_file($file_tmp, $destination)) {
 
             $process = new ThesisProcess;
-            $process->process_frontespizio($destination);
+            $process->process_frontespizio($file_name, $upload_dir);
             
             echo json_encode(array('success' => true, 'message' => 'File caricato correttamente.', 'thesis_session' => $tmp_folder, "process" => $process));
         } else {
