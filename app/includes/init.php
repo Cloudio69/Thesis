@@ -2,6 +2,8 @@
 
 include_once THESIS_DIR . "app/includes/ajax/init.php";
 
+include_once THESIS_DIR . "app/includes/ajax/public/init.php";
+
 class Thesis
 {
 
@@ -67,6 +69,8 @@ class Thesis
         <script>
             const init = document.querySelector("#<?php echo get_option('id_bottone'); ?>")
             const nonce = "<?php echo wp_create_nonce( 'thesis-token' ); ?>"
+            const ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
+            const configuratore = "<?php echo get_option('pagina_configuratore') ?>"
         </script>
     <?php
     }

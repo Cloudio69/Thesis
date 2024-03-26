@@ -29,8 +29,8 @@ function ajax_post_rilegature()
     try {
         $rilegatura = new Rilegatura;
         $query = $rilegatura->create_rilegatura(
-            sanitize_text_field($data['nome_rilegatura']),
-            sanitize_text_field($data['desc_rilegatura']),
+            $data['nome_rilegatura'],
+            $data['desc_rilegatura'],
             sanitize_text_field($data['url_rilegatura']),
             sanitize_text_field($data['prezzo_rilegatura']),
             sanitize_text_field($data['angoli'])
@@ -77,8 +77,8 @@ function ajax_update_rilegatura()
         $rilegatura = new Rilegatura;
         $query = $rilegatura->update_rilegatura(
             $id,
-            sanitize_text_field($data['nome_rilegatura']),
-            sanitize_text_field($data['desc_rilegatura']),
+            $data['nome_rilegatura'],
+            $data['desc_rilegatura'],
             sanitize_text_field($data['url_rilegatura']),
             sanitize_text_field($data['prezzo_rilegatura']),
             sanitize_text_field($data['angoli'])

@@ -16,6 +16,7 @@
 // Directory path e url del plugin
 define('THESIS_DIR', plugin_dir_path(__FILE__));
 define('THESIS_URL', plugin_dir_url(__FILE__));
+define('THESIS_PDFS', THESIS_DIR . "app/files");
 
 // Caricamento dei vendor **COMPOSER**
 require_once(THESIS_DIR . 'app/vendor/autoload.php');

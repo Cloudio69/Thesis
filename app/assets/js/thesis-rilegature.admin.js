@@ -54,7 +54,7 @@ const createElementRilegatura = (rilegatura) => {
   );
 
   nomeRilegatura.innerHTML = rilegatura.nome_rilegatura;
-  descrizioneRilegatura.innerHTML = rilegatura.descrizione_rilegatura;
+  descrizioneRilegatura.innerHTML = rilegatura.descrizione_rilegatura.replaceAll("\\","");
   prezzoRilegatura.innerHTML = "€ " + rilegatura.prezzo_rilegatura;
   anteprimaRilegatura.src = rilegatura.anteprima_rilegatura;
   optionsButton.dataset.id = rilegatura.id_rilegatura;
@@ -198,6 +198,8 @@ const showOptions = (e) => {
     formUpdate.onsubmit = (e) => {
       e.preventDefault();
 
+      document.querySelector("#submit--update").disabled = "true"
+
       const img = document.querySelector("#updated--image");
 
       let options = {
@@ -218,6 +220,8 @@ const showOptions = (e) => {
         url: "admin-ajax.php",
         data: options,
         success: (response) => {
+          document.querySelector("#submit--update").removeAttribute("disabled")
+          dialogUpdate.close();
           getRilegature();
           getVarianti();
           showToast(response);
