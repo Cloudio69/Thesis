@@ -35,13 +35,11 @@ function ajax_upload_file()
         $upload_dir = THESIS_PDFS . "/" . $tmp_folder;
         $destination = $upload_dir . '/' . $file_name;
 
-        $process = new ThesisProcess;
-        $process->process_frontespizio($destination);
-
-
-
         if (move_uploaded_file($file_tmp, $destination)) {
-            // File caricato correttamente
+
+            $process = new ThesisProcess;
+            $process->process_frontespizio($destination);
+            
             echo json_encode(array('success' => true, 'message' => 'File caricato correttamente.', 'thesis_session' => $tmp_folder, "process" => $process));
         } else {
             // Errore durante il caricamento del file
