@@ -15,13 +15,15 @@
                 </div>
             </div>
             <div class="thesis--manager flex flex-1 gap-4 flex-wrap rounded-md">
-                <div class="thesis--customers bg-white flex-1 p-4 rounded-md border border-slate-200">
-                    <h3 class="text-base font-bold flex items-center gap-2"><span class="material-symbols-outlined text-amber-300 drop-shadow-md">groups</span>Clienti</h3>
-                    <canvas id="thesis--customers" class="py-4 h-full">
-                </div>
-                <div class="thesis--orders flex-1 bg-white p-4 rounded-md border border-slate-200">
-                    <h3 class="text-base font-bold flex justify-between items-center"><span class="flex items-center gap-2"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">orders</span>Ordini</span><span><a class="flex items-center gap-2 text-[12px]" href="<?php echo menu_page_url('thesis-ordini', false) ?>">VAI AGLI ORDINI <span class="material-symbols-outlined text-amber-300 text-sm drop-shadow-">east</span></a></span></h3>
-                    <canvas id="thesis--orders" class="py-4 h-full">
+                <div class="flex w-full gap-4">
+                    <div class="thesis--customers bg-white flex-1 p-4 rounded-md border border-slate-200">
+                        <h3 class="text-base font-bold flex items-center gap-2"><span class="material-symbols-outlined text-amber-300 drop-shadow-md">groups</span>Clienti</h3>
+                        <canvas id="thesis--customers" class="py-4 h-full">
+                    </div>
+                    <div class="thesis--orders flex-1 bg-white p-4 rounded-md border border-slate-200">
+                        <h3 class="text-base font-bold flex justify-between items-center"><span class="flex items-center gap-2"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">orders</span>Ordini</span><span><a class="flex items-center gap-2 text-[12px]" href="<?php echo menu_page_url('thesis-ordini', false) ?>">VAI AGLI ORDINI <span class="material-symbols-outlined text-amber-300 text-sm drop-shadow-">east</span></a></span></h3>
+                        <canvas id="thesis--orders" class="py-4 h-full">
+                    </div>
                 </div>
                 <div class="thesis--accessori w-full bg-white p-4 rounded-md border border-slate-200">
                     <h3 class="text-base font-bold mb-2">Accessori</h3>
@@ -44,7 +46,7 @@
 </div>
 
 <?php
-    /* Script per Dashboard */
-    wp_enqueue_script('thesis-charts', THESIS_URL . "/app/assets/js/charts.admin.js", array(), null, true);
-    
+/* Script per Dashboard */
+wp_enqueue_script('thesis-charts', THESIS_URL . "/app/assets/js/charts.admin.js", array(), null, true);
+
 ?>

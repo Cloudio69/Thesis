@@ -3,7 +3,7 @@
 class Angolo
 {
 
-    public function get_angolo($id = null)
+    public function get_angoli($id = null)
     {
         global $wpdb;
 

@@ -1,5 +1,9 @@
 <?php
 
+include_once THESIS_DIR . "app/includes/ajax/accessori/angoli.php";
+include_once THESIS_DIR . "app/includes/ajax/accessori/segnalibri.php";
+include_once THESIS_DIR . "app/includes/ajax/accessori/grammature.php";
+
 include_once THESIS_DIR . "app/includes/models/rilegature.php";
 include_once THESIS_DIR . "app/includes/models/variazioni.php";
 include_once THESIS_DIR . "app/includes/models/colore-caratteri.php";

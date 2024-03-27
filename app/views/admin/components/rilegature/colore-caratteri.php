@@ -1,7 +1,7 @@
 <div class="thesis--colori-carattere flex gap-4">
     <div class="thesis--sidebar flex flex-col gap-4 max-w-64">
         <div class="thesis--info bg-white p-4 rounded-md border border-slate-200">
-            <h3 class="text-2xl font-bold flex items-center gap-2"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">info</span><span>Colori Carattere</span></h3>
+            <h3 class="text-2xl font-bold flex items-center gap-2"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">info</span><span>Colori carattere</span></h3>
             <p class="mt-2">Da qui puoi vedere tutte i colori carattere, puoi creare i colori carattere cliccando sul pulsante "+"</p>
         </div>
     </div>
