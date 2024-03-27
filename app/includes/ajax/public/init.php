@@ -5,6 +5,9 @@ include THESIS_DIR . "app/includes/models/pdf/init.php";
 add_action('wp_ajax_nopriv_upload_file', 'ajax_upload_file');
 add_action('wp_ajax_upload_file', 'ajax_upload_file');
 
+add_action('wp_ajax_get_options', 'ajax_get_options');
+add_action('wp_ajax_nopriv_get_options', 'ajax_get_options');
+
 function uuidv4()
 {
     $data = random_bytes(16);
@@ -51,4 +54,10 @@ function ajax_upload_file()
     }
     // Assicurati di terminare lo script
     wp_die();
+}
+
+
+function ajax_get_options()
+{
+    
 }

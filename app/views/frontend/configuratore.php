@@ -14,6 +14,7 @@ wp_enqueue_style('thesis-frontend', THESIS_URL . "/app/assets/css/frontend/thesi
         <div class="thesis--fragments flex items-center justify-center h-full w-[60%] pt-[4rem] bg-slate-100">
             <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/frontespizio.php"; ?>
             <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/tipologia.php"; ?>
+            <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/rilegature.php"; ?>
         </div>
         <?php include_once THESIS_DIR . "app/views/frontend/components/sidebar.php"; ?>
     </div>

@@ -13,7 +13,16 @@ const config = [
     content: document.querySelector(".thesis--tipologia"),
     isCompleted: true,
   },
+  {
+    step: "rilegatura",
+    nav: document.querySelector("#rilegature"),
+    sidebar: document.querySelector("#rilegature_step"),
+    content: document.querySelector(".thesis--rilegature"),
+    isCompleted: true,
+  },
 ];
+
+const preload = (url) => (new Image()).src = url;
 
 document
   .querySelectorAll(".thesis--sidebar > div")
@@ -21,6 +30,9 @@ document
 document
   .querySelectorAll(".thesis--fragments > div")
   .forEach((item) => item.classList.add("hidden"));
+document
+  .querySelector(".thesis--fragments > div")
+  .classList.remove("hidden")
 
 config.forEach((item) => {
   if (item.sidebar.id === "frontespizio_step")
@@ -51,6 +63,30 @@ config.forEach((item) => {
   }
 });
 
+let images = {
+  fronte: "/wp-content/uploads/2024/03/mockup-fronte.png",
+  fronteRetro: "/wp-content/uploads/2024/03/mockup-fronte-retro.png"
+}
+
+for (image in images) {
+  let preloaded = new Image();
+  preloaded.src = preload(images[image])
+  preloaded.className = "w-full h-2/3 drop-shadow-md"
+  images[image] = preloaded
+}
+
+const fronte = document.querySelector("#fronte")
+const fronteRetro = document.querySelector("#fronte-retro")
+
+fronte.onmouseenter = () => {
+  document.querySelector(".tipologia > img").remove()
+  document.querySelector(".tipologia").append(images.fronte)
+}
+fronteRetro.onmouseenter = () => {
+  document.querySelector(".tipologia > img").remove()
+  document.querySelector(".tipologia").append(images.fronteRetro)
+}
+
 /* Preloader */
 
 window.onload = () => {
@@ -64,4 +100,6 @@ window.onload = () => {
       },
     }
   );
+
+  // preloader.pause();
 };

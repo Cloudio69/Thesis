@@ -76,6 +76,3 @@ class Variante
         }
     }
 }
-
-
-$variazioniDb = new Variante;

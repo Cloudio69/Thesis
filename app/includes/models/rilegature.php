@@ -85,7 +85,12 @@ class Rilegatura
             return json_encode(array("errore" => $e));
         }
     }
+
+    public function get_full_data_rilegature()
+    {
+        global $wpdb;
+        
+        $query = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "thesis_rilegature");
+        return json_encode($query);
+    }
 }
-
-
-$rilegatureDb = new Rilegatura;
