@@ -24,9 +24,6 @@ class ThesisProcess
         $image->setImageBackgroundColor($hex);
         $image->setImageAlphaChannel(Imagick::ALPHACHANNEL_SHAPE);
 
-
-
-
         $image->writeImage($upload_dir . "/frontespizio_generato.png");
 
         $image->clear();
