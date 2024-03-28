@@ -22,7 +22,7 @@ const config = [
   },
 ];
 
-const preload = (url) => (new Image()).src = url;
+const preload = (url) => (new Image().src = url);
 
 document
   .querySelectorAll(".thesis--sidebar > div")
@@ -30,9 +30,7 @@ document
 document
   .querySelectorAll(".thesis--fragments > div")
   .forEach((item) => item.classList.add("hidden"));
-document
-  .querySelector(".thesis--fragments > div")
-  .classList.remove("hidden")
+document.querySelector(".thesis--fragments > div").classList.remove("hidden");
 
 config.forEach((item) => {
   if (item.sidebar.id === "frontespizio_step")
@@ -65,27 +63,73 @@ config.forEach((item) => {
 
 let images = {
   fronte: "/wp-content/uploads/2024/03/mockup-fronte.png",
-  fronteRetro: "/wp-content/uploads/2024/03/mockup-fronte-retro.png"
-}
+  fronteRetro: "/wp-content/uploads/2024/03/mockup-fronte-retro.png",
+};
 
 for (image in images) {
   let preloaded = new Image();
-  preloaded.src = preload(images[image])
-  preloaded.className = "w-full h-2/3 drop-shadow-md"
-  images[image] = preloaded
+  preloaded.src = preload(images[image]);
+  preloaded.className = "w-full h-2/3 drop-shadow-md object-contain p-4";
+  images[image] = preloaded;
 }
 
-const fronte = document.querySelector("#fronte")
-const fronteRetro = document.querySelector("#fronte-retro")
+const fronte = document.querySelector("#fronte");
+const fronteRetro = document.querySelector("#fronte-retro");
 
 fronte.onmouseenter = () => {
-  document.querySelector(".tipologia > img").remove()
-  document.querySelector(".tipologia").append(images.fronte)
-}
+  document.querySelector(".tipologia > img").remove();
+  document.querySelector(".tipologia").append(images.fronte);
+};
 fronteRetro.onmouseenter = () => {
-  document.querySelector(".tipologia > img").remove()
-  document.querySelector(".tipologia").append(images.fronteRetro)
-}
+  document.querySelector(".tipologia > img").remove();
+  document.querySelector(".tipologia").append(images.fronteRetro);
+};
+
+const getOpzioni = async () => {
+  let opzioni = await jQuery.ajax({
+    dataType: "json",
+    method: "GET",
+    url: ajaxurl,
+    data: {
+      action: "get_options",
+    },
+    success: (response) => {
+      return response;
+    },
+  });
+
+  let data = JSON.parse(opzioni.data);
+  let results = JSON.parse(data.results);
+
+  let groupedResults = raggruppaPerId(results);
+
+  const radioRilegatura = document.querySelectorAll("[name='rilegatura']");
+
+  radioRilegatura.forEach((radio) => {
+    radio.onclick = (e) => {
+      let id = e.currentTarget.value;
+      console.log(groupedResults[id]);
+    };
+  });
+};
+
+getOpzioni();
+
+const raggruppaPerId = (array) => {
+  const raggruppato = {};
+
+  array.forEach((oggetto) => {
+    const { id_rilegatura } = oggetto;
+
+    if (!raggruppato[id_rilegatura]) {
+      raggruppato[id_rilegatura] = [];
+    }
+
+    raggruppato[id_rilegatura].push(oggetto);
+  });
+
+  return raggruppato;
+};
 
 /* Preloader */
 

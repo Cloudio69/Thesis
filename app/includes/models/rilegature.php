@@ -89,8 +89,8 @@ class Rilegatura
     public function get_full_data_rilegature()
     {
         global $wpdb;
-        
-        $query = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "thesis_rilegature");
+        // Rilegature
+        $query = $wpdb->get_results("SELECT * FROM ". $wpdb->prefix ."thesis_rilegature INNER JOIN ". $wpdb->prefix ."thesis_variazioni USING (id_rilegatura)");
         return json_encode($query);
     }
 }

@@ -11,4 +11,19 @@ class ThesisProcess
         $image->setImageAlphaChannel(Imagick::ALPHACHANNEL_REMOVE);
         $image->writeImage($dir . "/frontespizio.jpg");
     }
+
+    public function genera_frontespizio($image_path, $start_color, $stop_color, $upload_dir)
+    {
+        $image = new Imagick();
+        $image->setResolution(300, 300);
+        $image->readImage($upload_dir . "/" . $image_path . '[0]');
+
+        $image->transparentPaintImage((new ImagickPixel('white')), 0, 0, false);
+
+        $image->setImageFormat('png');
+        $image->writeImage($upload_dir . "/frontespizio_generato.png");
+
+        $image->clear(); 
+        $image->destroy();
+    }
 }
