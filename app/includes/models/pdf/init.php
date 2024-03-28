@@ -7,7 +7,6 @@ class ThesisProcess
     {
         $image = new Imagick($dir . "/" . $file_name . '[0]');
         $image->setImageFormat('jpg');
-        $image->setAntiAlias(true);
         $image->setResolution(300, 300);
         $image->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
         $image->setImageAlphaChannel(Imagick::ALPHACHANNEL_REMOVE);
@@ -18,17 +17,13 @@ class ThesisProcess
     {
         $image = new Imagick();
         $image->readImage($upload_dir . "/" . $image_path . '[0]');
-        $image->setAntiAlias(true);
         $image->setResolution(300, 300);
-
         $image->transparentPaintImage((new ImagickPixel('white')), 0, 0, false);
-
-        $image->despeckleImage();
-
+        $image->modulateImage(0, 0, 100);
         $image->setImageFormat('png');
         $image->writeImage($upload_dir . "/frontespizio_generato.png");
 
-        $image->clear(); 
+        $image->clear();
         $image->destroy();
     }
 }
