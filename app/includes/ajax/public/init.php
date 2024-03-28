@@ -39,11 +39,11 @@ function ajax_upload_file()
         $destination = $upload_dir . '/' . $file_name;
 
         if (move_uploaded_file($file_tmp, $destination)) {
-            
+
             $process = new ThesisProcess;
 
             $process->process_frontespizio($file_name, $upload_dir);
-            $process->genera_frontespizio($file_name, $upload_dir);
+            $process->genera_frontespizio($destination . '[0]', 255, 255, 255, $upload_dir . "/frontespizio_generato.png");
             
             echo json_encode(array('success' => true, 'message' => 'File caricato correttamente.', 'thesis_session' => $tmp_folder, "process" => $process));
         } else {
