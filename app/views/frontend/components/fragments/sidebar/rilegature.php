@@ -28,8 +28,14 @@
             </div>
         </div>
         <div class="varianti flex flex-col gap-4 mt-4">
-        <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">palette</span>Varianti colore</h1>
-            <div class="grid grid-cols-3 gap-4 items-center place-items-center text-center">
+            <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">palette</span>Varianti colore</h1>
+            <div class="flex gap-4 items-center place-items-center text-center">
+                <p class="opacity-50">Scegli prima una rilegatura.</p>
+            </div>
+        </div>
+        <div class="colori_carattere flex flex-col gap-4 mt-4">
+            <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">border_color</span>Colori carattere</h1>
+            <div class="flex gap-4 items-center place-items-center text-center">
                 <p class="opacity-50">Scegli prima una rilegatura.</p>
             </div>
         </div>

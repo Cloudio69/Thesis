@@ -103,12 +103,49 @@ const getOpzioni = async () => {
 
   let groupedResults = raggruppaPerId(results);
 
+  // Preload immagini varianti
+
+  for (property in groupedResults) {
+    groupedResults[property].forEach((variante) => {
+      let anteprimaVar = new Image();
+      anteprimaVar.src = preload(variante.anteprima_variante);
+      anteprimaVar.classList.add("w-full", "h-[64px]", "rounded-full", "object-cover", "overflow-hidden", "[clip-path:circle()]")
+      variante.anteprima_variante = anteprimaVar;
+    });
+  }
+
   const radioRilegatura = document.querySelectorAll("[name='rilegatura']");
 
   radioRilegatura.forEach((radio) => {
     radio.onclick = (e) => {
+      let varianti = document.querySelector(".varianti div");
+      varianti.className = "grid grid-cols-5 gap-4 items-center place-items-center text-center"
       let id = e.currentTarget.value;
-      console.log(groupedResults[id]);
+      varianti.replaceChildren();
+
+      groupedResults[id].forEach((variante) => {
+        let varianteWrapper = document.createElement("label");
+        let radioVariante = document.createElement("input");
+        let titoloVariante = document.createElement("h3")
+
+        titoloVariante.innerHTML = variante.nome_variante;
+        titoloVariante.className = "font-bold"
+
+        varianteWrapper.setAttribute("for", `variante-${variante.id_variante}`);
+
+        varianteWrapper.classList.add("w-full", "flex", "flex-col", "items-center", "justify-center", "gap-2", "p-4", "rounded-md", "bg-slate-50", "border");
+
+        radioVariante.type = "radio";
+        radioVariante.name = "variante"
+        radioVariante.classList.add("hidden");
+        radioVariante.id = `variante-${variante.id_variante}`;
+
+        varianteWrapper.appendChild(variante.anteprima_variante);
+        varianteWrapper.appendChild(titoloVariante);
+        varianteWrapper.appendChild(radioVariante);
+
+        varianti.appendChild(varianteWrapper);
+      });
     };
   });
 };
