@@ -38,21 +38,6 @@ class ThesisProcess
         self::coloraCanaleAlpha($output, $r, $g, $b, $output);
     }
 
-    public static function unisciImmagini($immagineSorgente, $immagineDestinazione, $risultato)
-    {
-        $primaImmagine = new Imagick($immagineDestinazione);
-        $primaImmagine->scaleImage(370, 524, true);
-
-        $nuovaImmagine = new Imagick($immagineSorgente);
-        $nuovaImmagine->scaleImage(370, 524, true);
-
-        $primaImmagine->addImage($nuovaImmagine);
-        $primaImmagine->setImageFormat('png');
-
-        $res = $primaImmagine->mergeImageLayers(Imagick::LAYERMETHOD_COMPARECLEAR);
-        $res->writeImages($risultato, false);
-    }
-
     public static function rimuoviSfondo($src, $dest)
     {
         $immagine = imagecreatefrompng($src);
@@ -83,7 +68,7 @@ class ThesisProcess
     {
         $imagick = new Imagick();
         $imagick->readImage($fileSorgente);
-        $imagick->quantizeImage(4, imagick::COLORSPACE_GRAY, 2, false, false);
+        $imagick->quantizeImage(2, imagick::COLORSPACE_TRANSPARENT, 16, true, false);
         $imagick->writeImages($destinazione, false);
     }
 
