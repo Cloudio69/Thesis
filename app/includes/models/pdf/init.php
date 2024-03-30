@@ -4,9 +4,12 @@ class ThesisProcess
 {
     public function process_frontespizio($file_name, $dir)
     {
-        $image = new Imagick($dir . "/" . $file_name . '[0]');
-        $image->setImageFormat('jpg');
+        $image = new Imagick();
+
         $image->setResolution(300, 300);
+        $image->readImage($dir . "/" . $file_name . '[0]');
+        $image->setImageFormat('jpg');
+        
         $image->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
         $image->setImageAlphaChannel(Imagick::ALPHACHANNEL_REMOVE);
         $image->writeImage($dir . "/frontespizio.jpg");
@@ -48,6 +51,9 @@ class ThesisProcess
     public static function colore_singolo($fileSorgente, $destinazione)
     {
         $imagick = new Imagick();
+        $imagick->setResolution(300, 300);
+        $imagick->setAntiAlias(true);
+        
         $imagick->readImage($fileSorgente);
         $imagick->quantizeImage(2, imagick::COLORSPACE_TRANSPARENT, 16, true, false);
         $imagick->writeImages($destinazione, false);
