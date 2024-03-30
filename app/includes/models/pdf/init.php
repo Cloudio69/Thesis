@@ -11,34 +11,15 @@ class ThesisProcess
         $image->setImageAlphaChannel(Imagick::ALPHACHANNEL_REMOVE);
         $image->writeImage($dir . "/frontespizio.jpg");
     }
-    /**
-     *   public function genera_frontespizio($image_path, $upload_dir, $hex = "#ffffff")
-     *   {
-     *       $image = new Imagick();
-     *       $image->readImage($upload_dir . "/" . $image_path . '[0]');
-     *       $image->setResolution(300, 300);
-     *       $image->transparentPaintImage((new ImagickPixel('white')), 0, 0, false);
-     *
-     *       $image->setImageAlphaChannel(Imagick::ALPHACHANNEL_EXTRACT);
-     *       $image->setImageBackgroundColor($hex);
-     *       $image->setImageAlphaChannel(Imagick::ALPHACHANNEL_SHAPE);
-     *
-     *       $image->writeImage($upload_dir . "/frontespizio_generato.png");
-     *
-     *       $image->clear();
-     *       $image->destroy();
-     *    }
-     */
-
 
     public static function genera_frontespizio($percorso, $r, $g, $b, $output)
     {
-        self::coloreSingolo($percorso, $output);
-        self::rimuoviSfondo($output, $output);
-        self::coloraCanaleAlpha($output, $r, $g, $b, $output);
+        self::colore_singolo($percorso, $output);
+        self::rimuovi_sfondo($output, $output);
+        self::colora_canale_alpha($output, $r, $g, $b, $output);
     }
 
-    public static function rimuoviSfondo($src, $dest)
+    public static function rimuovi_sfondo($src, $dest)
     {
         $immagine = imagecreatefrompng($src);
         $larghezza = imagesx($immagine);
@@ -64,7 +45,7 @@ class ThesisProcess
         imagedestroy($immagine);
     }
 
-    public static function coloreSingolo($fileSorgente, $destinazione)
+    public static function colore_singolo($fileSorgente, $destinazione)
     {
         $imagick = new Imagick();
         $imagick->readImage($fileSorgente);
@@ -72,7 +53,7 @@ class ThesisProcess
         $imagick->writeImages($destinazione, false);
     }
 
-    public static function coloraCanaleAlpha($inputFilePath, $red, $green, $blue, $outputFilePath)
+    public static function colora_canale_alpha($inputFilePath, $red, $green, $blue, $outputFilePath)
     {
         $immagineSorgente = imagecreatefrompng($inputFilePath);
         $immagineDestinazione = imagecreatefrompng($inputFilePath);

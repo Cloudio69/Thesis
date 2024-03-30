@@ -23,8 +23,8 @@ wp_enqueue_style('thesis-frontend', THESIS_URL . "/app/assets/css/frontend/thesi
     </div>
 </div>
 
-<?php wp_enqueue_script('thesis-configurator', THESIS_URL . 'app/assets/js/frontend/thesis-configurator.js');?>
+<?php wp_enqueue_script('thesis-configurator', THESIS_URL . 'app/assets/js/frontend/thesis-configurator.js', ['jquery'], true);?>
 <?php
-wp_enqueue_script('gsap', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js');}?>
+wp_enqueue_script('gsap', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js', array(), true);}?>
 
 <?php wp_footer();?>
