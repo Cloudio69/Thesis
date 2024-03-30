@@ -184,3 +184,8 @@ window.onload = () => {
 
   // preloader.pause();
 };
+
+
+// Lightbox
+
+Fancybox.bind("[data-fancybox]")
