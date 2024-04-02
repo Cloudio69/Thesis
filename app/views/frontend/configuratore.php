@@ -4,9 +4,11 @@
     $upload_dir = THESIS_PDFS . "/" . $tmp_folder;
     $file_name = "tesi.pdf";
 
-    $process = new ThesisProcess;
-    $process->process_frontespizio($file_name, $upload_dir);
-    $process->genera_frontespizio($upload_dir . "/frontespizio.jpg", 192, 192, 192, $upload_dir . "/frontespizio_generato.png");
+    if (!file_exists($upload_dir . '/frontespizio.jpg')) {
+        $process = new ThesisProcess;
+        $process->process_frontespizio($file_name, $upload_dir);
+        $process->genera_frontespizio($upload_dir . "/frontespizio.jpg", 255, 255, 255, $upload_dir . "/frontespizio_generato.png");
+    }
 ?>
 <?php
 wp_enqueue_style('tailwind-css', THESIS_URL . "/app/assets/css/tailwind.css");
