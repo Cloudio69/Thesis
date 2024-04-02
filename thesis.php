@@ -19,7 +19,7 @@ define('THESIS_URL', plugin_dir_url(__FILE__));
 define('THESIS_PDFS', THESIS_DIR . "app/files");
 
 // Caricamento dei vendor **COMPOSER**
-require_once(THESIS_DIR . 'app/vendor/autoload.php');
+// require_once(THESIS_DIR . 'app/vendor/autoload.php');
 
 // Inizializza le classi principali
 require_once(THESIS_DIR . 'app/includes/init.php');

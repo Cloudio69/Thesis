@@ -187,7 +187,6 @@ const getOpzioni = async () => {
           anteprima.replaceChildren();
 
           let zoomIn = document.createElement("a");
-          zoomIn.dataset.fancybox = true;
 
           let anteprimaVariante = variante.anteprima_variante;
           anteprimaVariante.classList.add("shadow-xl");
@@ -219,10 +218,16 @@ const getOpzioni = async () => {
             var img = new Image();
             img.src = imgData;
 
-            jQuery.fancybox.open({
-              src: img,
-              type: "image",
-            });
+            img.classList.add("w-[25vw]", "h-full")
+
+            new Fancybox(
+              [
+                {
+                  src: img.src,
+                  type: "image",
+                },
+              ],
+            );
           };
 
           zoomIn.appendChild(canvas)
