@@ -1,13 +1,22 @@
 <?php wp_head(); ?>
 <?php
+    $tmp_folder = $_COOKIE['thesis_session'];
+    $upload_dir = THESIS_PDFS . "/" . $tmp_folder;
+    $file_name = "tesi.pdf";
+
+    $process = new ThesisProcess;
+    $process->process_frontespizio($file_name, $upload_dir);
+    $process->genera_frontespizio($upload_dir . "/frontespizio.jpg", 192, 192, 192, $upload_dir . "/frontespizio_generato.png");
+?>
+<?php
 wp_enqueue_style('tailwind-css', THESIS_URL . "/app/assets/css/tailwind.css");
 wp_enqueue_style('thesis-frontend', THESIS_URL . "/app/assets/css/frontend/thesis-frontend.css");
 ?>
 
 <?php if (!isset($_COOKIE['thesis_session'])) { ?>
     <div class="thesis--wrapper w-full h-full flex flex-col justify-center items-center gap-4">
-    <div class="alert bg-red-700 text-white ring-1 ring-red-500 rounded-md ring-offset-2 font-bold p-2 px-4">Sessione non valida</div>
-    <a href="/" class="underline">Torna indietro</a>
+        <div class="alert bg-red-700 text-white ring-1 ring-red-500 rounded-md ring-offset-2 font-bold p-2 px-4">Sessione non valida</div>
+        <a href="/" class="underline">Torna indietro</a>
     </div>
 <?php } else { ?>
     <div id="preloader" class="h-full w-full z-[99] flex justify-center items-center flex-col fixed bg-white top-0 gap-2">

@@ -28,7 +28,7 @@ function ajax_upload_file()
 
     if ($_FILES['file']) {
         $file = $_FILES['file'];
-        $file_name = $file['name'];
+        $file_name = 'tesi.pdf';
         $file_tmp = $file['tmp_name'];
 
         $tmp_folder = uuidv4();
@@ -39,13 +39,7 @@ function ajax_upload_file()
         $destination = $upload_dir . '/' . $file_name;
 
         if (move_uploaded_file($file_tmp, $destination)) {
-
-            $process = new ThesisProcess;
-
-            $process->process_frontespizio($file_name, $upload_dir);
-            $process->genera_frontespizio($upload_dir . "/frontespizio.jpg", 255, 255, 255, $upload_dir . "/frontespizio_generato.png");
-            
-            echo json_encode(array('success' => true, 'message' => 'File caricato correttamente.', 'thesis_session' => $tmp_folder, "process" => $process));
+            echo json_encode(array('success' => true, 'message' => 'File caricato correttamente.', 'thesis_session' => $tmp_folder));
         } else {
             // Errore durante il caricamento del file
             echo json_encode(array('success' => false, 'message' => 'Si è verificato un errore durante il caricamento del file.'));
@@ -54,7 +48,6 @@ function ajax_upload_file()
         // Nessun file è stato inviato
         echo json_encode(array('success' => false, 'message' => 'Nessun file inviato.'));
     }
-    // Assicurati di terminare lo script
     wp_die();
 }
 

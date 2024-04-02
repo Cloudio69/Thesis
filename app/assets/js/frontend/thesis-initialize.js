@@ -22,7 +22,8 @@ if (typeof init != "undefined" && init) {
     "gap-2"
   );
 
-  preloader.innerHTML = "<img class='animate-spin w-10 h-10' src='/wp-content/plugins/thesis/app/assets/img/svg/loading.svg' />";
+  preloader.innerHTML =
+    "<img class='animate-spin w-10 h-10' src='/wp-content/plugins/thesis/app/assets/img/svg/loading.svg' />";
 
   let fileUpload = document.createElement("input");
   fileUpload.type = "file";
@@ -37,7 +38,12 @@ if (typeof init != "undefined" && init) {
 
     fileUpload.onchange = (e) => {
 
-      document.body.appendChild(preloader)
+      if (!e.currentTarget.files[0] || e.currentTarget.files[0].type !== "application/pdf") {
+        console.error("Errore nel caricamento file.");
+        return;
+      }
+
+      document.body.appendChild(preloader);
 
       let data = new FormData();
       data.append("action", "upload_file");

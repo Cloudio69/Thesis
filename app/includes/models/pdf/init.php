@@ -8,8 +8,9 @@ class ThesisProcess
 
         $image->setResolution(300, 300);
         $image->readImage($dir . "/" . $file_name . '[0]');
+        $image->scaleImage(1920, 1280, true);
         $image->setImageFormat('jpg');
-        
+
         $image->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
         $image->setImageAlphaChannel(Imagick::ALPHACHANNEL_REMOVE);
         $image->writeImage($dir . "/frontespizio.jpg");
@@ -52,8 +53,6 @@ class ThesisProcess
     {
         $imagick = new Imagick();
         $imagick->setResolution(300, 300);
-        $imagick->setAntiAlias(true);
-        
         $imagick->readImage($fileSorgente);
         $imagick->quantizeImage(2, imagick::COLORSPACE_TRANSPARENT, 16, true, false);
         $imagick->writeImages($destinazione, false);
