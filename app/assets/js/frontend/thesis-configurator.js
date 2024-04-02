@@ -1,3 +1,9 @@
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(";").shift();
+}
+
 const config = [
   {
     step: "frontespizio",
@@ -66,7 +72,7 @@ let images = {
   fronteRetro: "/wp-content/uploads/2024/03/mockup-fronte-retro.png",
 };
 
-for (image in images) {
+for (let image in images) {
   let preloaded = new Image();
   preloaded.src = preload(images[image]);
   preloaded.className = "w-full h-2/3 drop-shadow-md object-contain p-4";
@@ -105,11 +111,10 @@ const getOpzioni = async () => {
 
   // Preload immagini varianti
 
-  for (property in groupedResults) {
+  for (let property in groupedResults) {
     groupedResults[property].forEach((variante) => {
       let anteprimaVar = new Image();
       anteprimaVar.src = preload(variante.anteprima_variante);
-      anteprimaVar.classList.add("w-full", "h-[64px]", "rounded-full", "object-cover", "overflow-hidden", "[clip-path:circle()]")
       variante.anteprima_variante = anteprimaVar;
     });
   }
@@ -119,32 +124,111 @@ const getOpzioni = async () => {
   radioRilegatura.forEach((radio) => {
     radio.onclick = (e) => {
       let varianti = document.querySelector(".varianti div");
-      varianti.className = "grid grid-cols-5 gap-4 items-center place-items-center text-center"
+      varianti.className =
+        "grid grid-cols-5 gap-4 items-center place-items-center text-center";
       let id = e.currentTarget.value;
       varianti.replaceChildren();
 
       groupedResults[id].forEach((variante) => {
         let varianteWrapper = document.createElement("label");
         let radioVariante = document.createElement("input");
-        let titoloVariante = document.createElement("h3")
+        let titoloVariante = document.createElement("h3");
 
         titoloVariante.innerHTML = variante.nome_variante;
-        titoloVariante.className = "font-bold"
+        titoloVariante.className = "font-bold";
 
         varianteWrapper.setAttribute("for", `variante-${variante.id_variante}`);
 
-        varianteWrapper.classList.add("w-full", "flex", "flex-col", "items-center", "justify-center", "gap-2", "p-4", "rounded-md", "bg-slate-50", "border");
+        varianteWrapper.classList.add(
+          "w-full",
+          "flex",
+          "flex-col",
+          "items-center",
+          "justify-center",
+          "gap-2",
+          "p-4",
+          "rounded-md",
+          "bg-slate-50",
+          "border"
+        );
 
         radioVariante.type = "radio";
-        radioVariante.name = "variante"
+        radioVariante.name = "variante";
         radioVariante.classList.add("hidden");
         radioVariante.id = `variante-${variante.id_variante}`;
 
-        varianteWrapper.appendChild(variante.anteprima_variante);
+        let immagineVariante = variante.anteprima_variante.cloneNode();
+        immagineVariante.classList.add(
+          "w-full",
+          "h-[64px]",
+          "rounded-full",
+          "object-cover",
+          "overflow-hidden",
+          "[clip-path:circle()]"
+        );
+
+        varianteWrapper.appendChild(immagineVariante);
         varianteWrapper.appendChild(titoloVariante);
         varianteWrapper.appendChild(radioVariante);
 
         varianti.appendChild(varianteWrapper);
+
+        radioVariante.onclick = () => {
+          let canvas = document.createElement("canvas");
+          canvas.classList.add(
+            "w-[25vw]",
+            "h-full",
+            "shadow-xl",
+            "shadow-[#00000078]",
+            "rounded-s"
+          );
+
+          let anteprima = document.querySelector(".rilegature");
+          anteprima.replaceChildren();
+
+          let zoomIn = document.createElement("a");
+          zoomIn.dataset.fancybox = true;
+
+          let anteprimaVariante = variante.anteprima_variante;
+          anteprimaVariante.classList.add("shadow-xl");
+
+          let context = canvas.getContext("2d");
+
+          canvas.width = anteprimaVariante.width;
+          canvas.height = anteprimaVariante.height;
+          context.drawImage(anteprimaVariante, 0, 0);
+
+          let frontespizioGen = new Image();
+          frontespizioGen.src =
+            "/wp-content/plugins/thesis/app/files/" +
+            getCookie("thesis_session") +
+            "/frontespizio_generato.png";
+
+          frontespizioGen.onload = () =>
+            context.drawImage(
+              frontespizioGen,
+              0,
+              0,
+              canvas.width,
+              canvas.height
+            );
+
+          zoomIn.onclick = () => {
+            let imgData = canvas.toDataURL();
+
+            var img = new Image();
+            img.src = imgData;
+
+            jQuery.fancybox.open({
+              src: img,
+              type: "image",
+            });
+          };
+
+          zoomIn.appendChild(canvas)
+
+          anteprima.appendChild(zoomIn);
+        };
       });
     };
   });
@@ -185,7 +269,6 @@ window.onload = () => {
   // preloader.pause();
 };
 
-
 // Lightbox
 
-Fancybox.bind("[data-fancybox]")
+Fancybox.bind("[data-fancybox]");

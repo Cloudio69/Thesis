@@ -5,7 +5,7 @@ $path_frontespizio = THESIS_URL . "app/files/" . $session . "/frontespizio.jpg";
 
 
 <div class="thesis--frontespizio frontespizio flex items-center justify-center">
-    <a href="<?php echo $path_frontespizio; ?>" class="flex items-center justify-center" data-fancybox><img class="drop-shadow-md w-1/2 h-full" src="<?php echo $path_frontespizio; ?>" /></a>
+    <a href="<?php echo $path_frontespizio; ?>" class="flex items-center justify-center" data-fancybox><img class="drop-shadow-md w-[25vw] h-full" src="<?php echo $path_frontespizio; ?>" /></a>
 </div>
 
 <?php
