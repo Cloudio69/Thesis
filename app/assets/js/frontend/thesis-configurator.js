@@ -187,6 +187,7 @@ const getOpzioni = async () => {
           anteprima.replaceChildren();
 
           let zoomIn = document.createElement("a");
+          zoomIn.href = "#"
 
           let anteprimaVariante = variante.anteprima_variante;
           anteprimaVariante.classList.add("shadow-xl");
