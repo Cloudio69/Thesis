@@ -1,4 +1,5 @@
 <?php wp_head(); ?>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <?php
     $tmp_folder = $_COOKIE['thesis_session'];
     $upload_dir = THESIS_PDFS . "/" . $tmp_folder;
@@ -7,7 +8,6 @@
     if (!file_exists($upload_dir . '/frontespizio.jpg')) {
         $process = new ThesisProcess;
         $process->process_frontespizio($file_name, $upload_dir);
-        $process->genera_frontespizio($upload_dir . "/frontespizio.jpg", 255, 255, 255, $upload_dir . "/frontespizio_generato.png");
     }
 ?>
 <?php
@@ -27,8 +27,8 @@ wp_enqueue_style('thesis-frontend', THESIS_URL . "/app/assets/css/frontend/thesi
     </div>
     <div class="thesis--wrapper h-full">
         <?php include_once THESIS_DIR . "app/views/frontend/components/header.php"; ?>
-        <div class="thesis--body h-full flex justify-stretch">
-            <div class="thesis--fragments flex items-center justify-center h-full w-[60%] pt-[4rem] bg-slate-100">
+        <div class="thesis--body h-full lg:flex justify-stretch md:flex-col md:flex">
+            <div class="thesis--fragments flex items-center justify-center lg:h-full md:h-[50vh] lg:w-[60%] pt-[4rem] bg-slate-100">
                 <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/frontespizio.php"; ?>
                 <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/tipologia.php"; ?>
                 <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/rilegature.php"; ?>

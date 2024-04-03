@@ -8,6 +8,9 @@ add_action('wp_ajax_upload_file', 'ajax_upload_file');
 add_action('wp_ajax_get_options', 'ajax_get_options');
 add_action('wp_ajax_nopriv_get_options', 'ajax_get_options');
 
+add_action('wp_ajax_genera_frontespizio', 'ajax_genera_frontespizio');
+add_action('wp_ajax_nopriv_genera_frontespizio', 'ajax_genera_frontespizio');
+
 function uuidv4()
 {
     $data = random_bytes(16);
@@ -58,4 +61,19 @@ function ajax_get_options()
     $query = $rilegatura->get_full_data_rilegature();
 
     wp_send_json_success(json_encode(array("results" => $query, "message" => "Query effettuata.")), 200);
+}
+
+
+function ajax_genera_frontespizio(){
+    $data = $_POST['data'];
+
+    [$r, $g, $b] = $data['rgb'];
+
+    $tmp_folder = $data['uuid'];
+    $upload_dir = THESIS_PDFS . "/" . $tmp_folder;
+
+    $process = new ThesisProcess;
+    $process->genera_frontespizio($upload_dir . "/frontespizio.jpg", $r, $g, $b, $upload_dir . "/frontespizio_generato.png");
+
+    wp_send_json_success(json_encode(array("message" => "Frontespizio generato.")), 200);
 }

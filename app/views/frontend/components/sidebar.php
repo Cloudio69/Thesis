@@ -1,4 +1,4 @@
-<div class="thesis--sidebar bg-white shadow-md h-full border fixed right-0 pt-[4rem] w-2/5 overflow-auto">
+<div class="thesis--sidebar bg-white shadow-md h-full border lg:fixed right-0 pt-[4rem] lg:w-2/5 overflow-auto md:relative md:w-full">
     <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/sidebar/frontespizio.php"; ?>
     <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/sidebar/tipologia.php"; ?>
     <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/sidebar/rilegature.php"; ?>

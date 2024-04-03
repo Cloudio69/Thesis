@@ -54,6 +54,7 @@ class ThesisProcess
         $imagick = new Imagick();
         $imagick->setResolution(300, 300);
         $imagick->readImage($fileSorgente);
+        $imagick->scaleImage(1920, 1280, true);
         $imagick->quantizeImage(2, imagick::COLORSPACE_TRANSPARENT, 16, true, false);
         $imagick->writeImages($destinazione, false);
     }

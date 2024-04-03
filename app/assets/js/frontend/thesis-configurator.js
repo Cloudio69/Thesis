@@ -4,6 +4,8 @@ function getCookie(name) {
   if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
+let currentStep = 0;
+
 const config = [
   {
     step: "frontespizio",
@@ -38,7 +40,7 @@ document
   .forEach((item) => item.classList.add("hidden"));
 document.querySelector(".thesis--fragments > div").classList.remove("hidden");
 
-config.forEach((item) => {
+config.forEach((item, index) => {
   if (item.sidebar.id === "frontespizio_step")
     item.sidebar.classList.remove("hidden");
 
@@ -63,7 +65,41 @@ config.forEach((item) => {
         .forEach((item) => item.classList.add("hidden"));
 
       item.sidebar.classList.remove("hidden");
+
+      currentStep = index;
     };
+
+    item.sidebar.querySelectorAll(".next-step").forEach((button) => {
+      button.onclick = (e) => {
+        if (e.currentTarget.nextElementSibling) {
+          e.currentTarget.nextElementSibling.classList.remove("selected");
+        } else if (e.currentTarget.previousElementSibling) {
+          e.currentTarget.previousElementSibling.classList.remove("selected");
+        }
+
+        e.currentTarget.classList.add("selected");
+        document
+          .querySelectorAll(".route")
+          .forEach((item) => item.classList.remove("active"));
+        document
+          .querySelector(".thesis--navigation")
+          .children[currentStep + 1].classList.add("active");
+        document
+          .querySelector(".thesis--sidebar")
+          .children[currentStep].classList.add("hidden");
+        document
+          .querySelector(".thesis--sidebar")
+          .children[currentStep + 1].classList.remove("hidden");
+        document
+          .querySelector(".thesis--fragments")
+          .children[currentStep].classList.add("hidden");
+        document
+          .querySelector(".thesis--fragments")
+          .children[currentStep + 1].classList.remove("hidden");
+
+        currentStep++;
+      };
+    });
   }
 });
 
@@ -187,7 +223,7 @@ const getOpzioni = async () => {
           anteprima.replaceChildren();
 
           let zoomIn = document.createElement("a");
-          zoomIn.href = "#"
+          zoomIn.href = "#";
 
           let anteprimaVariante = variante.anteprima_variante;
           anteprimaVariante.classList.add("shadow-xl");
@@ -219,19 +255,17 @@ const getOpzioni = async () => {
             var img = new Image();
             img.src = imgData;
 
-            img.classList.add("w-[25vw]", "h-full")
+            img.classList.add("w-[25vw]", "h-full");
 
-            new Fancybox(
-              [
-                {
-                  src: img.src,
-                  type: "image",
-                },
-              ],
-            );
+            new Fancybox([
+              {
+                src: img.src,
+                type: "image",
+              },
+            ]);
           };
 
-          zoomIn.appendChild(canvas)
+          zoomIn.appendChild(canvas);
 
           anteprima.appendChild(zoomIn);
         };
@@ -240,7 +274,31 @@ const getOpzioni = async () => {
   });
 };
 
-getOpzioni();
+const generaFrontespizio = () => {
+  jQuery
+    .get(
+      "/wp-content/plugins/thesis/app/files/" +
+        getCookie("thesis_session") +
+        "/frontespizio_generato.png"
+    )
+    .fail(async () => {
+      await jQuery.ajax({
+        dataType: "json",
+        method: "POST",
+        url: ajaxurl,
+        data: {
+          action: "genera_frontespizio",
+          data: {
+            uuid: getCookie("thesis_session"),
+            rgb: [192, 192, 192],
+          },
+        },
+        success: (response) => {
+          return response;
+        },
+      });
+    });
+};
 
 const raggruppaPerId = (array) => {
   const raggruppato = {};
@@ -257,6 +315,9 @@ const raggruppaPerId = (array) => {
 
   return raggruppato;
 };
+
+generaFrontespizio();
+getOpzioni();
 
 /* Preloader */
 

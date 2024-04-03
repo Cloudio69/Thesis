@@ -43,7 +43,6 @@
 
 .active {
   color: white;
-  overflow: hidden;
   position: relative;
   transition: all 0.4s ease-in-out;
 }
@@ -79,4 +78,9 @@
 
 label:has(input[type="radio"]:checked) {
   outline: 1px solid black;
+}
+
+.selected span {
+  background: #f4bf24;
+  color: white;
 }
