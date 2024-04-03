@@ -413,6 +413,18 @@ const getColori = async (id) => {
                 getCookie("thesis_session") +
                 "/frontespizio_generato.png";
               frontespizioGen.onload = () => {
+                context.clearRect(0, 0, canvas.width, canvas.height)
+                
+                const varianteScelta = document.querySelector("[name='variante']:checked").parentElement.querySelector("img");
+
+                context.drawImage(
+                  varianteScelta,
+                  0,
+                  0,
+                  canvas.width,
+                  canvas.height
+                )
+
                 context.drawImage(
                   frontespizioGen,
                   0,
