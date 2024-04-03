@@ -275,15 +275,14 @@ const getOpzioni = async () => {
   });
 };
 
-const generaFrontespizio = async () => {
-  await jQuery
-    .get(
-      "/wp-content/plugins/thesis/app/files/" +
-        getCookie("thesis_session") +
-        "/frontespizio_generato.png"
-    )
-    .fail(async () => {
-      await jQuery.ajax({
+const generaFrontespizio = () => {
+  fetch(
+    "/wp-content/plugins/thesis/app/files/" +
+      getCookie("thesis_session") +
+      "/frontespizio_generato.png"
+  ).then((response) => {
+    if (!response.ok) {
+      jQuery.ajax({
         dataType: "json",
         method: "POST",
         url: ajaxurl,
@@ -298,7 +297,8 @@ const generaFrontespizio = async () => {
           return response;
         },
       });
-    });
+    }
+  });
 };
 
 const getColori = async (id) => {
@@ -369,15 +369,24 @@ const getColori = async (id) => {
         listaColori.appendChild(label);
 
         radio.onclick = async (e) => {
-          let body = document.querySelector(".thesis--fragments")
+          let body = document.querySelector(".thesis--fragments");
           let preloader = document.createElement("div");
-          
 
-          preloader.classList.add("fixed", "flex", "w-full", "h-full", "justify-center", "items-center", "bg-slate-200", "opacity-75")
+          preloader.classList.add(
+            "fixed",
+            "flex",
+            "w-full",
+            "h-full",
+            "justify-center",
+            "items-center",
+            "bg-slate-200",
+            "opacity-75"
+          );
 
-          preloader.innerHTML = "<img src='/wp-content/plugins/thesis/app/assets/img/svg/loading.svg' class='animate-spin w-[48px] h-[48px]'/>"
+          preloader.innerHTML =
+            "<img src='/wp-content/plugins/thesis/app/assets/img/svg/loading.svg' class='animate-spin w-[48px] h-[48px]'/>";
 
-          body.appendChild(preloader)
+          body.appendChild(preloader);
 
           const hexToRgb = (hex) => {
             var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -413,9 +422,11 @@ const getColori = async (id) => {
                 getCookie("thesis_session") +
                 "/frontespizio_generato.png";
               frontespizioGen.onload = () => {
-                context.clearRect(0, 0, canvas.width, canvas.height)
-                
-                const varianteScelta = document.querySelector("[name='variante']:checked").parentElement.querySelector("img");
+                context.clearRect(0, 0, canvas.width, canvas.height);
+
+                const varianteScelta = document
+                  .querySelector("[name='variante']:checked")
+                  .parentElement.querySelector("img");
 
                 context.drawImage(
                   varianteScelta,
@@ -423,7 +434,7 @@ const getColori = async (id) => {
                   0,
                   canvas.width,
                   canvas.height
-                )
+                );
 
                 context.drawImage(
                   frontespizioGen,
