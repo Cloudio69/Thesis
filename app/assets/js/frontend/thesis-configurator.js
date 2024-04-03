@@ -163,6 +163,7 @@ const getOpzioni = async () => {
       varianti.className =
         "grid grid-cols-5 gap-4 items-center place-items-center text-center";
       let id = e.currentTarget.value;
+      getColori(id);
       varianti.replaceChildren();
 
       groupedResults[id].forEach((variante) => {
@@ -274,8 +275,8 @@ const getOpzioni = async () => {
   });
 };
 
-const generaFrontespizio = () => {
-  jQuery
+const generaFrontespizio = async () => {
+  await jQuery
     .get(
       "/wp-content/plugins/thesis/app/files/" +
         getCookie("thesis_session") +
@@ -298,6 +299,134 @@ const generaFrontespizio = () => {
         },
       });
     });
+};
+
+const getColori = async (id) => {
+  const listaColori = document.querySelector(".colori_carattere > div");
+  listaColori.replaceChildren();
+  listaColori.classList.add(
+    "animate-pulse",
+    "min-h-[2rem]",
+    "bg-slate-200",
+    "rounded-md"
+  );
+
+  let colori = await jQuery.ajax({
+    dataType: "json",
+    method: "GET",
+    url: ajaxurl,
+    data: {
+      action: "get_colori_carattere",
+      data: {
+        id_rilegatura: id,
+      },
+    },
+    success: (response) => {
+      listaColori.className = "";
+      listaColori.classList.add(
+        "grid",
+        "grid-cols-5",
+        "items-center",
+        "justify-center",
+        "place-items-center",
+        "gap-4",
+        "text-center"
+      );
+
+      let data = JSON.parse(response.data);
+      let results = JSON.parse(data.results);
+
+      results.forEach((colore) => {
+        let label = document.createElement("label");
+        let radio = document.createElement("input");
+
+        radio.type = "radio";
+        radio.value = colore.id_colore_carattere;
+        radio.dataset.hex = colore.hex_colore;
+        radio.id = `colore-${colore.id_colore_carattere}`;
+        radio.name = "colori_carattere";
+
+        radio.className = "hidden";
+
+        label.setAttribute("for", radio.id);
+
+        label.classList.add(
+          "w-full",
+          "flex",
+          "flex-col",
+          "items-center",
+          "justify-center",
+          "gap-2",
+          "p-4",
+          "rounded-md",
+          "bg-slate-50",
+          "border"
+        );
+
+        label.innerHTML = `<div class='rounded-full h-[64px] w-[64px]' style='background: ${colore.hex_colore}'></div><span>${colore.nome_colore}</span>`;
+        label.appendChild(radio);
+
+        listaColori.appendChild(label);
+
+        radio.onclick = async (e) => {
+          let body = document.querySelector(".thesis--fragments")
+          let preloader = document.createElement("div");
+          
+
+          preloader.classList.add("fixed", "flex", "w-full", "h-full", "justify-center", "items-center", "bg-slate-200", "opacity-75")
+
+          preloader.innerHTML = "<img src='/wp-content/plugins/thesis/app/assets/img/svg/loading.svg' class='animate-spin w-[48px] h-[48px]'/>"
+
+          body.appendChild(preloader)
+
+          const hexToRgb = (hex) => {
+            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result
+              ? [
+                  parseInt(result[1], 16),
+                  parseInt(result[2], 16),
+                  parseInt(result[3], 16),
+                ]
+              : null;
+          };
+
+          let hex = e.currentTarget.dataset.hex;
+          await jQuery.ajax({
+            dataType: "json",
+            method: "POST",
+            url: ajaxurl,
+            data: {
+              action: "genera_frontespizio",
+              data: {
+                uuid: getCookie("thesis_session"),
+                rgb: hexToRgb(hex),
+              },
+            },
+            success: (response) => {
+              preloader.remove();
+              let canvas = document.querySelector("canvas");
+              let context = canvas.getContext("2d");
+
+              let frontespizioGen = new Image();
+              frontespizioGen.src =
+                "/wp-content/plugins/thesis/app/files/" +
+                getCookie("thesis_session") +
+                "/frontespizio_generato.png";
+              frontespizioGen.onload = () => {
+                context.drawImage(
+                  frontespizioGen,
+                  0,
+                  0,
+                  canvas.width,
+                  canvas.height
+                );
+              };
+            },
+          });
+        };
+      });
+    },
+  });
 };
 
 const raggruppaPerId = (array) => {

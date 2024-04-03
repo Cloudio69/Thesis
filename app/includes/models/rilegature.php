@@ -27,7 +27,7 @@ class Rilegatura
                 "descrizione_rilegatura" => $descrizione_rilegatura,
                 "anteprima_rilegatura" => $anteprima_rilegatura,
                 "prezzo_rilegatura" => $prezzo_rilegatura,
-                "angoli" => $angoli
+                "angoli" => $angoli,
             );
 
             $format = array("%s", "%s", "%s", "%f", "%d");
@@ -69,7 +69,7 @@ class Rilegatura
                 "descrizione_rilegatura" => $descrizione_rilegatura,
                 "anteprima_rilegatura" => $anteprima_rilegatura,
                 "prezzo_rilegatura" => $prezzo_rilegatura,
-                "angoli" => $angoli
+                "angoli" => $angoli,
             );
 
             $wpdb->update(
@@ -90,7 +90,15 @@ class Rilegatura
     {
         global $wpdb;
         // Rilegature
-        $query = $wpdb->get_results("SELECT * FROM ". $wpdb->prefix ."thesis_rilegature INNER JOIN ". $wpdb->prefix ."thesis_variazioni USING (id_rilegatura)");
+        $query = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "thesis_rilegature INNER JOIN " . $wpdb->prefix . "thesis_variazioni USING (id_rilegatura)");
+        return json_encode($query);
+    }
+
+    public function get_colori_carattere($id_rilegatura)
+    {
+        global $wpdb;
+
+        $query = $wpdb->get_results("SELECT id_colore_carattere, nome_colore, hex_colore FROM " . $wpdb->prefix . "thesis_rilegature JOIN " . $wpdb->prefix . "thesis_color_assoc USING (id_rilegatura) JOIN " . $wpdb->prefix . "thesis_colori_carattere USING (id_colore_carattere) WHERE id_rilegatura = $id_rilegatura");
         return json_encode($query);
     }
 }

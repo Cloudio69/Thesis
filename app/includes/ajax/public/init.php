@@ -11,6 +11,9 @@ add_action('wp_ajax_nopriv_get_options', 'ajax_get_options');
 add_action('wp_ajax_genera_frontespizio', 'ajax_genera_frontespizio');
 add_action('wp_ajax_nopriv_genera_frontespizio', 'ajax_genera_frontespizio');
 
+add_action('wp_ajax_get_colori_carattere', 'ajax_get_colori_carattere');
+add_action('wp_ajax_nopriv_get_colori_carattere', 'ajax_get_colori_carattere');
+
 function uuidv4()
 {
     $data = random_bytes(16);
@@ -76,4 +79,13 @@ function ajax_genera_frontespizio(){
     $process->genera_frontespizio($upload_dir . "/frontespizio.jpg", $r, $g, $b, $upload_dir . "/frontespizio_generato.png");
 
     wp_send_json_success(json_encode(array("message" => "Frontespizio generato.")), 200);
+}
+
+function ajax_get_colori_carattere(){
+    $data = $_GET['data'];
+
+    $rilegatura = new Rilegatura;
+    $query = $rilegatura->get_colori_carattere($data['id_rilegatura']);
+
+    wp_send_json_success(json_encode(array("results" => $query)));
 }
