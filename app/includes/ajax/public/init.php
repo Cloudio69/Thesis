@@ -30,7 +30,9 @@ function ajax_upload_file()
 
     $verify = wp_verify_nonce($nonce, 'thesis-token');
 
-    if (!$verify) wp_die("Nonce not verified.");
+    if (!$verify) {
+        wp_die("Nonce not verified.");
+    }
 
     if ($_FILES['file']) {
         $file = $_FILES['file'];
@@ -57,7 +59,6 @@ function ajax_upload_file()
     wp_die();
 }
 
-
 function ajax_get_options()
 {
     $rilegatura = new Rilegatura;
@@ -66,8 +67,8 @@ function ajax_get_options()
     wp_send_json_success(json_encode(array("results" => $query, "message" => "Query effettuata.")), 200);
 }
 
-
-function ajax_genera_frontespizio(){
+function ajax_genera_frontespizio()
+{
     $data = $_POST['data'];
 
     [$r, $g, $b] = $data['rgb'];
@@ -75,13 +76,25 @@ function ajax_genera_frontespizio(){
     $tmp_folder = $data['uuid'];
     $upload_dir = THESIS_PDFS . "/" . $tmp_folder;
 
+    if (!is_dir($upload_dir . "/frontespizi")) {
+        mkdir($upload_dir . "/frontespizi", 0755, true);
+    }
+
     $process = new ThesisProcess;
-    $process->genera_frontespizio($upload_dir . "/frontespizio.jpg", $r, $g, $b, $upload_dir . "/frontespizio_generato.png");
+
+    if (!isset($data['id'])) {
+        $process->genera_frontespizio($upload_dir . "/frontespizio.jpg", $r, $g, $b, $upload_dir . "/frontespizio_generato.png");
+    } else {
+        if (!file_exists($upload_dir . "/frontespizi/frontespizio_generato-" . $data['id'] . ".png")) {
+            $process->genera_frontespizio($upload_dir . "/frontespizio.jpg", $r, $g, $b, $upload_dir . "/frontespizi/frontespizio_generato-" . $data['id'] . ".png");
+        }
+    }
 
     wp_send_json_success(json_encode(array("message" => "Frontespizio generato.")), 200);
 }
 
-function ajax_get_colori_carattere(){
+function ajax_get_colori_carattere()
+{
     $data = $_GET['data'];
 
     $rilegatura = new Rilegatura;
