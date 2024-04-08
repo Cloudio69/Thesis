@@ -10,8 +10,10 @@ const order = {
     bn: [],
     colorate: [],
   },
-  cd: {}
+  cd: {},
 };
+
+const formOrder = document.querySelector("#rilegature_form");
 
 let currentStep = 0;
 
@@ -481,6 +483,40 @@ const raggruppaPerId = (array) => {
   });
 
   return raggruppato;
+};
+
+formOrder.onsubmit = (e) => {
+  e.preventDefault();
+
+  if(!checkFields()) return;
+
+  let rilegatura = document.querySelector("[name='rilegatura']:checked");
+  let variante = document.querySelector("[name='variante']:checked");
+  let colore = document.querySelector("[name='colori_carattere']:checked");
+
+  order.rilegature.push({
+    id_rilegatura: rilegatura.value,
+    id_variante: variante.value,
+    id_colore: colore.value,
+    qty: 1,
+  });
+
+  e.currentTarget.reset();
+
+  console.log(order);
+};
+
+const checkFields = () => {
+  let rilegatura = document.querySelector("[name='rilegatura']:checked");
+  let variante = document.querySelector("[name='variante']:checked");
+  let colore = document.querySelector("[name='colori_carattere']:checked");
+
+  if (!rilegatura || !variante || !colore) {
+    alert("Devi selezionare tutte le opzioni per procedere con l'ordine.");
+    return false;
+  }
+
+  return true;
 };
 
 generaFrontespizio();

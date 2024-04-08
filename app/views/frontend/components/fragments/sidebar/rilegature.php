@@ -8,9 +8,9 @@
             <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">book_2</span>Rilegature</h1>
             <div class="grid grid-cols-3 gap-4 items-center place-items-center text-center">
             <?php
-include_once THESIS_DIR . "app/includes/models/rilegature.php";
-$rilegature = new Rilegatura;
-$query = $rilegature->get_rilegature();
+            include_once THESIS_DIR . "app/includes/models/rilegature.php";
+            $rilegature = new Rilegatura;
+            $query = $rilegature->get_rilegature();
 
             $decodedRilegature = json_decode($query);
 
@@ -53,7 +53,12 @@ $query = $rilegature->get_rilegature();
                 <p class="opacity-50">Scegli prima una rilegatura.</p>
             </div>
         </div>
-        <button type="submit">SALVA</button>
+        <div class="quantita flex flex-col gap-4 mt-4">
+            <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">add_shopping_cart</span>Quantità</h1>
+            <div class="flex gap-4 items-center place-items-center text-center">
+                <input type="number" name="quantita" class="w-24 p-2 rounded-md" value="1" min="1" required />
+            </div>
+        <button type="submit" class="rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none">SALVA</button>
         </form>
     </section>
 </div>
