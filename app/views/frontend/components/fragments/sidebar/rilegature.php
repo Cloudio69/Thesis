@@ -58,7 +58,7 @@
             <div class="flex gap-4 items-center place-items-center text-center">
                 <input type="number" name="quantita" class="w-24 p-2 rounded-md" value="1" min="1" required />
             </div>
-        <button type="submit" class="rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none">SALVA</button>
+        <button type="submit" class="rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400">SALVA</button>
         </form>
     </section>
 </div>
