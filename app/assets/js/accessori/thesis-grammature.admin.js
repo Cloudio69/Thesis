@@ -1,4 +1,6 @@
 const listGrammature = document.querySelector("#list--grammature");
+const aggiungiGrammatura = document.querySelector("#aggiungi--grammature");
+const dialogGrammatura = document.querySelector("#dialog--grammature");
 
 jQuery.ajax({
   dataType: "json",
@@ -56,6 +58,10 @@ const getGrammature = (results) => {
       listGrammature.appendChild(grammaturaCard);
     });
   }
+};
+
+aggiungiGrammatura.onclick = () => {  
+  dialogGrammatura.showModal();
 };
 
 

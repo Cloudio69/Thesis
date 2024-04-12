@@ -1,4 +1,6 @@
 const listSegnalibri = document.querySelector("#list--segnalibri");
+const aggiungiSegnalibro = document.querySelector("#aggiungi--segnalibri");
+const dialogSegnalibro = document.querySelector("#dialog--segnalibri");
 
 jQuery.ajax({
   dataType: "json",
@@ -62,3 +64,14 @@ const getSegnalibri = (results) => {
     });
   }
 };
+
+
+aggiungiSegnalibro.onclick = () => {
+  dialogSegnalibro.showModal();
+};
+
+
+
+
+
+
