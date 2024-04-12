@@ -67,7 +67,7 @@ class Thesis
     {
     ?>
         <script>
-            const init = document.querySelector("#<?php echo get_option('id_bottone'); ?>")
+            const init = document.querySelectorAll(".<?php echo get_option('class_bottone'); ?>")
             const nonce = "<?php echo wp_create_nonce( 'thesis-token' ); ?>"
             const ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
             const configuratore = "<?php echo get_option('pagina_configuratore') ?>"
@@ -82,7 +82,7 @@ class Thesis
             'configuratore'
         );
         add_option(
-            'id_bottone',
+            'class_bottone',
             'configuratore'
         );
         register_setting(
@@ -91,7 +91,7 @@ class Thesis
         );
         register_setting(
             'thesis_impostazioni',
-            'id_bottone'
+            'class_bottone'
         );
     }
 

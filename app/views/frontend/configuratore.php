@@ -8,7 +8,8 @@ if (isset($_COOKIE['thesis_session'])) {
 
     if (!file_exists($upload_dir . '/frontespizio.jpg')) {
         $process = new ThesisProcess;
-        $process->process_frontespizio($file_name, $upload_dir);
+        if(file_exists($upload_dir . "/". $file_name)) $process->process_frontespizio($file_name, $upload_dir);
+        else $_COOKIE['thesis_session'] = null;
     }
 }
 ?>

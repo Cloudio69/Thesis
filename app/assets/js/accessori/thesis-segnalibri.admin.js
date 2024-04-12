@@ -18,5 +18,47 @@ const getSegnalibri = (results) => {
   if (results.length === 0) {
     listSegnalibri.removeAttribute("class");
     listSegnalibri.innerHTML = "Non ci sono segnalibri.";
+  } else {
+    listSegnalibri.removeAttribute("class");
+    listSegnalibri.classList.add("grid", "gap-4", "lg:grid-cols-5", "md:grid-cols-2");
+
+    results.forEach((segnalibro) => {
+      let segnalibroCard = document.createElement("div");
+      segnalibroCard.classList.add(
+        "bg-white",
+        "shadow-md",
+        "rounded-lg",
+        "p-4",
+        "flex",
+        "flex-col",
+        "justify-between"
+      );
+
+      let segnalibroImg = document.createElement("img");
+      segnalibroImg.src = segnalibro.anteprima_segnalibro;
+      segnalibroImg.classList.add("w-full", "h-48", "object-cover", "rounded-lg");
+
+      let segnalibroNome = document.createElement("h2");
+      segnalibroNome.textContent = segnalibro.nome_segnalibro;
+      segnalibroNome.classList.add("text-xl", "font-bold", "mt-2");
+
+      let segnalibroButton = document.createElement("button");
+      segnalibroButton.textContent = "Modifica";
+      segnalibroButton.classList.add(
+        "bg-blue-500",
+        "text-white",
+        "font-bold",
+        "rounded-lg",
+        "p-2",
+        "mt-2",
+        "hover:bg-blue-700"
+      );
+
+      segnalibroCard.appendChild(segnalibroImg);
+      segnalibroCard.appendChild(segnalibroNome);
+      segnalibroCard.appendChild(segnalibroButton);
+
+      listSegnalibri.appendChild(segnalibroCard);
+    });
   }
 };

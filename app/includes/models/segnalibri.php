@@ -16,4 +16,50 @@ class Segnalibro {
             return json_encode($query);
         }
     }
+
+    public function post_segnalibro($data)
+    {
+        global $wpdb;
+
+        $wpdb->insert(
+            $wpdb->prefix . "thesis_segnalibri",
+            [
+                'nome_segnalibro' => $data['nome'],
+                'anteprima_segnalibro' => $data['immagine']
+            ]
+        );
+
+        return json_encode(['status' => 'success', 'message' => 'Segnalibro aggiunto correttamente']);
+    }
+
+    public function update_segnalibro($data)
+    {
+        global $wpdb;
+
+        $wpdb->update(
+            $wpdb->prefix . "thesis_segnalibri",
+            [
+                'nome' => $data['nome'],
+                'prezzo' => $data['prezzo'],
+                'descrizione' => $data['descrizione'],
+                'immagine' => $data['immagine']
+            ],
+            ['id_segnalibro' => $data['id']]
+        );
+
+        return json_encode(['status' => 'success', 'message' => 'Segnalibro modificato correttamente']);
+    }
+
+    public function delete_segnalibro($id)
+    {
+        global $wpdb;
+
+        $wpdb->delete(
+            $wpdb->prefix . "thesis_segnalibri",
+            ['id_segnalibro' => $id],
+            ['%d']
+        );
+
+        return json_encode(['status' => 'success', 'message' => 'Segnalibro eliminato correttamente']);
+    }
 }

@@ -9,6 +9,14 @@ add_action('wp_ajax_delete_segnalibro', 'ajax_delete_segnalibro');
 
 function ajax_post_segnalibri()
 {
+    try {
+        $segnalibro = new Segnalibro;
+        $data = $_POST['data'];
+        $query = $segnalibro->post_segnalibro($data);
+        wp_send_json_success(json_encode(array("results" => $query, "message" => "Query effettuata.")), 200);
+    } catch (Exception $e) {
+        wp_send_json_error("Errore nella richiesta: {$e}", 500);
+    }
 }
 
 function ajax_get_segnalibri()
@@ -24,4 +32,12 @@ function ajax_get_segnalibri()
 
 function ajax_delete_segnalibro()
 {
+    try {
+        $segnalibro = new Segnalibro;
+        $data = $_POST['data'];
+        $query = $segnalibro->delete_segnalibro($data['id']);
+        wp_send_json_success(json_encode(array("results" => $query, "message" => "Query effettuata.")), 200);
+    } catch (Exception $e) {
+        wp_send_json_error("Errore nella richiesta: {$e}", 500);
+    }
 }

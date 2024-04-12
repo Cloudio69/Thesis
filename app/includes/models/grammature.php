@@ -16,4 +16,52 @@ class Grammatura {
             return json_encode($query);
         }
     }
+
+    public function post_grammatura($data)
+    {
+        global $wpdb;
+
+        $wpdb->insert(
+            $wpdb->prefix . "thesis_grammature",
+            [
+                'nome_grammatura' => $data['nome'],
+                'prezzo_grammatura' => $data['prezzo'],
+                'descrizione_grammatura' => $data['descrizione'],
+                'anteprima_grammatura' => $data['immagine']
+            ]
+        );
+
+        return json_encode(['status' => 'success', 'message' => 'Grammatura aggiunta correttamente']);
+    }
+
+    public function update_grammatura($data)
+    {
+        global $wpdb;
+
+        $wpdb->update(
+            $wpdb->prefix . "thesis_grammature",
+            [
+                'nome' => $data['nome'],
+                'prezzo' => $data['prezzo'],
+                'descrizione' => $data['descrizione'],
+                'immagine' => $data['immagine']
+            ],
+            ['id_grammatura' => $data['id']]
+        );
+
+        return json_encode(['status' => 'success', 'message' => 'Grammatura modificata correttamente']);
+    }
+
+    public function delete_grammatura($id)
+    {
+        global $wpdb;
+
+        $wpdb->delete(
+            $wpdb->prefix . "thesis_grammature",
+            ['id_grammatura' => $id],
+            ['%d']
+        );
+
+        return json_encode(['status' => 'success', 'message' => 'Grammatura eliminata correttamente']);
+    }
 }

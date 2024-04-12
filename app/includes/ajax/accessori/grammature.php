@@ -9,6 +9,14 @@ add_action('wp_ajax_delete_grammatura', 'ajax_delete_grammatura');
 
 function ajax_post_grammature()
 {
+    try {
+        $grammatura = new Grammatura;
+        $data = $_POST['data'];
+        $query = $grammatura->post_grammatura($data);
+        wp_send_json_success(json_encode(array("results" => $query, "message" => "Query effettuata.")), 200);
+    } catch (Exception $e) {
+        wp_send_json_error("Errore nella richiesta: {$e}", 500);
+    }
 }
 
 function ajax_get_grammature()
@@ -24,4 +32,12 @@ function ajax_get_grammature()
 
 function ajax_delete_grammatura()
 {
+    try {
+        $grammatura = new Grammatura;
+        $data = $_POST['data'];
+        $query = $grammatura->delete_grammatura($data['id']);
+        wp_send_json_success(json_encode(array("results" => $query, "message" => "Query effettuata.")), 200);
+    } catch (Exception $e) {
+        wp_send_json_error("Errore nella richiesta: {$e}", 500);
+    }
 }

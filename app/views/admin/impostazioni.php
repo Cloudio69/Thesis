@@ -2,9 +2,9 @@
 if (!isset($_POST)) $success = false;
 
 if (isset($_POST['submit'])) {
-    $id_bottone = sanitize_text_field($_POST['id_bottone']);
+    $class_bottone = sanitize_text_field($_POST['class_bottone']);
     $pagina_configuratore = sanitize_text_field($_POST['wordpress--page']);
-    update_option('id_bottone', $id_bottone);
+    update_option('class_bottone', $class_bottone);
     update_option('pagina_configuratore', $pagina_configuratore);
 
     $success = true;
@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
 }
 
 $opzione_salvata = get_option('pagina_configuratore');
-$id_salvato = get_option('id_bottone');
+$id_salvato = get_option('class_bottone');
 
 ?>
 
@@ -40,8 +40,8 @@ $id_salvato = get_option('id_bottone');
                     ?>
                 </select>
                 <h1 class="text-xl font-bold mb-2 mt-8">Bottone Upload</h1>
-                <p class="opacity-75 mb-4">Inserisci l'ID del bottone da usare per inizializzare il configuratore</p>
-                <input type="text" name="id_bottone" value="<?php echo $id_salvato; ?>" placeholder="Inserisci senza #" />
+                <p class="opacity-75 mb-4">Inserisci la classe del bottone da usare per inizializzare il configuratore</p>
+                <input type="text" name="class_bottone" value="<?php echo $id_salvato; ?>" placeholder="Inserisci senza #" />
 
                 <?php submit_button('Salva impostazioni'); ?>
             </form>
