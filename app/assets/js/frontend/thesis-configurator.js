@@ -545,6 +545,8 @@ const generaPagine = async () => {
 
   numPages = JSON.parse(getNumPages.data).results;
 
+  // Contatore persistente
+  let counter = 0
   const progresso = document.querySelector("#progresso--pagine");
 
   await Promise.all(
@@ -561,7 +563,9 @@ const generaPagine = async () => {
           },
         },
         success: () => {
-          progresso.textContent = `Pagina ${i + 1} di ${numPages}`;
+          // Evita di far rimbalzare il progresso
+          if(i > counter) counter = i;
+          progresso.textContent = `Pagina ${counter + 1} di ${numPages}`;
         },
       });
     })
