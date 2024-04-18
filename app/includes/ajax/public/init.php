@@ -113,9 +113,9 @@ function ajax_genera_pagine(){
 
     $process = new ThesisProcess;
 
-    $process->genera_pagine($upload_dir . "/tesi.pdf", $upload_dir . "/pagine", $data['num_pagina']);
+    $process->genera_pagine($upload_dir . "/tesi.pdf", $upload_dir . "/pagine", $numPagina);
 
-    wp_send_json_success(json_encode(array("message" => "Pagina generata.")), 200);
+    wp_send_json_success(json_encode(array("message" => "Pagina generata.", "pagina" => $numPagina)), 200);
 }
 
 function ajax_get_colori_carattere()

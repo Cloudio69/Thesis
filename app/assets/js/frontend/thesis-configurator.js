@@ -547,23 +547,30 @@ const generaPagine = async () => {
 
   numPages = JSON.parse(getNumPages.data).results;
 
-  for (let i = 0; i < numPages; i++) {
-    jQuery.ajax({
-      dataType: "json",
-      method: "POST",
-      url: ajaxurl,
-      data: {
-        action: "genera_pagine",
+  const progresso = document.querySelector("#progresso--pagine");
+
+  await Promise.all(
+    Array.from({ length: numPages }, async (_, i) => {
+      await jQuery.ajax({
+        dataType: "json",
+        method: "POST",
+        url: ajaxurl,
         data: {
-          uuid: getCookie("thesis_session"),
-          num_pagina: i,
+          action: "genera_pagine",
+          data: {
+            uuid: getCookie("thesis_session"),
+            num_pagina: i,
+          },
         },
-      },
-      success: (response) => {
-        return response;
-      },
-    });
-  }
+        success: () => {
+          progresso.textContent = `Pagina ${i + 1} of ${numPages}`;
+        }
+      });
+    })
+  ).then(() => {
+    console.log("Pagine generate.");
+  });
+
 };
 
 generaPagine();
