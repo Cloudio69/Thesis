@@ -530,8 +530,6 @@ const checkFields = () => {
 };
 
 const generaPagine = async () => {
-  const pagineWrapper = document.querySelector(".thesis--pagine");
-
   let getNumPages = await jQuery.ajax({
     dataType: "json",
     method: "GET",
@@ -563,14 +561,50 @@ const generaPagine = async () => {
           },
         },
         success: () => {
-          progresso.textContent = `Pagina ${i + 1} of ${numPages}`;
-        }
+          progresso.textContent = `Pagina ${i + 1} di ${numPages}`;
+        },
       });
     })
   ).then(() => {
-    console.log("Pagine generate.");
+    creaPagine();
   });
+};
 
+const creaPagine = () => {
+  const pagineWrapper = document.querySelector(".thesis--pagine");
+
+  pagineWrapper.replaceChildren();
+
+  let pagineContainer = document.createElement("div");
+
+  pagineContainer.classList.add("grid", "grid-cols-2", "gap-4", "overflow-auto");
+
+  for (let i = 0; i < numPages; i++) {
+    let pagina = new Image();
+    pagina.src =
+      "/wp-content/plugins/thesis/app/files/" +
+      getCookie("thesis_session") +
+      "/pagine/pagina-" +
+      i +
+      ".jpg";
+
+    pagina.classList.add("p-4");
+
+    let zoomIn = document.createElement("a");
+    zoomIn.href = pagina.src;
+
+    zoomIn.dataset.fancybox = "gallery";
+
+    zoomIn.appendChild(pagina);
+
+    pagineContainer.appendChild(zoomIn);
+  }
+  
+  Fancybox.bind("[data-fancybox='gallery']");
+
+  pagineWrapper.classList.replace("items-center", "self-start")
+
+  pagineWrapper.appendChild(pagineContainer);
 };
 
 generaPagine();

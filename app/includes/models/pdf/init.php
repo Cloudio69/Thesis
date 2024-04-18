@@ -18,15 +18,20 @@ class ThesisProcess
 
     public static function genera_pagine($fileSorgente, $cartellaDestinazione, $num_pagina)
     {
-        $image = new Imagick();
-        $image->setResolution(300, 300);
-        $image->readImage($fileSorgente . "[" . $num_pagina . ']');
-        $image->scaleImage(1920, 1280, true);
-        $image->setImageFormat('jpg');
+        if (!file_exists($cartellaDestinazione . "/pagina-{$num_pagina}.jpg")) {
+            $image = new Imagick();
+            $image->setResolution(300, 300);
+            $image->readImage($fileSorgente . "[" . $num_pagina . ']');
+            $image->scaleImage(1920, 1280, true);
+            $image->setImageFormat('jpg');
 
-        $image->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
-        $image->setImageAlphaChannel(Imagick::ALPHACHANNEL_REMOVE);
-        $image->writeImage($cartellaDestinazione . "/pagina-{$num_pagina}.jpg");
+            $image->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
+            $image->setImageAlphaChannel(Imagick::ALPHACHANNEL_REMOVE);
+
+            $image->writeImage($cartellaDestinazione . "/pagina-{$num_pagina}.jpg");
+        } else {
+            return;
+        }
     }
 
     public static function get_num_pagine($fileSorgente)
