@@ -577,7 +577,7 @@ const creaPagine = () => {
 
   let pagineContainer = document.createElement("div");
 
-  pagineContainer.classList.add("grid", "grid-cols-2", "gap-4", "overflow-auto");
+  pagineContainer.classList.add("grid", "grid-cols-3", "gap-4", "overflow-auto");
 
   for (let i = 0; i < numPages; i++) {
     let pagina = new Image();
