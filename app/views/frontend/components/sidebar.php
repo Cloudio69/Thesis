@@ -2,4 +2,8 @@
     <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/sidebar/frontespizio.php"; ?>
     <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/sidebar/tipologia.php"; ?>
     <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/sidebar/rilegature.php"; ?>
+    <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/sidebar/pagine.php"; ?>
+    <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/sidebar/cd.php"; ?>
+    <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/sidebar/finalizza.php"; ?>
+    <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/sidebar/checkout.php"; ?>
 </div>

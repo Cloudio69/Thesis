@@ -16,6 +16,26 @@ class ThesisProcess
         $image->writeImage($dir . "/frontespizio.jpg");
     }
 
+    public static function genera_pagine($fileSorgente, $cartellaDestinazione, $num_pagina)
+    {
+        $image = new Imagick();
+        $image->setResolution(300, 300);
+        $image->readImage($fileSorgente . "[" . $num_pagina . ']');
+        $image->scaleImage(1920, 1280, true);
+        $image->setImageFormat('jpg');
+
+        $image->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
+        $image->setImageAlphaChannel(Imagick::ALPHACHANNEL_REMOVE);
+        $image->writeImage($cartellaDestinazione . "/pagina-{$num_pagina}.jpg");
+    }
+
+    public static function get_num_pagine($fileSorgente)
+    {
+        $pdf = file_get_contents($fileSorgente);
+        $num = preg_match_all("/\/Page\W/", $pdf, $dummy);
+        return $num;
+    }
+
     public static function genera_frontespizio($percorso, $r, $g, $b, $output)
     {
         self::colore_singolo($percorso, $output);

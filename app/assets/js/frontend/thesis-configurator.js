@@ -39,7 +39,16 @@ const config = [
     content: document.querySelector(".thesis--rilegature"),
     isCompleted: true,
   },
+  {
+    step: "pagine",
+    nav: document.querySelector("#pagine"),
+    sidebar: document.querySelector("#pagine_step"),
+    content: document.querySelector(".thesis--pagine"),
+    isCompleted: true,
+  },
 ];
+
+let numPages = 0;
 
 const preload = (url) => (new Image().src = url);
 
@@ -488,17 +497,18 @@ const raggruppaPerId = (array) => {
 formOrder.onsubmit = (e) => {
   e.preventDefault();
 
-  if(!checkFields()) return;
+  if (!checkFields()) return;
 
   let rilegatura = document.querySelector("[name='rilegatura']:checked");
   let variante = document.querySelector("[name='variante']:checked");
   let colore = document.querySelector("[name='colori_carattere']:checked");
+  let qty = document.querySelector("[name='quantita']");
 
   order.rilegature.push({
     id_rilegatura: rilegatura.value,
     id_variante: variante.value,
     id_colore: colore.value,
-    qty: 1,
+    qty: qty.value,
   });
 
   e.currentTarget.reset();
@@ -519,6 +529,44 @@ const checkFields = () => {
   return true;
 };
 
+const generaPagine = async () => {
+  const pagineWrapper = document.querySelector(".thesis--pagine");
+
+  let getNumPages = await jQuery.ajax({
+    dataType: "json",
+    method: "GET",
+    url: ajaxurl,
+    data: {
+      action: "get_num_pagine",
+      uuid: getCookie("thesis_session"),
+    },
+    success: (response) => {
+      return JSON.parse(response.data);
+    },
+  });
+
+  numPages = JSON.parse(getNumPages.data).results;
+
+  for (let i = 0; i < numPages; i++) {
+    jQuery.ajax({
+      dataType: "json",
+      method: "POST",
+      url: ajaxurl,
+      data: {
+        action: "genera_pagine",
+        data: {
+          uuid: getCookie("thesis_session"),
+          num_pagina: i,
+        },
+      },
+      success: (response) => {
+        return response;
+      },
+    });
+  }
+};
+
+generaPagine();
 generaFrontespizio();
 getOpzioni();
 

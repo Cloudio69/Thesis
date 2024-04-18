@@ -35,6 +35,10 @@ wp_enqueue_style('thesis-frontend', THESIS_URL . "/app/assets/css/frontend/thesi
                 <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/frontespizio.php"; ?>
                 <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/tipologia.php"; ?>
                 <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/rilegature.php"; ?>
+                <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/pagine.php"; ?>
+                <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/cd.php"; ?>
+                <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/finalizza.php"; ?>
+                <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/checkout.php"; ?>
             </div>
             <?php include_once THESIS_DIR . "app/views/frontend/components/sidebar.php"; ?>
         </div>

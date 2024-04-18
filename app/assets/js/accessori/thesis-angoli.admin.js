@@ -3,19 +3,28 @@ const aggiungiAngolo = document.querySelector("#aggiungi--angoli");
 const modalAngolo = document.querySelector("#modal--angoli");
 const formAngolo = document.querySelector("#form--angolo");
 
-jQuery.ajax({
-  dataType: "json",
-  method: "GET",
-  url: "admin-ajax.php",
-  data: { action: "get_angoli" },
-  success: (response) => {
-    res = JSON.parse(response.data);
-    results = JSON.parse(res.results);
-    getAngoli(results);
-  },
-});
 
-const getAngoli = (results) => {
+const getAngoli = async () => {
+
+  let results = await jQuery.ajax({
+    dataType: "json",
+    method: "GET",
+    url: "admin-ajax.php",
+    data: { action: "get_angoli" },
+    success: (response) => {
+      res = JSON.parse(response.data);
+      inObj = JSON.parse(res.results);
+     
+      return inObj;
+    },
+  });
+
+  // Che cazzo di casino che merda di codice
+
+  results = JSON.parse(await results.data)
+  results = JSON.parse(await results.results);
+  console.log(results);
+
   if (results.length === 0) {
     listAngoli.removeAttribute("class");
     listAngoli.innerHTML = "Non ci sono angoli.";
@@ -113,7 +122,7 @@ const getAngoli = (results) => {
             listAngoli.replaceChildren();
             res = JSON.parse(response.data);
             results = JSON.parse(res.results);
-            getAngoli(results);
+            getAngoli();
           },
         });
       };
@@ -196,3 +205,6 @@ const getAngoli = (results) => {
     };
   };
 };
+
+
+getAngoli();
