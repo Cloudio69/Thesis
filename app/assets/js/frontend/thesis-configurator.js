@@ -69,6 +69,9 @@ config.forEach((item, index) => {
     item.nav.classList.add("opacity-50");
   } else {
     item.nav.onclick = (e) => {
+      if (item.step === "pagine")
+        generaPagine();
+      
       document
         .querySelectorAll(".route")
         .forEach((item) => item.classList.remove("active"));
@@ -524,7 +527,7 @@ const checkFields = () => {
   if (!rilegatura || !variante || !colore) {
     alert("Devi selezionare tutte le opzioni per procedere con l'ordine.");
     return false;
-  }
+  }  
 
   return true;
 };
@@ -546,7 +549,7 @@ const generaPagine = async () => {
   numPages = JSON.parse(getNumPages.data).results;
 
   // Contatore persistente
-  let counter = 0
+  let counter = 0;
   const progresso = document.querySelector("#progresso--pagine");
 
   await Promise.all(
@@ -564,7 +567,7 @@ const generaPagine = async () => {
         },
         success: () => {
           // Evita di far rimbalzare il progresso
-          if(i > counter) counter = i;
+          if (i > counter) counter = i;
           progresso.textContent = `Pagina ${counter + 1} di ${numPages}`;
         },
       });
@@ -581,7 +584,12 @@ const creaPagine = () => {
 
   let pagineContainer = document.createElement("div");
 
-  pagineContainer.classList.add("grid", "grid-cols-3", "gap-4", "overflow-auto");
+  pagineContainer.classList.add(
+    "grid",
+    "grid-cols-3",
+    "gap-4",
+    "overflow-auto"
+  );
 
   for (let i = 0; i < numPages; i++) {
     let pagina = new Image();
@@ -603,15 +611,14 @@ const creaPagine = () => {
 
     pagineContainer.appendChild(zoomIn);
   }
-  
+
   Fancybox.bind("[data-fancybox='gallery']");
 
-  pagineWrapper.classList.replace("items-center", "self-start")
+  pagineWrapper.classList.replace("items-center", "self-start");
 
   pagineWrapper.appendChild(pagineContainer);
 };
 
-generaPagine();
 generaFrontespizio();
 getOpzioni();
 
