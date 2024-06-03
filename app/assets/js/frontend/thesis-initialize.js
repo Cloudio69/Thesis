@@ -22,9 +22,8 @@ if (typeof init != "undefined" && init) {
       "top-0",
       "gap-2"
     );
-
     preloader.innerHTML =
-      "<img class='animate-spin w-10 h-10' src='/wp-content/plugins/thesis/app/assets/img/svg/loading.svg' />";
+      "<img class='animate-spin w-10 h-10' src='/wp-content/plugins/thesis/app/assets/img/svg/loading.svg' /><p id='status'>Caricamento...</p>";
 
     let fileUpload = document.createElement("input");
     fileUpload.type = "file";
@@ -59,8 +58,27 @@ if (typeof init != "undefined" && init) {
           type: "POST",
           url: ajaxurl,
           data: data,
+          xhr: function () {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener(
+              "progress",
+              function (evt) {
+                if (evt.lengthComputable) {
+                  var percentComplete = evt.loaded / evt.total;
+                  console.log(percentComplete);
+                  jQuery("#status").html(
+                    "<b> Upload del file: " +
+                      Math.round(percentComplete * 100) +
+                      "% </b>"
+                  );
+                }
+              },
+              false
+            );
+            return xhr;
+          },
           success: (response) => {
-            init.forEach((item) => item.removeAttribute("disabled"))
+            init.forEach((item) => item.removeAttribute("disabled"));
             let res = JSON.parse(response);
             setCookie("thesis_session", res.thesis_session, 1);
             window.location.href = configuratore;

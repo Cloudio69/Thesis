@@ -1,6 +1,7 @@
-<?php wp_head(); ?>
+<?php wp_head();?>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <?php
+
 if (isset($_COOKIE['thesis_session'])) {
     $tmp_folder = $_COOKIE['thesis_session'];
     $upload_dir = THESIS_PDFS . "/" . $tmp_folder;
@@ -8,17 +9,21 @@ if (isset($_COOKIE['thesis_session'])) {
 
     if (!file_exists($upload_dir . '/frontespizio.jpg')) {
         $process = new ThesisProcess;
-        if(file_exists($upload_dir . "/". $file_name)) $process->process_frontespizio($file_name, $upload_dir);
-        else $_COOKIE['thesis_session'] = null;
+        if (file_exists($upload_dir . "/" . $file_name)) {
+            $process->process_frontespizio($file_name, $upload_dir);
+        } else {
+            $_COOKIE['thesis_session'] = null;
+        }
     }
 }
+
 ?>
 <?php
 wp_enqueue_style('tailwind-css', THESIS_URL . "/app/assets/css/tailwind.css");
 wp_enqueue_style('thesis-frontend', THESIS_URL . "/app/assets/css/frontend/thesis-frontend.css");
 ?>
 
-<?php if (!isset($_COOKIE['thesis_session'])) { ?>
+<?php if (!isset($_COOKIE['thesis_session'])) {?>
     <div class="thesis--wrapper w-full h-full flex flex-col justify-center items-center gap-4">
         <div class="alert bg-red-700 text-white ring-1 ring-red-500 rounded-md ring-offset-2 font-bold p-2 px-4">Sessione non valida</div>
         <a href="/" class="underline">Torna indietro</a>
@@ -29,24 +34,23 @@ wp_enqueue_style('thesis-frontend', THESIS_URL . "/app/assets/css/frontend/thesi
         <p class="font-medium">Caricamento...</p>
     </div>
     <div class="thesis--wrapper h-full">
-        <?php include_once THESIS_DIR . "app/views/frontend/components/header.php"; ?>
+        <?php include_once THESIS_DIR . "app/views/frontend/components/header.php";?>
         <div class="thesis--body h-full lg:flex justify-stretch md:flex-col md:flex">
             <div class="thesis--fragments flex items-center justify-center lg:h-full md:h-[50vh] lg:w-[60%] pt-[4rem] bg-slate-100 overflow-auto">
-                <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/frontespizio.php"; ?>
-                <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/tipologia.php"; ?>
-                <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/rilegature.php"; ?>
-                <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/pagine.php"; ?>
-                <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/cd.php"; ?>
-                <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/finalizza.php"; ?>
-                <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/checkout.php"; ?>
+                <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/frontespizio.php";?>
+                <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/tipologia.php";?>
+                <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/rilegature.php";?>
+                <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/pagine.php";?>
+                <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/cd.php";?>
+                <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/finalizza.php";?>
+                <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/checkout.php";?>
             </div>
-            <?php include_once THESIS_DIR . "app/views/frontend/components/sidebar.php"; ?>
+            <?php include_once THESIS_DIR . "app/views/frontend/components/sidebar.php";?>
         </div>
     </div>
 
-    <?php wp_enqueue_script('thesis-configurator', THESIS_URL . 'app/assets/js/frontend/thesis-configurator.js', ['jquery'], true); ?>
+    <?php wp_enqueue_script('thesis-configurator', THESIS_URL . 'app/assets/js/frontend/thesis-configurator.js', ['jquery'], true);?>
 <?php
-    wp_enqueue_script('gsap', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js', array(), true);
-} ?>
+wp_enqueue_script('gsap', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js', array(), true);}?>
 
-<?php wp_footer(); ?>
+<?php wp_footer();?>
