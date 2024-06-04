@@ -126,8 +126,8 @@ config.forEach((item, index) => {
 });
 
 let images = {
-  fronte: "/wp-content/uploads/2024/03/mockup-fronte.png",
-  fronteRetro: "/wp-content/uploads/2024/03/mockup-fronte-retro.png",
+  fronte: "/wp-content/plugins/thesis/app/assets/img/mockup-fronte.png",
+  fronteRetro: "/wp-content/plugins/thesis/app/assets/img/mockup-fronte-retro.png",
 };
 
 for (let image in images) {
