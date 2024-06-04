@@ -67,7 +67,7 @@ if (typeof init != "undefined" && init) {
                   var percentComplete = evt.loaded / evt.total;
                   console.log(percentComplete);
                   jQuery("#status").html(
-                    "<b> Upload del file: " +
+                    "<b class='text-xl'> Upload del file: " +
                       Math.round(percentComplete * 100) +
                       "% </b>"
                   );

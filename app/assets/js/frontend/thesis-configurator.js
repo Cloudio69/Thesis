@@ -48,7 +48,7 @@ const config = [
   },
 ];
 
-let numPages = 0;
+let numPages = 0, generated = false;
 
 const preload = (url) => (new Image().src = url);
 
@@ -69,9 +69,8 @@ config.forEach((item, index) => {
     item.nav.classList.add("opacity-50");
   } else {
     item.nav.onclick = (e) => {
-      if (item.step === "pagine")
-        generaPagine();
-      
+      if (item.step === "pagine" && generated === false) generaPagine();
+
       document
         .querySelectorAll(".route")
         .forEach((item) => item.classList.remove("active"));
@@ -527,7 +526,7 @@ const checkFields = () => {
   if (!rilegatura || !variante || !colore) {
     alert("Devi selezionare tutte le opzioni per procedere con l'ordine.");
     return false;
-  }  
+  }
 
   return true;
 };
@@ -552,29 +551,32 @@ const generaPagine = async () => {
   let counter = 0;
   const progresso = document.querySelector("#progresso--pagine");
 
-  await Promise.all(
-    Array.from({ length: numPages }, async (_, i) => {
-      await jQuery.ajax({
-        dataType: "json",
-        method: "POST",
-        url: ajaxurl,
-        data: {
-          action: "genera_pagine",
+  if (!generated) {
+    await Promise.all(
+      Array.from({ length: numPages }, async (_, i) => {
+        await jQuery.ajax({
+          dataType: "json",
+          method: "POST",
+          url: ajaxurl,
           data: {
-            uuid: getCookie("thesis_session"),
-            num_pagina: i,
+            action: "genera_pagine",
+            data: {
+              uuid: getCookie("thesis_session"),
+              num_pagina: i,
+            },
           },
-        },
-        success: () => {
-          // Evita di far rimbalzare il progresso
-          if (i > counter) counter = i;
-          progresso.textContent = `Pagina ${counter + 1} di ${numPages}`;
-        },
-      });
-    })
-  ).then(() => {
-    creaPagine();
-  });
+          success: () => {
+            // Evita di far rimbalzare il progresso
+            if (i > counter) counter = i;
+            progresso.textContent = `Pagina ${counter + 1} di ${numPages}`;
+          },
+        });
+      })
+    ).then(() => {
+      creaPagine();
+      generated = true;
+    });
+  }
 };
 
 const creaPagine = () => {
