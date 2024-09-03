@@ -48,7 +48,8 @@ const config = [
   },
 ];
 
-let numPages = 0, generated = false;
+let numPages = 0,
+  generated = false;
 
 const preload = (url) => (new Image().src = url);
 
@@ -127,7 +128,8 @@ config.forEach((item, index) => {
 
 let images = {
   fronte: "/wp-content/plugins/thesis/app/assets/img/mockup-fronte.png",
-  fronteRetro: "/wp-content/plugins/thesis/app/assets/img/mockup-fronte-retro.png",
+  fronteRetro:
+    "/wp-content/plugins/thesis/app/assets/img/mockup-fronte-retro.png",
 };
 
 for (let image in images) {
@@ -573,8 +575,8 @@ const generaPagine = async () => {
         });
       })
     ).then(() => {
-      creaPagine();
-      generated = true;
+      creaPagine()
+      generated = true; // Evita di rigenerare le pagine
     });
   }
 };
