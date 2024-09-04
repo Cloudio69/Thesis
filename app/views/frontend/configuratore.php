@@ -21,6 +21,8 @@ if (isset($_COOKIE['thesis_session'])) {
 <?php
 wp_enqueue_style('tailwind-css', THESIS_URL . "/app/assets/css/tailwind.css");
 wp_enqueue_style('thesis-frontend', THESIS_URL . "/app/assets/css/frontend/thesis-frontend.css");
+wp_enqueue_script('fabric-js', 'https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js');
+wp_enqueue_script('gsap', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js');
 ?>
 
 <?php if (!isset($_COOKIE['thesis_session'])) {?>
@@ -49,8 +51,13 @@ wp_enqueue_style('thesis-frontend', THESIS_URL . "/app/assets/css/frontend/thesi
         </div>
     </div>
 
-    <?php wp_enqueue_script('thesis-configurator', THESIS_URL . 'app/assets/js/frontend/thesis-configurator.js', ['jquery'], true);?>
+    <?php 
+        wp_enqueue_script('thesis-configurator', THESIS_URL . 'app/assets/js/frontend/thesis-configurator.js', ['jquery'], true);
+        wp_enqueue_script('thesis-canvas', THESIS_URL . 'app/assets/js/frontend/thesis-canvas.js', ['fabric-js'], true);
+    ?>
 <?php
-wp_enqueue_script('gsap', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js', array(), true);}?>
+}
+
+?>
 
 <?php wp_footer();?>

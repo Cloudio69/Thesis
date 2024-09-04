@@ -46,6 +46,13 @@ const config = [
     content: document.querySelector(".thesis--pagine"),
     isCompleted: true,
   },
+  {
+    step: "cd",
+    nav: document.querySelector("#cd"),
+    sidebar: document.querySelector("#cd_step"),
+    content: document.querySelector(".thesis--cd"),
+    isCompleted: true,
+  },
 ];
 
 let numPages = 0,
@@ -625,6 +632,7 @@ const creaPagine = () => {
 
 generaFrontespizio();
 getOpzioni();
+
 
 /* Preloader */
 
