@@ -44,13 +44,27 @@ for ($i = 0; $i < count($decodedRilegature); $i++) {
         <div class="carta_grammatura flex flex-col gap-4 mt-4">
             <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">article</span>Carta e grammatura</h1>
             <div class="flex gap-4 items-center place-items-center text-center">
-                <p class="opacity-50">Scegli prima una rilegatura.</p>
+                <select name="grammatura" class="p-2 rounded-md" required>
+                    <option value="" selected disabled>Seleziona la grammatura</option>
+                    <option value="grammatura-80">80 gr.</option>
+                    <option value="grammatura-100">100 gr. patinata</option>
+                    <option value="grammatura-120">120 gr. uso mano</option>
+                </select>
+                <select name="formato" class="p-2 rounded-md">
+                    <option value="" selected disabled>Seleziona il formato</option>
+                    <option value="formato-a4">A4</option>
+                    <option value="formato-a3">A3</option>
+                </select>
             </div>
         </div>
         <div class="angoli flex flex-col gap-4 mt-4">
             <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">arrows_more_up</span>Angoli</h1>
             <div class="flex gap-4 items-center place-items-center text-center">
-                <p class="opacity-50">Scegli prima una rilegatura.</p>
+                <select name="angoli" class="p-2 rounded-md" required>
+                    <option value="" selected disabled>Seleziona gli angoli</option>
+                    <option value="angoli-dorati">Dorati</option>
+                    <option value="angoli-argentati">Argentati</option>
+                </select>
             </div>
         </div>
         <div class="segnalibri flex flex-col gap-4 mt-4">
