@@ -505,6 +505,16 @@ const raggruppaPerId = (array) => {
   return raggruppato;
 };
 
+document.querySelectorAll("#rilegature_form label").forEach( item => item.onclick = () => { 
+  let sectionAccessori = document.querySelector(".section_accessori");
+  if(sectionAccessori.classList.contains("hidden")){ 
+    sectionAccessori.classList.remove("hidden");
+    sectionAccessori.classList.add("fadeIn")
+  }
+ } )
+
+
+
 formOrder.onsubmit = (e) => {
   e.preventDefault();
 
@@ -513,12 +523,18 @@ formOrder.onsubmit = (e) => {
   let rilegatura = document.querySelector("[name='rilegatura']:checked");
   let variante = document.querySelector("[name='variante']:checked");
   let colore = document.querySelector("[name='colori_carattere']:checked");
+  let grammatura = document.querySelector("[name='grammatura']");
+  let formato = document.querySelector("[name='formato']");
+  let angoli = document.querySelector("[name='angoli']");
   let qty = document.querySelector("[name='quantita']");
 
   order.rilegature.push({
     id_rilegatura: rilegatura.value,
     id_variante: variante.value,
     id_colore: colore.value,
+    grammatura: grammatura.value,
+    formato: formato.value,
+    angoli: angoli.value,
     qty: qty.value,
   });
 
@@ -582,7 +598,7 @@ const generaPagine = async () => {
         });
       })
     ).then(() => {
-      creaPagine()
+      creaPagine();
       generated = true; // Evita di rigenerare le pagine
     });
   }
@@ -632,7 +648,6 @@ const creaPagine = () => {
 
 generaFrontespizio();
 getOpzioni();
-
 
 /* Preloader */
 
