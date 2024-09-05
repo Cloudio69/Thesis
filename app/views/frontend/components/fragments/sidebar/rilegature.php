@@ -22,7 +22,7 @@
                                 <h3><?php echo $decodedRilegature[$i]->nome_rilegatura ?></h3>
                                 <span class="!text-sm"><?php echo $decodedRilegature[$i]->prezzo_rilegatura ?> €</span>
                             </div>
-                            <input type="radio" name="rilegatura" value="<?php echo $decodedRilegature[$i]->id_rilegatura; ?>" id="<?php echo $decodedRilegature[$i]->id_rilegatura; ?>" class="hidden"/>
+                            <input type="radio" data-nome="<?php echo $decodedRilegature[$i]->nome_rilegatura ?>" data-prezzo="<?php echo $decodedRilegature[$i]->prezzo_rilegatura?>" name="rilegatura" value="<?php echo $decodedRilegature[$i]->id_rilegatura; ?>" id="<?php echo $decodedRilegature[$i]->id_rilegatura; ?>" class="hidden"/>
                         </label>
                     <?php
                 }
@@ -71,15 +71,23 @@
             <div class="segnalibri flex flex-col gap-4 mt-4">
                 <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">bookmark</span>Segnalibri</h1>
                 <div class="flex gap-4 items-center place-items-center text-center">
-                    <p class="opacity-50">Scegli prima una rilegatura.</p>
+                    <select name="segnalibri" class="p-2 rounded-md" required>
+                        <option value="" selected disabled>Seleziona il segnalibro</option>
+                        <option value="segnalibro-nero">Nero</option>
+                        <option value="segnalibro-bianco">Bianco</option>
+                        <option value="segnalibro-dorato">Dorato</option>
+                        <option value="segnalibro-rosso">Rosso</option>
+                        <option value="segnalibro-blu">Blu</option>
+                        <option value="segnalibro-verde">Verde</option>
+                    </select>
                 </div>
             </div>
             <div class="quantita flex flex-col gap-4 mt-4">
                 <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">add_shopping_cart</span>Quantità</h1>
                 <div class="flex gap-4 items-center place-items-center text-center">
                     <input type="number" name="quantita" class="w-24 p-2 rounded-md" value="1" min="1" required />
+                    <button type="submit" class="rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400">AGGIUNGI AL CARRELLO</button>
                 </div>
-            <button type="submit" class="rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400">SALVA</button>
         </div>
         </form>
     </section>
