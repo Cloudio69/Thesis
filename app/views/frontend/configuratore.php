@@ -52,6 +52,7 @@ wp_enqueue_script('gsap', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.mi
     </div>
 
     <?php 
+        wp_enqueue_script('thesis-pages', THESIS_URL . 'app/assets/js/frontend/thesis-pages.js', array(), true);
         wp_enqueue_script('thesis-configurator', THESIS_URL . 'app/assets/js/frontend/thesis-configurator.js', ['jquery'], true);
         wp_enqueue_script('thesis-canvas', THESIS_URL . 'app/assets/js/frontend/thesis-canvas.js', ['fabric-js'], true);
     ?>

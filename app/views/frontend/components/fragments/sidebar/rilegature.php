@@ -91,7 +91,7 @@
         </div>
         </form>
     </section>
-    <div class="fixed bg-white flex flex-col gap-2 rounded-md p-4 -mr-8 top-0 min-h-[250px] right-1/2 translate-x-1/2 translate-y-1/2 min-w-[15%] max-w-[15%] shadow-md">
+    <div class="fixed bg-white flex flex-col gap-2 rounded-md p-4 min-w-[15%] max-w-[15%] left-[43%] top-24 m-4 shadow-md">
         <h1 class="font-bold text-lg">Rilegatura</h1>
         <section class="rilegature_riepilogo">
             <p class="opacity-50 text-sm">Muovi il mouse su una rilegatura per scoprirne le caratteristiche.</p>

@@ -607,7 +607,12 @@ const generaPagine = async () => {
   }
 };
 
-const creaPagine = () => {
+let pagineTipologia = {
+  bn: [],
+  colorate: [],
+};
+
+const creaPagine = async () => {
   const pagineWrapper = document.querySelector(".thesis--pagine");
 
   pagineWrapper.replaceChildren();
@@ -629,6 +634,36 @@ const creaPagine = () => {
       "/pagine/pagina-" +
       i +
       ".jpg";
+
+    pagina.onload = (e) => {
+      let rgb = getAverageRGB(e.currentTarget);
+      if (rgb.r === rgb.g && rgb.g === rgb.b) {
+        pagineTipologia.bn.push({ ...rgb, pagina: i });
+      } else {
+        pagineTipologia.colorate.push({ ...rgb, pagina: i });
+      }
+
+      if (
+        pagineTipologia.bn.length + pagineTipologia.colorate.length ===
+        numPages
+      ) {
+        let counterBn = document.querySelector("#bianco--nero span");
+        let counterColorate = document.querySelector("#colore span");
+        let pagineBn = pagineTipologia.bn.map((pagina) => pagina.pagina);
+        let pagineColorate = pagineTipologia.colorate.map(
+          (pagina) => pagina.pagina
+        );
+
+        counterBn.textContent = pagineTipologia.bn.length;
+        counterColorate.textContent = pagineTipologia.colorate.length;
+
+        counterBn.classList.remove("animate-pulse");
+        counterColorate.classList.remove("animate-pulse");
+
+        order.pagine.bn = pagineBn;
+        order.pagine.colorate = pagineColorate;
+      }
+    };
 
     pagina.classList.add("p-4");
 
@@ -691,14 +726,17 @@ openCart.onclick = () => {
 
 const rilegature = document.querySelectorAll(".rilegatura");
 rilegature.forEach((rilegatura) => {
-  rilegatura.onmouseenter = () => {
+  rilegatura.onclick = () => {
     let nome = rilegatura.querySelector('[type="radio"]').dataset.nome;
-    let desc = rilegatura.querySelector('[type="radio"]').dataset.descrizione
+    let desc = rilegatura.querySelector('[type="radio"]').dataset.descrizione;
     // Replace backslashes
     desc = desc.replace(/\\/g, "");
-    let nomeContainer = document.querySelector(".rilegature_riepilogo").previousElementSibling;
+    let nomeContainer = document.querySelector(
+      ".rilegature_riepilogo"
+    ).previousElementSibling;
     let descContainer = document.querySelector(".rilegature_riepilogo p");
-    descContainer.classList.remove("opacity-50")
+    descContainer.classList.remove("opacity-50");
+    descContainer.classList.add('text-neutral-600');
     descContainer.textContent = desc;
     nomeContainer.textContent = nome;
   };
