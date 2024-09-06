@@ -340,7 +340,7 @@ const getColori = async (id) => {
   listaColori.replaceChildren();
   listaColori.classList.add(
     "animate-pulse",
-    "min-h-[2rem]",
+    "min-h-[125px]",
     "bg-slate-200",
     "rounded-md"
   );
@@ -505,15 +505,16 @@ const raggruppaPerId = (array) => {
   return raggruppato;
 };
 
-document.querySelectorAll("#rilegature_form label").forEach( item => item.onclick = () => { 
-  let sectionAccessori = document.querySelector(".section_accessori");
-  if(sectionAccessori.classList.contains("hidden")){ 
-    sectionAccessori.classList.remove("hidden");
-    sectionAccessori.classList.add("fadeIn")
-  }
- } )
-
-
+document.querySelectorAll("#rilegature_form label").forEach(
+  (item) =>
+    (item.onclick = () => {
+      let sectionAccessori = document.querySelector(".section_accessori");
+      if (sectionAccessori.classList.contains("hidden")) {
+        sectionAccessori.classList.remove("hidden");
+        sectionAccessori.classList.add("fadeIn");
+      }
+    })
+);
 
 formOrder.onsubmit = (e) => {
   e.preventDefault();
@@ -532,6 +533,8 @@ formOrder.onsubmit = (e) => {
     id_rilegatura: rilegatura.value,
     id_variante: variante.value,
     id_colore: colore.value,
+    nome_rilegatura: rilegatura.dataset.nome,
+    prezzo_rilegatura: rilegatura.dataset.prezzo,
     grammatura: grammatura.value,
     formato: formato.value,
     angoli: angoli.value,
@@ -678,8 +681,25 @@ const openCart = document.querySelector(".open-cart-dialog");
 
 closeCart.onclick = () => {
   cartDialog.classList.add("hidden");
-}
+};
 
 openCart.onclick = () => {
   cartDialog.classList.remove("hidden");
-}
+};
+
+// Rilegatura description
+
+const rilegature = document.querySelectorAll(".rilegatura");
+rilegature.forEach((rilegatura) => {
+  rilegatura.onmouseenter = () => {
+    let nome = rilegatura.querySelector('[type="radio"]').dataset.nome;
+    let desc = rilegatura.querySelector('[type="radio"]').dataset.descrizione
+    // Replace backslashes
+    desc = desc.replace(/\\/g, "");
+    let nomeContainer = document.querySelector(".rilegature_riepilogo").previousElementSibling;
+    let descContainer = document.querySelector(".rilegature_riepilogo p");
+    descContainer.classList.remove("opacity-50")
+    descContainer.textContent = desc;
+    nomeContainer.textContent = nome;
+  };
+});

@@ -1,6 +1,6 @@
 <div id="tipologia_step" class="p-12 flex flex-col gap-4 h-3/4">
     <h1 class="text-3xl font-bold">Scegli la stampa</h1>
-    <p>Seleziona adesso la tipologia di stampa: solo Fronte o Fronte/Retro. Assicurati della corretta impaginazione del documento PDF prima di procedere.</p>
+    <p>Seleziona adesso la tipologia di stampa: solo Fronte o Fronte/Retro. La maggior parte dei laureandi utilizza la stampa <b>Fronte</b>, ma puoi sempre scegliere Fronte/Retro</p>
     <section class="tipo--stampa h-full flex-col flex justify-center items-center">
         <h2 class="text-xl text-center font-bold p-4">Scegli come stampare</h2>
         <div class="flex items-center justify-center gap-8 cursor-pointer">

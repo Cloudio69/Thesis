@@ -16,13 +16,13 @@
 
                 for ($i = 0; $i < count($decodedRilegature); $i++) {
             ?>
-                        <label for="<?php echo $decodedRilegature[$i]->id_rilegatura; ?>" class="card bg-slate-50 border flex flex-col font-bold rounded-md w-full justify-center items-center overflow-hidden">
+                        <label for="<?php echo $decodedRilegature[$i]->id_rilegatura; ?>" class="card rilegatura bg-slate-50 border flex flex-col font-bold rounded-md w-full justify-center items-center overflow-hidden">
                             <img src="<?php echo $decodedRilegature[$i]->anteprima_rilegatura ?>" class="w-32 h-32 object-contain p-4"/>
                             <div class="flex justify-between items-center w-full p-4 bg-white border-t">
                                 <h3><?php echo $decodedRilegature[$i]->nome_rilegatura ?></h3>
                                 <span class="!text-sm"><?php echo $decodedRilegature[$i]->prezzo_rilegatura ?> €</span>
                             </div>
-                            <input type="radio" data-nome="<?php echo $decodedRilegature[$i]->nome_rilegatura ?>" data-prezzo="<?php echo $decodedRilegature[$i]->prezzo_rilegatura?>" name="rilegatura" value="<?php echo $decodedRilegature[$i]->id_rilegatura; ?>" id="<?php echo $decodedRilegature[$i]->id_rilegatura; ?>" class="hidden"/>
+                            <input type="radio" data-nome="<?php echo $decodedRilegature[$i]->nome_rilegatura ?>" data-prezzo="<?php echo $decodedRilegature[$i]->prezzo_rilegatura?>" data-descrizione="<?php echo htmlspecialchars($decodedRilegature[$i]->descrizione_rilegatura, ENT_QUOTES, 'UTF-8') ?>" name="rilegatura" value="<?php echo $decodedRilegature[$i]->id_rilegatura; ?>" id="<?php echo $decodedRilegature[$i]->id_rilegatura; ?>" class="hidden"/>
                         </label>
                     <?php
                 }
@@ -91,4 +91,10 @@
         </div>
         </form>
     </section>
+    <div class="fixed bg-white flex flex-col gap-2 rounded-md p-4 -mr-8 top-0 min-h-[250px] right-1/2 translate-x-1/2 translate-y-1/2 min-w-[15%] max-w-[15%] shadow-md">
+        <h1 class="font-bold text-lg">Rilegatura</h1>
+        <section class="rilegature_riepilogo">
+            <p class="opacity-50 text-sm">Muovi il mouse su una rilegatura per scoprirne le caratteristiche.</p>
+        </section>
+    </div>
 </div>
