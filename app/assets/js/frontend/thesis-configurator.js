@@ -505,17 +505,6 @@ const raggruppaPerId = (array) => {
   return raggruppato;
 };
 
-document.querySelectorAll("#rilegature_form label").forEach(
-  (item) =>
-    (item.onclick = () => {
-      let sectionAccessori = document.querySelector(".section_accessori");
-      if (sectionAccessori.classList.contains("hidden")) {
-        sectionAccessori.classList.remove("hidden");
-        sectionAccessori.classList.add("fadeIn");
-      }
-    })
-);
-
 formOrder.onsubmit = (e) => {
   e.preventDefault();
 
@@ -731,12 +720,10 @@ rilegature.forEach((rilegatura) => {
     let desc = rilegatura.querySelector('[type="radio"]').dataset.descrizione;
     // Replace backslashes
     desc = desc.replace(/\\/g, "");
-    let nomeContainer = document.querySelector(
-      ".rilegature_riepilogo"
-    ).previousElementSibling;
+    let nomeContainer = document.querySelector(".rilegature_riepilogo").previousElementSibling;
     let descContainer = document.querySelector(".rilegature_riepilogo p");
     descContainer.classList.remove("opacity-50");
-    descContainer.classList.add('text-neutral-600');
+    descContainer.classList.add("text-neutral-600");
     descContainer.textContent = desc;
     nomeContainer.textContent = nome;
   };

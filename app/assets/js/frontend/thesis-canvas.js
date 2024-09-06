@@ -76,7 +76,7 @@ const titoloTesi = new fabric.Textbox("TITOLO TESI DI LAUREA", {
   lockMovementX: true,
   lockMovementY: true,
   textAlign: "center",
-  width: 250,
+  width: 350,
   height: 100,
   hoverCursor: "pointer",
 });
