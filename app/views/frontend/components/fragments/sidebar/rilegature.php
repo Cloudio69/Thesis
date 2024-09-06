@@ -91,7 +91,7 @@ for ($i = 0; $i < count($decodedRilegature); $i++) {
             </div>
             <div class="subtotale_rilegature mt-24">
                 <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">euro_symbol</span>Subtotale</h1>
-                <div class="scelte_rilegature flex gap-4 items-start justify-between">
+                <div class="scelte_rilegature flex gap-4 items-start justify-between mt-4">
                     <p class="opacity-50">Aggiungi le tue opzioni al carrello e visualizza il subtotale</p>
                     <p class="opacity-50 font-bold text-2xl" id="subtotale_rilegature">0.00 €</p>
                 </div>
