@@ -23,6 +23,7 @@ wp_enqueue_style('tailwind-css', THESIS_URL . "/app/assets/css/tailwind.css");
 wp_enqueue_style('thesis-frontend', THESIS_URL . "/app/assets/css/frontend/thesis-frontend.css");
 wp_enqueue_script('fabric-js', 'https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js');
 wp_enqueue_script('gsap', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js');
+wp_enqueue_script('cookie-helper', THESIS_URL . 'app/assets/js/frontend/helper/cookie-helper.js', array(), true);
 ?>
 
 <?php if (!isset($_COOKIE['thesis_session'])) {?>
@@ -52,8 +53,12 @@ wp_enqueue_script('gsap', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.mi
     </div>
 
     <?php 
-        wp_enqueue_script('thesis-pages', THESIS_URL . 'app/assets/js/frontend/thesis-pages.js', array(), true);
         wp_enqueue_script('thesis-configurator', THESIS_URL . 'app/assets/js/frontend/thesis-configurator.js', ['jquery'], true);
+        wp_enqueue_script('thesis-pages', THESIS_URL . 'app/assets/js/frontend/thesis-pages.js', array(), true);
+        wp_enqueue_script('thesis-frame', THESIS_URL . 'app/assets/js/frontend/thesis-frame.js', array(), true);
+        wp_enqueue_script('thesis-typology', THESIS_URL . 'app/assets/js/frontend/thesis-typology.js', array(), true);
+        wp_enqueue_script('thesis-cover', THESIS_URL . 'app/assets/js/frontend/thesis-cover.js', array(), true);
+        wp_enqueue_script('thesis-cart', THESIS_URL . 'app/assets/js/frontend/thesis-cart.js', array(), true);
         wp_enqueue_script('thesis-canvas', THESIS_URL . 'app/assets/js/frontend/thesis-canvas.js', ['fabric-js'], true);
     ?>
 <?php
