@@ -101,7 +101,7 @@ for ($i = 0; $i < count($decodedRilegature); $i++) {
     <div class="fixed bg-white flex flex-col gap-2 rounded-md p-4 min-w-[15%] max-w-[15%] left-[43%] top-24 m-4 shadow-md">
         <h1 class="font-bold text-lg">Rilegatura</h1>
         <section class="rilegature_riepilogo">
-            <p class="opacity-50 text-sm">Muovi il mouse su una rilegatura per scoprirne le caratteristiche.</p>
+            <p class="opacity-50 text-sm">Seleziona una rilegatura per scoprirne le caratteristiche.</p>
         </section>
     </div>
 </div>

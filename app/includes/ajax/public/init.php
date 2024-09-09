@@ -5,6 +5,12 @@ include THESIS_DIR . "app/includes/models/pdf/init.php";
 add_action('wp_ajax_nopriv_upload_file', 'ajax_upload_file');
 add_action('wp_ajax_upload_file', 'ajax_upload_file');
 
+add_action('wp_ajax_clear_all_frontespizi', 'clear_all_frontespizi');
+add_action('wp_ajax_nopriv_clear_all_frontespizi', 'clear_all_frontespizi');
+
+add_action('wp_ajax_nopriv_upload_frontespizio', 'ajax_upload_frontespizio');
+add_action('wp_ajax_upload_frontespizio', 'ajax_upload_frontespizio');
+
 add_action('wp_ajax_get_options', 'ajax_get_options');
 add_action('wp_ajax_nopriv_get_options', 'ajax_get_options');
 
@@ -30,6 +36,48 @@ function uuidv4()
     return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
 }
 
+
+function ajax_upload_frontespizio()
+{
+    $nonce = $_POST['nonce'];
+
+    $token = $_COOKIE['thesis_session'];
+
+    $verify = wp_verify_nonce($nonce, 'thesis-token');
+
+    if (!$verify) {
+        wp_die("Nonce not verified.");
+    } else if(!$token) {
+        wp_die("Token not found.");
+    }
+
+    if ($_FILES['file']) {
+        $file = $_FILES['file'];
+        $file_name = 'frontespizio.pdf';
+        $file_tmp = $file['tmp_name'];
+
+        $tmp_folder = $token;
+
+        $upload_dir = THESIS_PDFS . "/" . $tmp_folder;
+        $destination = $upload_dir . '/' . $file_name;
+
+        if (move_uploaded_file($file_tmp, $destination)) {
+            $process = new ThesisProcess;
+            $process->process_frontespizio($file_name, $upload_dir);
+
+            echo json_encode(array('success' => true, 'message' => 'File caricato correttamente.'));
+        } else {
+            // Errore durante il caricamento del file
+            echo json_encode(array('success' => false, 'message' => 'Si è verificato un errore durante il caricamento del file.'));
+        }
+    } else {
+        // Nessun file è stato inviato
+        echo json_encode(array('success' => false, 'message' => 'Nessun file inviato.'));
+    }
+    wp_die();
+}
+
+
 function ajax_upload_file()
 {
     $nonce = $_POST['nonce'];
@@ -47,7 +95,7 @@ function ajax_upload_file()
 
         $tmp_folder = uuidv4();
 
-        mkdir(THESIS_PDFS . "/" . $tmp_folder, 0755, true);
+        if (!is_dir(THESIS_PDFS . "/" . $tmp_folder)) mkdir(THESIS_PDFS . "/" . $tmp_folder, 0755, true);
 
         $upload_dir = THESIS_PDFS . "/" . $tmp_folder;
         $destination = $upload_dir . '/' . $file_name;
@@ -138,4 +186,20 @@ function ajax_get_num_pagine()
     $query = $process->get_num_pagine($upload_dir . "/tesi.pdf");
     
     wp_send_json_success(json_encode(array("results" => $query)));
+}
+
+function clear_all_frontespizi()
+{
+
+    if(!$_COOKIE['thesis_session']) wp_die("Sessione non valida.");
+
+    $frontespizi = THESIS_PDFS . "/" . $_COOKIE['thesis_session'] . "/frontespizi";
+
+    $files = glob($frontespizi . '/*');
+
+    foreach ($files as $file) {
+        if (is_file($file)) {
+            unlink($file);
+        }
+    }
 }

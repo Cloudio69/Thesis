@@ -44,10 +44,8 @@ function getAverageRGB(imgEl) {
   return rgb;
 }
 
-
 let numPages = 0,
   generated = false;
-
 
 const generaPagine = async () => {
   let getNumPages = await jQuery.ajax({
@@ -87,6 +85,18 @@ const generaPagine = async () => {
             // Evita di far rimbalzare il progresso
             if (i > counter) counter = i;
             progresso.textContent = `Pagina ${counter + 1} di ${numPages}`;
+          },
+
+          statusCode: {
+            404: function () {
+              console.error("Pagina non trovata");
+            },
+            502: function () {
+              let container = document.querySelector(".thesis--pagine");
+              container.replaceChildren();
+              container.innerHTML =
+                "<span class='material-symbols-outlined text-8xl'>error</span><p class='text-center'>Si è verificato un errore durante la generazione delle pagine<br> Ricarica la pagina per proseguire</p>";
+            },
           },
         });
       })
@@ -174,11 +184,10 @@ const creaPagine = async () => {
   pagineWrapper.appendChild(pagineContainer);
 };
 
-
 // Se ci troviamo nello step Pagine, generiamo le pagine
 // Check se fai click su un pulsante con classe .next-step oppuer se clicchi sulla navbar per andare allo step Pagine
 // Check se è già stato generato il contenuto
 
 window.onclick = (e) => {
   currentStep === 3 && generaPagine();
-}
+};
