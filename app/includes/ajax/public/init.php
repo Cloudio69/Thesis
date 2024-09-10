@@ -46,9 +46,9 @@ function ajax_upload_frontespizio()
     $verify = wp_verify_nonce($nonce, 'thesis-token');
 
     if (!$verify) {
-        wp_die("Nonce not verified.");
+        wp_die("Nonce not verified.", 'thesis', array('response' => 403));
     } else if(!$token) {
-        wp_die("Token not found.");
+        wp_die("Token not found.", 'thesis', array('response' => 403));
     }
 
     if ($_FILES['file']) {

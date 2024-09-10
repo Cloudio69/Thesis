@@ -7,7 +7,7 @@ const rigeneraCanvas = () => {
     "/wp-content/plugins/thesis/app/files/" +
     getCookie("thesis_session") +
     "/frontespizi/frontespizio_generato-" +
-    colore.id_colore_carattere +
+    document.querySelector("[name='colori_carattere']:checked").value +
     ".png";
   frontespizioGen.onload = () => {
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -19,6 +19,25 @@ const rigeneraCanvas = () => {
     context.drawImage(varianteScelta, 0, 0, canvas.width, canvas.height);
 
     context.drawImage(frontespizioGen, 0, 0, canvas.width, canvas.height);
+
+    if (document.querySelector('[name="segnalibri"]').value) {
+      let img = new Image();
+      img.src =
+        "/wp-content/plugins/thesis/app/assets/img/segnalibri/" +
+        document.querySelector('[name="segnalibri"]').value +
+        ".svg";
+      img.onload = () => {
+        context.drawImage(img, 30, 0, 20, canvas.height);
+      };
+    }
+
+    if(document.querySelector('[name="angoli"]').value) {
+      let img = new Image();
+      img.src = "/wp-content/plugins/thesis/app/assets/img/angoli/" + document.querySelector('[name="angoli"]').value + ".png";
+      img.onload = () => {
+        context.drawImage(img, 0, 0, canvas.width, canvas.height);
+      }
+    }
   };
 };
 
@@ -155,6 +174,25 @@ const getOpzioni = async () => {
               canvas.width,
               canvas.height
             );
+
+            if (document.querySelector('[name="segnalibri"]').value) {
+              let img = new Image();
+              img.src =
+                "/wp-content/plugins/thesis/app/assets/img/segnalibri/" +
+                document.querySelector('[name="segnalibri"]').value +
+                ".svg";
+              img.onload = () => {
+                context.drawImage(img, 30, 0, 20, canvas.height);
+              };
+            }
+
+            if(document.querySelector('[name="angoli"]').value) {
+              let img = new Image();
+              img.src = "/wp-content/plugins/thesis/app/assets/img/angoli/" + document.querySelector('[name="angoli"]').value + ".png";
+              img.onload = () => {
+                context.drawImage(img, 0, 0, canvas.width, canvas.height);
+              }
+            }
 
           zoomIn.onclick = () => {
             let imgData = canvas.toDataURL();
@@ -337,6 +375,15 @@ const getColori = async (id) => {
                     context.drawImage(img, 30, 0, 20, canvas.height);
                   };
                 }
+
+                if(document.querySelector('[name="angoli"]').value) {
+                  let img = new Image();
+                  img.src = "/wp-content/plugins/thesis/app/assets/img/angoli/" + document.querySelector('[name="angoli"]').value + ".png";
+                  img.onload = () => {
+                    context.drawImage(img, 0, 0, canvas.width, canvas.height);
+                  }
+                }
+
               };
             },
           });
@@ -491,5 +538,22 @@ segnalibroSelect.onchange = (e) => {
     context.drawImage(img, 30, 0, 20, canvas.height);
   };
 };
+
+const angoliSelect = document.querySelector("[name='angoli']");
+angoliSelect.onchange = (e) => {
+  let img = new Image();
+  img.src =
+    "/wp-content/plugins/thesis/app/assets/img/angoli/" + e.currentTarget.value + ".png";
+
+  img.onload = () => {
+    let canvas = document.querySelector("canvas");
+    let context = canvas.getContext("2d");
+
+    rigeneraCanvas();
+    context.drawImage(img, 0, 0, canvas.width, canvas.height);
+  };
+};
+
+
 
 getOpzioni();
