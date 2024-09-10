@@ -21,7 +21,7 @@ const img = new fabric.Image.fromURL(
 const titoloUni = new fabric.Textbox(
   "Università degli Studi di Bari\nFacoltà di Lorem Ipsum",
   {
-    fontFamily: "arial",
+    fontFamily: "Inter",
     fontWeight: "bold",
     fontSize: 20,
     originX: "center",
@@ -43,7 +43,7 @@ const titoloUni = new fabric.Textbox(
 canvas.add(titoloUni);
 
 const corsoDiLaurea = new fabric.Textbox("Corso di Laurea in Lorem Ipsum", {
-  fontFamily: "arial",
+  fontFamily: "Inter",
   fontSize: 18,
   originX: "center",
   originY: "top",
@@ -64,7 +64,7 @@ canvas.add(corsoDiLaurea);
 // titoloTesi
 
 const titoloTesi = new fabric.Textbox("TITOLO TESI DI LAUREA", {
-  fontFamily: "arial",
+  fontFamily: "Inter",
   fontSize: 20,
   fontWeight: "bold",
   originX: "center",
@@ -86,7 +86,7 @@ const titoloTesi = new fabric.Textbox("TITOLO TESI DI LAUREA", {
 canvas.add(titoloTesi);
 
 const annoAccademico = new fabric.Textbox("Anno Accademico 20XX/20XX", {
-  fontFamily: "arial",
+  fontFamily: "Inter",
   fontSize: 18,
   originX: "center",
   originY: "bottom",
@@ -109,7 +109,7 @@ canvas.add(annoAccademico);
 const testoStudente = new fabric.Textbox(
   "Studente:\nCarlo Bianchi\nMatricola:\nXXXXXX",
   {
-    fontFamily: "arial",
+    fontFamily: "Inter",
     fontSize: 16,
     originX: "left",
     originY: "center",
@@ -133,7 +133,7 @@ canvas.add(testoStudente);
 const testoRelatore = new fabric.Textbox(
   "Relatore:\nMario Rossi\nContro relatore:\nJohn Doe",
   {
-    fontFamily: "arial",
+    fontFamily: "Inter",
     fontSize: 16,
     originX: "right",
     originY: "center",
