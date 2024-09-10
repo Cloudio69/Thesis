@@ -25,9 +25,9 @@ const rigeneraCanvas = () => {
       img.src =
         "/wp-content/plugins/thesis/app/assets/img/segnalibri/" +
         document.querySelector('[name="segnalibri"]').value +
-        ".svg";
+        ".png";
       img.onload = () => {
-        context.drawImage(img, 30, 0, 20, canvas.height);
+        context.drawImage(img, 0, 0, canvas.width, canvas.height);
       };
     }
 
@@ -180,9 +180,9 @@ const getOpzioni = async () => {
               img.src =
                 "/wp-content/plugins/thesis/app/assets/img/segnalibri/" +
                 document.querySelector('[name="segnalibri"]').value +
-                ".svg";
+                ".png";
               img.onload = () => {
-                context.drawImage(img, 30, 0, 20, canvas.height);
+                context.drawImage(img, 0, 0, canvas.width, canvas.height);
               };
             }
 
@@ -370,9 +370,9 @@ const getColori = async (id) => {
                   img.src =
                     "/wp-content/plugins/thesis/app/assets/img/segnalibri/" +
                     document.querySelector('[name="segnalibri"]').value +
-                    ".svg";
+                    ".png";
                   img.onload = () => {
-                    context.drawImage(img, 30, 0, 20, canvas.height);
+                    context.drawImage(img, 0, 0, canvas.width, canvas.height);
                   };
                 }
 
@@ -528,14 +528,14 @@ segnalibroSelect.onchange = (e) => {
   img.src =
     "/wp-content/plugins/thesis/app/assets/img/segnalibri/" +
     e.currentTarget.value +
-    ".svg";
+    ".png";
 
   img.onload = () => {
     let canvas = document.querySelector("canvas");
     let context = canvas.getContext("2d");
 
     rigeneraCanvas();
-    context.drawImage(img, 30, 0, 20, canvas.height);
+    context.drawImage(img, 0, 0, canvas.width, canvas.height);
   };
 };
 

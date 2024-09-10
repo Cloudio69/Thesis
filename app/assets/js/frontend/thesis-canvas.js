@@ -1,8 +1,9 @@
 /* Canvas */
-const canvas = new fabric.Canvas("cd-canvas", { selection: true, hoverCursor: "default" });
+const canvas = new fabric.Canvas("cd-canvas", { selection: true, hoverCursor: "default"});
+// Set background color TRANSPARENT
 canvas.setDimensions({ width: 600, height: 600 });
 
-canvas.backgroundColor = "#ffffff";
+canvas.backgroundColor = "transparent";
 
 const img = new fabric.Image.fromURL(
   "/wp-content/plugins/thesis/app/assets/img/cd-mask.png",
