@@ -286,7 +286,9 @@ pageFilter.forEach((item) => {
 
     if(!generated) return;
 
-    pageFilter.forEach((item) => { item.classList.contains('active') && item.classList.remove('active')})
+    pageFilter.forEach((item) => { item.querySelector("span").classList.contains('active') && item.querySelector("span").classList.remove('active')})
+
+    e.currentTarget.querySelector("span").classList.add("active");
 
     // if is already filtered remove the filter
     if (filtered) {

@@ -162,7 +162,15 @@ formOrder.onsubmit = (e) => {
 
   e.currentTarget.reset();
 
-  console.log(order);
+  document.querySelector(".thesis--rilegature").replaceChildren();
+  document.querySelector(".thesis--rilegature").innerHTML = `<div class='flex flex-col items-center justify-center'><span class='material-symbols-outlined text-7xl'>check</span><p class='text-lg text-center'><b>Aggiunto al carrello!</b><br>Puoi continuare ad aggiungere altre rilegature!</p>`;
+
+  document.querySelector(".varianti div").replaceChildren()
+  document.querySelector(".colori_carattere div").replaceChildren()
+
+  document.querySelector(".varianti div").innerHTML = `<p class="opacity-50 col-span-5 place-self-start">Scegli prima una rilegatura.</p>`
+  document.querySelector(".colori_carattere div").innerHTML = `<p class="opacity-50 col-span-5 place-self-start">Scegli prima una rilegatura.</p>`
+
 };
 
 

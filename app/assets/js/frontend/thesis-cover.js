@@ -2,6 +2,8 @@ const rigeneraCanvas = () => {
   let canvas = document.querySelector("canvas");
   let context = canvas.getContext("2d");
 
+  if(!document.querySelector("[name='colori_carattere']:checked")) return;
+
   let frontespizioGen = new Image();
   frontespizioGen.src =
     "/wp-content/plugins/thesis/app/files/" +

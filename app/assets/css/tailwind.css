@@ -638,6 +638,10 @@ video {
   z-index: 99;
 }
 
+.col-span-5 {
+  grid-column: span 5 / span 5;
+}
+
 .\!m-1 {
   margin: 0.25rem !important;
 }
@@ -1006,6 +1010,10 @@ video {
 .divide-slate-200 > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-opacity: 1;
   border-color: rgb(226 232 240 / var(--tw-divide-opacity));
+}
+
+.place-self-start {
+  place-self: start;
 }
 
 .self-start {
