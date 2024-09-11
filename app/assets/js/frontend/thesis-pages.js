@@ -48,26 +48,26 @@ let numPages = 0,
   generated = false;
 
 const generaPagine = async () => {
-  let getNumPages = await jQuery.ajax({
-    dataType: "json",
-    method: "GET",
-    url: ajaxurl,
-    data: {
-      action: "get_num_pagine",
-      uuid: getCookie("thesis_session"),
-    },
-    success: (response) => {
-      return JSON.parse(response.data);
-    },
-  });
-
-  numPages = JSON.parse(getNumPages.data).results;
-
-  // Contatore persistente
-  let counter = 0;
-  const progresso = document.querySelector("#progresso--pagine");
-
   if (!generated) {
+    let getNumPages = await jQuery.ajax({
+      dataType: "json",
+      method: "GET",
+      url: ajaxurl,
+      data: {
+        action: "get_num_pagine",
+        uuid: getCookie("thesis_session"),
+      },
+      success: (response) => {
+        return JSON.parse(response.data);
+      },
+    });
+
+    numPages = JSON.parse(getNumPages.data).results;
+
+    // Contatore persistente
+    let counter = 0;
+    const progresso = document.querySelector("#progresso--pagine");
+
     await Promise.all(
       Array.from({ length: numPages }, async (_, i) => {
         await jQuery.ajax({
@@ -112,6 +112,11 @@ let pagineTipologia = {
   colorate: [],
 };
 
+let assets = {
+  rgb: "/wp-content/plugins/thesis/app/assets/img/svg/rgb.svg",
+  bn: "/wp-content/plugins/thesis/app/assets/img/svg/black-and-white.svg",
+};
+
 const creaPagine = async () => {
   const pagineWrapper = document.querySelector(".thesis--pagine");
 
@@ -127,6 +132,76 @@ const creaPagine = async () => {
   );
 
   for (let i = 0; i < numPages; i++) {
+    let paginaWrapper = document.createElement("div");
+    let colorSwitch = document.createElement("button");
+
+    colorSwitch.dataset.pagina = i;
+
+    colorSwitch.addEventListener("click", (e) => {
+      let numPagina = e.currentTarget.dataset.pagina;
+      let colorSrc = new URL(e.currentTarget.querySelector("img").src);
+
+      if (colorSrc.pathname === assets.bn) {
+        e.currentTarget.querySelector("img").src = assets.rgb;
+        if (
+          e.currentTarget.parentElement
+            .querySelector("img")
+            .classList.contains("grayscale")
+        )
+          e.currentTarget.parentElement
+            .querySelector("img")
+            .classList.remove("grayscale");
+        pagineTipologia.colorate.push(
+          pagineTipologia.bn.splice(
+            pagineTipologia.bn.findIndex(
+              (pagina) => pagina.pagina === parseInt(numPagina)
+            ),
+            1
+          )[0]
+        );
+      } else {
+        e.currentTarget.querySelector("img").src = assets.bn;
+        pagineTipologia.bn.push(
+          pagineTipologia.colorate.splice(
+            pagineTipologia.colorate.findIndex(
+              (pagina) => pagina.pagina === parseInt(numPagina)
+            ),
+            1
+          )[0]
+        );
+        if (
+          !e.currentTarget.parentElement
+            .querySelector("img")
+            .classList.contains("grayscale")
+        )
+          e.currentTarget.parentElement
+            .querySelector("img")
+            .classList.add("grayscale", "transition-all");
+      }
+
+      updateColorCounter();
+    });
+
+    paginaWrapper.classList.add("pagina--wrapper", "relative");
+
+    colorSwitch.classList.add(
+      "absolute",
+      "bottom-6",
+      "right-6",
+      "rounded-full",
+      "color-switch",
+      "border-none",
+      "hover:bg-transparent",
+      "focus:outline-none",
+      "focus:bg-transparent"
+    );
+    colorSwitch.innerHTML =
+      "<img src='" +
+      assets.bn +
+      "' class='w-8 h-8 drop-shadow-md' data-pagina=" +
+      i +
+      "/>";
+
     let pagina = new Image();
     pagina.src =
       "/wp-content/plugins/thesis/app/files/" +
@@ -139,30 +214,19 @@ const creaPagine = async () => {
       let rgb = getAverageRGB(e.currentTarget);
       if (rgb.r === rgb.g && rgb.g === rgb.b) {
         pagineTipologia.bn.push({ ...rgb, pagina: i });
+        document.querySelectorAll(".color-switch")[i].querySelector("img").src =
+          assets.bn;
+        document
+          .querySelectorAll(".color-switch")
+          [i].parentElement.querySelector("img")
+          .classList.add("grayscale", "Transition-all");
       } else {
         pagineTipologia.colorate.push({ ...rgb, pagina: i });
+        document.querySelectorAll(".color-switch")[i].querySelector("img").src =
+          assets.rgb;
       }
 
-      if (
-        pagineTipologia.bn.length + pagineTipologia.colorate.length ===
-        numPages
-      ) {
-        let counterBn = document.querySelector("#bianco--nero span");
-        let counterColorate = document.querySelector("#colore span");
-        let pagineBn = pagineTipologia.bn.map((pagina) => pagina.pagina);
-        let pagineColorate = pagineTipologia.colorate.map(
-          (pagina) => pagina.pagina
-        );
-
-        counterBn.textContent = pagineTipologia.bn.length;
-        counterColorate.textContent = pagineTipologia.colorate.length;
-
-        counterBn.classList.remove("animate-pulse");
-        counterColorate.classList.remove("animate-pulse");
-
-        order.pagine.bn = pagineBn;
-        order.pagine.colorate = pagineColorate;
-      }
+      updateColorCounter();
     };
 
     pagina.classList.add("p-4");
@@ -174,7 +238,10 @@ const creaPagine = async () => {
 
     zoomIn.appendChild(pagina);
 
-    pagineContainer.appendChild(zoomIn);
+    paginaWrapper.appendChild(zoomIn);
+    paginaWrapper.appendChild(colorSwitch);
+
+    pagineContainer.appendChild(paginaWrapper);
   }
 
   Fancybox.bind("[data-fancybox='gallery']");
@@ -182,6 +249,29 @@ const creaPagine = async () => {
   pagineWrapper.classList.replace("items-center", "self-start");
 
   pagineWrapper.appendChild(pagineContainer);
+};
+
+const updateColorCounter = () => {
+  if (
+    pagineTipologia.bn.length + pagineTipologia.colorate.length ===
+    numPages
+  ) {
+    let counterBn = document.querySelector("#bianco--nero span");
+    let counterColorate = document.querySelector("#colore span");
+    let pagineBn = pagineTipologia.bn.map((pagina) => pagina.pagina);
+    let pagineColorate = pagineTipologia.colorate.map(
+      (pagina) => pagina.pagina
+    );
+
+    counterBn.textContent = pagineTipologia.bn.length;
+    counterColorate.textContent = pagineTipologia.colorate.length;
+
+    counterBn.classList.remove("animate-pulse");
+    counterColorate.classList.remove("animate-pulse");
+
+    order.pagine.bn = pagineBn;
+    order.pagine.colorate = pagineColorate;
+  }
 };
 
 // Se ci troviamo nello step Pagine, generiamo le pagine
