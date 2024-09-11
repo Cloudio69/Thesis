@@ -37,3 +37,20 @@ const success = document.querySelectorAll(".success")
 success.forEach((item) => {
   item.querySelector("button").onclick = (e) => e.currentTarget.parentElement.remove()
 })
+
+document.querySelector("#free-storage").onclick = (e) => {
+
+  e.preventDefault();
+
+  jQuery.ajax({
+    url: ajaxurl,
+    method: "POST",
+    data: { action: "thesis_clear_files" },
+    success: function(response) {
+      window.location.reload();
+    },
+    error: function(xhr, status, error) {
+      console.error(error);
+    }
+  });
+}

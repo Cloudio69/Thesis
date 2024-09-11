@@ -253,8 +253,8 @@ const creaPagine = async () => {
 
 const updateColorCounter = () => {
   if (
-    pagineTipologia.bn.length + pagineTipologia.colorate.length ===
-    numPages
+    pagineTipologia.bn.length + pagineTipologia.colorate.length === numPages &&
+    generated
   ) {
     let counterBn = document.querySelector("#bianco--nero span");
     let counterColorate = document.querySelector("#colore span");
@@ -274,10 +274,48 @@ const updateColorCounter = () => {
   }
 };
 
-// Se ci troviamo nello step Pagine, generiamo le pagine
-// Check se fai click su un pulsante con classe .next-step oppuer se clicchi sulla navbar per andare allo step Pagine
-// Check se è già stato generato il contenuto
+let pageFilter = [
+  document.querySelector("#bianco--nero"),
+  document.querySelector("#colore"),
+];
+let filtered = false;
 
-window.onclick = (e) => {
-  currentStep === 3 && generaPagine();
-};
+pageFilter.forEach((item) => {
+
+  item.onclick = (e) => {
+
+    if(!generated) return;
+
+    pageFilter.forEach((item) => { item.classList.contains('active') && item.classList.remove('active')})
+
+    // if is already filtered remove the filter
+    if (filtered) {
+      document.querySelectorAll(".pagina--wrapper").forEach((item) => {
+        item.classList.remove("hidden");
+      });
+
+      filtered = false;
+    }
+
+    if (e.currentTarget.id === "bianco--nero") {
+      document.querySelectorAll(".pagina--wrapper").forEach((item) => {
+        if (pagineTipologia.bn.find((pagina) => pagina.pagina === parseInt(item.querySelector("button").dataset.pagina)) === undefined) {
+          item.classList.add("hidden");
+        }
+      });
+
+    } else {
+      document.querySelectorAll(".pagina--wrapper").forEach((item) => {
+        if (pagineTipologia.colorate.find((pagina) => pagina.pagina === parseInt(item.querySelector("button").dataset.pagina)) === undefined) {
+          item.classList.add("hidden");
+        }
+      });
+    }
+
+    filtered = true;
+  };
+});
+
+document.querySelector("#pagine").addEventListener("click", () => {
+  generaPagine();
+}) 

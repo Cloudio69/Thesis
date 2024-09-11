@@ -26,6 +26,8 @@ add_action('wp_ajax_nopriv_genera_pagine', 'ajax_genera_pagine');
 add_action('wp_ajax_get_num_pagine', 'ajax_get_num_pagine');
 add_action('wp_ajax_nopriv_get_num_pagine', 'ajax_get_num_pagine');
 
+add_action('wp_ajax_thesis_clear_files', 'thesis_clear_files');
+
 function uuidv4()
 {
     $data = random_bytes(16);
@@ -35,7 +37,6 @@ function uuidv4()
 
     return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
 }
-
 
 function ajax_upload_frontespizio()
 {
@@ -47,7 +48,7 @@ function ajax_upload_frontespizio()
 
     if (!$verify) {
         wp_die("Nonce not verified.", 'thesis', array('response' => 403));
-    } else if(!$token) {
+    } else if (!$token) {
         wp_die("Token not found.", 'thesis', array('response' => 403));
     }
 
@@ -77,7 +78,6 @@ function ajax_upload_frontespizio()
     wp_die();
 }
 
-
 function ajax_upload_file()
 {
     $nonce = $_POST['nonce'];
@@ -95,7 +95,9 @@ function ajax_upload_file()
 
         $tmp_folder = uuidv4();
 
-        if (!is_dir(THESIS_PDFS . "/" . $tmp_folder)) mkdir(THESIS_PDFS . "/" . $tmp_folder, 0755, true);
+        if (!is_dir(THESIS_PDFS . "/" . $tmp_folder)) {
+            mkdir(THESIS_PDFS . "/" . $tmp_folder, 0755, true);
+        }
 
         $upload_dir = THESIS_PDFS . "/" . $tmp_folder;
         $destination = $upload_dir . '/' . $file_name;
@@ -147,7 +149,8 @@ function ajax_genera_frontespizio()
     wp_send_json_success(json_encode(array("message" => "Frontespizio generato.")), 200);
 }
 
-function ajax_genera_pagine(){
+function ajax_genera_pagine()
+{
 
     $data = $_POST['data'];
 
@@ -184,14 +187,16 @@ function ajax_get_num_pagine()
     $process = new ThesisProcess;
 
     $query = $process->get_num_pagine($upload_dir . "/tesi.pdf");
-    
+
     wp_send_json_success(json_encode(array("results" => $query)));
 }
 
 function clear_all_frontespizi()
 {
 
-    if(!$_COOKIE['thesis_session']) wp_die("Sessione non valida.");
+    if (!$_COOKIE['thesis_session']) {
+        wp_die("Sessione non valida.");
+    }
 
     $frontespizi = THESIS_PDFS . "/" . $_COOKIE['thesis_session'] . "/frontespizi";
 
@@ -203,3 +208,30 @@ function clear_all_frontespizi()
         }
     }
 }
+
+function rrmdir($dir)
+{
+    if (is_dir($dir)) {
+        $objects = scandir($dir);
+        foreach ($objects as $object) {
+            if ($object != "." && $object != "..") {
+                if (filetype($dir . "/" . $object) == "dir") {
+                    rrmdir($dir . "/" . $object);
+                } else {
+                    unlink($dir . "/" . $object);
+                }
+
+            }
+        }
+        reset($objects);
+        rmdir($dir);
+    }
+}
+
+function thesis_clear_files()
+{
+    rrmdir(THESIS_PDFS);
+    mkdir(THESIS_PDFS, 0755, true);
+}
+
+

@@ -17,19 +17,75 @@ class Thesis
     public function thesis_hooks()
     {
         /* Admin - Menu e Scripts */
+        add_action('init', array($this, 'thesis_schedule_cron'));
         add_action('admin_menu', array($this, 'thesis_admin_page'));
         add_action('admin_enqueue_scripts', array($this, 'thesis_scripts'));
         add_action('wp_enqueue_scripts', array($this, 'thesis_public_scripts'));
         add_filter('page_template', array($this, 'thesis_template_page'));
         add_action('wp_footer', array($this, 'add_thesis_id_button'));
+        add_action('thesis_clear_event', array($this, 'thesis_clear_function'));
+        add_filter('cron_schedules', array($this, 'thesis_clear_interval'));
+    }
+
+    public function thesis_schedule_cron()
+    {
+        if (!wp_next_scheduled('thesis_clear_event')) {
+            wp_schedule_event(time(), get_option('time_schedule'), 'thesis_clear_event');
+        }
+    }
+
+    public function thesis_clear_interval()
+    {
+        $schedules['daily'] = array(
+            'interval' => 86400,
+            'display' => __('Once Daily'),
+        );
+
+        $schedules['hourly'] = array(
+            'interval' => 3600,
+            'display' => __('Once Hourly'),
+        );
+
+        $schedules['weekly'] = array(
+            'interval' => 604800,
+            'display' => __('Once Weekly'),
+        );
+
+        $schedules['monthly'] = array(
+            'interval' => 2635200,
+            'display' => __('Once Monthly'),
+        );
+
+        return $schedules;
+    }
+
+    public function thesis_clear_function()
+    {
+        $dir = THESIS_PDFS;
+        if (is_dir($dir)) {
+            $objects = scandir($dir);
+            foreach ($objects as $object) {
+                if ($object != "." && $object != "..") {
+                    if (filetype($dir . "/" . $object) == "dir") {
+                        rrmdir($dir . "/" . $object);
+                    } else {
+                        unlink($dir . "/" . $object);
+                    }
+
+                }
+            }
+            reset($objects);
+            rmdir($dir);
+        }
+        mkdir(THESIS_PDFS, 0755, true);
     }
 
     public function thesis_public_scripts()
     {
         global $pagename;
-        if ($pagename !== 'configuratore') { 
+        if ($pagename !== 'configuratore') {
             wp_enqueue_script('thesis-initialize', THESIS_URL . 'app/assets/js/frontend/thesis-initialize.js', array(), false, true);
-            wp_enqueue_style('tailwind-css',  THESIS_URL . "/app/assets/css/tailwind.css");
+            wp_enqueue_style('tailwind-css', THESIS_URL . "/app/assets/css/tailwind.css");
         }
     }
 
@@ -49,11 +105,13 @@ class Thesis
         /* Stili e Scripts */
         $current_screen = get_current_screen();
 
-        if (strpos($current_screen->base, 'thesis') === false) return;
+        if (strpos($current_screen->base, 'thesis') === false) {
+            return;
+        }
 
         wp_enqueue_media();
         wp_enqueue_style('thesis-admin', THESIS_URL . "/app/assets/css/thesis.admin.css");
-        wp_enqueue_style('tailwind-css',  THESIS_URL . "/app/assets/css/tailwind.css");
+        wp_enqueue_style('tailwind-css', THESIS_URL . "/app/assets/css/tailwind.css");
         wp_enqueue_script('admin-js', THESIS_URL . "/app/assets/js/thesis.admin.js", array(), null, true);
         wp_enqueue_script('chart-js', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js');
     }
@@ -63,17 +121,17 @@ class Thesis
         /* Widget per Elementor */
     }
 
-    function add_thesis_id_button()
+    public function add_thesis_id_button()
     {
-    ?>
+        ?>
         <script>
             const init = document.querySelectorAll(".<?php echo get_option('class_bottone'); ?>")
-            const nonce = "<?php echo wp_create_nonce( 'thesis-token' ); ?>"
+            const nonce = "<?php echo wp_create_nonce('thesis-token'); ?>"
             const ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
             const configuratore = "<?php echo get_option('pagina_configuratore') ?>"
         </script>
     <?php
-    }
+}
 
     public function thesis_options()
     {
@@ -83,6 +141,10 @@ class Thesis
         );
         add_option(
             'class_bottone',
+            'configuratore'
+        );
+        add_option(
+            'time_schedule',
             'configuratore'
         );
         register_setting(
@@ -115,7 +177,7 @@ class Thesis
             'manage_options',
             'thesis-rilegature',
             function () {
-                include_once(THESIS_DIR . 'app/views/admin/rilegature.php');
+                include_once (THESIS_DIR . 'app/views/admin/rilegature.php');
             },
             null
         );
@@ -127,7 +189,7 @@ class Thesis
             'manage_options',
             'thesis-ordini',
             function () {
-                include_once(THESIS_DIR . 'app/views/admin/orders.php');
+                include_once (THESIS_DIR . 'app/views/admin/orders.php');
             },
             null
         );
@@ -139,7 +201,7 @@ class Thesis
             'manage_options',
             'thesis-accessori',
             function () {
-                include_once(THESIS_DIR . 'app/views/admin/accessori.php');
+                include_once (THESIS_DIR . 'app/views/admin/accessori.php');
             },
             null
         );
@@ -151,7 +213,7 @@ class Thesis
             'manage_options',
             'thesis-impostazioni',
             function () {
-                include_once(THESIS_DIR . 'app/views/admin/impostazioni.php');
+                include_once (THESIS_DIR . 'app/views/admin/impostazioni.php');
             },
             null
         );
@@ -159,6 +221,6 @@ class Thesis
     public function thesis_render_admin_page()
     {
         /* Template pagina Admin */
-        include_once(THESIS_DIR . 'app/views/admin/init.php');
+        include_once THESIS_DIR . 'app/views/admin/init.php';
     }
 }
