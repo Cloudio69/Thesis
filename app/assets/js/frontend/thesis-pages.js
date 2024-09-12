@@ -265,12 +265,15 @@ const updateColorCounter = () => {
 
     counterBn.textContent = pagineTipologia.bn.length;
     counterColorate.textContent = pagineTipologia.colorate.length;
+    document.querySelector("#subtotale_bn b").textContent = pagineTipologia.bn.length;
+    document.querySelector("#subtotale_colori b").textContent = pagineTipologia.colorate.length;
 
     counterBn.classList.remove("animate-pulse");
     counterColorate.classList.remove("animate-pulse");
+    document.querySelector(".subtotale_pagine").classList.remove("animate-pulse");
 
-    order.pagine.bn = pagineBn;
-    order.pagine.colorate = pagineColorate;
+    cart.pagine.bn = pagineBn;
+    cart.pagine.colorate = pagineColorate;
   }
 };
 
@@ -319,6 +322,44 @@ pageFilter.forEach((item) => {
       filtered = false;
     }
 
+  };
+});
+
+let massiveActions = [
+  document.querySelector("#stampa_colori"),
+  document.querySelector("#stampa_bn"),
+]
+
+massiveActions.forEach((item) => {
+  item.onclick = (e) => {
+    e.preventDefault();
+
+    if (!generated) return;
+
+    let color = e.currentTarget.id === "stampa_colori" ? "colorate" : "bn";
+
+    if(color === "colorate") {
+      document.querySelectorAll(".color-switch").forEach((item) => {
+        item.querySelector("img").src = assets.rgb;
+        item.parentElement.querySelector("img").classList.remove("grayscale");
+      });
+
+      // Sposta tutte la pagine nell'array bn dall'array colorate
+      pagineTipologia.colorate = pagineTipologia.colorate.concat(pagineTipologia.bn);
+      pagineTipologia.bn = [];
+
+    } else {
+      document.querySelectorAll(".color-switch").forEach((item) => {
+        item.querySelector("img").src = assets.bn;
+        item.parentElement.querySelector("img").classList.add("grayscale");
+      });
+
+      // Sposta tutte la pagine nell'array colorate dall'array bn
+      pagineTipologia.bn = pagineTipologia.bn.concat(pagineTipologia.colorate);
+      pagineTipologia.colorate = [];
+    }
+
+    updateColorCounter();
   };
 });
 

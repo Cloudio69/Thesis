@@ -1,4 +1,4 @@
-const order = {
+const cart = {
   rilegature: [],
   pagine: {
     bn: [],
@@ -148,7 +148,7 @@ formOrder.onsubmit = (e) => {
   let angoli = document.querySelector("[name='angoli']");
   let qty = document.querySelector("[name='quantita']");
 
-  order.rilegature.push({
+  cart.rilegature.push({
     id_rilegatura: rilegatura.value,
     id_variante: variante.value,
     id_colore: colore.value,
