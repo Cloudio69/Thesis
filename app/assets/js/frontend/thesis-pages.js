@@ -218,7 +218,7 @@ const creaPagine = async () => {
           assets.bn;
         document
           .querySelectorAll(".color-switch")
-          [i].parentElement.querySelector("img")
+        [i].parentElement.querySelector("img")
           .classList.add("grayscale", "Transition-all");
       } else {
         pagineTipologia.colorate.push({ ...rgb, pagina: i });
@@ -284,37 +284,41 @@ pageFilter.forEach((item) => {
 
   item.onclick = (e) => {
 
-    if(!generated) return;
+    if (!generated) return;
 
-    pageFilter.forEach((item) => { item.querySelector("span").classList.contains('active') && item.querySelector("span").classList.remove('active')})
+    pageFilter.forEach((item) => { item.querySelector("span").classList.contains('active') && item.querySelector("span").classList.remove('active') })
 
     e.currentTarget.querySelector("span").classList.add("active");
 
     // if is already filtered remove the filter
-    if (filtered) {
+    if (!filtered) {
+
+      filtered = true;
+
+      if (e.currentTarget.id === "bianco--nero") {
+        document.querySelectorAll(".pagina--wrapper").forEach((item) => {
+          if (pagineTipologia.bn.find((pagina) => pagina.pagina === parseInt(item.querySelector("button").dataset.pagina)) === undefined) {
+            item.classList.add("hidden");
+          }
+        });
+
+      } else {
+        document.querySelectorAll(".pagina--wrapper").forEach((item) => {
+          if (pagineTipologia.colorate.find((pagina) => pagina.pagina === parseInt(item.querySelector("button").dataset.pagina)) === undefined) {
+            item.classList.add("hidden");
+          }
+        });
+      }
+    } else {
       document.querySelectorAll(".pagina--wrapper").forEach((item) => {
         item.classList.remove("hidden");
       });
 
+      pageFilter.forEach((item) => { item.querySelector("span").classList.contains('active') && item.querySelector("span").classList.remove('active') })
+
       filtered = false;
     }
 
-    if (e.currentTarget.id === "bianco--nero") {
-      document.querySelectorAll(".pagina--wrapper").forEach((item) => {
-        if (pagineTipologia.bn.find((pagina) => pagina.pagina === parseInt(item.querySelector("button").dataset.pagina)) === undefined) {
-          item.classList.add("hidden");
-        }
-      });
-
-    } else {
-      document.querySelectorAll(".pagina--wrapper").forEach((item) => {
-        if (pagineTipologia.colorate.find((pagina) => pagina.pagina === parseInt(item.querySelector("button").dataset.pagina)) === undefined) {
-          item.classList.add("hidden");
-        }
-      });
-    }
-
-    filtered = true;
   };
 });
 
