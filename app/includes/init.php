@@ -30,7 +30,7 @@ class Thesis
     public function thesis_schedule_cron()
     {
         if (!wp_next_scheduled('thesis_clear_event')) {
-            wp_schedule_event(time(), get_option('time_schedule'), 'thesis_clear_event');
+            wp_schedule_event(time(), get_option('time_schedule') ? get_option('time_schedule') : 'monthly', 'thesis_clear_event');
         }
     }
 
