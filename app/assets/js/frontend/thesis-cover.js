@@ -119,10 +119,11 @@ const getOpzioni = async () => {
       if (groupedResults[e.currentTarget.value][0].angoli === "0") {
         document.querySelector("[name='angoli']").disabled = true;
         document.querySelector("[name='angoli']").value = "";
-        rigeneraCanvas();
       } else {
         document.querySelector("[name='angoli']").disabled = false;
       }
+
+      if(segnalibroSelect.value !== "") segnalibroSelect.value = "";
       
       let varianti = document.querySelector(".varianti div");
       varianti.className =
