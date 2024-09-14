@@ -40,10 +40,8 @@ class Angolo
         $wpdb->update(
             $wpdb->prefix . "thesis_angoli",
             [
-                'nome' => $data['nome'],
-                'prezzo' => $data['prezzo'],
-                'descrizione' => $data['descrizione'],
-                'immagine' => $data['immagine']
+                'nome_angolo' => $data['nome'],
+                'anteprima_angolo' => $data['immagine']
             ],
             ['id_angolo' => $data['id']]
         );

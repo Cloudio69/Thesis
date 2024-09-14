@@ -39,10 +39,8 @@ class Segnalibro {
         $wpdb->update(
             $wpdb->prefix . "thesis_segnalibri",
             [
-                'nome' => $data['nome'],
-                'prezzo' => $data['prezzo'],
-                'descrizione' => $data['descrizione'],
-                'immagine' => $data['immagine']
+                'nome_segnalibro' => $data['nome'],
+                'anteprima_segnalibro' => $data['immagine']
             ],
             ['id_segnalibro' => $data['id']]
         );
