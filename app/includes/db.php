@@ -57,7 +57,7 @@ class ThesisDatabase
         CREATE TABLE " . $wpdb->prefix . "thesis_grammature (
             id_grammatura INT NOT NULL AUTO_INCREMENT,
             nome_grammatura VARCHAR(50),
-            formato_grammatura VARCHAR(3),
+            prezzo_grammatura DECIMAL(10,2),
             PRIMARY KEY (id_grammatura)
         ) $charset_collate;
 
@@ -67,7 +67,24 @@ class ThesisDatabase
             anteprima_angolo TEXT,
             PRIMARY KEY (id_angolo)
         ) $charset_collate;
-        
+
+        INSERT INTO " . $wpdb->prefix . "thesis_angoli (nome_angolo, anteprima_angolo) VALUES
+        ('Dorati', '/wp-content/plugins/thesis/app/assets/img/angoli/angoli-dorati.png'),
+        ('Argentati', '/wp-content/plugins/thesis/app/assets/img/angoli/angoli-argentati.png');
+
+        INSERT INTO " . $wpdb->prefix . "thesis_grammature (nome_grammatura, prezzo_grammatura) VALUES
+        ('80 gr', 0.00),
+        ('100 gr. patinata', 0.03),
+        ('120 gr. uso mano', 0.05);
+
+        INSERT INTO " . $wpdb->prefix . "thesis_segnalibri (nome_colore, anteprima_segnalibro) VALUES
+        ('Rosso', '/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-rosso.png'),
+        ('Blu', '/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-blu.png'),
+        ('Verde', '/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-verde.png'),
+        ('Nero', '/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-verde.png'),
+        ('Bianco', '/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-verde.png'),
+        ('Dorato', '/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-verde.png');
+
         ";
 
         dbDelta($sql);

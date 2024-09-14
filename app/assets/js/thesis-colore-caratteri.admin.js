@@ -224,8 +224,6 @@ const creaAssocHTML = (oggetti) => {
   for (const id in oggetti) {
     const gruppo = oggetti[id];
 
-    console.log(gruppo);
-
     const divGruppo = document.createElement("div");
     divGruppo.classList.add(
       "gruppo",

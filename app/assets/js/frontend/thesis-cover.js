@@ -540,7 +540,6 @@ fileUpload.onchange = (e) => {
             var percentComplete = evt.loaded / evt.total;
             percentComplete = Math.round(percentComplete * 100);
             progress.value = percentComplete;
-            // console.log(percentComplete);
           }
         },
         false

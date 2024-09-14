@@ -71,7 +71,6 @@ class Thesis
                     } else {
                         unlink($dir . "/" . $object);
                     }
-
                 }
             }
             reset($objects);
@@ -123,38 +122,30 @@ class Thesis
 
     public function add_thesis_id_button()
     {
-        ?>
+?>
         <script>
             const init = document.querySelectorAll(".<?php echo get_option('class_bottone'); ?>")
             const nonce = "<?php echo wp_create_nonce('thesis-token'); ?>"
             const ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
             const configuratore = "<?php echo get_option('pagina_configuratore') ?>"
         </script>
-    <?php
-}
+<?php
+    }
 
     public function thesis_options()
     {
-        add_option(
-            'pagina_configuratore',
-            'configuratore'
-        );
-        add_option(
-            'class_bottone',
-            'configuratore'
-        );
-        add_option(
-            'time_schedule',
-            'configuratore'
-        );
-        register_setting(
-            'thesis_impostazioni',
-            'pagina_configuratore'
-        );
-        register_setting(
-            'thesis_impostazioni',
-            'class_bottone'
-        );
+        add_option('pagina_configuratore', 'configuratore');
+        add_option('class_bottone', 'configuratore');
+        add_option('time_schedule', 'monthly');
+        register_setting('thesis_impostazioni', 'pagina_configuratore');
+        register_setting('thesis_impostazioni', 'class_bottone');
+        register_setting('thesis_impostazioni', 'time_schedule');
+
+        // Prezzi settings
+        add_option('prezzo_angoli', '4');
+        add_option('prezzo_segnalibri', '2');
+        register_setting('thesis_prezzi', 'prezzo_angoli');
+        register_setting('thesis_prezzi', 'prezzo_segnalibri');
     }
 
     public function thesis_admin_page()
@@ -177,7 +168,7 @@ class Thesis
             'manage_options',
             'thesis-rilegature',
             function () {
-                include_once (THESIS_DIR . 'app/views/admin/rilegature.php');
+                include_once(THESIS_DIR . 'app/views/admin/rilegature.php');
             },
             null
         );
@@ -189,7 +180,7 @@ class Thesis
             'manage_options',
             'thesis-ordini',
             function () {
-                include_once (THESIS_DIR . 'app/views/admin/orders.php');
+                include_once(THESIS_DIR . 'app/views/admin/orders.php');
             },
             null
         );
@@ -201,7 +192,7 @@ class Thesis
             'manage_options',
             'thesis-accessori',
             function () {
-                include_once (THESIS_DIR . 'app/views/admin/accessori.php');
+                include_once(THESIS_DIR . 'app/views/admin/accessori.php');
             },
             null
         );
@@ -213,7 +204,7 @@ class Thesis
             'manage_options',
             'thesis-impostazioni',
             function () {
-                include_once (THESIS_DIR . 'app/views/admin/impostazioni.php');
+                include_once(THESIS_DIR . 'app/views/admin/impostazioni.php');
             },
             null
         );

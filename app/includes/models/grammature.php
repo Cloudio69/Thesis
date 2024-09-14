@@ -25,7 +25,7 @@ class Grammatura {
             $wpdb->prefix . "thesis_grammature",
             [
                 'nome_grammatura' => $data['nome'],
-                'formato_grammatura' => $data['formato'],
+                'prezzo_grammatura' => $data['prezzo'],
             ]
         );
 
@@ -40,7 +40,7 @@ class Grammatura {
             $wpdb->prefix . "thesis_grammature",
             [
                 'nome_grammatura' => $data['nome'],
-                'formato_grammatura' => $data['formato'],
+                'prezzo_grammatura' => $data['prezzo'],
             ],
             ['id_grammatura' => $data['id']]
         );

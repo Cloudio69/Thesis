@@ -353,7 +353,6 @@ const modificaVariante = (e) => {
       },
     };
 
-    console.log(options)
 
     jQuery.ajax({
       dataType: "json",

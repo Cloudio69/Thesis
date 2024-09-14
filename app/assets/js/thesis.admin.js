@@ -38,7 +38,7 @@ success.forEach((item) => {
   item.querySelector("button").onclick = (e) => e.currentTarget.parentElement.remove()
 })
 
-document.querySelector("#free-storage").onclick = (e) => {
+document.querySelector("#free-storage") && (document.querySelector("#free-storage").onclick = (e) => {
 
   e.preventDefault();
 
@@ -46,11 +46,11 @@ document.querySelector("#free-storage").onclick = (e) => {
     url: ajaxurl,
     method: "POST",
     data: { action: "thesis_clear_files" },
-    success: function(response) {
+    success: function (response) {
       window.location.reload();
     },
-    error: function(xhr, status, error) {
+    error: function (xhr, status, error) {
       console.error(error);
     }
   });
-}
+})

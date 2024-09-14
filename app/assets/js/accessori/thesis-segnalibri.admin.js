@@ -37,12 +37,8 @@ const getSegnalibri = (results) => {
         "justify-between"
       );
 
-      let segnalibroImg = document.createElement("img");
-      segnalibroImg.src = segnalibro.anteprima_segnalibro;
-      segnalibroImg.classList.add("w-full", "h-48", "object-cover", "rounded-lg");
-
       let segnalibroNome = document.createElement("h2");
-      segnalibroNome.textContent = segnalibro.nome_segnalibro;
+      segnalibroNome.textContent = segnalibro.nome_colore;
       segnalibroNome.classList.add("text-xl", "font-bold", "mt-2");
 
       let segnalibroButton = document.createElement("button");
@@ -57,7 +53,6 @@ const getSegnalibri = (results) => {
         "hover:bg-blue-700"
       );
 
-      segnalibroCard.appendChild(segnalibroImg);
       segnalibroCard.appendChild(segnalibroNome);
       segnalibroCard.appendChild(segnalibroButton);
 

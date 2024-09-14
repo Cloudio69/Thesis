@@ -23,7 +23,6 @@ const getAngoli = async () => {
 
   results = JSON.parse(await results.data)
   results = JSON.parse(await results.results);
-  console.log(results);
 
   if (results.length === 0) {
     listAngoli.removeAttribute("class");
@@ -43,10 +42,6 @@ const getAngoli = async () => {
         "flex-col",
         "justify-between"
       );
-
-      let angoloImg = document.createElement("img");
-      angoloImg.src = angolo.anteprima_angolo;
-      angoloImg.classList.add("w-full", "h-48", "object-cover", "rounded-lg");
 
       let angoloNome = document.createElement("h2");
       angoloNome.textContent = angolo.nome_angolo;
@@ -126,8 +121,7 @@ const getAngoli = async () => {
           },
         });
       };
-
-      angoloCard.appendChild(angoloImg);
+      
       angoloCard.appendChild(angoloNome);
       // angoloCard.appendChild(angoloPrezzo);
       angoloCard.appendChild(angoloButton);
