@@ -85,7 +85,7 @@ function ajax_update_rilegatura()
             $data['desc_rilegatura'],
             sanitize_text_field($data['url_rilegatura']),
             sanitize_text_field($data['prezzo_rilegatura']),
-            sanitize_text_field($data['angoli'])
+            $data['angoli']
         );
         wp_send_json_success(json_encode(array("results" => $query, "message" => "Aggiornato con successo.")), 200);
     } catch (Exception $e) {

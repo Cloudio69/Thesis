@@ -209,7 +209,7 @@ const showOptions = (e) => {
           nome_rilegatura: e.currentTarget.nome_rilegatura.value,
           desc_rilegatura: e.currentTarget.descrizione_rilegatura.value,
           prezzo_rilegatura: e.currentTarget.prezzo_rilegatura.value,
-          angoli: +e.currentTarget.angoli.value,
+          angoli: +e.currentTarget.angoli.checked,
           url_rilegatura: img.src,
         },
       };

@@ -1,5 +1,16 @@
 const imageCache = {};
 
+const hexToRgb = (hex) => {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result
+    ? [
+      parseInt(result[1], 16),
+      parseInt(result[2], 16),
+      parseInt(result[3], 16),
+    ]
+    : null;
+};
+
 const preloadAssets = () => {
   let assets = [
     "/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-nero.png",
@@ -105,6 +116,14 @@ const getOpzioni = async () => {
 
   radioRilegatura.forEach((radio) => {
     radio.onclick = (e) => {
+      if (groupedResults[e.currentTarget.value][0].angoli === "0") {
+        document.querySelector("[name='angoli']").disabled = true;
+        document.querySelector("[name='angoli']").value = "";
+        rigeneraCanvas();
+      } else {
+        document.querySelector("[name='angoli']").disabled = false;
+      }
+      
       let varianti = document.querySelector(".varianti div");
       varianti.className =
         "grid grid-cols-5 gap-4 items-center place-items-center text-center";
@@ -344,16 +363,7 @@ const getColori = async (id) => {
 
           body.appendChild(preloader);
 
-          const hexToRgb = (hex) => {
-            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-            return result
-              ? [
-                parseInt(result[1], 16),
-                parseInt(result[2], 16),
-                parseInt(result[3], 16),
-              ]
-              : null;
-          };
+
 
           let hex = e.currentTarget.dataset.hex;
           await jQuery.ajax({

@@ -62,7 +62,7 @@ class Rilegatura
 
         try {
 
-            $format = array("%s", "%s", "%s");
+            $format = array("%s", "%s", "%s", "%f", "%d");
 
             $data = array(
                 'nome_rilegatura' => $nome_rilegatura,
