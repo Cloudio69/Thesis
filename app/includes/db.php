@@ -81,7 +81,7 @@ class ThesisDatabase
         ) LIMIT 1;
 
         INSERT INTO " . $wpdb->prefix . "thesis_grammature (nome_grammatura, prezzo_grammatura)
-        SELECT * FROM (SELECT '80 gr', 0.00) AS tmp
+        SELECT * FROM (SELECT '80 gr.', 0.00) AS tmp
         WHERE NOT EXISTS (
             SELECT nome_grammatura FROM " . $wpdb->prefix . "thesis_grammature WHERE nome_grammatura = '80 gr'
         ) LIMIT 1;
