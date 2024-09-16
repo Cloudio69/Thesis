@@ -22,7 +22,7 @@ const getGrammature = (results) => {
     listGrammature.innerHTML = "Non ci sono grammature.";
   } else {
     listGrammature.removeAttribute("class");
-    listGrammature.classList.add("grid", "gap-4", "lg:grid-cols-5", "md:grid-cols-2");
+    listGrammature.classList.add("grid", "gap-4", "grid-cols-3");
 
     results.forEach((grammatura) => {
       let grammaturaCard = document.createElement("div");
@@ -32,25 +32,27 @@ const getGrammature = (results) => {
         "rounded-lg",
         "p-4",
         "flex",
-        "flex-col",
+        "items-center",
         "justify-between"
       );
 
       let grammaturaNome = document.createElement("h2");
       grammaturaNome.textContent = grammatura.nome_grammatura;
-      grammaturaNome.classList.add("text-xl", "font-bold", "mt-2");
+      grammaturaNome.classList.add("text-sm", "font-bold");
 
       let grammaturaButton = document.createElement("button");
-      grammaturaButton.textContent = "Modifica";
+      grammaturaButton.innerHTML = "<span class='material-symbols-outlined'>delete</span>";
       grammaturaButton.classList.add(
-        "bg-blue-500",
-        "text-white",
+        "text-amber-300",
+        "text-sm",
+        "flex",
+        "items-center",
         "font-bold",
         "rounded-lg",
         "p-2",
-        "mt-2",
-        "hover:bg-blue-700"
+        "hover:bg-red-600"
       );
+
 
       grammaturaCard.appendChild(grammaturaNome);
       grammaturaCard.appendChild(grammaturaButton);

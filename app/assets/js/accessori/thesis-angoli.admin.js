@@ -29,7 +29,7 @@ const getAngoli = async () => {
     listAngoli.innerHTML = "Non ci sono angoli.";
   } else {
     listAngoli.removeAttribute("class");
-    listAngoli.classList.add("grid", "gap-4", "lg:grid-cols-5", "md:grid-cols-2");
+    listAngoli.classList.add("grid", "gap-4", "grid-cols-3");
 
     results.forEach((angolo) => {
       let angoloCard = document.createElement("div");
@@ -39,13 +39,13 @@ const getAngoli = async () => {
         "rounded-lg",
         "p-4",
         "flex",
-        "flex-col",
+        "items-center",
         "justify-between"
       );
 
       let angoloNome = document.createElement("h2");
       angoloNome.textContent = angolo.nome_angolo;
-      angoloNome.classList.add("text-xl", "font-bold", "mt-2");
+      angoloNome.classList.add("text-sm", "font-bold");
 
       /* 
       let angoloPrezzo = document.createElement("span");
@@ -53,54 +53,20 @@ const getAngoli = async () => {
       angoloPrezzo.classList.add("text-lg", "font-bold", "mt-2");
       */
 
-      let angoloButton = document.createElement("button");
-      angoloButton.textContent = "Modifica";
-      angoloButton.classList.add(
-        "bg-blue-500",
-        "text-white",
-        "font-bold",
-        "rounded-lg",
-        "p-2",
-        "mt-2",
-        "hover:bg-blue-600"
-      );
-
-      angoloButton.onclick = () => {
-        let img = document.querySelector("#selected--image-angolo");
-        let nome = formAngolo.nome_angolo.value;
-        let immagine = img.src;
-
-        jQuery.ajax({
-          dataType: "json",
-          method: "POST",
-          url: "admin-ajax.php",
-          data: {
-            action: "update_angoli",
-            data: {
-              id: angolo.id,
-              nome: nome,
-              immagine: immagine,
-            },
-          },
-          success: (response) => {
-            listAngoli.replaceChildren();
-            res = JSON.parse(response.data);
-            results = JSON.parse(res.results);
-            getAngoli(results);
-          },
-        });
-      };
+      let actionWrapper = document.createElement("div");
+      actionWrapper.classList.add("flex", "items-center", "justify-center");
 
       let angoloButtonDelete = document.createElement("button");
       angoloButtonDelete.dataset.id = angolo.id_angolo;
-      angoloButtonDelete.textContent = "Elimina";
+      angoloButtonDelete.innerHTML = "<span class=\"material-symbols-outlined\"> delete </span>";
       angoloButtonDelete.classList.add(
-        "bg-red-500",
-        "text-white",
+        "text-amber-300",
+        "text-sm",
+        "flex",
+        "items-center",
         "font-bold",
         "rounded-lg",
         "p-2",
-        "mt-2",
         "hover:bg-red-600"
       );
 
@@ -122,10 +88,11 @@ const getAngoli = async () => {
         });
       };
       
+
+      actionWrapper.appendChild(angoloButtonDelete);
+
       angoloCard.appendChild(angoloNome);
-      // angoloCard.appendChild(angoloPrezzo);
-      angoloCard.appendChild(angoloButton);
-      angoloCard.appendChild(angoloButtonDelete);
+      angoloCard.appendChild(actionWrapper);
 
       listAngoli.appendChild(angoloCard);
     });

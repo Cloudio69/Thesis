@@ -34,13 +34,13 @@
             </div>
             <div class="flex space-between gap-2">
                 <span class="flex-1">Prezzo pagine B/N</span>
-                <span id="prezzo_bn"><b>0</b></span>
+                <span id="prezzo_bn"><b><?php echo get_option('prezzo_bn'); ?></b></span>
             </div>
             <div class="flex space-between gap-2">
                 <span class="flex-1">Prezzo pagine a colori</span>
-                <span id="prezzo_colori"><b>0</b></span>
+                <span id="prezzo_colori"><b><?php echo get_option('prezzo_colori'); ?></b></span>
             </div>
-            <div class="flex space-between gap-2 border-t mt-2 py-2">
+            <div class="flex space-between gap-2 border-t mt-2 py-2 totale_pagine">
                 <span class="flex-1">Totale</span>
                 <span id="totale_pagine"><b>0</b></span>
             </div>

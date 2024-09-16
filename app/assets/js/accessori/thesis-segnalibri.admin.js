@@ -23,7 +23,7 @@ const getSegnalibri = (results) => {
     listSegnalibri.innerHTML = "Non ci sono segnalibri.";
   } else {
     listSegnalibri.removeAttribute("class");
-    listSegnalibri.classList.add("grid", "gap-4", "lg:grid-cols-5", "md:grid-cols-2");
+    listSegnalibri.classList.add("grid", "gap-4", "grid-cols-3");
 
     results.forEach((segnalibro) => {
       let segnalibroCard = document.createElement("div");
@@ -33,24 +33,25 @@ const getSegnalibri = (results) => {
         "rounded-lg",
         "p-4",
         "flex",
-        "flex-col",
+        "items-center",
         "justify-between"
       );
 
       let segnalibroNome = document.createElement("h2");
       segnalibroNome.textContent = segnalibro.nome_colore;
-      segnalibroNome.classList.add("text-xl", "font-bold", "mt-2");
+      segnalibroNome.classList.add("text-sm", "font-bold");
 
       let segnalibroButton = document.createElement("button");
-      segnalibroButton.textContent = "Modifica";
+      segnalibroButton.innerHTML = "<span class='material-symbols-outlined'>delete</span>";
       segnalibroButton.classList.add(
-        "bg-blue-500",
-        "text-white",
+        "text-amber-300",
+        "text-sm",
+        "flex",
+        "items-center",
         "font-bold",
         "rounded-lg",
         "p-2",
-        "mt-2",
-        "hover:bg-blue-700"
+        "hover:bg-red-600"
       );
 
       segnalibroCard.appendChild(segnalibroNome);

@@ -144,6 +144,14 @@ class Thesis
         // Prezzi settings
         add_option('prezzo_angoli', '4');
         add_option('prezzo_segnalibri', '2');
+        add_option('prezzo_bn', '0.04');
+        add_option('prezzo_colori', '0.40');
+        add_option('prezzo_a4', '0.00');
+        add_option('prezzo_a3', '0.04');
+        register_setting('thesis_prezzi', 'prezzo_a4');
+        register_setting('thesis_prezzi', 'prezzo_a3');
+        register_setting('thesis_prezzi', 'prezzo_bn');
+        register_setting('thesis_prezzi', 'prezzo_colori');
         register_setting('thesis_prezzi', 'prezzo_angoli');
         register_setting('thesis_prezzi', 'prezzo_segnalibri');
     }
