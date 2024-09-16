@@ -5,6 +5,7 @@ include_once THESIS_DIR . "app/includes/models/grammature.php";
 add_action('wp_ajax_post_grammature', 'ajax_post_grammature');
 add_action('wp_ajax_get_grammature', 'ajax_get_grammature');
 add_action('wp_ajax_delete_grammatura', 'ajax_delete_grammatura');
+add_action('wp_ajax_nopriv_get_grammature', 'ajax_get_grammature');
 
 
 function ajax_post_grammature()

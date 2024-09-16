@@ -5,6 +5,7 @@ include_once THESIS_DIR . "app/includes/models/angoli.php";
 add_action('wp_ajax_post_angoli', 'ajax_post_angoli');
 add_action('wp_ajax_get_angoli', 'ajax_get_angoli');
 add_action('wp_ajax_delete_angolo', 'ajax_delete_angolo');
+add_action('wp_ajax_nopriv_get_angoli', 'ajax_get_angoli');
 
 
 function ajax_post_angoli()

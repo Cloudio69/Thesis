@@ -8,7 +8,7 @@
             <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">book_2</span>Rilegature</h1>
             <div class="grid grid-cols-3 gap-4 items-center place-items-center text-center">
             <?php
-include_once THESIS_DIR . "app/includes/models/rilegature.php";
+
 $rilegature = new Rilegatura;
 $query = $rilegature->get_rilegature();
 
@@ -47,9 +47,16 @@ for ($i = 0; $i < count($decodedRilegature); $i++) {
                 <div class="flex gap-4 items-center place-items-center text-center">
                     <select name="grammatura" class="p-2 rounded-md" required>
                         <option value="" selected disabled>Seleziona la grammatura</option>
-                        <option value="grammatura-80">80 gr.</option>
-                        <option value="grammatura-100">100 gr. patinata</option>
-                        <option value="grammatura-120">120 gr. uso mano</option>
+                        <?php 
+
+                            $grammature = new Grammatura;
+                            $grammature = $grammature->get_grammature();
+                            $decodedGrammature = json_decode($grammature);
+
+                            foreach ($decodedGrammature as $grammatura) {
+                                echo "<option value=\"$grammatura->id_grammatura\">$grammatura->nome_grammatura</option>";
+                            }
+                        ?>
                     </select>
                     <select name="formato" class="p-2 rounded-md">
                         <option value="" selected disabled>Seleziona il formato</option>
@@ -63,8 +70,16 @@ for ($i = 0; $i < count($decodedRilegature); $i++) {
                 <div class="flex gap-4 items-center place-items-center text-center">
                     <select name="angoli" class="p-2 rounded-md" required>
                         <option value="" selected disabled>Seleziona gli angoli</option>
-                        <option value="angoli-dorati">Dorati</option>
-                        <option value="angoli-argentati">Argentati</option>
+                        <?php 
+                            $angoli = new Angolo;
+                            $angoli = $angoli->get_angoli();
+                            $decodedAngoli = json_decode($angoli);
+
+                            foreach ($decodedAngoli as $angolo) {
+                                echo "<option value=\"$angolo->id_angolo\" data-src=\"$angolo->anteprima_angolo\">$angolo->nome_angolo</option>";
+                            }
+                        
+                        ?>
                     </select>
                 </div>
             </div>
@@ -73,12 +88,16 @@ for ($i = 0; $i < count($decodedRilegature); $i++) {
                 <div class="flex gap-4 items-center place-items-center text-center">
                     <select name="segnalibri" class="p-2 rounded-md" required>
                         <option value="" selected disabled>Seleziona il segnalibro</option>
-                        <option value="segnalibro-nero">Nero</option>
-                        <option value="segnalibro-bianco">Bianco</option>
-                        <option value="segnalibro-dorato">Dorato</option>
-                        <option value="segnalibro-rosso">Rosso</option>
-                        <option value="segnalibro-blu">Blu</option>
-                        <option value="segnalibro-verde">Verde</option>
+                        <?php 
+                            $segnalibri = new Segnalibro;
+                            $segnalibri = $segnalibri->get_segnalibri();
+                            $decodedSegnalibri = json_decode($segnalibri);
+
+                            foreach ($decodedSegnalibri as $segnalibro) {
+                                echo "<option value=\"$segnalibro->id_segnalibro\" data-src=\"$segnalibro->anteprima_segnalibro\">$segnalibro->nome_colore</option>";
+                            }
+                        
+                        ?>
                     </select>
                 </div>
             </div>

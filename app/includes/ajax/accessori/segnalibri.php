@@ -5,6 +5,7 @@ include_once THESIS_DIR . "app/includes/models/segnalibri.php";
 add_action('wp_ajax_post_segnalibri', 'ajax_post_segnalibri');
 add_action('wp_ajax_get_segnalibri', 'ajax_get_segnalibri');
 add_action('wp_ajax_delete_segnalibro', 'ajax_delete_segnalibro');
+add_action('wp_ajax_nopriv_get_segnalibri', 'ajax_get_segnalibri');
 
 
 function ajax_post_segnalibri()

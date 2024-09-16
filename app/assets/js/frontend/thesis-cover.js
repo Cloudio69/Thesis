@@ -1,38 +1,61 @@
-const imageCache = {};
+let assetsAngoli = [];
+let assetsSegnalibri = [];
 
 const hexToRgb = (hex) => {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
     ? [
-      parseInt(result[1], 16),
-      parseInt(result[2], 16),
-      parseInt(result[3], 16),
-    ]
+        parseInt(result[1], 16),
+        parseInt(result[2], 16),
+        parseInt(result[3], 16),
+      ]
     : null;
 };
 
-const preloadAssets = () => {
-  let assets = [
-    "/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-nero.png",
-    "/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-rosso.png",
-    "/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-verde.png",
-    "/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-blu.png",
-    "/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-dorato.png",
-    "/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-bianco.png",
-    "/wp-content/plugins/thesis/app/assets/img/angoli/angoli-dorati.png",
-    "/wp-content/plugins/thesis/app/assets/img/angoli/angoli-argentati.png",
-  ];
-
-  assets.forEach((asset) => {
-    if (!imageCache[asset]) {
-      const img = new Image();
-      img.src = asset;
-      imageCache[asset] = img;
-    }
-  });
+const preloadAccessori = (src) => {
+  let img = new Image();
+  img.src = src;
+  return img.src;
 };
 
-preloadAssets();
+const getAssets = async () => {
+  const angoliResponse = await jQuery.ajax({
+    dataType: "json",
+    method: "GET",
+    url: ajaxurl,
+    data: {
+      action: "get_angoli",
+    },
+  });
+
+  const segnalibriResponse = await jQuery.ajax({
+    dataType: "json",
+    method: "GET",
+    url: ajaxurl,
+    data: {
+      action: "get_segnalibri",
+    },
+  });
+
+  let angoliData = JSON.parse(angoliResponse.data);
+  let segnalibriData = JSON.parse(segnalibriResponse.data);
+
+  angoliData = JSON.parse(angoliData.results);
+  segnalibriData = JSON.parse(segnalibriData.results);
+
+  const angoliSrc = angoliData.map((angolo) => angolo.anteprima_angolo);
+  const segnalibriSrc = segnalibriData.map(
+    (segnalibro) => segnalibro.anteprima_segnalibro
+  );
+
+  assetsAngoli = [ ...angoliSrc ];
+  assetsSegnalibri = [ ...segnalibriSrc ];
+
+  assetsAngoli.forEach((angolo) => preloadAccessori(angolo));
+  assetsSegnalibri.forEach((segnalibro) => preloadAccessori(segnalibro));
+};
+
+getAssets();
 
 const rigeneraCanvas = () => {
   let canvas = document.querySelector("canvas");
@@ -61,25 +84,19 @@ const rigeneraCanvas = () => {
     const angoliValue = document.querySelector('[name="angoli"]').value;
 
     if (segnalibriValue) {
-      const img = imageCache[`/wp-content/plugins/thesis/app/assets/img/segnalibri/${segnalibriValue}.png`];
-      if (img.complete) {
+      const img = new Image();
+      img.src = assetsSegnalibri[segnalibriValue - 1];
+      img.onload = () => {
         context.drawImage(img, 0, 0, canvas.width, canvas.height);
-      } else {
-        img.onload = () => {
-          context.drawImage(img, 0, 0, canvas.width, canvas.height);
-        };
-      }
+      };
     }
 
     if (angoliValue) {
-      const img = imageCache[`/wp-content/plugins/thesis/app/assets/img/angoli/${angoliValue}.png`];
-      if (img.complete) {
+      const img = new Image();
+      img.src = assetsAngoli[angoliValue - 1];
+      img.onload = () => {
         context.drawImage(img, 0, 0, canvas.width, canvas.height);
-      } else {
-        img.onload = () => {
-          context.drawImage(img, 0, 0, canvas.width, canvas.height);
-        };
-      }
+      };
     }
   };
 };
@@ -116,6 +133,14 @@ const getOpzioni = async () => {
 
   radioRilegatura.forEach((radio) => {
     radio.onclick = (e) => {
+
+      // reset segnalibri, angoli, grammatura and formato
+      document.querySelector("[name='segnalibri']").value = "";
+      document.querySelector("[name='angoli']").value = "";
+      document.querySelector("[name='grammatura']").value = "";
+      document.querySelector("[name='formato']").value = "";
+      
+
       if (groupedResults[e.currentTarget.value][0].angoli === "0") {
         document.querySelector("[name='angoli']").disabled = true;
         document.querySelector("[name='angoli']").value = "";
@@ -123,8 +148,8 @@ const getOpzioni = async () => {
         document.querySelector("[name='angoli']").disabled = false;
       }
 
-      if(segnalibroSelect.value !== "") segnalibroSelect.value = "";
-      
+      if (segnalibroSelect.value !== "") segnalibroSelect.value = "";
+
       let varianti = document.querySelector(".varianti div");
       varianti.className =
         "grid grid-cols-5 gap-4 items-center place-items-center text-center";
@@ -178,6 +203,7 @@ const getOpzioni = async () => {
         varianti.appendChild(varianteWrapper);
 
         radioVariante.onclick = () => {
+          
           let canvas = document.createElement("canvas");
           canvas.classList.add(
             "w-[25vw]",
@@ -227,29 +253,25 @@ const getOpzioni = async () => {
               canvas.height
             );
 
-          const segnalibriValue = document.querySelector('[name="segnalibri"]').value;
+          const segnalibriValue = document.querySelector(
+            '[name="segnalibri"]'
+          ).value;
           const angoliValue = document.querySelector('[name="angoli"]').value;
 
           if (segnalibriValue) {
-            const img = imageCache[`/wp-content/plugins/thesis/app/assets/img/segnalibri/${segnalibriValue}.png`];
-            if (img.complete) {
+            const img = new Image();
+            img.src = assetsSegnalibri[segnalibriValue - 1];
+            img.onload = () => {
               context.drawImage(img, 0, 0, canvas.width, canvas.height);
-            } else {
-              img.onload = () => {
-                context.drawImage(img, 0, 0, canvas.width, canvas.height);
-              };
-            }
+            };
           }
 
           if (angoliValue) {
-            const img = imageCache[`/wp-content/plugins/thesis/app/assets/img/angoli/${angoliValue}.png`];
-            if (img.complete) {
+            const img = new Image();
+            img.src = assetsAngoli[angoliValue - 1];
+            img.onload = () => {
               context.drawImage(img, 0, 0, canvas.width, canvas.height);
-            } else {
-              img.onload = () => {
-                context.drawImage(img, 0, 0, canvas.width, canvas.height);
-              };
-            }
+            };
           }
 
           zoomIn.onclick = () => {
@@ -364,8 +386,6 @@ const getColori = async (id) => {
 
           body.appendChild(preloader);
 
-
-
           let hex = e.currentTarget.dataset.hex;
           await jQuery.ajax({
             dataType: "json",
@@ -414,29 +434,26 @@ const getColori = async (id) => {
                   canvas.height
                 );
 
-                const segnalibriValue = document.querySelector('[name="segnalibri"]').value;
-                const angoliValue = document.querySelector('[name="angoli"]').value;
+                const segnalibriValue = document.querySelector(
+                  '[name="segnalibri"]'
+                ).value;
+                const angoliValue =
+                  document.querySelector('[name="angoli"]').value;
 
                 if (segnalibriValue) {
-                  const img = imageCache[`/wp-content/plugins/thesis/app/assets/img/segnalibri/${segnalibriValue}.png`];
-                  if (img.complete) {
+                  const img = new Image();
+                  img.src = assetsSegnalibri[segnalibriValue - 1];
+                  img.onload = () => {
                     context.drawImage(img, 0, 0, canvas.width, canvas.height);
-                  } else {
-                    img.onload = () => {
-                      context.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    };
-                  }
+                  };
                 }
 
                 if (angoliValue) {
-                  const img = imageCache[`/wp-content/plugins/thesis/app/assets/img/angoli/${angoliValue}.png`];
-                  if (img.complete) {
+                  const img = new Image();
+                  img.src = assetsAngoli[angoliValue - 1];
+                  img.onload = () => {
                     context.drawImage(img, 0, 0, canvas.width, canvas.height);
-                  } else {
-                    img.onload = () => {
-                      context.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    };
-                  }
+                  };
                 }
               };
             },
@@ -577,36 +594,12 @@ fileUpload.onchange = (e) => {
 
 const segnalibroSelect = document.querySelector("[name='segnalibri']");
 segnalibroSelect.onchange = (e) => {
-  let img = new Image();
-  img.src =
-    "/wp-content/plugins/thesis/app/assets/img/segnalibri/" +
-    e.currentTarget.value +
-    ".png";
-
-  img.onload = () => {
-    let canvas = document.querySelector("canvas");
-    let context = canvas.getContext("2d");
-
-    rigeneraCanvas();
-    context.drawImage(img, 0, 0, canvas.width, canvas.height);
-  };
+  rigeneraCanvas();
 };
 
 const angoliSelect = document.querySelector("[name='angoli']");
 angoliSelect.onchange = (e) => {
-  let img = new Image();
-  img.src =
-    "/wp-content/plugins/thesis/app/assets/img/angoli/" + e.currentTarget.value + ".png";
-
-  img.onload = () => {
-    let canvas = document.querySelector("canvas");
-    let context = canvas.getContext("2d");
-
-    rigeneraCanvas();
-    context.drawImage(img, 0, 0, canvas.width, canvas.height);
-  };
+  rigeneraCanvas();
 };
-
-
 
 getOpzioni();

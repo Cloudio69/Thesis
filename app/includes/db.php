@@ -68,22 +68,71 @@ class ThesisDatabase
             PRIMARY KEY (id_angolo)
         ) $charset_collate;
 
-        INSERT INTO " . $wpdb->prefix . "thesis_angoli (nome_angolo, anteprima_angolo) VALUES
-        ('Dorati', '/wp-content/plugins/thesis/app/assets/img/angoli/angoli-dorati.png'),
-        ('Argentati', '/wp-content/plugins/thesis/app/assets/img/angoli/angoli-argentati.png');
+        INSERT INTO " . $wpdb->prefix . "thesis_angoli (nome_angolo, anteprima_angolo)
+        SELECT * FROM (SELECT 'Dorati', '/wp-content/plugins/thesis/app/assets/img/angoli/angoli-dorati.png') AS tmp
+        WHERE NOT EXISTS (
+            SELECT nome_angolo FROM " . $wpdb->prefix . "thesis_angoli WHERE nome_angolo = 'Dorati'
+        ) LIMIT 1;
 
-        INSERT INTO " . $wpdb->prefix . "thesis_grammature (nome_grammatura, prezzo_grammatura) VALUES
-        ('80 gr', 0.00),
-        ('100 gr. patinata', 0.03),
-        ('120 gr. uso mano', 0.05);
+        INSERT INTO " . $wpdb->prefix . "thesis_angoli (nome_angolo, anteprima_angolo)
+        SELECT * FROM (SELECT 'Argentati', '/wp-content/plugins/thesis/app/assets/img/angoli/angoli-argentati.png') AS tmp
+        WHERE NOT EXISTS (
+            SELECT nome_angolo FROM " . $wpdb->prefix . "thesis_angoli WHERE nome_angolo = 'Argentati'
+        ) LIMIT 1;
 
-        INSERT INTO " . $wpdb->prefix . "thesis_segnalibri (nome_colore, anteprima_segnalibro) VALUES
-        ('Rosso', '/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-rosso.png'),
-        ('Blu', '/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-blu.png'),
-        ('Verde', '/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-verde.png'),
-        ('Nero', '/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-verde.png'),
-        ('Bianco', '/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-verde.png'),
-        ('Dorato', '/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-verde.png');
+        INSERT INTO " . $wpdb->prefix . "thesis_grammature (nome_grammatura, prezzo_grammatura)
+        SELECT * FROM (SELECT '80 gr', 0.00) AS tmp
+        WHERE NOT EXISTS (
+            SELECT nome_grammatura FROM " . $wpdb->prefix . "thesis_grammature WHERE nome_grammatura = '80 gr'
+        ) LIMIT 1;
+
+        INSERT INTO " . $wpdb->prefix . "thesis_grammature (nome_grammatura, prezzo_grammatura)
+        SELECT * FROM (SELECT '100 gr. patinata', 0.03) AS tmp
+        WHERE NOT EXISTS (
+            SELECT nome_grammatura FROM " . $wpdb->prefix . "thesis_grammature WHERE nome_grammatura = '100 gr. patinata'
+        ) LIMIT 1;
+
+        INSERT INTO " . $wpdb->prefix . "thesis_grammature (nome_grammatura, prezzo_grammatura)
+        SELECT * FROM (SELECT '120 gr. uso mano', 0.05) AS tmp
+        WHERE NOT EXISTS (
+            SELECT nome_grammatura FROM " . $wpdb->prefix . "thesis_grammature WHERE nome_grammatura = '120 gr. uso mano'
+        ) LIMIT 1;
+
+        INSERT INTO " . $wpdb->prefix . "thesis_segnalibri (nome_colore, anteprima_segnalibro)
+        SELECT * FROM (SELECT 'Rosso', '/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-rosso.png') AS tmp
+        WHERE NOT EXISTS (
+            SELECT nome_colore FROM " . $wpdb->prefix . "thesis_segnalibri WHERE nome_colore = 'Rosso'
+        ) LIMIT 1;
+
+        INSERT INTO " . $wpdb->prefix . "thesis_segnalibri (nome_colore, anteprima_segnalibro)
+        SELECT * FROM (SELECT 'Blu', '/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-blu.png') AS tmp
+        WHERE NOT EXISTS (
+            SELECT nome_colore FROM " . $wpdb->prefix . "thesis_segnalibri WHERE nome_colore = 'Blu'
+        ) LIMIT 1;
+
+        INSERT INTO " . $wpdb->prefix . "thesis_segnalibri (nome_colore, anteprima_segnalibro)
+        SELECT * FROM (SELECT 'Verde', '/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-verde.png') AS tmp
+        WHERE NOT EXISTS (
+            SELECT nome_colore FROM " . $wpdb->prefix . "thesis_segnalibri WHERE nome_colore = 'Verde'
+        ) LIMIT 1;
+
+        INSERT INTO " . $wpdb->prefix . "thesis_segnalibri (nome_colore, anteprima_segnalibro)
+        SELECT * FROM (SELECT 'Nero', '/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-nero.png') AS tmp
+        WHERE NOT EXISTS (
+            SELECT nome_colore FROM " . $wpdb->prefix . "thesis_segnalibri WHERE nome_colore = 'Nero'
+        ) LIMIT 1;
+
+        INSERT INTO " . $wpdb->prefix . "thesis_segnalibri (nome_colore, anteprima_segnalibro)
+        SELECT * FROM (SELECT 'Bianco', '/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-bianco.png') AS tmp
+        WHERE NOT EXISTS (
+            SELECT nome_colore FROM " . $wpdb->prefix . "thesis_segnalibri WHERE nome_colore = 'Bianco'
+        ) LIMIT 1;
+
+        INSERT INTO " . $wpdb->prefix . "thesis_segnalibri (nome_colore, anteprima_segnalibro)
+        SELECT * FROM (SELECT 'Dorato', '/wp-content/plugins/thesis/app/assets/img/segnalibri/segnalibro-dorato.png') AS tmp
+        WHERE NOT EXISTS (
+            SELECT nome_colore FROM " . $wpdb->prefix . "thesis_segnalibri WHERE nome_colore = 'Dorato'
+        ) LIMIT 1;
 
         ";
 
