@@ -9,6 +9,8 @@
             <div class="grid grid-cols-3 gap-4 items-center place-items-center text-center">
             <?php
 
+$prezzo_angoli = get_option('prezzo_angoli');
+$prezzo_segnalibri = get_option('prezzo_segnalibri');
 $rilegature = new Rilegatura;
 $query = $rilegature->get_rilegature();
 
@@ -54,14 +56,14 @@ for ($i = 0; $i < count($decodedRilegature); $i++) {
                             $decodedGrammature = json_decode($grammature);
 
                             foreach ($decodedGrammature as $grammatura) {
-                                echo "<option value=\"$grammatura->id_grammatura\">$grammatura->nome_grammatura</option>";
+                                echo "<option value=\"$grammatura->id_grammatura\" data-prezzo=\"$grammatura->prezzo_grammatura\">$grammatura->nome_grammatura</option>";
                             }
                         ?>
                     </select>
                     <select name="formato" class="p-2 rounded-md">
                         <option value="" selected disabled>Seleziona il formato</option>
-                        <option value="formato-a4">A4</option>
-                        <option value="formato-a3">A3</option>
+                        <option value="formato-a4" data-prezzo="<?php echo get_option('prezzo_a4')?>">A4</option>
+                        <option value="formato-a3" data-prezzo="<?php echo get_option('prezzo_a3')?>">A3</option>
                     </select>
                 </div>
             </div>
@@ -76,7 +78,7 @@ for ($i = 0; $i < count($decodedRilegature); $i++) {
                             $decodedAngoli = json_decode($angoli);
 
                             foreach ($decodedAngoli as $angolo) {
-                                echo "<option value=\"$angolo->id_angolo\" data-src=\"$angolo->anteprima_angolo\">$angolo->nome_angolo</option>";
+                                echo "<option value=\"$angolo->id_angolo\" data-src=\"$angolo->anteprima_angolo\" data-prezzo=\"$prezzo_angoli\">$angolo->nome_angolo</option>";
                             }
                         
                         ?>
@@ -94,7 +96,7 @@ for ($i = 0; $i < count($decodedRilegature); $i++) {
                             $decodedSegnalibri = json_decode($segnalibri);
 
                             foreach ($decodedSegnalibri as $segnalibro) {
-                                echo "<option value=\"$segnalibro->id_segnalibro\" data-src=\"$segnalibro->anteprima_segnalibro\">$segnalibro->nome_colore</option>";
+                                echo "<option value=\"$segnalibro->id_segnalibro\" data-src=\"$segnalibro->anteprima_segnalibro\" data-prezzo=\"$prezzo_segnalibri\">$segnalibro->nome_colore</option>";
                             }
                         
                         ?>
