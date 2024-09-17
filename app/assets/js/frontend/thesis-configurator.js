@@ -7,6 +7,16 @@ const cart = {
   cd: {},
 };
 
+let totaleRilegature = {
+  prezzo_rilegatura: 0,
+  prezzo_grammatura: 0,
+  prezzo_formato: 0,
+  prezzo_angoli: 0,
+  prezzo_segnalibri: 0,
+  qty: 0
+}
+
+
 const formOrder = document.querySelector("#rilegature_form");
 
 let currentStep = 0;
@@ -172,6 +182,38 @@ formOrder.onsubmit = (e) => {
   document.querySelector(".colori_carattere div").innerHTML = `<p class="opacity-50 col-span-5 place-self-start">Scegli prima una rilegatura.</p>`
 
 };
+
+let names = ["rilegatura", "grammatura", "formato", "angoli", "segnalibri", "quantita"];
+
+const calcoloRilegatura = (elem) => {
+
+  let subtotal = 0;
+
+  names.forEach((name) => {
+    let selected = document.querySelector(`[name='${name}']`);
+
+    if (selected.tagName === "SELECT") {
+      selected = selected.selectedOptions[0];
+      selected.dataset.prezzo ? (totaleRilegature[`prezzo_${name}`] = parseFloat(selected.dataset.prezzo)) : (totaleRilegature[`prezzo_${name}`] = 0);
+    }
+
+    if (selected.type === "number") totaleRilegature[`qty`] = parseInt(selected.value);
+    if (selected.type === "radio") totaleRilegature[`prezzo_${name}`] = parseFloat(selected.dataset.prezzo);
+  });
+
+  Object.entries(totaleRilegature).forEach(([key, value]) => {
+
+    if (key.includes("prezzo") && !key.includes("grammatura") && !key.includes("formato")) {
+      subtotal += value;
+    }
+
+    if (key === "qty") subtotal *= value;
+  });
+
+  console.log(subtotal);
+}
+
+names.forEach((name) => document.querySelector(`[name='${name}']`).addEventListener("change", calcoloRilegatura));
 
 
 /* Preloader */
