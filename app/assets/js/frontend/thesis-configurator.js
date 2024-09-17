@@ -7,7 +7,7 @@ const cart = {
   cd: {},
 };
 
-let totaleRilegature = {
+let objRilegatura = {
   prezzo_rilegatura: 0,
   prezzo_grammatura: 0,
   prezzo_formato: 0,
@@ -15,6 +15,8 @@ let totaleRilegature = {
   prezzo_segnalibri: 0,
   qty: 0
 }
+
+let totale = 0;
 
 
 const formOrder = document.querySelector("#rilegature_form");
@@ -172,6 +174,8 @@ formOrder.onsubmit = (e) => {
 
   e.currentTarget.reset();
 
+  document.querySelector('#subtotale_rilegature').textContent = "0.00€";
+
   document.querySelector(".thesis--rilegature").replaceChildren();
   document.querySelector(".thesis--rilegature").innerHTML = `<div class='flex flex-col items-center justify-center'><span class='material-symbols-outlined text-7xl'>check</span><p class='text-lg text-center'><b>Aggiunto al carrello!</b><br>Puoi continuare ad aggiungere altre rilegature!</p>`;
 
@@ -185,7 +189,7 @@ formOrder.onsubmit = (e) => {
 
 let names = ["rilegatura", "grammatura", "formato", "angoli", "segnalibri", "quantita"];
 
-const calcoloRilegatura = (elem) => {
+const calcoloRilegatura = () => {
 
   let subtotal = 0;
 
@@ -194,14 +198,14 @@ const calcoloRilegatura = (elem) => {
 
     if (selected.tagName === "SELECT") {
       selected = selected.selectedOptions[0];
-      selected.dataset.prezzo ? (totaleRilegature[`prezzo_${name}`] = parseFloat(selected.dataset.prezzo)) : (totaleRilegature[`prezzo_${name}`] = 0);
+      selected.dataset.prezzo ? (objRilegatura[`prezzo_${name}`] = parseFloat(selected.dataset.prezzo)) : (objRilegatura[`prezzo_${name}`] = 0);
     }
 
-    if (selected.type === "number") totaleRilegature[`qty`] = parseInt(selected.value);
-    if (selected.type === "radio") totaleRilegature[`prezzo_${name}`] = parseFloat(selected.dataset.prezzo);
+    if (selected.type === "number") objRilegatura[`qty`] = parseInt(selected.value);
+    if (selected.type === "radio") objRilegatura[`prezzo_${name}`] = parseFloat(selected.dataset.prezzo);
   });
 
-  Object.entries(totaleRilegature).forEach(([key, value]) => {
+  Object.entries(objRilegatura).forEach(([key, value]) => {
 
     if (key.includes("prezzo") && !key.includes("grammatura") && !key.includes("formato")) {
       subtotal += value;
@@ -210,7 +214,8 @@ const calcoloRilegatura = (elem) => {
     if (key === "qty") subtotal *= value;
   });
 
-  console.log(subtotal);
+  totale = subtotal.toFixed(2);
+  document.querySelector('#subtotale_rilegature').textContent = totale + "€";
 }
 
 names.forEach((name) => document.querySelector(`[name='${name}']`).addEventListener("change", calcoloRilegatura));
