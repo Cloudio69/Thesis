@@ -154,9 +154,9 @@ formOrder.onsubmit = (e) => {
     id_colore: colore.value,
     nome_rilegatura: rilegatura.dataset.nome,
     prezzo_rilegatura: rilegatura.dataset.prezzo,
-    grammatura: grammatura.value,
-    formato: formato.value,
-    angoli: angoli.value,
+    id_grammatura: grammatura.value,
+    id_formato: formato.value,
+    id_angolo: angoli.value,
     qty: qty.value,
   });
 

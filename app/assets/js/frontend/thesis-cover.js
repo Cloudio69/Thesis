@@ -1,14 +1,14 @@
-let assetsAngoli = [];
-let assetsSegnalibri = [];
+let assetsAngoli = {};
+let assetsSegnalibri = {};
 
 const hexToRgb = (hex) => {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
     ? [
-        parseInt(result[1], 16),
-        parseInt(result[2], 16),
-        parseInt(result[3], 16),
-      ]
+      parseInt(result[1], 16),
+      parseInt(result[2], 16),
+      parseInt(result[3], 16),
+    ]
     : null;
 };
 
@@ -43,16 +43,24 @@ const getAssets = async () => {
   angoliData = JSON.parse(angoliData.results);
   segnalibriData = JSON.parse(segnalibriData.results);
 
-  const angoliSrc = angoliData.map((angolo) => angolo.anteprima_angolo);
-  const segnalibriSrc = segnalibriData.map(
-    (segnalibro) => segnalibro.anteprima_segnalibro
-  );
+  const angoliSrc = angoliData.map((angolo) => ({
+    id: angolo.id_angolo,
+    src: angolo.anteprima_angolo,
+  }));
 
-  assetsAngoli = [ ...angoliSrc ];
-  assetsSegnalibri = [ ...segnalibriSrc ];
+  const segnalibriSrc = segnalibriData.map((segnalibro) => ({
+    id: segnalibro.id_segnalibro,
+    src: segnalibro.anteprima_segnalibro,
+  }));
 
-  assetsAngoli.forEach((angolo) => preloadAccessori(angolo));
-  assetsSegnalibri.forEach((segnalibro) => preloadAccessori(segnalibro));
+  angoliSrc.forEach((angolo) => {
+    assetsAngoli[angolo.id] = preloadAccessori(angolo.src);
+  });
+
+  segnalibriSrc.forEach((segnalibro) => {
+    assetsSegnalibri[segnalibro.id] = preloadAccessori(segnalibro.src);
+  });
+
 };
 
 getAssets();
@@ -85,7 +93,7 @@ const rigeneraCanvas = () => {
 
     if (segnalibriValue) {
       const img = new Image();
-      img.src = assetsSegnalibri[segnalibriValue - 1];
+      img.src = assetsSegnalibri[segnalibriValue];
       img.onload = () => {
         context.drawImage(img, 0, 0, canvas.width, canvas.height);
       };
@@ -93,7 +101,7 @@ const rigeneraCanvas = () => {
 
     if (angoliValue) {
       const img = new Image();
-      img.src = assetsAngoli[angoliValue - 1];
+      img.src = assetsAngoli[angoliValue];
       img.onload = () => {
         context.drawImage(img, 0, 0, canvas.width, canvas.height);
       };
@@ -139,7 +147,7 @@ const getOpzioni = async () => {
       document.querySelector("[name='angoli']").value = "";
       document.querySelector("[name='grammatura']").value = "";
       document.querySelector("[name='formato']").value = "";
-      
+
 
       if (groupedResults[e.currentTarget.value][0].angoli === "0") {
         document.querySelector("[name='angoli']").disabled = true;
@@ -203,7 +211,7 @@ const getOpzioni = async () => {
         varianti.appendChild(varianteWrapper);
 
         radioVariante.onclick = () => {
-          
+
           let canvas = document.createElement("canvas");
           canvas.classList.add(
             "w-[25vw]",
@@ -260,7 +268,7 @@ const getOpzioni = async () => {
 
           if (segnalibriValue) {
             const img = new Image();
-            img.src = assetsSegnalibri[segnalibriValue - 1];
+            img.src = assetsSegnalibri[segnalibriValue];
             img.onload = () => {
               context.drawImage(img, 0, 0, canvas.width, canvas.height);
             };
@@ -268,7 +276,7 @@ const getOpzioni = async () => {
 
           if (angoliValue) {
             const img = new Image();
-            img.src = assetsAngoli[angoliValue - 1];
+            img.src = assetsAngoli[angoliValue];
             img.onload = () => {
               context.drawImage(img, 0, 0, canvas.width, canvas.height);
             };
@@ -442,7 +450,7 @@ const getColori = async (id) => {
 
                 if (segnalibriValue) {
                   const img = new Image();
-                  img.src = assetsSegnalibri[segnalibriValue - 1];
+                  img.src = assetsSegnalibri[segnalibriValue];
                   img.onload = () => {
                     context.drawImage(img, 0, 0, canvas.width, canvas.height);
                   };
@@ -450,7 +458,7 @@ const getColori = async (id) => {
 
                 if (angoliValue) {
                   const img = new Image();
-                  img.src = assetsAngoli[angoliValue - 1];
+                  img.src = assetsAngoli[angoliValue];
                   img.onload = () => {
                     context.drawImage(img, 0, 0, canvas.width, canvas.height);
                   };
