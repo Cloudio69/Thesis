@@ -110,8 +110,8 @@
                         <button type="submit" class="rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400">AGGIUNGI AL CARRELLO</button>
                     </div>
                 </div>
-                <div class="subtotale_rilegature mt-24">
-                    <div class="scelte_rilegature flex gap-4 items-start justify-between mt-4">
+                <div class="subtotale_rilegature mt-16 p-4 border border-neutral-300 rounded-md shadow-md">
+                    <div class="scelte_rilegature flex gap-4 items-start justify-between">
                         <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">euro_symbol</span>Subtotale</h1>
                         <p class="font-bold text-2xl" id="subtotale_rilegature">0.00 €</p>
                     </div>
