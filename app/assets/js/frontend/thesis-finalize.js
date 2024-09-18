@@ -1,6 +1,6 @@
-const rilegatureForm = document.getElementById("#rilegature_form");
-const pagineForm = document.getElementById("#form_pagine");
-const cdForm = document.getElementById("#form_cd");
+const rilegatureForm = document.querySelector("#rilegature_form");
+const pagineForm = document.querySelector("#form_pagine");
+const cdForm = document.querySelector("#form_cd");
 
 let forms = [rilegatureForm, pagineForm, cdForm];
 
