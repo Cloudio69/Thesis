@@ -40,7 +40,7 @@
                     <span class="material-symbols-outlined text-xl">close</span>
                 </a>
             </div>
-            <div class="thesis--cart-items p-4">
+            <div class="thesis--cart-items p-4 flex flex-col gap-4 max-h-[30vh] overflow-auto">
                 <p class="placeholder-cart opacity-50">Nessun prodotto nel carrello.</p>
             </div>
         </div>

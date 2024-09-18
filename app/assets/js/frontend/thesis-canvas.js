@@ -265,9 +265,11 @@ formCD.onsubmit = (e) => {
     success: function (response) {
       cart.cd = {
         contenuto: selectCD.value,
+        prezzo: 10,
         qty: formCD.querySelector("[name='quantita_cd']").value,
         url: JSON.parse(response).url,
       }
+      
     },
     error: function (error) {
       console.error(error);

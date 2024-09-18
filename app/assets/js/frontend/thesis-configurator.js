@@ -4,7 +4,7 @@ const cart = {
     bn: [],
     colorate: [],
   },
-  cd: {},
+  cd: {}
 };
 
 let objRilegatura = {
