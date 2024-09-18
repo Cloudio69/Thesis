@@ -44,29 +44,6 @@
                 </div>
             </div>
             <div class="section_accessori">
-                <div class="carta_grammatura flex flex-col gap-4 mt-4">
-                    <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">article</span>Carta e grammatura</h1>
-                    <div class="flex gap-4 items-center place-items-center text-center">
-                        <select name="grammatura" class="p-2 rounded-md" required>
-                            <option value="" selected disabled>Seleziona la grammatura</option>
-                            <?php
-
-                            $grammature = new Grammatura;
-                            $grammature = $grammature->get_grammature();
-                            $decodedGrammature = json_decode($grammature);
-
-                            foreach ($decodedGrammature as $grammatura) {
-                                echo "<option value=\"$grammatura->id_grammatura\" data-prezzo=\"$grammatura->prezzo_grammatura\">$grammatura->nome_grammatura</option>";
-                            }
-                            ?>
-                        </select>
-                        <select name="formato" class="p-2 rounded-md">
-                            <option value="" selected disabled>Seleziona il formato</option>
-                            <option value="formato-a4" data-prezzo="<?php echo get_option('prezzo_a4') ?>">A4</option>
-                            <option value="formato-a3" data-prezzo="<?php echo get_option('prezzo_a3') ?>">A3</option>
-                        </select>
-                    </div>
-                </div>
                 <div class="angoli flex flex-col gap-4 mt-4">
                     <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">arrows_more_up</span>Angoli</h1>
                     <div class="flex gap-4 items-center place-items-center text-center">
@@ -113,7 +90,7 @@
                 <div class="subtotale_rilegature mt-16 p-4 border border-neutral-300 rounded-md shadow-md">
                     <div class="scelte_rilegature flex gap-4 items-start justify-between">
                         <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">euro_symbol</span>Subtotale</h1>
-                        <p class="font-bold text-2xl" id="subtotale_rilegature">0.00 €</p>
+                        <p class="font-bold text-2xl" class="subtotale_rilegature">0.00 €</p>
                     </div>
                     <div class="font-bold text-sm mt-4 flex items-start gap-4"><span class="material-symbols-outlined text-3xl !text-white bg-amber-400 rounded-full">info</span><p class="text-neutral-500"> il formato e la grammatura sono moltiplicati per le pagine e non influiscono sul prezzo della rilegatura </p></div>
                 </div>

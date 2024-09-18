@@ -1,3 +1,10 @@
+let prezzoPagine = {
+  prezzo_bn: parseFloat(document.querySelector("#prezzo_bn b").textContent),
+  prezzo_colorate: parseFloat(document.querySelector("#prezzo_colori b").textContent),
+  prezzo_grammatura: 0,
+  prezzo_formato: 0
+}
+
 function getAverageRGB(imgEl) {
   var blockSize = 5, // only visit every 5 pixels
     defaultRGB = { r: 0, g: 0, b: 0 }, // for non-supporting envs
@@ -272,6 +279,8 @@ const updateColorCounter = () => {
     counterColorate.classList.remove("animate-pulse");
     document.querySelector(".subtotale_pagine").classList.remove("animate-pulse");
 
+    calcoloPagine();
+
     cart.pagine.bn = pagineBn;
     cart.pagine.colorate = pagineColorate;
   }
@@ -344,7 +353,6 @@ massiveActions.forEach((item) => {
         item.parentElement.querySelector("img").classList.remove("grayscale");
       });
 
-      // Sposta tutte la pagine nell'array bn dall'array colorate
       pagineTipologia.colorate = pagineTipologia.colorate.concat(pagineTipologia.bn);
       pagineTipologia.bn = [];
 
@@ -354,7 +362,6 @@ massiveActions.forEach((item) => {
         item.parentElement.querySelector("img").classList.add("grayscale");
       });
 
-      // Sposta tutte la pagine nell'array colorate dall'array bn
       pagineTipologia.bn = pagineTipologia.bn.concat(pagineTipologia.colorate);
       pagineTipologia.colorate = [];
     }
@@ -366,3 +373,58 @@ massiveActions.forEach((item) => {
 document.querySelector("#pagine").addEventListener("click", () => {
   generaPagine();
 }) 
+
+const listinoPagine = document.querySelector('.listino_pagine')
+const totalePagine = document.querySelector('.totale_pagine')
+
+document.querySelector("[name='grammatura']").addEventListener("change", (e) => {
+  if(document.querySelector('#prezzo_grammatura')) document.querySelector('#prezzo_grammatura').parentElement.remove()
+  prezzoPagine.prezzo_grammatura = objRilegatura.prezzo_grammatura
+  cart.pagine = { ...cart.pagine, ...prezzoPagine}
+
+  let grammatura = listinoPagine.firstElementChild.cloneNode(true)
+  grammatura.firstElementChild.textContent = 'Grammatura: ' + e.currentTarget.selectedOptions[0].textContent;
+  grammatura.childNodes.forEach((item) =>{  if(item.id) item.removeAttribute('id'); item.id = 'prezzo_grammatura' })
+  listinoPagine.insertBefore(grammatura, totalePagine)
+
+  document.querySelector('#prezzo_grammatura b').textContent = prezzoPagine.prezzo_grammatura !== 0 ? prezzoPagine.prezzo_grammatura : 'Nessun sovrapprezzo'
+
+  calcoloPagine();
+
+});
+
+document.querySelector("[name='formato']").addEventListener("change", (e) => {
+  if(document.querySelector('#prezzo_formato')) document.querySelector('#prezzo_formato').parentElement.remove()
+  prezzoPagine.prezzo_formato = objRilegatura.prezzo_formato
+  cart.pagine = { ...cart.pagine, ...prezzoPagine}
+
+  let formato = listinoPagine.firstElementChild.cloneNode(true)
+  formato.firstElementChild.textContent = 'Formato: ' + e.currentTarget.selectedOptions[0].textContent;
+  formato.childNodes.forEach((item) =>{  if(item.id) item.removeAttribute('id'); item.id = 'prezzo_formato' })
+  listinoPagine.insertBefore(formato, totalePagine) 
+
+  document.querySelector('#prezzo_formato b').textContent = prezzoPagine.prezzo_formato !== 0 ? prezzoPagine.prezzo_formato : 'Nessun sovrapprezzo'
+
+  calcoloPagine();
+
+});
+
+const calcoloPagine = () => {
+  let pagineBn = pagineTipologia.bn.length;
+  let pagineColorate = pagineTipologia.colorate.length;
+  let numPagine = pagineBn + pagineColorate;
+
+  let totaleFormato = 0;
+  let totaleGrammatura = 0;
+
+  let totale = 0;
+
+  let prezzoBn = pagineBn * prezzoPagine.prezzo_bn;
+  let prezzoColorate = pagineColorate * prezzoPagine.prezzo_colorate;
+
+  prezzoPagine.prezzo_formato !== 0 && (totaleFormato = numPagine * prezzoPagine.prezzo_formato);
+  prezzoPagine.prezzo_grammatura !== 0 && (totaleGrammatura = numPagine * prezzoPagine.prezzo_grammatura);
+
+  totale = prezzoBn + prezzoColorate + totaleFormato + totaleGrammatura;
+  document.querySelector('.totale_pagine b').textContent = totale.toFixed(2) + ' €';
+}

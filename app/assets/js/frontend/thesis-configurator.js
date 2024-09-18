@@ -197,6 +197,7 @@ const calcoloRilegatura = () => {
     let selected = document.querySelector(`[name='${name}']`);
 
     if (selected.type === "radio") {
+      if(!selected.checked) return;
       selected = document.querySelector(`[name='${name}']:checked`);
       objRilegatura[`prezzo_${name}`] = parseFloat(selected.dataset.prezzo);
     }
@@ -219,7 +220,6 @@ const calcoloRilegatura = () => {
 
   totale = subtotal.toFixed(2);
   document.querySelector('#subtotale_rilegature').textContent = totale + "€";
-  console.log(objRilegatura)
 }
 
 names.forEach((name) => {
