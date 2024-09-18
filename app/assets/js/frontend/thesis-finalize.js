@@ -10,6 +10,8 @@ forms.forEach((form) => {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
+    if(document.querySelector('.placeholder-cart')) document.querySelector('.placeholder-cart').classList.add('hidden');
+
     updateCart();
   });
 });
@@ -24,9 +26,13 @@ const createCartItem = (item) => {
     "items-center",
     "justify-center"
   );
-  removeButton.setAttribute("id", item.position);
+  removeButton.setAttribute("data-id", item.position);
+  removeButton.onclick = (e) => {
+    cart.rilegature.splice(e.target.dataset.id, 1);
+    removeButton.parentElement.remove();
+  };
   removeButton.innerHTML =
-    "<span class='material-symbols-outlined'>close</span>";
+    "<span class='material-symbols-outlined !text-white !bg-red-600'>close</span>";
   cartItem.classList.add(
     "cart--item",
     "flex",
@@ -35,9 +41,9 @@ const createCartItem = (item) => {
     "p-4",
     "bg-white",
     "rounded-lg",
-    "shadow-sm",
+    "border"
   );
-  cartItem.innerHTML = `${item.nome_rilegatura} - ${item.qty} copie - ${item.prezzo_rilegatura}€`;
+  cartItem.innerHTML = `<span class='font-bold text-xl'>${item.nome_rilegatura}</span><span class='flex justify-center'>${item.qty} x ${item.prezzo_rilegatura}€</span>`;
 
   cartItem.appendChild(removeButton);
 
@@ -49,7 +55,9 @@ const updateCart = () => {
     if (key.match(/rilegature/)) {
       // rilegature is an array of objects
       cart[key].forEach((item) => {
-        cartWrapper.appendChild(createCartItem({...item, position: cart[key].indexOf(item)}));
+        cartWrapper.appendChild(
+          createCartItem({ ...item, position: cart[key].indexOf(item) })
+        );
       });
     }
   });
