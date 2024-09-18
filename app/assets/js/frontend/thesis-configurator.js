@@ -66,6 +66,13 @@ const config = [
     content: document.querySelector(".thesis--finalizza"),
     isCompleted: true,
   },
+  {
+    step: "checkout",
+    nav: document.querySelector("#checkout"),
+    sidebar: document.querySelector("#checkout_step"),
+    content: document.querySelector(".thesis--checkout"),
+    isCompleted: true,
+  },
 ];
 
 const preload = (url) => (new Image().src = url);
@@ -96,7 +103,7 @@ config.forEach((item, index) => {
 
       e.currentTarget.classList.add("active");
 
-      if(e.currentTarget.id === "finalizza") {
+      if(e.currentTarget.id === "finalizza" || e.currentTarget.id === "checkout") {
         document.querySelector(".open-cart-dialog").classList.add("hidden");
       } else {
         if (document.querySelector(".open-cart-dialog").classList.contains("hidden")) {
@@ -176,12 +183,16 @@ formOrder.onsubmit = (e) => {
 
   cart.rilegature.push({
     id_rilegatura: rilegatura.value,
-    id_variante: variante.value,
-    id_colore: colore.value,
     nome_rilegatura: rilegatura.dataset.nome,
     prezzo_rilegatura: rilegatura.dataset.prezzo,
-    id_segnalibro: segnalibri.value,
-    id_angolo: angoli.value,
+    id_variante: variante.value,
+    nome_variante: variante.parentElement.querySelector('h3').textContent,
+    id_colore: colore.value,
+    nome_colore: colore.parentElement.querySelector('span').textContent,
+    id_segnalibro: segnalibri.value ? segnalibri.value : null,
+    nome_segnalibro: segnalibri.selectedIndex !== 0 ? segnalibri.selectedOptions[0].textContent : "Nessun segnalibro",
+    id_angolo: angoli.value ? angoli.value : null,
+    nome_angolo: angoli.selectedIndex !== 0 ? angoli.selectedOptions[0].textContent : "Nessun angolo",
     qty: qty.value,
   });
 
