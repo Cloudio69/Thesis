@@ -33,7 +33,7 @@
     <button class="flex mx-4 my-2 open-cart-dialog absolute shadow-md items-center gap-2 py-2 px-4 justify-center border-none hover:bg-black focus:bg-white bg-white w-fit text-black font-bold text-left focus:outline-none focus:text-black rounded-md outline-none text-sm"><span class="material-symbols-outlined text-xl">
             shopping_bag
         </span>CARRELLO</button>
-        <div class="thesis--cart-dialog top-14 mx-4 absolute hidden rounded-md bg-white shadow-md border border-gray-200 z-50">
+        <div class="thesis--cart-dialog top-14 mx-4 absolute hidden rounded-md bg-white shadow-md border border-gray-200 z-50 w-[25vw]">
             <div class="flex items-center justify-between p-4 border-b">
                 <h1 class="font-bold text-xl">Carrello</h1>
                 <a class="close-cart-dialog cursor-pointer">
