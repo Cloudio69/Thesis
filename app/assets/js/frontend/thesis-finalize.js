@@ -23,6 +23,9 @@ const updateCart = async () => {
   const cdDiv = document.createElement('div');
   const pagineDiv = document.createElement('div');
   const rilegatureDiv = document.createElement('div');
+  const totaleDiv = document.createElement('div');
+
+  let totale = 0;
 
   rilegatureDiv.classList.add('flex', 'flex-col', 'gap-4');
   pagineDiv.classList.add('flex', 'flex-col', 'gap-4');
@@ -44,12 +47,14 @@ const updateCart = async () => {
             <h4 class="font-bold text-xl">${rilegatura.nome_rilegatura}</h4>
             <span class='text-sm mt-2'>Colore: ${rilegatura.nome_colore}</span>
             <span class='text-sm'>Variante: ${rilegatura.nome_variante}</span>
-            <span class='text-sm'>Segnalibro: ${rilegatura.nome_segnalibro}</span>
-            <span class='text-sm mb-2'>Angoli: ${rilegatura.nome_angolo}</span>
+            <span class='text-sm'>Segnalibro: ${rilegatura.nome_segnalibro} (+${parseFloat(rilegatura.prezzo_segnalibro).toFixed(2)})</span>
+            <span class='text-sm mb-2'>Angoli: ${rilegatura.nome_angolo} (+${parseFloat(rilegatura.prezzo_angolo).toFixed(2)})</span>
           </div>
-          <span class="text-xl font-bold">${rilegatura.prezzo_rilegatura}€</span>
+          <span class="text-xl font-bold">${(parseFloat(rilegatura.prezzo_rilegatura) + parseFloat(rilegatura.prezzo_segnalibro) + parseFloat(rilegatura.prezzo_angolo)).toFixed(2)}€</span>
         </div>
       `;
+
+      totale += parseFloat(rilegatura.prezzo_rilegatura) + parseFloat(rilegatura.prezzo_segnalibro) + parseFloat(rilegatura.prezzo_angolo);
 
 
       let eliminaBtn = document.createElement('button');
@@ -60,6 +65,7 @@ const updateCart = async () => {
 
       rilegatureItem.appendChild(eliminaBtn);
       rilegatureDiv.appendChild(rilegatureItem);
+
     });
   } else {
     let rilegatureItem = document.createElement('div');
@@ -85,6 +91,13 @@ const updateCart = async () => {
       </div>
     `;
 
+    let numPagine = cart.pagine.bn.length + cart.pagine.colorate.length;
+    let costoPagine = (cart.pagine.prezzo_bn * cart.pagine.bn.length) + (cart.pagine.prezzo_colorate * cart.pagine.colorate.length);
+    costoPagine += (cart.pagine.prezzo_formato * numPagine) + (cart.pagine.prezzo_grammatura * numPagine);
+
+    totale += costoPagine;
+
+
     pagineDiv.appendChild(pagineItem);
   } else {
     let pagineItem = document.createElement('div');
@@ -104,15 +117,20 @@ const updateCart = async () => {
       </div>
     `;
     cdDiv.appendChild(cdItem);
+
+    totale += cart.cd.prezzo * cart.cd.qty;
   } else {
     let cdItem = document.createElement('div');
     cdItem.innerText = "Nessun dato";
     cdDiv.appendChild(cdItem);
   }
 
+  totaleDiv.innerHTML = `<h3 class='text-2xl mt-4 font-bold flex items-center justify-between w-full'><span>Totale: </span><span>${totale.toFixed(2)}€</span></h3>`;
+
   cartWrapper.appendChild(rilegatureDiv);
   cartWrapper.appendChild(pagineDiv);
   cartWrapper.appendChild(cdDiv);
+  cartWrapper.appendChild(totaleDiv);
 };
 
 

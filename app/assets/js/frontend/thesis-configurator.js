@@ -191,8 +191,10 @@ formOrder.onsubmit = (e) => {
     nome_colore: colore.parentElement.querySelector('span').textContent,
     id_segnalibro: segnalibri.value ? segnalibri.value : null,
     nome_segnalibro: segnalibri.selectedIndex !== 0 ? segnalibri.selectedOptions[0].textContent : "Nessun segnalibro",
+    prezzo_segnalibro: segnalibri.selectedIndex !== 0 ? segnalibri.selectedOptions[0].dataset.prezzo : 0,
     id_angolo: angoli.value ? angoli.value : null,
     nome_angolo: angoli.selectedIndex !== 0 ? angoli.selectedOptions[0].textContent : "Nessun angolo",
+    prezzo_angolo: angoli.selectedIndex !== 0 ? angoli.selectedOptions[0].dataset.prezzo : 0,
     qty: qty.value,
   });
 
