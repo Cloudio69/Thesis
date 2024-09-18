@@ -196,7 +196,6 @@ const calcoloRilegatura = () => {
 
     if (document.querySelector(`[name='${name}']:checked`)) {
       selected = document.querySelector(`[name='${name}']:checked`);
-      console.log(selected)
       objRilegatura[`prezzo_${name}`] = parseFloat(selected.dataset.prezzo);
     }
     
