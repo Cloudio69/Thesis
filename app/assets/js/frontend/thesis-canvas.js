@@ -249,10 +249,31 @@ editCd.addEventListener("click", () => {
 formCD.onsubmit = (e) => {
   e.preventDefault();
 
-  cart.cd = {
-    contenuto: selectCD.value,
-    qty: e.currentTarget.querySelector("[name='quantita']").value,
-  }
+  const data = new FormData();
+  data.append("action", "upload_cd_cover");
+  data.append("nonce", nonce);
+  data.append("thesis_session", getCookie("thesis_session"));
+  data.append("canvas", canvas.toDataURL());
+
+  jQuery.ajax({
+    url: ajaxurl,
+    type: "POST",
+    data: data,
+    processData: false,
+    contentType: false,
+    cache: false,
+    success: function (response) {
+      cart.cd = {
+        contenuto: selectCD.value,
+        qty: formCD.querySelector("[name='quantita_cd']").value,
+        url: JSON.parse(response).url,
+      }
+    },
+    error: function (error) {
+      console.error(error);
+    },
+  });
+  
 }
 
 selectCD.onchange = (e) => {

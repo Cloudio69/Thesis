@@ -1,4 +1,4 @@
-<div id="cd_step" class="p-12 flex flex-col gap-4 h-3/4">
+<div id="cd_step" class="p-12 flex flex-col gap-4">
     <h1 class="text-3xl font-bold">Il tuo CD</h1>
     <p>Puoi includere con la tesi un CD serigrafato, <b>cliccando su Si, potrai modificarlo secondo le tue preferenze, scegli se aggiungere dei file sul disco o lasciare la tesi</b><br><br>Altrimenti puoi proseguire con la finalizzazione <b>cliccando su No</b></p>
     <section class="tipo--stampa-cd h-full flex-col flex justify-center items-center">
@@ -15,7 +15,13 @@
         </div>
     </section>
     <form class="hidden mt-4 flex-col gap-4" id="form_cd">
-            <div class="flex flex-col gap-4">
+            <h1 class="font-bold text-xl">
+                Puoi cliccare sui testi presenti sul CD a sinistra per modificarli
+            </h1>
+            <p>
+                Dopo aver cambiato il contenuto del CD, clicca su "Aggiungi al carrello" per confermare le modifiche
+            </p>
+            <div class="flex flex-col gap-4 mt-4">
                 <label for="contenuto">Contenuto del disco:</label>
                 <select name="contenuto" id="contenuto" class="p-2 rounded-md" required>
                     <option value="" selected disabled>Seleziona il contenuto del CD</option>

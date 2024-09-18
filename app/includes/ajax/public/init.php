@@ -34,6 +34,8 @@ add_action('wp_ajax_upload_cd_file', 'ajax_upload_cd_file');
 add_action('wp_ajax_nopriv_remove_cd_file', 'ajax_remove_cd_file');
 add_action('wp_ajax_remove_cd_file', 'ajax_remove_cd_file');
 
+add_action('wp_ajax_nopriv_upload_cd_cover', 'upload_cd_cover');
+add_action('wp_ajax_upload_cd_cover', 'upload_cd_cover');
 
 function uuidv4()
 {
@@ -198,8 +200,8 @@ function ajax_get_num_pagine()
     wp_send_json_success(json_encode(array("results" => $query)));
 }
 
-
-function ajax_upload_cd_file() {
+function ajax_upload_cd_file()
+{
     $nonce = $_POST['nonce'];
 
     $token = $_COOKIE['thesis_session'];
@@ -212,7 +214,7 @@ function ajax_upload_cd_file() {
         wp_die("Token not found.", 'thesis', array('response' => 403));
     }
 
-    if($_FILES['file']) {
+    if ($_FILES['file']) {
         $file = $_FILES['file'];
         $file_name = basename($file['name']);
         $file_tmp = $file['tmp_name'];
@@ -221,13 +223,13 @@ function ajax_upload_cd_file() {
 
         $upload_dir = THESIS_FILES . "/" . $tmp_folder;
 
-        if(!is_dir($upload_dir . "/file_aggiuntivi")) {
+        if (!is_dir($upload_dir . "/file_aggiuntivi")) {
             mkdir($upload_dir . "/file_aggiuntivi", 0755, true);
         }
 
         $destination = $upload_dir . "/file_aggiuntivi/" . $file_name;
 
-        if(move_uploaded_file($file_tmp, $destination)) {
+        if (move_uploaded_file($file_tmp, $destination)) {
             echo json_encode(array('success' => true, 'message' => 'File caricato correttamente.'));
         } else {
             echo json_encode(array('success' => false, 'message' => 'Si è verificato un errore durante il caricamento del file.'));
@@ -237,7 +239,54 @@ function ajax_upload_cd_file() {
     }
 }
 
-function ajax_remove_cd_file(){
+function upload_cd_cover()
+{
+    $nonce = $_POST['nonce'];
+
+    $token = $_COOKIE['thesis_session'];
+
+    $verify = wp_verify_nonce($nonce, 'thesis-token');
+
+    if (!$verify) {
+        wp_die("Nonce not verified.", 'thesis', array('response' => 403));
+    } else if (!$token) {
+        wp_die("Token not found.", 'thesis', array('response' => 403));
+    }
+
+    if ($_POST['canvas']) {
+        $canvas_data = $_POST['canvas'];
+        $file_name = 'cd_cover.png';
+
+        $tmp_folder = $token;
+        $upload_dir = THESIS_FILES . "/" . $tmp_folder;
+
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0755, true);
+        }
+
+        $destination = $upload_dir . '/' . $file_name;
+
+        // Decode the base64 data
+        $canvas_data = str_replace('data:image/png;base64,', '', $canvas_data);
+        $canvas_data = str_replace(' ', '+', $canvas_data);
+        $file_data = base64_decode($canvas_data);
+
+        if (file_put_contents($destination, $file_data)) {
+            $destination_url = get_site_url() . "/wp-content/plugins/thesis/app/files/" . $token . "/" . $file_name;
+            echo json_encode(array('success' => true, 'message' => 'File caricato correttamente.', 'url' => $destination_url));
+        } else {
+            // Errore durante il caricamento del file
+            echo json_encode(array('success' => false, 'message' => 'Si è verificato un errore durante il caricamento del file.'));
+        }
+    } else {
+        // Nessun file è stato inviato
+        echo json_encode(array('success' => false, 'message' => 'Nessun file inviato.'));
+    }
+    wp_die();
+}
+
+function ajax_remove_cd_file()
+{
     $nonce = $_POST['nonce'];
 
     $token = $_COOKIE['thesis_session'];
@@ -258,13 +307,12 @@ function ajax_remove_cd_file(){
 
     $destination = $upload_dir . "/file_aggiuntivi/" . $file;
 
-    if(unlink($destination)) {
+    if (unlink($destination)) {
         echo json_encode(array('success' => true, 'message' => 'File rimosso correttamente.'));
     } else {
         echo json_encode(array('success' => false, 'message' => 'Si è verificato un errore durante la rimozione del file.'));
     }
 }
-
 
 function clear_all_frontespizi()
 {
@@ -308,5 +356,3 @@ function thesis_clear_files()
     rrmdir(THESIS_FILES);
     mkdir(THESIS_FILES, 0755, true);
 }
-
-
