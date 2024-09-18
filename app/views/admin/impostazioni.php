@@ -94,7 +94,7 @@ $time_schedule = get_option('time_schedule');
                 <p class="opacity-75 mb-4">Clicca per cancellare adesso tutte le cartelle</p>
                 <div class="storage-utility flex flex-col gap-4 mb-4">
                     <div class="used-storage">
-                        <h2>Spazio utilizzato <p class="text-xl"><?php echo readableBytes(recurse_dirsize(THESIS_PDFS)) ?></p></h2>
+                        <h2>Spazio utilizzato <p class="text-xl"><?php echo readableBytes(recurse_dirsize(THESIS_FILES)) ?></p></h2>
                     </div>
                     <div class="free-storage">
                         <button id="free-storage" class="button button-secondary">LIBERA SPAZIO</button>

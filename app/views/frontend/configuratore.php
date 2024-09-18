@@ -9,7 +9,7 @@
 
 if (isset($_COOKIE['thesis_session'])) {
     $tmp_folder = $_COOKIE['thesis_session'];
-    $upload_dir = THESIS_PDFS . "/" . $tmp_folder;
+    $upload_dir = THESIS_FILES . "/" . $tmp_folder;
     $file_name = "tesi.pdf";
 
     if (!file_exists($upload_dir . '/frontespizio.jpg')) {

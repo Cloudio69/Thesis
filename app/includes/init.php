@@ -61,7 +61,7 @@ class Thesis
 
     public function thesis_clear_function()
     {
-        $dir = THESIS_PDFS;
+        $dir = THESIS_FILES;
         if (is_dir($dir)) {
             $objects = scandir($dir);
             foreach ($objects as $object) {
@@ -76,7 +76,7 @@ class Thesis
             reset($objects);
             rmdir($dir);
         }
-        mkdir(THESIS_PDFS, 0755, true);
+        mkdir(THESIS_FILES, 0755, true);
     }
 
     public function thesis_public_scripts()

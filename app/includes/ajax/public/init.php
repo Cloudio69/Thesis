@@ -28,6 +28,13 @@ add_action('wp_ajax_nopriv_get_num_pagine', 'ajax_get_num_pagine');
 
 add_action('wp_ajax_thesis_clear_files', 'thesis_clear_files');
 
+add_action('wp_ajax_nopriv_upload_cd_file', 'ajax_upload_cd_file');
+add_action('wp_ajax_upload_cd_file', 'ajax_upload_cd_file');
+
+add_action('wp_ajax_nopriv_remove_cd_file', 'ajax_remove_cd_file');
+add_action('wp_ajax_remove_cd_file', 'ajax_remove_cd_file');
+
+
 function uuidv4()
 {
     $data = random_bytes(16);
@@ -59,7 +66,7 @@ function ajax_upload_frontespizio()
 
         $tmp_folder = $token;
 
-        $upload_dir = THESIS_PDFS . "/" . $tmp_folder;
+        $upload_dir = THESIS_FILES . "/" . $tmp_folder;
         $destination = $upload_dir . '/' . $file_name;
 
         if (move_uploaded_file($file_tmp, $destination)) {
@@ -95,11 +102,11 @@ function ajax_upload_file()
 
         $tmp_folder = uuidv4();
 
-        if (!is_dir(THESIS_PDFS . "/" . $tmp_folder)) {
-            mkdir(THESIS_PDFS . "/" . $tmp_folder, 0755, true);
+        if (!is_dir(THESIS_FILES . "/" . $tmp_folder)) {
+            mkdir(THESIS_FILES . "/" . $tmp_folder, 0755, true);
         }
 
-        $upload_dir = THESIS_PDFS . "/" . $tmp_folder;
+        $upload_dir = THESIS_FILES . "/" . $tmp_folder;
         $destination = $upload_dir . '/' . $file_name;
 
         if (move_uploaded_file($file_tmp, $destination)) {
@@ -130,7 +137,7 @@ function ajax_genera_frontespizio()
     [$r, $g, $b] = $data['rgb'];
 
     $tmp_folder = $data['uuid'];
-    $upload_dir = THESIS_PDFS . "/" . $tmp_folder;
+    $upload_dir = THESIS_FILES . "/" . $tmp_folder;
 
     if (!is_dir($upload_dir . "/frontespizi")) {
         mkdir($upload_dir . "/frontespizi", 0755, true);
@@ -156,7 +163,7 @@ function ajax_genera_pagine()
 
     $numPagina = $data['num_pagina'];
     $tmp_folder = $data['uuid'];
-    $upload_dir = THESIS_PDFS . "/" . $tmp_folder;
+    $upload_dir = THESIS_FILES . "/" . $tmp_folder;
 
     if (!is_dir($upload_dir . "/pagine")) {
         mkdir($upload_dir . "/pagine", 0755, true);
@@ -182,7 +189,7 @@ function ajax_get_colori_carattere()
 function ajax_get_num_pagine()
 {
     $uuid = $_GET['uuid'];
-    $upload_dir = str_replace('\\', '/', THESIS_PDFS . "/" . $uuid);
+    $upload_dir = str_replace('\\', '/', THESIS_FILES . "/" . $uuid);
 
     $process = new ThesisProcess;
 
@@ -191,6 +198,74 @@ function ajax_get_num_pagine()
     wp_send_json_success(json_encode(array("results" => $query)));
 }
 
+
+function ajax_upload_cd_file() {
+    $nonce = $_POST['nonce'];
+
+    $token = $_COOKIE['thesis_session'];
+
+    $verify = wp_verify_nonce($nonce, 'thesis-token');
+
+    if (!$verify) {
+        wp_die("Nonce not verified.", 'thesis', array('response' => 403));
+    } else if (!$token) {
+        wp_die("Token not found.", 'thesis', array('response' => 403));
+    }
+
+    if($_FILES['file']) {
+        $file = $_FILES['file'];
+        $file_name = basename($file['name']);
+        $file_tmp = $file['tmp_name'];
+
+        $tmp_folder = $token;
+
+        $upload_dir = THESIS_FILES . "/" . $tmp_folder;
+
+        if(!is_dir($upload_dir . "/file_aggiuntivi")) {
+            mkdir($upload_dir . "/file_aggiuntivi", 0755, true);
+        }
+
+        $destination = $upload_dir . "/file_aggiuntivi/" . $file_name;
+
+        if(move_uploaded_file($file_tmp, $destination)) {
+            echo json_encode(array('success' => true, 'message' => 'File caricato correttamente.'));
+        } else {
+            echo json_encode(array('success' => false, 'message' => 'Si è verificato un errore durante il caricamento del file.'));
+        }
+    } else {
+        echo json_encode(array('success' => false, 'message' => 'Nessun file inviato.'));
+    }
+}
+
+function ajax_remove_cd_file(){
+    $nonce = $_POST['nonce'];
+
+    $token = $_COOKIE['thesis_session'];
+
+    $verify = wp_verify_nonce($nonce, 'thesis-token');
+
+    if (!$verify) {
+        wp_die("Nonce not verified.", 'thesis', array('response' => 403));
+    } else if (!$token) {
+        wp_die("Token not found.", 'thesis', array('response' => 403));
+    }
+
+    $file = $_POST['filename'];
+
+    $tmp_folder = $token;
+
+    $upload_dir = THESIS_FILES . "/" . $tmp_folder;
+
+    $destination = $upload_dir . "/file_aggiuntivi/" . $file;
+
+    if(unlink($destination)) {
+        echo json_encode(array('success' => true, 'message' => 'File rimosso correttamente.'));
+    } else {
+        echo json_encode(array('success' => false, 'message' => 'Si è verificato un errore durante la rimozione del file.'));
+    }
+}
+
+
 function clear_all_frontespizi()
 {
 
@@ -198,7 +273,7 @@ function clear_all_frontespizi()
         wp_die("Sessione non valida.");
     }
 
-    $frontespizi = THESIS_PDFS . "/" . $_COOKIE['thesis_session'] . "/frontespizi";
+    $frontespizi = THESIS_FILES . "/" . $_COOKIE['thesis_session'] . "/frontespizi";
 
     $files = glob($frontespizi . '/*');
 
@@ -230,8 +305,8 @@ function rrmdir($dir)
 
 function thesis_clear_files()
 {
-    rrmdir(THESIS_PDFS);
-    mkdir(THESIS_PDFS, 0755, true);
+    rrmdir(THESIS_FILES);
+    mkdir(THESIS_FILES, 0755, true);
 }
 
 
