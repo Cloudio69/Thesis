@@ -59,6 +59,13 @@ const config = [
     content: document.querySelector(".thesis--cd"),
     isCompleted: true,
   },
+  {
+    step: "finalizza",
+    nav: document.querySelector("#finalizza"),
+    sidebar: document.querySelector("#finalizza_step"),
+    content: document.querySelector(".thesis--finalizza"),
+    isCompleted: true,
+  },
 ];
 
 const preload = (url) => (new Image().src = url);
@@ -88,6 +95,14 @@ config.forEach((item, index) => {
         .forEach((item) => item.classList.add("hidden"));
 
       e.currentTarget.classList.add("active");
+
+      if(e.currentTarget.id === "finalizza") {
+        document.querySelector(".open-cart-dialog").classList.add("hidden");
+      } else {
+        if (document.querySelector(".open-cart-dialog").classList.contains("hidden")) {
+          document.querySelector(".open-cart-dialog").classList.remove("hidden");
+        }
+      }
 
       item.content.classList.remove("hidden");
 
