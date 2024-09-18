@@ -90,7 +90,7 @@
                 <div class="subtotale_rilegature mt-16 p-4 border border-neutral-300 rounded-md shadow-md">
                     <div class="scelte_rilegature flex gap-4 items-start justify-between">
                         <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">euro_symbol</span>Subtotale</h1>
-                        <p class="font-bold text-2xl" class="subtotale_rilegature">0.00 €</p>
+                        <p class="font-bold text-2xl" id="subtotale_rilegature">0.00 €</p>
                     </div>
                     <div class="font-bold text-sm mt-4 flex items-start gap-4"><span class="material-symbols-outlined text-3xl !text-white bg-amber-400 rounded-full">info</span><p class="text-neutral-500"> il formato e la grammatura sono moltiplicati per le pagine e non influiscono sul prezzo della rilegatura </p></div>
                 </div>

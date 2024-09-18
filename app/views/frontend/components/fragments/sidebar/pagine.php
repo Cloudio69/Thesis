@@ -29,14 +29,14 @@
                             <option value="" selected disabled>Seleziona la grammatura</option>
                             <?php
 
-                                $grammature = new Grammatura;
-                                $grammature = $grammature->get_grammature();
-                                $decodedGrammature = json_decode($grammature);
+$grammature = new Grammatura;
+$grammature = $grammature->get_grammature();
+$decodedGrammature = json_decode($grammature);
 
-                                foreach ($decodedGrammature as $grammatura) {
-                                    echo "<option value=\"$grammatura->id_grammatura\" data-prezzo=\"$grammatura->prezzo_grammatura\">$grammatura->nome_grammatura</option>";
-                                }
-                                ?>
+foreach ($decodedGrammature as $grammatura) {
+    echo "<option value=\"$grammatura->id_grammatura\" data-prezzo=\"$grammatura->prezzo_grammatura\">$grammatura->nome_grammatura</option>";
+}
+?>
                         </select>
                         <select name="formato" class="p-2 rounded-md">
                             <option value="" selected disabled>Seleziona il formato</option>
@@ -71,5 +71,9 @@
             </div>
         </div>
     </section>
-
+    <div class="quantita flex flex-col gap-4 mt-4">
+        <div class="flex gap-4 items-center place-items-center text-center">
+            <button type="submit" class="rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400 next-step">AGGIUNGI E PROSEGUI</button>
+        </div>
+    </div>
 </div>

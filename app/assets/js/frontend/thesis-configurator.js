@@ -155,9 +155,8 @@ formOrder.onsubmit = (e) => {
   let rilegatura = document.querySelector("[name='rilegatura']:checked");
   let variante = document.querySelector("[name='variante']:checked");
   let colore = document.querySelector("[name='colori_carattere']:checked");
-  let grammatura = document.querySelector("[name='grammatura']");
-  let formato = document.querySelector("[name='formato']");
   let angoli = document.querySelector("[name='angoli']");
+  let segnalibri = document.querySelector("[name='segnalibri']");
   let qty = document.querySelector("[name='quantita']");
 
   cart.rilegature.push({
@@ -166,8 +165,7 @@ formOrder.onsubmit = (e) => {
     id_colore: colore.value,
     nome_rilegatura: rilegatura.dataset.nome,
     prezzo_rilegatura: rilegatura.dataset.prezzo,
-    id_grammatura: grammatura.value,
-    id_formato: formato.value,
+    id_segnalibro: segnalibri.value,
     id_angolo: angoli.value,
     qty: qty.value,
   });
@@ -196,9 +194,9 @@ const calcoloRilegatura = () => {
   names.forEach((name) => {
     let selected = document.querySelector(`[name='${name}']`);
 
-    if (selected.type === "radio") {
-      if(!selected.checked) return;
+    if (document.querySelector(`[name='${name}']:checked`)) {
       selected = document.querySelector(`[name='${name}']:checked`);
+      console.log(selected)
       objRilegatura[`prezzo_${name}`] = parseFloat(selected.dataset.prezzo);
     }
     

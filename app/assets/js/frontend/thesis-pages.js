@@ -2,7 +2,9 @@ let prezzoPagine = {
   prezzo_bn: parseFloat(document.querySelector("#prezzo_bn b").textContent),
   prezzo_colorate: parseFloat(document.querySelector("#prezzo_colori b").textContent),
   prezzo_grammatura: 0,
-  prezzo_formato: 0
+  prezzo_formato: 0,
+  id_grammatura: null,
+  id_formato: null
 }
 
 function getAverageRGB(imgEl) {
@@ -380,6 +382,7 @@ const totalePagine = document.querySelector('.totale_pagine')
 document.querySelector("[name='grammatura']").addEventListener("change", (e) => {
   if(document.querySelector('#prezzo_grammatura')) document.querySelector('#prezzo_grammatura').parentElement.remove()
   prezzoPagine.prezzo_grammatura = objRilegatura.prezzo_grammatura
+  prezzoPagine.id_grammatura = e.currentTarget.value
   cart.pagine = { ...cart.pagine, ...prezzoPagine}
 
   let grammatura = listinoPagine.firstElementChild.cloneNode(true)
@@ -396,6 +399,7 @@ document.querySelector("[name='grammatura']").addEventListener("change", (e) => 
 document.querySelector("[name='formato']").addEventListener("change", (e) => {
   if(document.querySelector('#prezzo_formato')) document.querySelector('#prezzo_formato').parentElement.remove()
   prezzoPagine.prezzo_formato = objRilegatura.prezzo_formato
+  prezzoPagine.id_formato = e.currentTarget.value
   cart.pagine = { ...cart.pagine, ...prezzoPagine}
 
   let formato = listinoPagine.firstElementChild.cloneNode(true)
