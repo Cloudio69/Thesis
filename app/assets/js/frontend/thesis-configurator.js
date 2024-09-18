@@ -196,29 +196,36 @@ const calcoloRilegatura = () => {
   names.forEach((name) => {
     let selected = document.querySelector(`[name='${name}']`);
 
+    if (selected.type === "radio") {
+      selected = document.querySelector(`[name='${name}']:checked`);
+      objRilegatura[`prezzo_${name}`] = parseFloat(selected.dataset.prezzo);
+    }
+    
     if (selected.tagName === "SELECT") {
       selected = selected.selectedOptions[0];
       selected.dataset.prezzo ? (objRilegatura[`prezzo_${name}`] = parseFloat(selected.dataset.prezzo)) : (objRilegatura[`prezzo_${name}`] = 0);
     }
 
     if (selected.type === "number") objRilegatura[`qty`] = parseInt(selected.value);
-    if (selected.type === "radio") objRilegatura[`prezzo_${name}`] = parseFloat(selected.dataset.prezzo);
+    
   });
 
   Object.entries(objRilegatura).forEach(([key, value]) => {
-
     if (key.includes("prezzo") && !key.includes("grammatura") && !key.includes("formato")) {
       subtotal += value;
     }
-
     if (key === "qty") subtotal *= value;
   });
 
   totale = subtotal.toFixed(2);
   document.querySelector('#subtotale_rilegature').textContent = totale + "€";
+  console.log(objRilegatura)
 }
 
-names.forEach((name) => document.querySelector(`[name='${name}']`).addEventListener("change", calcoloRilegatura));
+names.forEach((name) => {
+  if(document.querySelector(`[name='${name}']`).type !== "radio") document.querySelector(`[name='${name}']`).addEventListener("change", calcoloRilegatura);
+  else document.querySelectorAll(`[name='${name}']`).forEach((radio) => radio.addEventListener("change", calcoloRilegatura));
+});
 
 
 /* Preloader */
