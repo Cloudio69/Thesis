@@ -22,58 +22,60 @@
         </div>
     </section>
     <section>
-    <div class="carta_grammatura flex flex-col gap-4 mt-4">
-                    <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">article</span>Carta e grammatura</h1>
-                    <div class="flex gap-4 items-center place-items-center text-center">
-                        <select name="grammatura" class="p-2 rounded-md" required>
-                            <option value="" selected disabled>Seleziona la grammatura</option>
-                            <?php
+    <form id="form_pagine">
+        <div class="carta_grammatura flex flex-col gap-4 mt-4">
+                        <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">article</span>Carta e grammatura</h1>
+                        <div class="flex gap-4 items-center place-items-center text-center">
+                            <select name="grammatura" class="p-2 rounded-md" required>
+                                <option value="" selected disabled>Seleziona la grammatura</option>
+                                <?php
 
-$grammature = new Grammatura;
-$grammature = $grammature->get_grammature();
-$decodedGrammature = json_decode($grammature);
+                                $grammature = new Grammatura;
+                                $grammature = $grammature->get_grammature();
+                                $decodedGrammature = json_decode($grammature);
 
-foreach ($decodedGrammature as $grammatura) {
-    echo "<option value=\"$grammatura->id_grammatura\" data-prezzo=\"$grammatura->prezzo_grammatura\">$grammatura->nome_grammatura</option>";
-}
-?>
-                        </select>
-                        <select name="formato" class="p-2 rounded-md">
-                            <option value="" selected disabled>Seleziona il formato</option>
-                            <option value="formato-a4" data-prezzo="<?php echo get_option('prezzo_a4') ?>">A4</option>
-                            <option value="formato-a3" data-prezzo="<?php echo get_option('prezzo_a3') ?>">A3</option>
-                        </select>
+                                foreach ($decodedGrammature as $grammatura) {
+                                    echo "<option value=\"$grammatura->id_grammatura\" data-prezzo=\"$grammatura->prezzo_grammatura\">$grammatura->nome_grammatura</option>";
+                                }
+                                ?>
+                            </select>
+                            <select name="formato" class="p-2 rounded-md">
+                                <option value="" selected disabled>Seleziona il formato</option>
+                                <option value="formato-a4" data-prezzo="<?php echo get_option('prezzo_a4') ?>">A4</option>
+                                <option value="formato-a3" data-prezzo="<?php echo get_option('prezzo_a3') ?>">A3</option>
+                            </select>
+                        </div>
                     </div>
+        </section>
+        <section class="subtotale_pagine mt-4 p-4 animate-pulse border border-neutral-300 rounded-md shadow-md">
+            <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">euro_symbol</span>Subtotale</h1>
+            <div class="p-4 listino_pagine">
+                <div class="flex space-between gap-2">
+                    <span class="flex-1">Pagine B/N</span>
+                    <span id="subtotale_bn"><b>0</b></span>
                 </div>
-    </section>
-    <section class="subtotale_pagine mt-4 p-4 animate-pulse border border-neutral-300 rounded-md shadow-md">
-        <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">euro_symbol</span>Subtotale</h1>
-        <div class="p-4 listino_pagine">
-            <div class="flex space-between gap-2">
-                <span class="flex-1">Pagine B/N</span>
-                <span id="subtotale_bn"><b>0</b></span>
+                <div class="flex space-between gap-2">
+                    <span class="flex-1">Pagine a colori</span>
+                    <span id="subtotale_colori"><b>0</b></span>
+                </div>
+                <div class="flex space-between gap-2">
+                    <span class="flex-1">Prezzo pagine B/N</span>
+                    <span id="prezzo_bn"><b><?php echo get_option('prezzo_bn'); ?></b></span>
+                </div>
+                <div class="flex space-between gap-2">
+                    <span class="flex-1">Prezzo pagine a colori</span>
+                    <span id="prezzo_colori"><b><?php echo get_option('prezzo_colori'); ?></b></span>
+                </div>
+                <div class="flex space-between gap-2 border-t mt-2 py-2 totale_pagine">
+                    <span class="flex-1">Costo pagine:</span>
+                    <span id="totale_pagine"><b>0</b></span>
+                </div>
             </div>
-            <div class="flex space-between gap-2">
-                <span class="flex-1">Pagine a colori</span>
-                <span id="subtotale_colori"><b>0</b></span>
-            </div>
-            <div class="flex space-between gap-2">
-                <span class="flex-1">Prezzo pagine B/N</span>
-                <span id="prezzo_bn"><b><?php echo get_option('prezzo_bn'); ?></b></span>
-            </div>
-            <div class="flex space-between gap-2">
-                <span class="flex-1">Prezzo pagine a colori</span>
-                <span id="prezzo_colori"><b><?php echo get_option('prezzo_colori'); ?></b></span>
-            </div>
-            <div class="flex space-between gap-2 border-t mt-2 py-2 totale_pagine">
-                <span class="flex-1">Costo pagine:</span>
-                <span id="totale_pagine"><b>0</b></span>
+        </section>
+        <div class="quantita flex flex-col gap-4 mt-4">
+            <div class="flex gap-4 items-center place-items-center text-center">
+                <button type="submit" class="rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400 w-full">AGGIUNGI E PROSEGUI</button>
             </div>
         </div>
-    </section>
-    <div class="quantita flex flex-col gap-4 mt-4">
-        <div class="flex gap-4 items-center place-items-center text-center">
-            <button type="submit" class="rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400 next-step">AGGIUNGI E PROSEGUI</button>
-        </div>
-    </div>
+    </form>
 </div>

@@ -1,6 +1,6 @@
 <div id="cd_step" class="p-12 flex flex-col gap-4 h-3/4">
     <h1 class="text-3xl font-bold">Il tuo CD</h1>
-    <p>Puoi includere con la tesi un CD serigrafato, <b>cliccando su Si, potrai modificarlo secondo le tue preferenze</b><br><br>Altrimenti puoi proseguire con la finalizzazione <b>cliccando su No</b></p>
+    <p>Puoi includere con la tesi un CD serigrafato, <b>cliccando su Si, potrai modificarlo secondo le tue preferenze, scegli se aggiungere dei file sul disco o lasciare la tesi</b><br><br>Altrimenti puoi proseguire con la finalizzazione <b>cliccando su No</b></p>
     <section class="tipo--stampa h-full flex-col flex justify-center items-center">
         <h2 class="text-xl text-center font-bold p-4">Vuoi aggiungere il CD?</h2>
         <div class="flex items-center justify-center gap-8 cursor-pointer">

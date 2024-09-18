@@ -432,3 +432,9 @@ const calcoloPagine = () => {
   totale = prezzoBn + prezzoColorate + totaleFormato + totaleGrammatura;
   document.querySelector('.totale_pagine b').textContent = totale.toFixed(2) + ' €';
 }
+
+const formPagine = document.querySelector('#form_pagine')
+
+formPagine.onsubmit = (e) => {
+  e.preventDefault();
+}
