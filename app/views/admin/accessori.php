@@ -6,6 +6,7 @@ if (get_option('prezzo_bn') == '') update_option('prezzo_bn', '0.04');
 if (get_option('prezzo_colori') == '') update_option('prezzo_colori', '0.40');
 if (get_option('prezzo_a4') == '') update_option('prezzo_a4', '0.00');
 if (get_option('prezzo_a3') == '') update_option('prezzo_a3', '0.04');
+if (get_option('prezzo_cd') == '') update_option('prezzo_cd', '10.00');
 
 if(isset($_POST['submit'])) {
     update_option('prezzo_angoli', $_POST['accessorio-angoli']);
@@ -14,6 +15,7 @@ if(isset($_POST['submit'])) {
     update_option('prezzo_colori', $_POST['accessorio-colori']);
     update_option('prezzo_a4', $_POST['accessorio-a4']);
     update_option('prezzo_a3', $_POST['accessorio-a3']);
+    update_option('prezzo_cd', $_POST['cd']);
 }
 
 ?>
@@ -70,6 +72,11 @@ if(isset($_POST['submit'])) {
                             <label for="accessorio-a3" class="text-sm font-medium">Formato A3: </label>
                             <input type="number" min="0.00" step="any" id="accessorio-a3" name="accessorio-a3" class="border border-slate-300 rounded-md p-2 max-w-24" placeholder="€" value="<?php echo get_option('prezzo_a3'); ?>" />
                         </div>
+                        <div class="thesis--prezzo-item flex justify-between items-center mb-2">
+                            <label for="cd" class="text-sm font-medium">Prezzo CD: </label>
+                            <input type="number" min="0.00" step="any" id="accessorio-a3" name="cd" class="border border-slate-300 rounded-md p-2 max-w-24" placeholder="€" value="<?php echo get_option('prezzo_cd'); ?>" />
+                        </div>
+                        
                         <p class="text-sm opacity-50">Il prezzo delle pagine verrà sommato al prezzo delle grammature e del formato</p>
                         <?php submit_button('Salva', 'primary', 'submit', false);?>
                     </form>
