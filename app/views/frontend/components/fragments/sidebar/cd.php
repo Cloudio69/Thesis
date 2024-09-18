@@ -24,11 +24,17 @@
                 </select>
             </div>
             <div class="flex flex-col gap-4 mt-4 p-4 border rounded-md opacity-50" id="file_list_wrapper">
-                <label for="file_cd" class="font-bold text-2xl flex items-center justify-between"><span>File</span><span id="add_file_cd" class="material-symbols-outlined rounded-full flex items-center justify-center !text-white bg-amber-500">add</span></label>
-                <input type="file" name="file_cd" id="file_cd" class="hidden rounded-md" />
+                <label for="file_cd" class="font-bold text-2xl flex items-center justify-between cursor-pointer"><span>File</span><span id="add_file_cd" class="material-symbols-outlined rounded-full flex items-center justify-center !text-white bg-amber-500">add</span></label>
+                <input type="file" name="file_cd" id="file_cd" class="hidden rounded-md" disabled accept=".doc,.docx,.ppt,.pptx,.xls,.xlsx,.mp4,.mp3,.png,.jpg" />
                 <div id="file_list_cd" class="min-h-16">
                     <p class="opacity-50">Nessun file selezionato</p>
                 </div>
             </div>
+            <p class="text-sm opacity-50">Formati accettati: .doc, .docx, .ppt, .pptx, .xls, .xlsx, .mp4, .mp3, .png, .jpg</p>
+            <div class="flex flex-col gap-4 mt-4">
+                <label for="quantita_cd">Quantità:</label>
+                <input type="number" name="quantita_cd" id="quantita_cd" class="p-2 rounded-md" required/>
+            </div>
+            <button type="submit" class="rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400 w-full">AGGIUNGI AL CARRELLO</button>
         </form>
 </div>

@@ -1,5 +1,8 @@
 /* Canvas */
-const canvas = new fabric.Canvas("cd-canvas", { selection: true, hoverCursor: "default"});
+const canvas = new fabric.Canvas("cd-canvas", {
+  selection: true,
+  hoverCursor: "default",
+});
 // Set background color TRANSPARENT
 canvas.setDimensions({ width: 600, height: 600 });
 
@@ -82,7 +85,6 @@ const titoloTesi = new fabric.Textbox("TITOLO TESI DI LAUREA", {
   hoverCursor: "pointer",
 });
 
-
 canvas.add(titoloTesi);
 
 const annoAccademico = new fabric.Textbox("Anno Accademico 20XX/20XX", {
@@ -153,63 +155,63 @@ const testoRelatore = new fabric.Textbox(
 canvas.add(testoRelatore);
 
 titoloUni.on("editing:exited", function (e) {
-    if (titoloUni.text === "") {
-        titoloUni.fontSize = 20;
-        titoloUni.text = "Università degli Studi di Bari\nFacoltà di Lorem Ipsum";
-        canvas.renderAll();
-    }
+  if (titoloUni.text === "") {
+    titoloUni.fontSize = 20;
+    titoloUni.text = "Università degli Studi di Bari\nFacoltà di Lorem Ipsum";
+    canvas.renderAll();
+  }
 });
 
 corsoDiLaurea.on("editing:exited", function (e) {
-    if (corsoDiLaurea.text === "") {
-        corsoDiLaurea.fontSize = 18;
-        corsoDiLaurea.text = "Corso di Laurea in Lorem Ipsum";
-        canvas.renderAll();
-    }
+  if (corsoDiLaurea.text === "") {
+    corsoDiLaurea.fontSize = 18;
+    corsoDiLaurea.text = "Corso di Laurea in Lorem Ipsum";
+    canvas.renderAll();
+  }
 });
 
 titoloTesi.on("editing:exited", function (e) {
-    if (titoloTesi.text === "") {
-        titoloTesi.fontSize = 20;
-        titoloTesi.text = "TITOLO TESI DI LAUREA";
-        canvas.renderAll();
-    }
+  if (titoloTesi.text === "") {
+    titoloTesi.fontSize = 20;
+    titoloTesi.text = "TITOLO TESI DI LAUREA";
+    canvas.renderAll();
+  }
 });
 
 annoAccademico.on("editing:exited", function (e) {
-    if (annoAccademico.text === "") {
-        annoAccademico.fontSize = 18;
-        annoAccademico.text = "Anno Accademico 20XX/20XX";
-        canvas.renderAll();
-    }
+  if (annoAccademico.text === "") {
+    annoAccademico.fontSize = 18;
+    annoAccademico.text = "Anno Accademico 20XX/20XX";
+    canvas.renderAll();
+  }
 });
 
 testoStudente.on("editing:exited", function (e) {
-    if (testoStudente.text === "") {
-        testoStudente.fontSize = 16;
-        testoStudente.text = "Studente:\nCarlo Bianchi\nMatricola:\nXXXXXX";
-        canvas.renderAll();
-    }
+  if (testoStudente.text === "") {
+    testoStudente.fontSize = 16;
+    testoStudente.text = "Studente:\nCarlo Bianchi\nMatricola:\nXXXXXX";
+    canvas.renderAll();
+  }
 });
 
 testoRelatore.on("editing:exited", function (e) {
-    if (testoRelatore.text === "") {
-        testoRelatore.fontSize = 16;
-        testoRelatore.text = "Relatore:\nMario Rossi\nContro relatore:\nJohn Doe";
-        canvas.renderAll();
-    }
+  if (testoRelatore.text === "") {
+    testoRelatore.fontSize = 16;
+    testoRelatore.text = "Relatore:\nMario Rossi\nContro relatore:\nJohn Doe";
+    canvas.renderAll();
+  }
 });
 
 titoloTesi.on("changed", function (e) {
-    const obj = titoloTesi;
-    const text = obj.text;
+  const obj = titoloTesi;
+  const text = obj.text;
 
-    if (text.length > 20) {
-        obj.fontSize = 16;
-    } else {
-        obj.fontSize = 20;
-    }
-    canvas.renderAll();
+  if (text.length > 20) {
+    obj.fontSize = 16;
+  } else {
+    obj.fontSize = 20;
+  }
+  canvas.renderAll();
 });
 
 canvas.on("object:moving", function (e) {
@@ -232,19 +234,23 @@ canvas.on("object:moving", function (e) {
 
 canvas.renderAll();
 
-
 const editCd = document.querySelector("#edit-cd");
-const selectContenuto = document.querySelector("#contenuto")
+const selectCD = document.querySelector("#contenuto");
 
-editCd.addEventListener('click', () => {
-  document.querySelector('#form_cd').classList.remove('hidden');
-  document.querySelector('#form_cd').classList.add('flex');
-  document.querySelector('.tipo--stampa-cd').classList.add('hidden');
+editCd.addEventListener("click", () => {
+  document.querySelector("#form_cd").classList.remove("hidden");
+  document.querySelector("#form_cd").classList.add("flex");
+  document.querySelector(".tipo--stampa-cd").classList.add("hidden");
 });
 
-selectContenuto.onchange = () => {
-  const selected = selectContenuto.value;
-  console.log(selected);
-  if(selected.value === "file") document.querySelector("#file_list_wrapper").classList.remove("opacity-50")
-  else document.querySelector("#file_list_wrapper").classList.add("opacity-50")
-}
+selectCD.onchange = (e) => {
+  const listWrapper = document.querySelector("#file_list_wrapper");
+  const selected = e.currentTarget.value;
+  if (selected !== "file") {
+    if(!listWrapper.classList.contains('opacity-50')) listWrapper.classList.add("opacity-50");
+    listWrapper.querySelector("input[type='file']").disabled = true;
+  } else {
+    listWrapper.classList.remove("opacity-50");
+    listWrapper.querySelector("input[type='file']").disabled = false;
+  }
+};
