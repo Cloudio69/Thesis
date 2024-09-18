@@ -231,3 +231,20 @@ canvas.on("object:moving", function (e) {
 });
 
 canvas.renderAll();
+
+
+const editCd = document.querySelector("#edit-cd");
+const selectContenuto = document.querySelector("#contenuto")
+
+editCd.addEventListener('click', () => {
+  document.querySelector('#form_cd').classList.remove('hidden');
+  document.querySelector('#form_cd').classList.add('flex');
+  document.querySelector('.tipo--stampa-cd').classList.add('hidden');
+});
+
+selectContenuto.onchange = () => {
+  const selected = selectContenuto.value;
+  console.log(selected);
+  if(selected.value === "file") document.querySelector("#file_list_wrapper").classList.remove("opacity-50")
+  else document.querySelector("#file_list_wrapper").classList.add("opacity-50")
+}
