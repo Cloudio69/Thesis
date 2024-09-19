@@ -1,6 +1,6 @@
 /* Canvas */
 const canvas = new fabric.Canvas("cd-canvas", {
-  selection: true,
+  selection: false,
   hoverCursor: "default",
 });
 // Set background color TRANSPARENT
