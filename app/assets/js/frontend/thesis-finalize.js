@@ -120,11 +120,11 @@ const updateCart = async (e) => {
           (cart.pagine.prezzo_colorate * (cart.pagine.colorate.length > 0 ? cart.pagine.colorate.length : 0)).toFixed(2)
         }€</span></span>
         <span class="text-sm flex items-center justify-between"><b>Costo Formato</b><span>  ${
-          cart.pagine.prezzo_formato
-        }€</span></span>
+          cart.pagine.prezzo_formato ? cart.pagine.prezzo_formato + ' €' : 'Nessun sovraprezzo'
+        }</span></span>
         <span class="text-sm flex items-center justify-between"><b>Costo Grammatura</b><span> ${
-          cart.pagine.prezzo_grammatura
-        }€</span></span>
+          cart.pagine.prezzo_grammatura ? cart.pagine.prezzo_grammatura + ' €' : 'Nessun sovraprezzo'
+        }</span></span>
         </div>
       </div>
     `;
@@ -291,16 +291,16 @@ const updateFinalize = (totale) => {
     }</b></span></span>
         <span class="text-sm flex items-center justify-between"><b>Costo B/N</b><span>  ${
           (cart.pagine.prezzo_bn * cart.pagine.bn.length).toFixed(2)
-        }€</span></span>
+        } €</span></span>
         <span class="text-sm flex items-center justify-between"><b>Costo Colorate</b><span>  ${
           (cart.pagine.prezzo_colorate * cart.pagine.colorate.length).toFixed(2)
-        }€</span></span>
+        } €</span></span>
         <span class="text-sm flex items-center justify-between"><b>Costo Formato</b><span>  ${
-          cart.pagine.prezzo_formato
-        }€</span></span>
+          cart.pagine.prezzo_formato > 0 ? cart.pagine.prezzo_formato + ' €' : 'Nessun sovraprezzo'
+        }</span></span>
         <span class="text-sm flex items-center justify-between"><b>Costo Grammatura</b><span> ${
-          cart.pagine.prezzo_grammatura
-        }€</span></span>
+          cart.pagine.prezzo_grammatura > 0 ? cart.pagine.prezzo_grammatura + ' €' : 'Nessun sovraprezzo'
+        }</span></span>
         </div>
       </div>
     `;
