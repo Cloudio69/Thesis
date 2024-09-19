@@ -3,7 +3,7 @@
     header("Cache-Control: post-check=0, pre-check=0", false);
     header("Pragma: no-cache");
     
-    if($_GET['thesis_session']){
+    if(isset($_GET['thesis_session'])){
         setcookie('thesis_session', $_GET['thesis_session'], time() + (86400 * 30), "/");
         header("Location: /configuratore");
     }

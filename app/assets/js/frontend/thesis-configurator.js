@@ -214,6 +214,7 @@ formOrder.onsubmit = (e) => {
   document.querySelector(".varianti div").innerHTML = `<p class="opacity-50 col-span-5 place-self-start">Scegli prima una rilegatura.</p>`
   document.querySelector(".colori_carattere div").innerHTML = `<p class="opacity-50 col-span-5 place-self-start">Scegli prima una rilegatura.</p>`
 
+  document.querySelector('#prosegui_rilegature').classList.remove("hidden");
 };
 
 let names = ["rilegatura", "grammatura", "formato", "angoli", "segnalibri", "quantita"];
