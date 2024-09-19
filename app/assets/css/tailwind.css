@@ -594,10 +594,6 @@ video {
   position: relative;
 }
 
-.\!sticky {
-  position: sticky !important;
-}
-
 .bottom-0 {
   bottom: 0px;
 }
@@ -788,10 +784,6 @@ video {
 
 .max-h-\[60vh\] {
   max-height: 60vh;
-}
-
-.max-h-\[50vh\] {
-  max-height: 50vh;
 }
 
 .min-h-16 {
@@ -1243,10 +1235,6 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
-.bg-white\/75 {
-  background-color: rgb(255 255 255 / 0.75);
 }
 
 .object-contain {

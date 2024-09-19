@@ -16,7 +16,7 @@ forms.forEach((form) => {
   });
 });
 
-const updateCart = async () => {
+const updateCart = () => {
 
   cartWrapper.innerHTML = '';
 
@@ -39,7 +39,6 @@ const updateCart = async () => {
     cart.rilegature.forEach((rilegatura, index) => {
       let rilegatureItem = document.createElement('div');
       rilegatureItem.classList.add('flex', 'flex-col', 'gap-2', 'p-4', 'bg-white', 'border', 'rounded-md', 'shadow-md');
-      // rilegatureItem.innerText = `${rilegatura.nome_rilegatura} ( Variante: ${rilegatura.nome_colore} ) - Colore ${rilegatura.nome_colore} - Segnalibro: ${rilegatura.nome_segnalibro} - Angoli ${rilegatura.nome_angolo} ${rilegatura.prezzo}€`;
 
       rilegatureItem.innerHTML = `
         <div class="flex justify-between items-start">
@@ -72,7 +71,7 @@ const updateCart = async () => {
     rilegatureItem.innerText = "Nessun dato";
     rilegatureDiv.appendChild(rilegatureItem);
   }
-
+   // claudejs 
   if (cart.pagine.bn.length > 0 && cart.pagine.colorate.length > 0) {
     let pagineItem = document.createElement('div');
 
@@ -131,7 +130,28 @@ const updateCart = async () => {
   cartWrapper.appendChild(pagineDiv);
   cartWrapper.appendChild(cdDiv);
   cartWrapper.appendChild(totaleDiv);
+
+  updateFinalize(rilegatureDiv, pagineDiv, cdDiv, totale);
 };
+
+const updateFinalize = (rilegatureDiv, pagineDiv, cdDiv, totale) => {
+
+  const rilegatureWrapper = document.querySelector('.riepilogo-rilegature section');
+  const pagineWrapper = document.querySelector('.riepilogo-pagine section')
+  const cdWrapper = document.querySelector('.riepilogo-cd section');
+  const totaleWrappper = document.querySelector('#totale')
+
+  rilegatureWrapper.innerHTML = '';
+  pagineWrapper.innerHTML = '';
+  cdWrapper.innerHTML = '';
+  totaleWrappper.innerHTML = '';
+
+  rilegatureWrapper.appendChild(rilegatureDiv);
+  pagineWrapper.appendChild(pagineDiv);
+  cdWrapper.appendChild(cdDiv);
+
+  totaleWrappper.textContent = parseFloat(totale).toFixed(2);
+}
 
 
 function removeRilegatura(index) {
