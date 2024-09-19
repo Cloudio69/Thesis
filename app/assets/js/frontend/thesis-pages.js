@@ -1,11 +1,13 @@
 let prezzoPagine = {
   prezzo_bn: parseFloat(document.querySelector("#prezzo_bn b").textContent),
-  prezzo_colorate: parseFloat(document.querySelector("#prezzo_colori b").textContent),
+  prezzo_colorate: parseFloat(
+    document.querySelector("#prezzo_colori b").textContent
+  ),
   prezzo_grammatura: 0,
   prezzo_formato: 0,
   id_grammatura: null,
-  id_formato: null
-}
+  id_formato: null,
+};
 
 function getAverageRGB(imgEl) {
   var blockSize = 5, // only visit every 5 pixels
@@ -227,7 +229,7 @@ const creaPagine = async () => {
           assets.bn;
         document
           .querySelectorAll(".color-switch")
-        [i].parentElement.querySelector("img")
+          [i].parentElement.querySelector("img")
           .classList.add("grayscale", "Transition-all");
       } else {
         pagineTipologia.colorate.push({ ...rgb, pagina: i });
@@ -274,12 +276,16 @@ const updateColorCounter = () => {
 
     counterBn.textContent = pagineTipologia.bn.length;
     counterColorate.textContent = pagineTipologia.colorate.length;
-    document.querySelector("#subtotale_bn b").textContent = pagineTipologia.bn.length;
-    document.querySelector("#subtotale_colori b").textContent = pagineTipologia.colorate.length;
+    document.querySelector("#subtotale_bn b").textContent =
+      pagineTipologia.bn.length;
+    document.querySelector("#subtotale_colori b").textContent =
+      pagineTipologia.colorate.length;
 
     counterBn.classList.remove("animate-pulse");
     counterColorate.classList.remove("animate-pulse");
-    document.querySelector(".subtotale_pagine").classList.remove("animate-pulse");
+    document
+      .querySelector(".subtotale_pagine")
+      .classList.remove("animate-pulse");
 
     calcoloPagine();
 
@@ -295,30 +301,41 @@ let pageFilter = [
 let filtered = false;
 
 pageFilter.forEach((item) => {
-
   item.onclick = (e) => {
-
     if (!generated) return;
 
-    pageFilter.forEach((item) => { item.querySelector("span").classList.contains('active') && item.querySelector("span").classList.remove('active') })
+    pageFilter.forEach((item) => {
+      item.querySelector("span").classList.contains("active") &&
+        item.querySelector("span").classList.remove("active");
+    });
 
     e.currentTarget.querySelector("span").classList.add("active");
 
     // if is already filtered remove the filter
     if (!filtered) {
-
       filtered = true;
 
       if (e.currentTarget.id === "bianco--nero") {
         document.querySelectorAll(".pagina--wrapper").forEach((item) => {
-          if (pagineTipologia.bn.find((pagina) => pagina.pagina === parseInt(item.querySelector("button").dataset.pagina)) === undefined) {
+          if (
+            pagineTipologia.bn.find(
+              (pagina) =>
+                pagina.pagina ===
+                parseInt(item.querySelector("button").dataset.pagina)
+            ) === undefined
+          ) {
             item.classList.add("hidden");
           }
         });
-
       } else {
         document.querySelectorAll(".pagina--wrapper").forEach((item) => {
-          if (pagineTipologia.colorate.find((pagina) => pagina.pagina === parseInt(item.querySelector("button").dataset.pagina)) === undefined) {
+          if (
+            pagineTipologia.colorate.find(
+              (pagina) =>
+                pagina.pagina ===
+                parseInt(item.querySelector("button").dataset.pagina)
+            ) === undefined
+          ) {
             item.classList.add("hidden");
           }
         });
@@ -328,18 +345,20 @@ pageFilter.forEach((item) => {
         item.classList.remove("hidden");
       });
 
-      pageFilter.forEach((item) => { item.querySelector("span").classList.contains('active') && item.querySelector("span").classList.remove('active') })
+      pageFilter.forEach((item) => {
+        item.querySelector("span").classList.contains("active") &&
+          item.querySelector("span").classList.remove("active");
+      });
 
       filtered = false;
     }
-
   };
 });
 
 let massiveActions = [
   document.querySelector("#stampa_colori"),
   document.querySelector("#stampa_bn"),
-]
+];
 
 massiveActions.forEach((item) => {
   item.onclick = (e) => {
@@ -349,15 +368,16 @@ massiveActions.forEach((item) => {
 
     let color = e.currentTarget.id === "stampa_colori" ? "colorate" : "bn";
 
-    if(color === "colorate") {
+    if (color === "colorate") {
       document.querySelectorAll(".color-switch").forEach((item) => {
         item.querySelector("img").src = assets.rgb;
         item.parentElement.querySelector("img").classList.remove("grayscale");
       });
 
-      pagineTipologia.colorate = pagineTipologia.colorate.concat(pagineTipologia.bn);
+      pagineTipologia.colorate = pagineTipologia.colorate.concat(
+        pagineTipologia.bn
+      );
       pagineTipologia.bn = [];
-
     } else {
       document.querySelectorAll(".color-switch").forEach((item) => {
         item.querySelector("img").src = assets.bn;
@@ -374,43 +394,59 @@ massiveActions.forEach((item) => {
 
 document.querySelector("#pagine").addEventListener("click", () => {
   generaPagine();
-}) 
-
-const listinoPagine = document.querySelector('.listino_pagine')
-const totalePagine = document.querySelector('.totale_pagine')
-
-document.querySelector("[name='grammatura']").addEventListener("change", (e) => {
-  if(document.querySelector('#prezzo_grammatura')) document.querySelector('#prezzo_grammatura').parentElement.remove()
-  prezzoPagine.prezzo_grammatura = objRilegatura.prezzo_grammatura
-  prezzoPagine.id_grammatura = e.currentTarget.value
-  cart.pagine = { ...cart.pagine, ...prezzoPagine}
-
-  let grammatura = listinoPagine.firstElementChild.cloneNode(true)
-  grammatura.firstElementChild.textContent = 'Grammatura: ' + e.currentTarget.selectedOptions[0].textContent;
-  grammatura.childNodes.forEach((item) =>{  if(item.id) item.removeAttribute('id'); item.id = 'prezzo_grammatura' })
-  listinoPagine.insertBefore(grammatura, totalePagine)
-
-  document.querySelector('#prezzo_grammatura b').textContent = prezzoPagine.prezzo_grammatura !== 0 ? prezzoPagine.prezzo_grammatura : 'Nessun sovrapprezzo'
-
-  calcoloPagine();
-
 });
 
+const listinoPagine = document.querySelector(".listino_pagine");
+const totalePagine = document.querySelector(".totale_pagine");
+
+document
+  .querySelector("[name='grammatura']")
+  .addEventListener("change", (e) => {
+    if (document.querySelector("#prezzo_grammatura"))
+      document.querySelector("#prezzo_grammatura").parentElement.remove();
+    prezzoPagine.prezzo_grammatura = objRilegatura.prezzo_grammatura;
+    prezzoPagine.id_grammatura = e.currentTarget.value;
+    cart.pagine = { ...cart.pagine, ...prezzoPagine };
+
+    let grammatura = listinoPagine.firstElementChild.cloneNode(true);
+    grammatura.firstElementChild.textContent =
+      "Grammatura: " + e.currentTarget.selectedOptions[0].textContent;
+    grammatura.childNodes.forEach((item) => {
+      if (item.id) item.removeAttribute("id");
+      item.id = "prezzo_grammatura";
+    });
+    listinoPagine.insertBefore(grammatura, totalePagine);
+
+    document.querySelector("#prezzo_grammatura b").textContent =
+      prezzoPagine.prezzo_grammatura !== 0
+        ? prezzoPagine.prezzo_grammatura
+        : "Nessun sovrapprezzo";
+
+    calcoloPagine();
+  });
+
 document.querySelector("[name='formato']").addEventListener("change", (e) => {
-  if(document.querySelector('#prezzo_formato')) document.querySelector('#prezzo_formato').parentElement.remove()
-  prezzoPagine.prezzo_formato = objRilegatura.prezzo_formato
-  prezzoPagine.id_formato = e.currentTarget.value
-  cart.pagine = { ...cart.pagine, ...prezzoPagine}
+  if (document.querySelector("#prezzo_formato"))
+    document.querySelector("#prezzo_formato").parentElement.remove();
+  prezzoPagine.prezzo_formato = objRilegatura.prezzo_formato;
+  prezzoPagine.id_formato = e.currentTarget.value;
+  cart.pagine = { ...cart.pagine, ...prezzoPagine };
 
-  let formato = listinoPagine.firstElementChild.cloneNode(true)
-  formato.firstElementChild.textContent = 'Formato: ' + e.currentTarget.selectedOptions[0].textContent;
-  formato.childNodes.forEach((item) =>{  if(item.id) item.removeAttribute('id'); item.id = 'prezzo_formato' })
-  listinoPagine.insertBefore(formato, totalePagine) 
+  let formato = listinoPagine.firstElementChild.cloneNode(true);
+  formato.firstElementChild.textContent =
+    "Formato: " + e.currentTarget.selectedOptions[0].textContent;
+  formato.childNodes.forEach((item) => {
+    if (item.id) item.removeAttribute("id");
+    item.id = "prezzo_formato";
+  });
+  listinoPagine.insertBefore(formato, totalePagine);
 
-  document.querySelector('#prezzo_formato b').textContent = prezzoPagine.prezzo_formato !== 0 ? prezzoPagine.prezzo_formato : 'Nessun sovrapprezzo'
+  document.querySelector("#prezzo_formato b").textContent =
+    prezzoPagine.prezzo_formato !== 0
+      ? prezzoPagine.prezzo_formato
+      : "Nessun sovrapprezzo";
 
   calcoloPagine();
-
 });
 
 const calcoloPagine = () => {
@@ -426,15 +462,20 @@ const calcoloPagine = () => {
   let prezzoBn = pagineBn * prezzoPagine.prezzo_bn;
   let prezzoColorate = pagineColorate * prezzoPagine.prezzo_colorate;
 
-  prezzoPagine.prezzo_formato !== 0 && (totaleFormato = numPagine * prezzoPagine.prezzo_formato);
-  prezzoPagine.prezzo_grammatura !== 0 && (totaleGrammatura = numPagine * prezzoPagine.prezzo_grammatura);
+  prezzoPagine.prezzo_formato !== 0 &&
+    (totaleFormato = numPagine * prezzoPagine.prezzo_formato);
+  prezzoPagine.prezzo_grammatura !== 0 &&
+    (totaleGrammatura = numPagine * prezzoPagine.prezzo_grammatura);
 
   totale = prezzoBn + prezzoColorate + totaleFormato + totaleGrammatura;
-  document.querySelector('.totale_pagine b').textContent = totale.toFixed(2) + ' €';
-}
+  document.querySelector(".totale_pagine b").textContent =
+    totale.toFixed(2) + " €";
 
-const formPagine = document.querySelector('#form_pagine')
+  if(totale > 0) document.querySelector('#pagine_step button[type="submit"]').disabled = false;
+};
+
+const formPagine = document.querySelector("#form_pagine");
 
 formPagine.onsubmit = (e) => {
   e.preventDefault();
-}
+};

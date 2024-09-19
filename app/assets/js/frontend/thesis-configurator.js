@@ -124,6 +124,9 @@ config.forEach((item, index) => {
 
     item.sidebar.querySelectorAll(".next-step").forEach((button) => {
       button.onclick = (e) => {
+
+        if (e.currentTarget.disabled) return;
+
         if (e.currentTarget.nextElementSibling) {
           e.currentTarget.nextElementSibling.classList.remove("selected");
         } else if (e.currentTarget.previousElementSibling) {

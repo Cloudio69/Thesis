@@ -74,7 +74,7 @@
         </section>
         <div class="quantita flex flex-col gap-4 mt-4">
             <div class="flex gap-4 items-center place-items-center text-center">
-                <button type="submit" class="rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400 w-full">AGGIUNGI E PROSEGUI</button>
+                <button type="submit" class="next-step rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400 w-full" disabled>AGGIUNGI E PROSEGUI</button>
             </div>
         </div>
     </form>
