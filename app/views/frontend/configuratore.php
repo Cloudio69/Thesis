@@ -1,8 +1,4 @@
-<?php 
-    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-    header("Cache-Control: post-check=0, pre-check=0", false);
-    header("Pragma: no-cache");
-    
+<?php     
     if(isset($_GET['thesis_session'])){
         setcookie('thesis_session', $_GET['thesis_session'], time() + (86400 * 30), "/");
         header("Location: /configuratore");
