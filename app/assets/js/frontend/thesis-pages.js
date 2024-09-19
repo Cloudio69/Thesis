@@ -479,3 +479,9 @@ const formPagine = document.querySelector("#form_pagine");
 formPagine.onsubmit = (e) => {
   e.preventDefault();
 };
+
+const nextStepPagine = document.querySelector('#prosegui_rilegature')
+
+nextStepPagine.addEventListener("click", () => {
+  generaPagine();
+});
