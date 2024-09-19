@@ -4,7 +4,7 @@ const cart = {
     bn: [],
     colorate: [],
   },
-  cd: {}
+  cd: {},
 };
 
 let objRilegatura = {
@@ -13,11 +13,10 @@ let objRilegatura = {
   prezzo_formato: 0,
   prezzo_angoli: 0,
   prezzo_segnalibri: 0,
-  qty: 0
-}
+  qty: 0,
+};
 
 let totale = 0;
-
 
 const formOrder = document.querySelector("#rilegature_form");
 
@@ -103,11 +102,20 @@ config.forEach((item, index) => {
 
       e.currentTarget.classList.add("active");
 
-      if(e.currentTarget.id === "finalizza" || e.currentTarget.id === "checkout") {
+      if (
+        e.currentTarget.id === "finalizza" ||
+        e.currentTarget.id === "checkout"
+      ) {
         document.querySelector(".open-cart-dialog").classList.add("hidden");
       } else {
-        if (document.querySelector(".open-cart-dialog").classList.contains("hidden")) {
-          document.querySelector(".open-cart-dialog").classList.remove("hidden");
+        if (
+          document
+            .querySelector(".open-cart-dialog")
+            .classList.contains("hidden")
+        ) {
+          document
+            .querySelector(".open-cart-dialog")
+            .classList.remove("hidden");
         }
       }
 
@@ -124,7 +132,6 @@ config.forEach((item, index) => {
 
     item.sidebar.querySelectorAll(".next-step").forEach((button) => {
       button.onclick = (e) => {
-
         if (e.currentTarget.disabled) return;
 
         if (e.currentTarget.nextElementSibling) {
@@ -153,7 +160,23 @@ config.forEach((item, index) => {
           .querySelector(".thesis--fragments")
           .children[currentStep + 1].classList.remove("hidden");
 
-        currentStep++;
+          currentStep++;
+
+        if (currentStep === 5 || currentStep === 6) {
+          document.querySelector(".open-cart-dialog").classList.add("hidden");
+        } else {
+          if (
+            document
+              .querySelector(".open-cart-dialog")
+              .classList.contains("hidden")
+          ) {
+            document
+              .querySelector(".open-cart-dialog")
+              .classList.remove("hidden");
+          }
+        }
+
+        
       };
     });
   }
@@ -189,38 +212,60 @@ formOrder.onsubmit = (e) => {
     nome_rilegatura: rilegatura.dataset.nome,
     prezzo_rilegatura: rilegatura.dataset.prezzo,
     id_variante: variante.value,
-    nome_variante: variante.parentElement.querySelector('h3').textContent,
+    nome_variante: variante.parentElement.querySelector("h3").textContent,
     id_colore: colore.value,
-    nome_colore: colore.parentElement.querySelector('span').textContent,
+    nome_colore: colore.parentElement.querySelector("span").textContent,
     id_segnalibro: segnalibri.value ? segnalibri.value : null,
-    nome_segnalibro: segnalibri.selectedIndex !== 0 ? segnalibri.selectedOptions[0].textContent : "Nessun segnalibro",
-    prezzo_segnalibro: segnalibri.selectedIndex !== 0 ? segnalibri.selectedOptions[0].dataset.prezzo : 0,
+    nome_segnalibro:
+      segnalibri.selectedIndex !== 0
+        ? segnalibri.selectedOptions[0].textContent
+        : "Nessun segnalibro",
+    prezzo_segnalibro:
+      segnalibri.selectedIndex !== 0
+        ? segnalibri.selectedOptions[0].dataset.prezzo
+        : 0,
     id_angolo: angoli.value ? angoli.value : null,
-    nome_angolo: angoli.selectedIndex !== 0 ? angoli.selectedOptions[0].textContent : "Nessun angolo",
-    prezzo_angolo: angoli.selectedIndex !== 0 ? angoli.selectedOptions[0].dataset.prezzo : 0,
+    nome_angolo:
+      angoli.selectedIndex !== 0
+        ? angoli.selectedOptions[0].textContent
+        : "Nessun angolo",
+    prezzo_angolo:
+      angoli.selectedIndex !== 0 ? angoli.selectedOptions[0].dataset.prezzo : 0,
     qty: qty.value,
   });
 
   e.currentTarget.reset();
 
-  document.querySelector('#subtotale_rilegature').textContent = "0.00€";
+  document.querySelector("#subtotale_rilegature").textContent = "0.00€";
 
   document.querySelector(".thesis--rilegature").replaceChildren();
-  document.querySelector(".thesis--rilegature").innerHTML = `<div class='flex flex-col items-center justify-center'><span class='material-symbols-outlined text-7xl'>check</span><p class='text-lg text-center'><b>Aggiunto al carrello!</b><br>Puoi continuare ad aggiungere altre rilegature!</p>`;
+  document.querySelector(
+    ".thesis--rilegature"
+  ).innerHTML = `<div class='flex flex-col items-center justify-center'><span class='material-symbols-outlined text-7xl'>check</span><p class='text-lg text-center'><b>Aggiunto al carrello!</b><br>Puoi continuare ad aggiungere altre rilegature!</p>`;
 
-  document.querySelector(".varianti div").replaceChildren()
-  document.querySelector(".colori_carattere div").replaceChildren()
+  document.querySelector(".varianti div").replaceChildren();
+  document.querySelector(".colori_carattere div").replaceChildren();
 
-  document.querySelector(".varianti div").innerHTML = `<p class="opacity-50 col-span-5 place-self-start">Scegli prima una rilegatura.</p>`
-  document.querySelector(".colori_carattere div").innerHTML = `<p class="opacity-50 col-span-5 place-self-start">Scegli prima una rilegatura.</p>`
+  document.querySelector(
+    ".varianti div"
+  ).innerHTML = `<p class="opacity-50 col-span-5 place-self-start">Scegli prima una rilegatura.</p>`;
+  document.querySelector(
+    ".colori_carattere div"
+  ).innerHTML = `<p class="opacity-50 col-span-5 place-self-start">Scegli prima una rilegatura.</p>`;
 
-  document.querySelector('#prosegui_rilegature').classList.remove("hidden");
+  document.querySelector("#prosegui_rilegature").classList.remove("hidden");
 };
 
-let names = ["rilegatura", "grammatura", "formato", "angoli", "segnalibri", "quantita"];
+let names = [
+  "rilegatura",
+  "grammatura",
+  "formato",
+  "angoli",
+  "segnalibri",
+  "quantita",
+];
 
 const calcoloRilegatura = () => {
-
   let subtotal = 0;
 
   names.forEach((name) => {
@@ -230,32 +275,45 @@ const calcoloRilegatura = () => {
       selected = document.querySelector(`[name='${name}']:checked`);
       objRilegatura[`prezzo_${name}`] = parseFloat(selected.dataset.prezzo);
     }
-    
+
     if (selected.tagName === "SELECT") {
       selected = selected.selectedOptions[0];
-      selected.dataset.prezzo ? (objRilegatura[`prezzo_${name}`] = parseFloat(selected.dataset.prezzo)) : (objRilegatura[`prezzo_${name}`] = 0);
+      selected.dataset.prezzo
+        ? (objRilegatura[`prezzo_${name}`] = parseFloat(
+            selected.dataset.prezzo
+          ))
+        : (objRilegatura[`prezzo_${name}`] = 0);
     }
 
-    if (selected.type === "number") objRilegatura[`qty`] = parseInt(selected.value);
-    
+    if (selected.type === "number")
+      objRilegatura[`qty`] = parseInt(selected.value);
   });
 
   Object.entries(objRilegatura).forEach(([key, value]) => {
-    if (key.includes("prezzo") && !key.includes("grammatura") && !key.includes("formato")) {
+    if (
+      key.includes("prezzo") &&
+      !key.includes("grammatura") &&
+      !key.includes("formato")
+    ) {
       subtotal += value;
     }
     if (key === "qty") subtotal *= value;
   });
 
   totale = subtotal.toFixed(2);
-  document.querySelector('#subtotale_rilegature').textContent = totale + "€";
-}
+  document.querySelector("#subtotale_rilegature").textContent = totale + "€";
+};
 
 names.forEach((name) => {
-  if(document.querySelector(`[name='${name}']`).type !== "radio") document.querySelector(`[name='${name}']`).addEventListener("change", calcoloRilegatura);
-  else document.querySelectorAll(`[name='${name}']`).forEach((radio) => radio.addEventListener("change", calcoloRilegatura));
+  if (document.querySelector(`[name='${name}']`).type !== "radio")
+    document
+      .querySelector(`[name='${name}']`)
+      .addEventListener("change", calcoloRilegatura);
+  else
+    document
+      .querySelectorAll(`[name='${name}']`)
+      .forEach((radio) => radio.addEventListener("change", calcoloRilegatura));
 });
-
 
 /* Preloader */
 

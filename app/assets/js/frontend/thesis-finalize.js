@@ -114,10 +114,10 @@ const updateCart = async (e) => {
       cart.pagine.colorate.length
     }</b></span></span>
         <span class="text-sm flex items-center justify-between"><b>Costo B/N</b><span>  ${
-          cart.pagine.prezzo_bn * cart.pagine.bn.length
+          (cart.pagine.prezzo_bn * cart.pagine.bn.length).toFixed(2)
         }€</span></span>
         <span class="text-sm flex items-center justify-between"><b>Costo Colorate</b><span>  ${
-          cart.pagine.prezzo_colorate * cart.pagine.colorate.length
+          (cart.pagine.prezzo_colorate * cart.pagine.colorate.length).toFixed(2)
         }€</span></span>
         <span class="text-sm flex items-center justify-between"><b>Costo Formato</b><span>  ${
           cart.pagine.prezzo_formato
