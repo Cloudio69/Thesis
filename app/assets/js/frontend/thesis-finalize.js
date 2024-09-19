@@ -89,8 +89,8 @@ const updateCart = async (e) => {
     rilegatureItem.innerText = "Nessun dato";
     rilegatureDiv.appendChild(rilegatureItem);
   }
-  // claudejs
-  if (cart.pagine.bn.length > 0 && cart.pagine.colorate.length > 0) {
+  
+  if (cart.pagine.prezzo_grammatura >= 0 || cart.pagine.prezzo_formato >= 0) {
     let pagineItem = document.createElement("div");
 
     pagineItem.classList.add(
@@ -114,10 +114,10 @@ const updateCart = async (e) => {
       cart.pagine.colorate.length
     }</b></span></span>
         <span class="text-sm flex items-center justify-between"><b>Costo B/N</b><span>  ${
-          (cart.pagine.prezzo_bn * cart.pagine.bn.length).toFixed(2)
+          (cart.pagine.prezzo_bn * (cart.pagine.bn.length > 0 ? cart.pagine.bn.length : 0)).toFixed(2)
         }€</span></span>
         <span class="text-sm flex items-center justify-between"><b>Costo Colorate</b><span>  ${
-          (cart.pagine.prezzo_colorate * cart.pagine.colorate.length).toFixed(2)
+          (cart.pagine.prezzo_colorate * (cart.pagine.colorate.length > 0 ? cart.pagine.colorate.length : 0)).toFixed(2)
         }€</span></span>
         <span class="text-sm flex items-center justify-between"><b>Costo Formato</b><span>  ${
           cart.pagine.prezzo_formato
@@ -215,10 +215,6 @@ const updateFinalize = (totale) => {
   pagineDiv.classList.add("flex", "flex-col", "gap-4");
   cdDiv.classList.add("flex", "flex-col", "gap-4");
 
-  cdDiv.innerHTML = "<h3 class='font-bold'>CD</h3>";
-  pagineDiv.innerHTML = "<h3 class='font-bold'>Pagine</h3>";
-  rilegatureDiv.innerHTML = "<h3 class='font-bold'>Rilegature</h3>";
-
   if (cart.rilegature && cart.rilegature.length > 0) {
     cart.rilegature.forEach((rilegatura, index) => {
       let rilegatureItem = document.createElement("div");
@@ -269,7 +265,8 @@ const updateFinalize = (totale) => {
     rilegatureDiv.appendChild(rilegatureItem);
   }
 
-  if (cart.pagine.bn.length > 0 && cart.pagine.colorate.length > 0) {
+  
+  if (cart.pagine.prezzo_grammatura >= 0 || cart.pagine.prezzo_formato >= 0) {
     let pagineItem = document.createElement("div");
 
     pagineItem.classList.add(

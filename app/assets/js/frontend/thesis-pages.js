@@ -471,16 +471,22 @@ const calcoloPagine = () => {
   document.querySelector(".totale_pagine b").textContent =
     totale.toFixed(2) + " €";
 
-  if(totale > 0) document.querySelector('#pagine_step button[type="submit"]').disabled = false;
+  if (totale > 0)
+    document.querySelector(
+      '#pagine_step button[type="submit"]'
+    ).disabled = false;
 };
 
 const formPagine = document.querySelector("#form_pagine");
 
 formPagine.onsubmit = (e) => {
   e.preventDefault();
+
+  let goNext = document.querySelector("#prosegui_pagine");
+  if(goNext.classList.contains("hidden")) goNext.classList.remove("hidden");
 };
 
-const nextStepPagine = document.querySelector('#prosegui_rilegature')
+const nextStepPagine = document.querySelector("#prosegui_rilegature");
 
 nextStepPagine.addEventListener("click", () => {
   generaPagine();

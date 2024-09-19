@@ -39,14 +39,13 @@
                                 }
                                 ?>
                             </select>
-                            <select name="formato" class="p-2 rounded-md">
+                            <select name="formato" class="p-2 rounded-md" required>
                                 <option value="" selected disabled>Seleziona il formato</option>
                                 <option value="formato-a4" data-prezzo="<?php echo get_option('prezzo_a4') ?>">A4</option>
                                 <option value="formato-a3" data-prezzo="<?php echo get_option('prezzo_a3') ?>">A3</option>
                             </select>
                         </div>
                     </div>
-        </section>
         <section class="subtotale_pagine mt-4 p-4 animate-pulse border border-neutral-300 rounded-md shadow-md">
             <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">euro_symbol</span>Subtotale</h1>
             <div class="p-4 listino_pagine">
@@ -74,8 +73,9 @@
         </section>
         <div class="quantita flex flex-col gap-4 mt-4">
             <div class="flex gap-4 items-center place-items-center text-center">
-                <button type="submit" class="next-step rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400 w-full" disabled>AGGIUNGI E PROSEGUI</button>
+                <button type="submit" class="rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400 w-full disabled:animate-pulse" disabled>AGGIUNGI AL CARRELLO</button>
             </div>
         </div>
+        <button id="prosegui_pagine" class="hidden next-step rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400 w-full p-4 mt-4">PROSEGUI</button>
     </form>
 </div>
