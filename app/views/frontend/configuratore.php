@@ -7,6 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <?php
 
+if($_GET['thesis_session']){
+    setcookie('thesis_session', $_GET['thesis_session'], time() + (86400 * 30), "/");
+}
+
 if (isset($_COOKIE['thesis_session'])) {
     $tmp_folder = $_COOKIE['thesis_session'];
     $upload_dir = THESIS_FILES . "/" . $tmp_folder;
