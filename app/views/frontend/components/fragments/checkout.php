@@ -1,5 +1,5 @@
 <div class="thesis--checkout checkout flex flex-col items-center justify-center w-full">
-    <form action="/submit-checkout" method="POST" class="w-full max-w-5xl flex flex-col gap-4 ">
+    <form method="POST" class="w-full px-16 flex flex-col gap-4 ">
         <div class="dati--personali flex flex-col gap-4 border bg-white shadow-sm rounded-md p-4">
             <h1 class="text-2xl font-bold">Dati personali</h1>
             <div class="mb-4 flex">
@@ -138,11 +138,11 @@
                         <option value="VT">Viterbo</option>
                     </select>
                 </div>
-                <div class="">
+                <div class="flex-1">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="indirizzo">Indirizzo</label>
                     <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="address" type="text" name="address" required>
                 </div>
-                <div class="">
+                <div class="flex-1">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="citta">Città</label>
                     <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="city" type="text" name="city" required>
                 </div>

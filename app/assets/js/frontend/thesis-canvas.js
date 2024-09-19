@@ -237,7 +237,7 @@ canvas.renderAll();
 const editCd = document.querySelector("#edit-cd");
 const selectCD = document.querySelector("#contenuto");
 const fileListCD = document.querySelector("#file_cd");
-const fileListWrapper = document.querySelector("#file_list_cd")
+const fileListWrapper = document.querySelector("#file_list_cd");
 const formCD = document.querySelector("#form_cd");
 
 editCd.addEventListener("click", () => {
@@ -248,6 +248,12 @@ editCd.addEventListener("click", () => {
 
 formCD.onsubmit = (e) => {
   e.preventDefault();
+  
+  cart.cd = {
+    contenuto: selectCD.value,
+    prezzo: 10,
+    qty: formCD.querySelector("[name='quantita_cd']").value,
+  };
 
   const data = new FormData();
   data.append("action", "upload_cd_cover");
@@ -263,26 +269,20 @@ formCD.onsubmit = (e) => {
     contentType: false,
     cache: false,
     success: function (response) {
-      cart.cd = {
-        contenuto: selectCD.value,
-        prezzo: 10,
-        qty: formCD.querySelector("[name='quantita_cd']").value,
-        url: JSON.parse(response).url,
-      }
-      
+      cart.cd = { ...cart.cd, url: JSON.parse(response).url}
     },
     error: function (error) {
       console.error(error);
     },
   });
-  
-}
+};
 
 selectCD.onchange = (e) => {
   const listWrapper = document.querySelector("#file_list_wrapper");
   const selected = e.currentTarget.value;
   if (selected !== "file") {
-    if(!listWrapper.classList.contains('opacity-50')) listWrapper.classList.add("opacity-50");
+    if (!listWrapper.classList.contains("opacity-50"))
+      listWrapper.classList.add("opacity-50");
     listWrapper.querySelector("input[type='file']").disabled = true;
   } else {
     listWrapper.classList.remove("opacity-50");
@@ -292,26 +292,26 @@ selectCD.onchange = (e) => {
 
 fileListCD.onchange = (e) => {
   const files = e.currentTarget.files;
-  const list = fileListWrapper
+  const list = fileListWrapper;
   let isAlreadyUploaded = false;
 
-  if(list.querySelector('[data-filename]')) {
-    list.querySelectorAll('[data-filename]').forEach(item => {
-      if(item.getAttribute('data-filename') === files[0].name) {
-        alert('Il file è già stato caricato');
+  if (list.querySelector("[data-filename]")) {
+    list.querySelectorAll("[data-filename]").forEach((item) => {
+      if (item.getAttribute("data-filename") === files[0].name) {
+        alert("Il file è già stato caricato");
         isAlreadyUploaded = true;
       }
     });
   }
 
-  if(isAlreadyUploaded) return;
+  if (isAlreadyUploaded) return;
 
   const data = new FormData();
   data.append("action", "upload_cd_file");
   data.append("nonce", nonce);
   data.append("thesis_session", getCookie("thesis_session"));
   data.append("file", files[0]);
-  
+
   // Upload file with ajax where action is upload_cd_file
 
   jQuery.ajax({
@@ -323,26 +323,36 @@ fileListCD.onchange = (e) => {
     cache: false,
     xhr: function () {
       const xhr = new window.XMLHttpRequest();
-      xhr.upload.addEventListener("progress", function (evt) {
-        if (evt.lengthComputable) {
-          const percentComplete = evt.loaded / evt.total;
-        }
-      }, false);
+      xhr.upload.addEventListener(
+        "progress",
+        function (evt) {
+          if (evt.lengthComputable) {
+            const percentComplete = evt.loaded / evt.total;
+          }
+        },
+        false
+      );
       return xhr;
     },
     success: function (response) {
+      if (list.querySelector("p")) list.querySelector("p").remove();
 
-      if(list.querySelector('p')) list.querySelector('p').remove();
-
-      const listItem = document.createElement("div")
-      listItem.classList.add("flex", "items-center", "justify-between", "p-2", "border", "border-gray-200")
+      const listItem = document.createElement("div");
+      listItem.classList.add(
+        "flex",
+        "items-center",
+        "justify-between",
+        "p-2",
+        "border",
+        "border-gray-200"
+      );
       listItem.innerHTML = `<span class="text-sm">${files[0].name}</span><button class="text-sm text-white bg-red-600 p-2" id="remove_file_cd" data-filename='${files[0].name}'>Rimuovi</button>`;
 
       const removeButton = listItem.querySelector("#remove_file_cd");
       removeButton.onclick = (e) => {
         e.preventDefault();
 
-        let filename = removeButton.getAttribute('data-filename');
+        let filename = removeButton.getAttribute("data-filename");
         const data = new FormData();
 
         data.append("action", "remove_cd_file");
@@ -359,7 +369,7 @@ fileListCD.onchange = (e) => {
           cache: false,
           success: function (response) {
             removeButton.parentElement.remove();
-            if(!list.firstElementChild) {
+            if (!list.firstElementChild) {
               const p = document.createElement("p");
               p.classList.add("text-sm", "opacity-50");
               p.textContent = "Nessun file selezionato";
@@ -370,7 +380,7 @@ fileListCD.onchange = (e) => {
             console.error(error);
           },
         });
-      }
+      };
 
       list.appendChild(listItem);
       fileListCD.value = "";
@@ -379,4 +389,4 @@ fileListCD.onchange = (e) => {
       console.error(error);
     },
   });
-} 
+};
