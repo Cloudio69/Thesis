@@ -254,11 +254,6 @@ const updateFinalize = (totale) => {
         </div>
       `;
 
-      totale +=
-        parseFloat(rilegatura.prezzo_rilegatura) +
-        parseFloat(rilegatura.prezzo_segnalibro) +
-        parseFloat(rilegatura.prezzo_angolo);
-
       let eliminaBtn = document.createElement("button");
       eliminaBtn.innerText = "Elimina";
       eliminaBtn.addEventListener("click", () => {
