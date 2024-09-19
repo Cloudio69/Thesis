@@ -31,9 +31,9 @@ const updateCart = async (e) => {
   pagineDiv.classList.add("flex", "flex-col", "gap-4");
   cdDiv.classList.add("flex", "flex-col", "gap-4");
 
-  cdDiv.innerHTML = "<h3 class='font-bold'>CD</h3>";
+  /* cdDiv.innerHTML = "<h3 class='font-bold'>CD</h3>";
   pagineDiv.innerHTML = "<h3 class='font-bold'>Pagine</h3>";
-  rilegatureDiv.innerHTML = "<h3 class='font-bold'>Rilegature</h3>";
+  rilegatureDiv.innerHTML = "<h3 class='font-bold'>Rilegature</h3>"; */
 
   if (cart.rilegature && cart.rilegature.length > 0) {
     cart.rilegature.forEach((rilegatura, index) => {
@@ -77,6 +77,7 @@ const updateCart = async (e) => {
 
       let eliminaBtn = document.createElement("button");
       eliminaBtn.innerText = "Elimina";
+      eliminaBtn.classList.add("!bg-red-500", "text-white", "p-2", "rounded-md");
       eliminaBtn.addEventListener("click", () => {
         removeRilegatura(index);
       });
@@ -84,12 +85,8 @@ const updateCart = async (e) => {
       rilegatureItem.appendChild(eliminaBtn);
       rilegatureDiv.appendChild(rilegatureItem);
     });
-  } else {
-    let rilegatureItem = document.createElement("div");
-    rilegatureItem.innerText = "Nessun dato";
-    rilegatureDiv.appendChild(rilegatureItem);
   }
-  
+
   if (cart.pagine.prezzo_grammatura >= 0 || cart.pagine.prezzo_formato >= 0) {
     let pagineItem = document.createElement("div");
 
@@ -140,10 +137,6 @@ const updateCart = async (e) => {
     totale += costoPagine;
 
     pagineDiv.appendChild(pagineItem);
-  } else {
-    let pagineItem = document.createElement("div");
-    pagineItem.innerText = "Nessun dato";
-    pagineDiv.appendChild(pagineItem);
   }
 
   if (cart.cd.contenuto) {
@@ -161,13 +154,14 @@ const updateCart = async (e) => {
     cdItem.innerHTML = `
       <div class="flex justify-between items-start">
         <div class='flex flex-col w-full'>
-        <span class="text-sm flex items-center justify-between"><b>CD Serigrafato x ${cart.cd.qty}</b> <span>${cart.cd.prezzo}€</span></span>
+        <span class="text-xl flex items-center justify-between"><b>CD Serigrafato x ${cart.cd.qty}</b> <span>${cart.cd.prezzo}€</span></span>
         </div>
       </div>
     `;
     cdDiv.appendChild(cdItem);
 
     let removeCd = document.createElement("button");
+    removeCd.classList.add("!bg-red-500", "text-white", "p-2", "rounded-md");
     removeCd.innerText = "Elimina";
     removeCd.addEventListener("click", () => {
       cart.cd = {};
@@ -177,10 +171,6 @@ const updateCart = async (e) => {
     cdItem.appendChild(removeCd);
 
     totale += cart.cd.prezzo * cart.cd.qty;
-  } else {
-    let cdItem = document.createElement("div");
-    cdItem.innerText = "Nessun dato";
-    cdDiv.appendChild(cdItem);
   }
 
   totaleDiv.innerHTML = `<h3 class='text-2xl mt-4 font-bold flex items-center justify-between w-full'><span>Totale: </span><span>${totale.toFixed(
@@ -252,6 +242,7 @@ const updateFinalize = (totale) => {
 
       let eliminaBtn = document.createElement("button");
       eliminaBtn.innerText = "Elimina";
+      eliminaBtn.classList.add("!bg-red-500", "text-white", "p-2", "rounded-md");
       eliminaBtn.addEventListener("click", () => {
         removeRilegatura(index);
       });
@@ -316,7 +307,7 @@ const updateFinalize = (totale) => {
     cdItem.classList.add(
       "flex",
       "flex-col",
-      "gap-2",
+      "gap-4",
       "p-4",
       "bg-white",
       "border",
@@ -326,7 +317,7 @@ const updateFinalize = (totale) => {
     cdItem.innerHTML = `
       <div class="flex justify-between items-start">
         <div class='flex flex-col w-full'>
-        <span class="text-sm flex items-center justify-between"><b>CD Serigrafato x ${cart.cd.qty}</b> <span>${cart.cd.prezzo}€</span></span>
+        <span class="text-xl flex items-center justify-between"><b>CD Serigrafato x ${cart.cd.qty}</b> <span class='font-bold'>${cart.cd.prezzo}€</span></span>
         </div>
       </div>
     `;
@@ -334,6 +325,7 @@ const updateFinalize = (totale) => {
 
     let removeCd = document.createElement("button");
     removeCd.innerText = "Elimina";
+    removeCd.classList.add("!bg-red-500", "text-white", "p-2", "rounded-md");
     removeCd.addEventListener("click", () => {
       cart.cd = {};
       updateCart();
