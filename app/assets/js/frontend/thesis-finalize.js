@@ -154,7 +154,7 @@ const updateCart = async (e) => {
     cdItem.innerHTML = `
       <div class="flex justify-between items-start">
         <div class='flex flex-col w-full'>
-        <span class="text-xl flex items-center justify-between"><b>CD Serigrafato x ${cart.cd.qty}</b> <span>${cart.cd.prezzo}€</span></span>
+        <span class="text-xl flex items-center justify-between"><b>CD Serigrafato x ${cart.cd.qty}</b> <span class='font-bold'>${cart.cd.prezzo}€</span></span>
         ${cart.cd.filenames.length > 0 ? cart.cd.filenames.map((filename) => `<li class="text-sm mt-2">${filename}</li>`).join("") : ''}
         </div>
       </div>
@@ -253,7 +253,8 @@ const updateFinalize = (totale) => {
     });
   } else {
     let rilegatureItem = document.createElement("div");
-    rilegatureItem.innerText = "Nessun dato";
+    rilegatureItem.classList.add('opacity-50')
+    rilegatureItem.innerText = "Nessun elemento.";
     rilegatureDiv.appendChild(rilegatureItem);
   }
 
@@ -299,7 +300,8 @@ const updateFinalize = (totale) => {
     pagineDiv.appendChild(pagineItem);
   } else {
     let pagineItem = document.createElement("div");
-    pagineItem.innerText = "Nessun dato";
+    pagineItem.classList.add('opacity-50')
+    pagineItem.innerText = "Nessun elemento";
     pagineDiv.appendChild(pagineItem);
   }
 
@@ -336,7 +338,8 @@ const updateFinalize = (totale) => {
     cdItem.appendChild(removeCd);
   } else {
     let cdItem = document.createElement("div");
-    cdItem.innerText = "Nessun dato";
+    cdItem.classList.add('opacity-50')
+    cdItem.innerText = "Nessun elemento";
     cdDiv.appendChild(cdItem);
   }
 
