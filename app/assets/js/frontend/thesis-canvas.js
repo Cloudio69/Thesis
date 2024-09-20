@@ -253,6 +253,7 @@ formCD.onsubmit = (e) => {
     contenuto: selectCD.value,
     prezzo: 10,
     qty: formCD.querySelector("[name='quantita_cd']").value,
+    filenames: document.querySelectorAll('[data-filename]') ? Array.from(document.querySelectorAll('[data-filename]')).map(item => item.getAttribute('data-filename')) : [],
   };
 
   const data = new FormData();
@@ -355,6 +356,10 @@ fileListCD.onchange = (e) => {
         let filename = removeButton.getAttribute("data-filename");
         const data = new FormData();
 
+        if(cart.cd.filenames.includes(filename)) {
+          cart.cd.filenames = cart.cd.filenames.filter(item => item !== filename);
+        }
+
         data.append("action", "remove_cd_file");
         data.append("nonce", nonce);
         data.append("thesis_session", getCookie("thesis_session"));
@@ -369,6 +374,8 @@ fileListCD.onchange = (e) => {
           cache: false,
           success: function (response) {
             removeButton.parentElement.remove();
+            
+
             if (!list.firstElementChild) {
               const p = document.createElement("p");
               p.classList.add("text-sm", "opacity-50");

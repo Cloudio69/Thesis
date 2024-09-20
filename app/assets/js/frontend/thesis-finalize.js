@@ -102,7 +102,7 @@ const updateCart = async (e) => {
     );
 
     pagineItem.innerHTML = `
-    <h4 class="font-bold text-xl">Listino pagine</h4>
+    <h4 class="font-bold text-xl">Pagine</h4>
       <div class="flex justify-between items-start">
         <div class='flex flex-col w-full'>
         <span class='flex items-center justify-between my-2'><b class='text-xl'>B/N: ${
@@ -155,6 +155,7 @@ const updateCart = async (e) => {
       <div class="flex justify-between items-start">
         <div class='flex flex-col w-full'>
         <span class="text-xl flex items-center justify-between"><b>CD Serigrafato x ${cart.cd.qty}</b> <span>${cart.cd.prezzo}€</span></span>
+        ${cart.cd.filenames.length > 0 ? cart.cd.filenames.map((filename) => `<li class="text-sm mt-2">${filename}</li>`).join("") : ''}
         </div>
       </div>
     `;
@@ -272,7 +273,7 @@ const updateFinalize = (totale) => {
     );
 
     pagineItem.innerHTML = `
-    <h4 class="font-bold text-xl">Listino pagine</h4>
+    <h4 class="font-bold text-xl">Pagine</h4>
       <div class="flex justify-between items-start">
         <div class='flex flex-col w-full'>
         <span class='flex items-center justify-between my-2'><b class='text-xl'>B/N: ${
@@ -318,6 +319,7 @@ const updateFinalize = (totale) => {
       <div class="flex justify-between items-start">
         <div class='flex flex-col w-full'>
         <span class="text-xl flex items-center justify-between"><b>CD Serigrafato x ${cart.cd.qty}</b> <span class='font-bold'>${cart.cd.prezzo}€</span></span>
+        ${cart.cd.filenames.length > 0 ? cart.cd.filenames.map((filename) => `<li class="text-sm mt-2">${filename}</li>`).join("") : ''}
         </div>
       </div>
     `;
