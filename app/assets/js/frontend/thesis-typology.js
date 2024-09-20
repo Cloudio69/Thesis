@@ -13,8 +13,10 @@ fronteRetro.onmouseenter = () => {
 fronte.addEventListener('click', () => {
   cart.tipologia = "Fronte";
   updateCart();
+  showToast(`Tipologia selezionata: ${cart.tipologia}`, "success", 'check');
 })
 fronteRetro.addEventListener('click', () => {
   cart.tipologia = "Fronte e retro";
   updateCart();
+  showToast(`Tipologia selezionata: ${cart.tipologia}`, "success", 'check');
 })
