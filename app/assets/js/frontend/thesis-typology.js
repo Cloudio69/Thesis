@@ -12,7 +12,9 @@ fronteRetro.onmouseenter = () => {
 
 fronte.addEventListener('click', () => {
   cart.tipologia = "Fronte";
+  updateCart();
 })
 fronteRetro.addEventListener('click', () => {
   cart.tipologia = "Fronte e retro";
+  updateCart();
 })

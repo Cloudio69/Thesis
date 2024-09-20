@@ -239,6 +239,7 @@ const updateCart = async (e) => {
 };
 
 const updateFinalize = (totale) => {
+  const tipologiaWrapper = document.querySelector(".riepilogo-tipologia section");
   const rilegatureWrapper = document.querySelector(
     ".riepilogo-rilegature section"
   );
@@ -246,6 +247,7 @@ const updateFinalize = (totale) => {
   const cdWrapper = document.querySelector(".riepilogo-cd section");
   const totaleWrapper = document.querySelector("#totale");
 
+  tipologiaWrapper.innerHTML = "";
   rilegatureWrapper.innerHTML = "";
   pagineWrapper.innerHTML = "";
   cdWrapper.innerHTML = "";
@@ -254,10 +256,42 @@ const updateFinalize = (totale) => {
   const cdDiv = document.createElement("div");
   const pagineDiv = document.createElement("div");
   const rilegatureDiv = document.createElement("div");
+  const tipologiaDiv = document.createElement("div");
 
   rilegatureDiv.classList.add("flex", "flex-col", "gap-4");
   pagineDiv.classList.add("flex", "flex-col", "gap-4");
   cdDiv.classList.add("flex", "flex-col", "gap-4");
+  tipologiaDiv.classList.add("flex", "flex-col", "gap-4");
+
+  if (cart.tipologia) {
+    let tipologiaItem = document.createElement("div");
+    tipologiaItem.classList.add(
+      "flex",
+      "flex-col",
+      "gap-2",
+      "p-4",
+      "bg-white",
+      "border",
+      "rounded-md",
+      "shadow-md"
+    );
+
+    tipologiaItem.innerHTML = `
+      <div class="flex justify-between items-start">
+        <div class='flex flex-col'>
+          <h4 class="font-bold text-xl">Tipologia</h4>
+          <span class='text-sm mt-2'>${cart.tipologia}</span>
+        </div>
+      </div>
+    `;
+
+    tipologiaDiv.appendChild(tipologiaItem);
+  } else {
+    let tipologiaItem = document.createElement("div");
+    tipologiaItem.classList.add("opacity-50");
+    tipologiaItem.innerText = "Nessun elemento";
+    tipologiaDiv.appendChild(tipologiaItem);
+  }
 
   if (cart.rilegature && cart.rilegature.length > 0) {
     cart.rilegature.forEach((rilegatura, index) => {
@@ -412,6 +446,7 @@ const updateFinalize = (totale) => {
     cdDiv.appendChild(cdItem);
   }
 
+  tipologiaWrapper.appendChild(tipologiaDiv);
   rilegatureWrapper.appendChild(rilegatureDiv);
   pagineWrapper.appendChild(pagineDiv);
   cdWrapper.appendChild(cdDiv);
