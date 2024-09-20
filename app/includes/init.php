@@ -9,9 +9,15 @@ class Thesis
 
     public function __construct()
     {
+        $this->thesis_check_updates();
         $this->thesis_options();
         $this->thesis_hooks();
         $this->thesis_widgets();
+    }
+
+    public function thesis_check_updates()
+    {
+        // Will be implemented in the future
     }
 
     public function thesis_hooks()
@@ -122,7 +128,7 @@ class Thesis
 
     public function add_thesis_id_button()
     {
-?>
+        ?>
         <script>
             const init = document.querySelectorAll(".<?php echo get_option('class_bottone'); ?>")
             const nonce = "<?php echo wp_create_nonce('thesis-token'); ?>"
@@ -130,7 +136,7 @@ class Thesis
             const configuratore = "<?php echo get_option('pagina_configuratore') ?>"
         </script>
 <?php
-    }
+}
 
     public function thesis_options()
     {
@@ -178,7 +184,7 @@ class Thesis
             'manage_options',
             'thesis-rilegature',
             function () {
-                include_once(THESIS_DIR . 'app/views/admin/rilegature.php');
+                include_once (THESIS_DIR . 'app/views/admin/rilegature.php');
             },
             null
         );
@@ -190,7 +196,7 @@ class Thesis
             'manage_options',
             'thesis-ordini',
             function () {
-                include_once(THESIS_DIR . 'app/views/admin/orders.php');
+                include_once (THESIS_DIR . 'app/views/admin/orders.php');
             },
             null
         );
@@ -202,7 +208,7 @@ class Thesis
             'manage_options',
             'thesis-accessori',
             function () {
-                include_once(THESIS_DIR . 'app/views/admin/accessori.php');
+                include_once (THESIS_DIR . 'app/views/admin/accessori.php');
             },
             null
         );
@@ -214,7 +220,7 @@ class Thesis
             'manage_options',
             'thesis-impostazioni',
             function () {
-                include_once(THESIS_DIR . 'app/views/admin/impostazioni.php');
+                include_once (THESIS_DIR . 'app/views/admin/impostazioni.php');
             },
             null
         );
