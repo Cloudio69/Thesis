@@ -76,6 +76,6 @@
                 <button type="submit" class="rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400 w-full disabled:animate-pulse" disabled>AGGIUNGI AL CARRELLO</button>
             </div>
         </div>
-        <button id="prosegui_pagine" class="hidden next-step rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400 w-full p-4 mt-4">PROSEGUI</button>
+        <button type="button" id="prosegui_pagine" class="hidden next-step rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400 w-full p-4 mt-4">PROSEGUI</button>
     </form>
 </div>

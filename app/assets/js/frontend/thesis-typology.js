@@ -9,3 +9,10 @@ fronteRetro.onmouseenter = () => {
   document.querySelector(".tipologia > img").remove();
   document.querySelector(".tipologia").append(images.fronteRetro);
 };
+
+fronte.addEventListener('click', () => {
+  cart.tipologia = "Fronte";
+})
+fronteRetro.addEventListener('click', () => {
+  cart.tipologia = "Fronte e retro";
+})

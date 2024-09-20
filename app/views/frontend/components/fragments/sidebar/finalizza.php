@@ -8,5 +8,5 @@
         <span class="text-2xl font-bold">€</span>
     </div>
 </div>
-<button type="button" class="rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400 w-full" id="finalizza">PROCEDI AL CHECKOUT</button>
+<button type="button" class="rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400 w-full next-step" id="finalizza">PROCEDI AL CHECKOUT</button>
 </div>

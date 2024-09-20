@@ -1,4 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+@font-face {
+  font-family: "Inter";
+  src: url("../../fonts/Inter-VariableFont_slnt,wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+}
 
 @font-face {
   font-family: "Material Icons";
@@ -68,6 +73,10 @@
   transition: all 0.3s ease-in-out;
 }
 
+.toast {
+  font-family: 'Inter', sans-serif;
+}
+
 @keyframes animateY {
   from {
     transform: scaleY(0);
@@ -87,3 +96,29 @@ label:has(input[type="radio"]:checked) {
   color: white;
 }
 
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    display: none;
+  }
+}

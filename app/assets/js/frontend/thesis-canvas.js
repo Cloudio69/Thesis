@@ -22,7 +22,7 @@ const img = new fabric.Image.fromURL(
 );
 
 const titoloUni = new fabric.Textbox(
-  "Università degli Studi di Bari\nFacoltà di Lorem Ipsum",
+  "[Nome Università]\n[Facoltà]",
   {
     fontFamily: "Inter",
     fontWeight: "bold",
@@ -45,7 +45,7 @@ const titoloUni = new fabric.Textbox(
 
 canvas.add(titoloUni);
 
-const corsoDiLaurea = new fabric.Textbox("Corso di Laurea in Lorem Ipsum", {
+const corsoDiLaurea = new fabric.Textbox("[Corso di Laurea]", {
   fontFamily: "Inter",
   fontSize: 18,
   originX: "center",
@@ -66,7 +66,7 @@ canvas.add(corsoDiLaurea);
 
 // titoloTesi
 
-const titoloTesi = new fabric.Textbox("TITOLO TESI DI LAUREA", {
+const titoloTesi = new fabric.Textbox("[TITOLO TESI DI LAUREA]", {
   fontFamily: "Inter",
   fontSize: 20,
   fontWeight: "bold",
@@ -109,7 +109,7 @@ canvas.add(annoAccademico);
 // testoStudente
 
 const testoStudente = new fabric.Textbox(
-  "Studente:\nCarlo Bianchi\nMatricola:\nXXXXXX",
+  "Studente:\n[Nome Cognome]\nMatricola:\n[Matricola]",
   {
     fontFamily: "Inter",
     fontSize: 16,
@@ -133,7 +133,7 @@ canvas.add(testoStudente);
 // testoRelatore
 
 const testoRelatore = new fabric.Textbox(
-  "Relatore:\nMario Rossi\nContro relatore:\nJohn Doe",
+  "Relatore:\n[Nome Cognome]\nContro relatore:\n[Nome Cognome]",
   {
     fontFamily: "Inter",
     fontSize: 16,
@@ -157,7 +157,7 @@ canvas.add(testoRelatore);
 titoloUni.on("editing:exited", function (e) {
   if (titoloUni.text === "") {
     titoloUni.fontSize = 20;
-    titoloUni.text = "Università degli Studi di Bari\nFacoltà di Lorem Ipsum";
+    titoloUni.text = "[Nome Università]\n[Facoltà]";
     canvas.renderAll();
   }
 });
@@ -165,7 +165,7 @@ titoloUni.on("editing:exited", function (e) {
 corsoDiLaurea.on("editing:exited", function (e) {
   if (corsoDiLaurea.text === "") {
     corsoDiLaurea.fontSize = 18;
-    corsoDiLaurea.text = "Corso di Laurea in Lorem Ipsum";
+    corsoDiLaurea.text = "[Corso di Laurea]";
     canvas.renderAll();
   }
 });
@@ -173,7 +173,7 @@ corsoDiLaurea.on("editing:exited", function (e) {
 titoloTesi.on("editing:exited", function (e) {
   if (titoloTesi.text === "") {
     titoloTesi.fontSize = 20;
-    titoloTesi.text = "TITOLO TESI DI LAUREA";
+    titoloTesi.text = "[TITOLO TESI DI LAUREA]";
     canvas.renderAll();
   }
 });
@@ -189,7 +189,7 @@ annoAccademico.on("editing:exited", function (e) {
 testoStudente.on("editing:exited", function (e) {
   if (testoStudente.text === "") {
     testoStudente.fontSize = 16;
-    testoStudente.text = "Studente:\nCarlo Bianchi\nMatricola:\nXXXXXX";
+    testoStudente.text = "Studente:\n[Nome Cognome]\nMatricola:\n[Matricola]";
     canvas.renderAll();
   }
 });
@@ -197,7 +197,8 @@ testoStudente.on("editing:exited", function (e) {
 testoRelatore.on("editing:exited", function (e) {
   if (testoRelatore.text === "") {
     testoRelatore.fontSize = 16;
-    testoRelatore.text = "Relatore:\nMario Rossi\nContro relatore:\nJohn Doe";
+    testoRelatore.text =
+      "Relatore:\n[Nome Cognome]\nContro relatore:\n[Nome Cognome]";
     canvas.renderAll();
   }
 });
@@ -248,12 +249,16 @@ editCd.addEventListener("click", () => {
 
 formCD.onsubmit = (e) => {
   e.preventDefault();
-  
+
   cart.cd = {
     contenuto: selectCD.value,
     prezzo: 10,
     qty: formCD.querySelector("[name='quantita_cd']").value,
-    filenames: document.querySelectorAll('[data-filename]') ? Array.from(document.querySelectorAll('[data-filename]')).map(item => item.getAttribute('data-filename')) : [],
+    filenames: document.querySelectorAll("[data-filename]")
+      ? Array.from(document.querySelectorAll("[data-filename]")).map((item) =>
+          item.getAttribute("data-filename")
+        )
+      : [],
   };
 
   const data = new FormData();
@@ -270,7 +275,7 @@ formCD.onsubmit = (e) => {
     contentType: false,
     cache: false,
     success: function (response) {
-      cart.cd = { ...cart.cd, url: JSON.parse(response).url}
+      cart.cd = { ...cart.cd, url: JSON.parse(response).url };
     },
     error: function (error) {
       console.error(error);
@@ -356,8 +361,10 @@ fileListCD.onchange = (e) => {
         let filename = removeButton.getAttribute("data-filename");
         const data = new FormData();
 
-        if(cart.cd.filenames.includes(filename)) {
-          cart.cd.filenames = cart.cd.filenames.filter(item => item !== filename);
+        if (cart.cd.filenames.includes(filename)) {
+          cart.cd.filenames = cart.cd.filenames.filter(
+            (item) => item !== filename
+          );
         }
 
         data.append("action", "remove_cd_file");
@@ -374,7 +381,6 @@ fileListCD.onchange = (e) => {
           cache: false,
           success: function (response) {
             removeButton.parentElement.remove();
-            
 
             if (!list.firstElementChild) {
               const p = document.createElement("p");
