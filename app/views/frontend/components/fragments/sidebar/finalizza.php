@@ -4,6 +4,7 @@
 <div class="thesis--totale flex justify-between py-4">
     <h1 class="font-bold text-2xl">Totale</h1>
     <div class="flex gap-4 items-center">
+        <span class="text-xs opacity-50">incl. IVA</span>
         <span class="text-2xl font-bold" id="totale">0</span>
         <span class="text-2xl font-bold">€</span>
     </div>
