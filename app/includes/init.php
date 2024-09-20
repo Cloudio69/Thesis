@@ -134,6 +134,7 @@ class Thesis
             const nonce = "<?php echo wp_create_nonce('thesis-token'); ?>"
             const ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
             const configuratore = "<?php echo get_option('pagina_configuratore') ?>"
+            const popupId = <?php echo get_option('popup_id') ? get_option('popup_id') : 68; ?>;
         </script>
 <?php
 }
