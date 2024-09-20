@@ -29,16 +29,4 @@ require_once THESIS_DIR . "app/includes/db.php";
 register_activation_hook(__FILE__, array('ThesisDatabase', 'create_tables'));
 // Dimesso: register_uninstall_hook(__FILE__, array('ThesisDatabase', 'delete_tables'));
 
-/* if (is_admin()) {
-define('GH_REQUEST_URI', 'https://api.github.com/repos/%s/%s/releases');
-define('GHPU_USERNAME', 'Cloudio69');
-define('GHPU_REPOSITORY', 'Thesis');
-define('GHPU_AUTH_TOKEN', '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');
-
-include_once plugin_dir_path(__FILE__) . '/update/git-update.php';
-
-$updater = new GhPluginUpdater(__FILE__);
-$updater->init();
-} */
-
 $init = new Thesis();
