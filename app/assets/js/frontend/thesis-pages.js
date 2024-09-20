@@ -106,7 +106,38 @@ const generaPagine = async () => {
               let container = document.querySelector(".thesis--pagine");
               container.replaceChildren();
               container.innerHTML =
-                "<span class='material-symbols-outlined text-8xl'>error</span><p class='text-center'>Si è verificato un errore durante la generazione delle pagine<br> Ricarica la pagina per proseguire</p>";
+                "<span class='material-symbols-outlined text-8xl'>error</span><p class='text-center'>Si è verificato un errore durante la generazione delle pagine</p>";
+              let retry = document.createElement("button");
+              retry.textContent = "RIPROVA";
+              retry.classList.add(
+                'rounded-md', 'bg-slate-600', 'hover:bg-slate-400', 'text-white', 'border-none', 'focus:bg-yellow-400', 'disabled:animate-pulse', 'px-4', 'py-2', 'mt-4'
+              );
+              retry.onclick = () => {
+                retry.disabled = true;
+                setTimeout(() => {
+                  retry.disabled = false;
+                }, 5000);
+                generaPagine();
+              };
+
+              container.appendChild(retry);
+            },
+            503: function () {
+              let container = document.querySelector(".thesis--pagine");
+              container.replaceChildren();
+              container.innerHTML =
+                "<span class='material-symbols-outlined text-8xl'>error</span><p class='text-center'>Si è verificato un errore durante la generazione delle pagine</p>";
+              let retry = document.createElement("button");
+              retry.textContent = "RIPROVA";
+              retry.classList.add(
+                'rounded-md', 'bg-slate-600', 'hover:bg-slate-400', 'text-white', 'border-none', 'focus:bg-yellow-400', 'disabled:animate-pulse', 'px-4', 'py-2', 'mt-4'
+              );
+              retry.onclick = () => {
+                retry.disabled = true;
+                generaPagine();
+              };
+
+              container.appendChild(retry);
             },
           },
         });
@@ -390,10 +421,6 @@ massiveActions.forEach((item) => {
 
     updateColorCounter();
   };
-});
-
-document.querySelector("#pagine").addEventListener("click", () => {
-  generaPagine();
 });
 
 const listinoPagine = document.querySelector(".listino_pagine");

@@ -5,6 +5,7 @@ const cart = {
     colorate: [],
   },
   cd: {},
+  tipologia: ""
 };
 
 let objRilegatura = {
@@ -14,6 +15,32 @@ let objRilegatura = {
   prezzo_angoli: 0,
   prezzo_segnalibri: 0,
   qty: 0,
+};
+
+const showToast = async (message, status, icon) => {
+  if (document.querySelector(".toast"))
+    document.querySelector(".toast").remove();
+
+  let mapStatus = {
+    error: "bg-red-500",
+    success: "bg-green-500",
+    warning: "bg-yellow-500",
+  };
+
+  let bgStatus = mapStatus[status];
+
+  let toast = document.createElement("div");
+  toast.className = `toast toast-${status} fixed bottom-0 left-0 m-4 p-4 ${bgStatus} text-white rounded-lg shadow-lg flex items-center gap-4 z-50 fade-in `;
+  toast.innerHTML = `<span class="material-symbols-outlined flex items-center !text-white">${icon}</span><p class="flex font-bold">${message}</p>`;
+  document.body.appendChild(toast);
+
+  await new Promise((resolve) => {
+    setTimeout(() => {
+      toast.classList.remove("fade-in");
+      toast.classList.add("fade-out");
+      resolve();
+    }, 3000);
+  });
 };
 
 let totale = 0;
@@ -91,7 +118,7 @@ config.forEach((item, index) => {
   if (!item.isCompleted) {
     item.nav.disabled = "true";
     item.nav.classList.add("opacity-50");
-  } 
+  }
 
   item.nav.onclick = (e) => {
     if (item.isCompleted === false) return;
@@ -127,7 +154,6 @@ config.forEach((item, index) => {
 
     currentStep = index;
   };
-
 });
 
 document.querySelectorAll(".next-step").forEach((button) => {
