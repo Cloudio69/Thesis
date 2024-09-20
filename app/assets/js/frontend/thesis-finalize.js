@@ -19,6 +19,8 @@ forms.forEach((form) => {
   });
 });
 
+let iva = 0;
+
 const updateCart = async (e) => {
   cartWrapper.innerHTML = "";
 
@@ -225,9 +227,14 @@ const updateCart = async (e) => {
     totale += cart.cd.prezzo * cart.cd.qty;
   }
 
-  totaleDiv.innerHTML = `<h3 class='text-2xl mt-4 font-bold flex items-center justify-between w-full'><span>Totale: </span><span>${totale.toFixed(
+  iva = totale * 0.22;
+  let totaleIva = Math.round((totale + iva) * 100) / 100;
+
+  totaleDiv.innerHTML = `<h3 class='text-2xl mt-4 font-bold flex items-center justify-between w-full'><span>Totale: </span><span>${totaleIva.toFixed(
     2
   )}€</span></h3>`;
+
+  totaleDiv.innerHTML += `<h3 class='text-xs mt-2 opacity-50 font-bold flex items-center justify-between w-full'><span>Iva: </span><span>${iva.toFixed(2)}€</span></h3>`;
 
   cartWrapper.appendChild(tipologiaDiv);
   cartWrapper.appendChild(rilegatureDiv);
@@ -235,7 +242,7 @@ const updateCart = async (e) => {
   cartWrapper.appendChild(cdDiv);
   cartWrapper.appendChild(totaleDiv);
 
-  updateFinalize(totale);
+  updateFinalize(totaleIva);
 };
 
 const updateFinalize = (totale) => {
