@@ -59,7 +59,9 @@ let numPages = 0,
   generated = false;
 
 const generaPagine = async () => {
+
   if (!generated) {
+    document.querySelector(".thesis--pagine").replaceChildren();
     let getNumPages = await jQuery.ajax({
       dataType: "json",
       method: "GET",
@@ -75,77 +77,93 @@ const generaPagine = async () => {
 
     numPages = JSON.parse(getNumPages.data).results;
 
+    if (getCookie('thesis_page_generation') === 'true') {
+      creaPagine();
+      updateColorCounter();
+      generated = true;
+      return;
+    }
+
     // Contatore persistente
     let counter = 0;
     const progresso = document.querySelector("#progresso--pagine");
 
-    await Promise.all(
-      Array.from({ length: numPages }, async (_, i) => {
-        await jQuery.ajax({
-          dataType: "json",
-          method: "POST",
-          url: ajaxurl,
-          data: {
-            action: "genera_pagine",
+    const generatePagesBatch = async (start, end) => {
+      await Promise.all(
+        Array.from({ length: end - start }, async (_, i) => {
+          let pageIndex = start + i;
+          await jQuery.ajax({
+            dataType: "json",
+            method: "POST",
+            url: ajaxurl,
             data: {
-              uuid: getCookie("thesis_session"),
-              num_pagina: i,
+              action: "genera_pagine",
+              data: {
+                uuid: getCookie("thesis_session"),
+                num_pagina: pageIndex,
+              },
             },
-          },
-          success: () => {
-            // Evita di far rimbalzare il progresso
-            if (i > counter) counter = i;
-            progresso.textContent = `Pagina ${counter + 1} di ${numPages}`;
-          },
+            success: () => {
+              // Evita di far rimbalzare il progresso
+              if (pageIndex > counter) counter = pageIndex;
+              progresso.textContent = `Pagina ${counter + 1} di ${numPages}`;
+            },
+            statusCode: {
+              404: function () {
+                console.error("Pagina non trovata");
+              },
+              502: function () {
+                let container = document.querySelector(".thesis--pagine");
+                container.replaceChildren();
+                container.innerHTML =
+                  "<span class='material-symbols-outlined text-8xl'>error</span><p class='text-center'>Si è verificato un errore durante la generazione delle pagine</p>";
+                let retry = document.createElement("button");
+                retry.textContent = "RIPROVA";
+                retry.classList.add(
+                  'rounded-md', 'bg-slate-600', 'hover:bg-slate-400', 'text-white', 'border-none', 'focus:bg-yellow-400', 'disabled:animate-pulse', 'px-4', 'py-2', 'mt-4'
+                );
+                retry.onclick = () => {
+                  retry.disabled = true;
+                  setTimeout(() => {
+                    retry.disabled = false;
+                  }, 5000);
+                  generaPagine();
+                };
 
-          statusCode: {
-            404: function () {
-              console.error("Pagina non trovata");
-            },
-            502: function () {
-              let container = document.querySelector(".thesis--pagine");
-              container.replaceChildren();
-              container.innerHTML =
-                "<span class='material-symbols-outlined text-8xl'>error</span><p class='text-center'>Si è verificato un errore durante la generazione delle pagine</p>";
-              let retry = document.createElement("button");
-              retry.textContent = "RIPROVA";
-              retry.classList.add(
-                'rounded-md', 'bg-slate-600', 'hover:bg-slate-400', 'text-white', 'border-none', 'focus:bg-yellow-400', 'disabled:animate-pulse', 'px-4', 'py-2', 'mt-4'
-              );
-              retry.onclick = () => {
-                retry.disabled = true;
-                setTimeout(() => {
-                  retry.disabled = false;
-                }, 5000);
-                generaPagine();
-              };
+                container.appendChild(retry);
+              },
+              503: function () {
+                let container = document.querySelector(".thesis--pagine");
+                container.replaceChildren();
+                container.innerHTML =
+                  "<span class='material-symbols-outlined text-8xl'>error</span><p class='text-center'>Si è verificato un errore durante la generazione delle pagine</p>";
+                let retry = document.createElement("button");
+                retry.textContent = "RIPROVA";
+                retry.classList.add(
+                  'rounded-md', 'bg-slate-600', 'hover:bg-slate-400', 'text-white', 'border-none', 'focus:bg-yellow-400', 'disabled:animate-pulse', 'px-4', 'py-2', 'mt-4'
+                );
+                retry.onclick = () => {
+                  retry.disabled = true;
+                  generaPagine();
+                };
 
-              container.appendChild(retry);
+                container.appendChild(retry);
+              },
             },
-            503: function () {
-              let container = document.querySelector(".thesis--pagine");
-              container.replaceChildren();
-              container.innerHTML =
-                "<span class='material-symbols-outlined text-8xl'>error</span><p class='text-center'>Si è verificato un errore durante la generazione delle pagine</p>";
-              let retry = document.createElement("button");
-              retry.textContent = "RIPROVA";
-              retry.classList.add(
-                'rounded-md', 'bg-slate-600', 'hover:bg-slate-400', 'text-white', 'border-none', 'focus:bg-yellow-400', 'disabled:animate-pulse', 'px-4', 'py-2', 'mt-4'
-              );
-              retry.onclick = () => {
-                retry.disabled = true;
-                generaPagine();
-              };
+          });
+        })
+      );
+    };
 
-              container.appendChild(retry);
-            },
-          },
-        });
-      })
-    ).then(() => {
-      creaPagine();
-      generated = true; // Evita di rigenerare le pagine
-    });
+    for (let i = 0; i < numPages; i += 5) {
+      await generatePagesBatch(i, Math.min(i + 5, numPages));
+      await new Promise((resolve) => setTimeout(resolve, 500));
+    }
+
+    creaPagine();
+    generated = true; // Evita di rigenerare le pagine
+    setCookie('thesis_page_generation', 'true', 14);
+
   }
 };
 
@@ -260,7 +278,7 @@ const creaPagine = async () => {
           assets.bn;
         document
           .querySelectorAll(".color-switch")
-          [i].parentElement.querySelector("img")
+        [i].parentElement.querySelector("img")
           .classList.add("grayscale", "Transition-all");
       } else {
         pagineTipologia.colorate.push({ ...rgb, pagina: i });
@@ -510,7 +528,7 @@ formPagine.onsubmit = (e) => {
   e.preventDefault();
 
   let goNext = document.querySelector("#prosegui_pagine");
-  if(goNext.classList.contains("hidden")) goNext.classList.remove("hidden");
+  if (goNext.classList.contains("hidden")) goNext.classList.remove("hidden");
 };
 
 const nextStepPagine = document.querySelector("#prosegui_rilegature");
