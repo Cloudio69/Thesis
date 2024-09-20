@@ -35,42 +35,42 @@ const config = [
     nav: document.querySelector("#tipologia"),
     sidebar: document.querySelector("#tipologia_step"),
     content: document.querySelector(".thesis--tipologia"),
-    isCompleted: true,
+    isCompleted: false,
   },
   {
     step: "rilegatura",
     nav: document.querySelector("#rilegature"),
     sidebar: document.querySelector("#rilegature_step"),
     content: document.querySelector(".thesis--rilegature"),
-    isCompleted: true,
+    isCompleted: false,
   },
   {
     step: "pagine",
     nav: document.querySelector("#pagine"),
     sidebar: document.querySelector("#pagine_step"),
     content: document.querySelector(".thesis--pagine"),
-    isCompleted: true,
+    isCompleted: false,
   },
   {
     step: "cd",
     nav: document.querySelector("#cd"),
     sidebar: document.querySelector("#cd_step"),
     content: document.querySelector(".thesis--cd"),
-    isCompleted: true,
+    isCompleted: false,
   },
   {
     step: "finalizza",
     nav: document.querySelector("#finalizza"),
     sidebar: document.querySelector("#finalizza_step"),
     content: document.querySelector(".thesis--finalizza"),
-    isCompleted: true,
+    isCompleted: false,
   },
   {
     step: "checkout",
     nav: document.querySelector("#checkout"),
     sidebar: document.querySelector("#checkout_step"),
     content: document.querySelector(".thesis--checkout"),
-    isCompleted: true,
+    isCompleted: false,
   },
 ];
 
@@ -91,95 +91,92 @@ config.forEach((item, index) => {
   if (!item.isCompleted) {
     item.nav.disabled = "true";
     item.nav.classList.add("opacity-50");
-  } else {
-    item.nav.onclick = (e) => {
-      document
-        .querySelectorAll(".route")
-        .forEach((item) => item.classList.remove("active"));
-      document
-        .querySelectorAll(".thesis--fragments > div")
-        .forEach((item) => item.classList.add("hidden"));
+  } 
 
-      e.currentTarget.classList.add("active");
+  item.nav.onclick = (e) => {
+    if (item.isCompleted === false) return;
+    document
+      .querySelectorAll(".route")
+      .forEach((item) => item.classList.remove("active"));
+    document
+      .querySelectorAll(".thesis--fragments > div")
+      .forEach((item) => item.classList.add("hidden"));
 
+    e.currentTarget.classList.add("active");
+
+    if (
+      e.currentTarget.id === "finalizza" ||
+      e.currentTarget.id === "checkout"
+    ) {
+      document.querySelector(".open-cart-dialog").classList.add("hidden");
+    } else {
       if (
-        e.currentTarget.id === "finalizza" ||
-        e.currentTarget.id === "checkout"
+        document.querySelector(".open-cart-dialog").classList.contains("hidden")
       ) {
-        document.querySelector(".open-cart-dialog").classList.add("hidden");
-      } else {
-        if (
-          document
-            .querySelector(".open-cart-dialog")
-            .classList.contains("hidden")
-        ) {
-          document
-            .querySelector(".open-cart-dialog")
-            .classList.remove("hidden");
-        }
+        document.querySelector(".open-cart-dialog").classList.remove("hidden");
       }
+    }
 
-      item.content.classList.remove("hidden");
+    item.content.classList.remove("hidden");
 
-      document
-        .querySelectorAll(".thesis--sidebar > div")
-        .forEach((item) => item.classList.add("hidden"));
+    document
+      .querySelectorAll(".thesis--sidebar > div")
+      .forEach((item) => item.classList.add("hidden"));
 
-      item.sidebar.classList.remove("hidden");
+    item.sidebar.classList.remove("hidden");
 
-      currentStep = index;
-    };
+    currentStep = index;
+  };
 
-    item.sidebar.querySelectorAll(".next-step").forEach((button) => {
-      button.onclick = (e) => {
-        if (e.currentTarget.disabled) return;
+});
 
-        if (e.currentTarget.nextElementSibling) {
-          e.currentTarget.nextElementSibling.classList.remove("selected");
-        } else if (e.currentTarget.previousElementSibling) {
-          e.currentTarget.previousElementSibling.classList.remove("selected");
-        }
+document.querySelectorAll(".next-step").forEach((button) => {
+  button.onclick = (e) => {
+    if (e.currentTarget.disabled) return;
 
-        e.currentTarget.classList.add("selected");
-        document
-          .querySelectorAll(".route")
-          .forEach((item) => item.classList.remove("active"));
-        document
-          .querySelector(".thesis--navigation")
-          .children[currentStep + 1].classList.add("active");
-        document
-          .querySelector(".thesis--sidebar")
-          .children[currentStep].classList.add("hidden");
-        document
-          .querySelector(".thesis--sidebar")
-          .children[currentStep + 1].classList.remove("hidden");
-        document
-          .querySelector(".thesis--fragments")
-          .children[currentStep].classList.add("hidden");
-        document
-          .querySelector(".thesis--fragments")
-          .children[currentStep + 1].classList.remove("hidden");
+    if (e.currentTarget.nextElementSibling) {
+      e.currentTarget.nextElementSibling.classList.remove("selected");
+    } else if (e.currentTarget.previousElementSibling) {
+      e.currentTarget.previousElementSibling.classList.remove("selected");
+    }
 
-          currentStep++;
+    e.currentTarget.classList.add("selected");
+    document
+      .querySelectorAll(".route")
+      .forEach((item) => item.classList.remove("active"));
+    document
+      .querySelector(".thesis--navigation")
+      .children[currentStep + 1].classList.add("active");
+    document
+      .querySelector(".thesis--sidebar")
+      .children[currentStep].classList.add("hidden");
+    document
+      .querySelector(".thesis--sidebar")
+      .children[currentStep + 1].classList.remove("hidden");
+    document
+      .querySelector(".thesis--fragments")
+      .children[currentStep].classList.add("hidden");
+    document
+      .querySelector(".thesis--fragments")
+      .children[currentStep + 1].classList.remove("hidden");
 
-        if (currentStep === 5 || currentStep === 6) {
-          document.querySelector(".open-cart-dialog").classList.add("hidden");
-        } else {
-          if (
-            document
-              .querySelector(".open-cart-dialog")
-              .classList.contains("hidden")
-          ) {
-            document
-              .querySelector(".open-cart-dialog")
-              .classList.remove("hidden");
-          }
-        }
+    currentStep++;
 
-        
-      };
-    });
-  }
+    document
+      .querySelectorAll(".route")
+      [currentStep].classList.remove("opacity-50");
+    config[currentStep].isCompleted = true;
+
+    if (currentStep === 5 || currentStep === 6) {
+      document.querySelector(".open-cart-dialog").classList.add("hidden");
+    } else {
+      if (
+        document.querySelector(".open-cart-dialog").classList.contains("hidden")
+      ) {
+        document.querySelector(".open-cart-dialog").classList.remove("hidden");
+      }
+    }
+  };
 });
 
 let images = {
