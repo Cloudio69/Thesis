@@ -2,6 +2,16 @@
 
 require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
+/**
+ * Classe ThesisDatabase
+ * 
+ * Questa classe contiene i metodi per la creazione e la distruzione delle tabelle del database
+ * 
+ * @package Thesis
+ * @subpackage Includes/Database
+ * 
+ */
+
 class ThesisDatabase
 {
     public static function create_tables()

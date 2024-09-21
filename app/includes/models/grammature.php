@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Classe Grammatura
+ * 
+ * Questa classe contiene i metodi per la gestione delle grammature  delle pagine
+ * 
+ * @package Thesis
+ * @subpackage Includes/Models
+ * 
+ * 
+ */
+
 class Grammatura {
 
     public function get_grammature($id = null)

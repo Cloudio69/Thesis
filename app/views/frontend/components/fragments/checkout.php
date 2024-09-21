@@ -1,32 +1,32 @@
 <div class="thesis--checkout checkout flex flex-col items-center justify-center w-full">
-    <form method="POST" class="w-full px-16 flex flex-col gap-4 ">
+    <form method="POST" class="w-full px-16 flex flex-col gap-4 " id="checkout_form">
         <div class="dati--personali flex flex-col gap-4 border bg-white shadow-sm rounded-md p-4">
             <h1 class="text-2xl font-bold">Dati personali</h1>
             <div class="mb-4 flex">
                 <div class="w-1/2 pr-2">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="firstname">Nome</label>
-                    <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="firstname" type="text" name="firstname" required>
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="nome"><span>Nome</span><span id="nome_error" class="hidden text-red-500 text-xs">Campo non valido</span></label>
+                    <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="nome" type="text" name="nome" required>
                 </div>
                 <div class="w-1/2 pl-2">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="lastname">Cognome</label>
-                    <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="lastname" type="text" name="lastname" required>
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="cognome"><span>Cognome</span><span id="cognome_error" class="hidden text-red-500 text-xs">Campo non valido</span></label>
+                    <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="cognome" type="text" name="cognome" required>
                 </div>
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label>
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="email"><span>Email</span><span id="email_error" class="hidden text-red-500 text-xs">Campo non valido</span></label>
                 <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="email" type="email" name="email" required>
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="phone">Telefono</label>
-                <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="phone" type="tel" name="phone" required>
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="telefono"><span>Telefono</span><span id="telefono_error" class="hidden text-red-500 text-xs">Campo non valido</span></label>
+                <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="telefono" type="tel" name="telefono" required>
             </div>
         </div>
         <div class="dati--spedizione flex flex-col gap-4 border bg-white shadow-sm rounded-md p-4">
             <h1 class="text-2xl font-bold">Dati per la spedizione</h1>
             <div class="mb-4 flex flex-grow gap-4">
                 <div class="">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="province">Provincia</label>
-                    <select class="appearance-none rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="province" name="province" required>
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="provincia"><span>Provincia</span><span id="provincia_error" class="hidden text-red-500 text-xs">Campo non valido</span></label>
+                    <select class="appearance-none rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="provincia" name="provincia" required>
                         <option value="" selected disabled>Seleziona...</option>
                         <option value="AG">Agrigento</option>
                         <option value="AL">Alessandria</option>
@@ -139,21 +139,21 @@
                     </select>
                 </div>
                 <div class="flex-1">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="indirizzo">Indirizzo</label>
-                    <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="address" type="text" name="address" required>
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="indirizzo"><span>Indirizzo</span><span id="indirizzo_error" class="hidden text-red-500 text-xs">Campo non valido</span></label>
+                    <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="indirizzo" type="text" name="indirizzo" required>
                 </div>
                 <div class="flex-1">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="citta">Città</label>
-                    <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="city" type="text" name="city" required>
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="citta"><span>Città</span><span id="citta_error" class="hidden text-red-500 text-xs">Campo non valido</span></label>
+                    <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="citta" type="text" name="citta" required>
                 </div>
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="zipcode">Codice Postale</label>
-                <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="zipcode" type="text" name="zipcode" required>
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="codice_postale"><span>Codice Postale</span><span id="codice_postale_error" class="hidden text-red-500 text-xs">Campo non valido</span></label>
+                <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="codice_postale" type="text" name="codice_postale" required>
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="delivery">Spedizione</label>
-                <select class="appearance-none rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="delivery" name="delivery" required>
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="spedizione">Spedizione</label>
+                <select class="appearance-none rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="spedizione" name="spedizione" required>
                     <option value="standard">Standard</option>
                     <option value="express">Express</option>
                 </select>

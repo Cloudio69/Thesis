@@ -68,6 +68,7 @@ wp_enqueue_script('cookie-helper', THESIS_URL . 'app/assets/js/frontend/helper/c
         wp_enqueue_script('thesis-cart', THESIS_URL . 'app/assets/js/frontend/thesis-cart.js', array(), true);
         wp_enqueue_script('thesis-canvas', THESIS_URL . 'app/assets/js/frontend/thesis-canvas.js', ['fabric-js'], true);
         wp_enqueue_script('thesis-finalize', THESIS_URL . 'app/assets/js/frontend/thesis-finalize.js', array(), true);
+        wp_enqueue_script('thesis-checkout', THESIS_URL . 'app/assets/js/frontend/thesis-checkout.js', array(), true);
         wp_enqueue_script('popup-helper', THESIS_URL . 'app/assets/js/frontend/helper/popup-helper.js', array(), true);
     ?>
 <?php

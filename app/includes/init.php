@@ -4,6 +4,14 @@ include_once THESIS_DIR . "app/includes/ajax/init.php";
 
 include_once THESIS_DIR . "app/includes/ajax/public/init.php";
 
+/**
+ * Classe Thesis
+ * Questa classe contiene i metodi per l'inizializzazione del plugin
+ * 
+ * @package Thesis
+ * @subpackage Includes
+ */
+
 class Thesis
 {
 

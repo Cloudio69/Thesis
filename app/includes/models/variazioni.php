@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Classe Variante
+ * 
+ * Questa classe contiene i metodi per la gestione delle varianti delle tesi
+ * 
+ * @package Thesis
+ * @subpackage Includes/Models
+ * 
+ * 
+ */
+
 class Variante
 {
     public function get_varianti($id = null)
