@@ -234,7 +234,7 @@ const updateCart = async (e) => {
     2
   )}€</span></h3>`;
 
-  totaleDiv.innerHTML += `<h3 class='text-xs mt-2 opacity-50 font-bold flex items-center justify-between w-full'><span>Iva: </span><span>${iva.toFixed(2)}€</span></h3>`;
+  totaleDiv.innerHTML += `<h3 class='text-xs mt-2 opacity-50 font-bold flex items-center justify-between w-full'><span>IVA 22%: </span><span>${iva.toFixed(2)}€</span></h3>`;
 
   cartWrapper.appendChild(tipologiaDiv);
   cartWrapper.appendChild(rilegatureDiv);
@@ -469,3 +469,12 @@ function removeRilegatura(index) {
 
   updateCart();
 }
+
+document.addEventListener("click", (e) => {
+  const thesisCart = document.querySelector(".thesis--cart-dialog");
+  const openCartBtn = document.querySelector(".open-cart-dialog");
+
+  if (!thesisCart.contains(e.target) && !openCartBtn.contains(e.target)) {
+    thesisCart.classList.add("hidden");
+  }
+});
