@@ -253,6 +253,7 @@ const updateFinalize = (totale) => {
   const pagineWrapper = document.querySelector(".riepilogo-pagine section");
   const cdWrapper = document.querySelector(".riepilogo-cd section");
   const totaleWrapper = document.querySelector("#totale");
+  const subtotaleWrapper = document.querySelector("#subtotale");
 
   tipologiaWrapper.innerHTML = "";
   rilegatureWrapper.innerHTML = "";
@@ -457,6 +458,8 @@ const updateFinalize = (totale) => {
   rilegatureWrapper.appendChild(rilegatureDiv);
   pagineWrapper.appendChild(pagineDiv);
   cdWrapper.appendChild(cdDiv);
+
+  subtotaleWrapper.textContent = (totale - iva).toFixed(2);
 
   totaleWrapper.textContent = parseFloat(totale).toFixed(2);
 };
