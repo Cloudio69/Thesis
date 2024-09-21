@@ -61,7 +61,6 @@ let numPages = 0,
 const generaPagine = async () => {
 
   if (!generated) {
-    document.querySelector(".thesis--pagine").replaceChildren();
     let getNumPages = await jQuery.ajax({
       dataType: "json",
       method: "GET",
@@ -162,7 +161,7 @@ const generaPagine = async () => {
 
     creaPagine();
     generated = true; // Evita di rigenerare le pagine
-    setCookie('thesis_page_generation', 'true', 14);
+    setCookie('thesis_page_generation', 'true', 0);
 
   }
 };
