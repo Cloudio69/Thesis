@@ -190,7 +190,7 @@ document.querySelectorAll(".next-step").forEach((button) => {
 
     document
       .querySelectorAll(".route")
-      [currentStep].classList.remove("opacity-50");
+    [currentStep].classList.remove("opacity-50");
     config[currentStep].isCompleted = true;
 
     if (currentStep === 5 || currentStep === 6) {
@@ -262,19 +262,26 @@ formOrder.onsubmit = (e) => {
   document.querySelector("#subtotale_rilegature").textContent = "0.00€";
 
   document.querySelector(".thesis--rilegature").replaceChildren();
-  document.querySelector(
-    ".thesis--rilegature"
-  ).innerHTML = `<div class='flex flex-col items-center justify-center'><span class='material-symbols-outlined text-7xl'>check</span><p class='text-lg text-center'><b>Aggiunto al carrello!</b><br>Puoi continuare ad aggiungere altre rilegature!</p>`;
+  document.querySelector(".thesis--rilegature").innerHTML = `
+    <div class='flex flex-col items-center justify-center'>
+      <span class='material-symbols-outlined text-7xl'>check</span>
+      <p class='text-lg text-center'>
+        <b>Aggiunto al carrello!</b><br>
+        Puoi continuare ad aggiungere altre rilegature! <br><br>
+        <b>Oppure puoi proseguire</b>
+      </p>
+    </div>
+  `;
 
   document.querySelector(".varianti div").replaceChildren();
   document.querySelector(".colori_carattere div").replaceChildren();
 
-  document.querySelector(
-    ".varianti div"
-  ).innerHTML = `<p class="opacity-50 col-span-5 place-self-start">Scegli prima una rilegatura.</p>`;
-  document.querySelector(
-    ".colori_carattere div"
-  ).innerHTML = `<p class="opacity-50 col-span-5 place-self-start">Scegli prima una rilegatura.</p>`;
+  document.querySelector(".varianti div").innerHTML = `
+    <p class="opacity-50 col-span-5 place-self-start">Scegli prima una rilegatura.</p>
+  `;
+  document.querySelector(".colori_carattere div").innerHTML = `
+    <p class="opacity-50 col-span-5 place-self-start">Scegli prima una rilegatura.</p>
+  `;
 
   document.querySelector("#prosegui_rilegature").classList.remove("hidden");
 };
@@ -303,8 +310,8 @@ const calcoloRilegatura = () => {
       selected = selected.selectedOptions[0];
       selected.dataset.prezzo
         ? (objRilegatura[`prezzo_${name}`] = parseFloat(
-            selected.dataset.prezzo
-          ))
+          selected.dataset.prezzo
+        ))
         : (objRilegatura[`prezzo_${name}`] = 0);
     }
 
