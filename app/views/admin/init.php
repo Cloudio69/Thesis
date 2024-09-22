@@ -17,7 +17,7 @@
             </div>
             <div class="thesis--manager flex flex-1 gap-4 flex-wrap rounded-md">
                 <div class="flex w-full gap-4">
-                    <div class="thesis--customers bg-white flex-1 p-4 rounded-md border border-slate-200 flex flex-col min-h-[320px]">
+                    <div class="thesis--customers bg-white flex-1 p-4 rounded-md border border-slate-200 flex flex-col min-h-[320px] max-h-[320px]">
                         <h3 class="text-base font-bold flex items-center gap-2"><span class="material-symbols-outlined text-amber-300 drop-shadow-md">groups</span>Clienti</h3>
                         <div class="customer--data flex flex-col justify-center items-center flex-1">
                             <span class="material-symbols-outlined">
@@ -26,8 +26,8 @@
                             <p>Nessun dato.</p>
                         </div>
                     </div>
-                    <div class="thesis--orders flex-1 bg-white p-4 rounded-md border border-slate-200 flex flex-col min-h-[320px]">
-                        <h3 class="text-base font-bold flex items-center gap-2"><span class="material-symbols-outlined text-amber-300 drop-shadow-md">groups</span>Clienti</h3>
+                    <div class="thesis--orders flex-1 bg-white p-4 rounded-md border border-slate-200 flex flex-col min-h-[320px] max-h-[320px]">
+                        <h3 class="text-base font-bold flex items-center gap-2"><span class="material-symbols-outlined text-amber-300 drop-shadow-md">orders</span>Ordini</h3>
                         <div class="customer--data flex flex-col justify-center items-center flex-1">
                             <span class="material-symbols-outlined">
                                 folder_open
