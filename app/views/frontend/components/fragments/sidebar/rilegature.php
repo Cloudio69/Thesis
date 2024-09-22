@@ -96,7 +96,7 @@
                 </div>
             </div>
         </form>
-        <button class="hidden p-4 next-step w-full rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400" id="prosegui_rilegature">PROSEGUI</button>
+        <button class="hidden px-6 py-4 fixed left-1/2 bottom-5 next-step w-[160px] rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400" id="prosegui_rilegature">PROSEGUI</button>
         <div class="fixed bg-white flex flex-col gap-2 rounded-md p-4 min-w-[15%] max-w-[15%] left-[43%] top-24 m-4 shadow-md">
             <h1 class="font-bold text-lg">Rilegatura</h1>
             <section class="rilegature_riepilogo">

@@ -268,7 +268,7 @@ formOrder.onsubmit = (e) => {
       <p class='text-lg text-center'>
         <b>Aggiunto al carrello!</b><br>
         Puoi continuare ad aggiungere altre rilegature! <br><br>
-        <b>Oppure puoi proseguire cliccando il bottone in basso a destra</b>
+        <b>Oppure clicca su "PROSEGUI"</b>
       </p>
     </div>
   `;
