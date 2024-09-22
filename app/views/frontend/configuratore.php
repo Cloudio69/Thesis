@@ -32,7 +32,7 @@ wp_enqueue_script('fabric-js', 'https://cdnjs.cloudflare.com/ajax/libs/fabric.js
 wp_enqueue_script('gsap', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js');
 wp_enqueue_script('cookie-helper', THESIS_URL . 'app/assets/js/frontend/helper/cookie-helper.js', array(), true);
 ?>
-
+<body <?php body_class(); ?>>
 <?php if (!isset($_COOKIE['thesis_session'])) {?>
     <div class="thesis--wrapper w-full h-full flex flex-col justify-center items-center gap-4">
         <div class="alert bg-red-700 text-white ring-1 ring-red-500 rounded-md ring-offset-2 font-bold p-2 px-4">Sessione non valida</div>
@@ -75,6 +75,7 @@ wp_enqueue_script('cookie-helper', THESIS_URL . 'app/assets/js/frontend/helper/c
 }
 
 ?>
+</body>
 
 
 <?php wp_footer(); ?>

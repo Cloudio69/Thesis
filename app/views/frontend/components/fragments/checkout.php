@@ -140,16 +140,16 @@
                 </div>
                 <div class="flex-1">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="indirizzo"><span>Indirizzo</span><span id="indirizzo_error" class="hidden text-red-500 text-xs">Campo non valido</span></label>
-                    <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="indirizzo" type="text" name="indirizzo" required autocomplete="street-address">
+                    <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="indirizzo" type="text" name="indirizzo" required autocomplete="street-address" placeholder="Via Delle Nazioni 4">
                 </div>
                 <div class="flex-1">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="citta"><span>Città</span><span id="citta_error" class="hidden text-red-500 text-xs">Campo non valido</span></label>
-                    <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="citta" type="text" name="citta" required autocomplete="address-level2">
+                    <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="citta" type="text" name="citta" required autocomplete="address-level2" placeholder="Roma">
                 </div>
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="codice_postale"><span>Codice Postale</span><span id="codice_postale_error" class="hidden text-red-500 text-xs">Campo non valido</span></label>
-                <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="codice_postale" type="text" name="codice_postale" required autocomplete="postal-code">
+                <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="codice_postale" type="text" name="codice_postale" required autocomplete="postal-code" placeholder="00042">
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="spedizione">Spedizione</label>
