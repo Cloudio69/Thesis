@@ -527,7 +527,10 @@ formPagine.onsubmit = (e) => {
   e.preventDefault();
 
   let goNext = document.querySelector("#prosegui_pagine");
-  if (goNext.classList.contains("hidden")) goNext.classList.remove("hidden");
+  if (goNext.classList.contains("hidden")) {
+    goNext.classList.remove("hidden");
+    goNext.scrollIntoView({ behavior: "smooth" });
+  }
 };
 
 const nextStepPagine = document.querySelector("#prosegui_rilegature");

@@ -10,6 +10,10 @@
   src: url("../../fonts/MaterialSymbolsOutlined[FILL,GRAD,opsz,wght].woff2");
 }
 
+* {
+  scroll-behavior: smooth;
+}
+
 .material-symbols-outlined {
   font-family: "Material Icons";
   font-weight: normal;

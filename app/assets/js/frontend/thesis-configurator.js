@@ -268,7 +268,7 @@ formOrder.onsubmit = (e) => {
       <p class='text-lg text-center'>
         <b>Aggiunto al carrello!</b><br>
         Puoi continuare ad aggiungere altre rilegature! <br><br>
-        <b>Oppure puoi proseguire</b>
+        <b>Oppure puoi proseguire cliccando il bottone in basso a destra</b>
       </p>
     </div>
   `;
@@ -284,6 +284,7 @@ formOrder.onsubmit = (e) => {
   `;
 
   document.querySelector("#prosegui_rilegature").classList.remove("hidden");
+  document.querySelector("#prosegui_rilegature").scrollIntoView({ behavior: "smooth" });
 };
 
 let names = [
