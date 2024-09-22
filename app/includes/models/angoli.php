@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Classe Angolo
+ * 
+ * Questa classe contiene i metodi per la gestione degli angoli delle tesi
+ * 
+ * @package Thesis
+ * @subpackage Includes/Models
+ * 
+ * 
+ */
+
 class Angolo
 {
 

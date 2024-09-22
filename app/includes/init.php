@@ -4,6 +4,14 @@ include_once THESIS_DIR . "app/includes/ajax/init.php";
 
 include_once THESIS_DIR . "app/includes/ajax/public/init.php";
 
+/**
+ * Classe Thesis
+ * Questa classe contiene i metodi per l'inizializzazione del plugin
+ * 
+ * @package Thesis
+ * @subpackage Includes
+ */
+
 class Thesis
 {
 
@@ -89,6 +97,7 @@ class Thesis
     {
         global $pagename;
         if ($pagename !== 'configuratore') {
+            wp_enqueue_script('cookie-helper', THESIS_URL . 'app/assets/js/frontend/helper/cookie-helper.js', array(), false, true);
             wp_enqueue_script('thesis-initialize', THESIS_URL . 'app/assets/js/frontend/thesis-initialize.js', array(), false, true);
             wp_enqueue_style('tailwind-css', THESIS_URL . "/app/assets/css/tailwind.css");
         }
@@ -134,6 +143,7 @@ class Thesis
             const nonce = "<?php echo wp_create_nonce('thesis-token'); ?>"
             const ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
             const configuratore = "<?php echo get_option('pagina_configuratore') ?>"
+            const popupId = <?php echo get_option('popup_id') ? get_option('popup_id') : 68; ?>;
         </script>
 <?php
 }

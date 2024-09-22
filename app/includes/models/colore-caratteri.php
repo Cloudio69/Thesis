@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Classe CharColors
+ * 
+ * Questa classe contiene i metodi per la gestione dei colori dei caratteri delle tesi
+ * 
+ * @package Thesis
+ * @subpackage Includes/Models
+ * 
+ * 
+ */
+
 class CharColors
 {
 

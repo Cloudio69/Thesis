@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Classe Rilegatura
+ * 
+ * Questa classe contiene i metodi per la gestione delle rilegature delle tesi
+ * 
+ * @package Thesis
+ * @subpackage Includes/Models
+ * 
+ * 
+ */
+
 class Rilegatura
 {
     public function get_rilegature($id = null)
