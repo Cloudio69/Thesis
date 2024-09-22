@@ -1,3 +1,4 @@
+<?php include_once(THESIS_DIR . 'app/includes/ajax/public/init.php'); ?>
 <div class="thesis--wrapper p-6 h-full">
     <?php include_once(THESIS_DIR . 'app/views/admin/components/welcome.php'); ?>
     <section class="body flex flex-col mt-4 gap-4 h-full">
@@ -9,20 +10,30 @@
                     <p class="mt-2">Da qui puoi vedere un riepilogo dei tuoi guadagni e dei clienti che hanno acquistato</p>
                 </div>
                 <div class="thesis--stats flex flex-col gap-4 p-4 bg-white rounded-md border border-slate-200">
-                    <div class="nuovi--clienti flex flex-col"><span class="text-xs font-bold">Nuovi clienti</span><span class="text-3xl font-bold">0</span></div>
-                    <div class="nuovi--ordini flex flex-col"><span class="text-xs font-bold">Nuovi ordini</span><span class="text-3xl font-bold">0</span></div>
-                    <div class="guadagno flex flex-col"><span class="text-xs font-bold">Guadagno totale</span><span class="text-3xl font-bold">0</span></div>
+                    <div class="nuovi--clienti flex flex-col"><span class="text-xs font-bold">Nuovi clienti</span><span class="text-3xl font-bold"><?php echo do_shortcode('[new_customers_count]') ?></span></div>
+                    <div class="nuovi--ordini flex flex-col"><span class="text-xs font-bold">Nuovi ordini</span><span class="text-3xl font-bold"><?php echo do_shortcode('[new_orders_count]'); ?></span></div>
+                    <div class="guadagno flex flex-col"><span class="text-xs font-bold">Guadagno totale</span><span class="text-3xl font-bold"><?php echo do_shortcode('[total_profit]'); ?></span></div>
                 </div>
             </div>
             <div class="thesis--manager flex flex-1 gap-4 flex-wrap rounded-md">
                 <div class="flex w-full gap-4">
-                    <div class="thesis--customers bg-white flex-1 p-4 rounded-md border border-slate-200">
+                    <div class="thesis--customers bg-white flex-1 p-4 rounded-md border border-slate-200 flex flex-col min-h-[320px]">
                         <h3 class="text-base font-bold flex items-center gap-2"><span class="material-symbols-outlined text-amber-300 drop-shadow-md">groups</span>Clienti</h3>
-                        <canvas id="thesis--customers" class="py-4 h-full">
+                        <div class="customer--data flex flex-col justify-center items-center flex-1">
+                            <span class="material-symbols-outlined">
+                                folder_open
+                            </span>
+                            <p>Nessun dato.</p>
+                        </div>
                     </div>
-                    <div class="thesis--orders flex-1 bg-white p-4 rounded-md border border-slate-200">
-                        <h3 class="text-base font-bold flex justify-between items-center"><span class="flex items-center gap-2"><span class="material-symbols-outlined text-amber-300 drop-shadow-sm">orders</span>Ordini</span><span><a class="flex items-center gap-2 text-[12px]" href="<?php echo menu_page_url('thesis-ordini', false) ?>">VAI AGLI ORDINI <span class="material-symbols-outlined text-amber-300 text-sm drop-shadow-">east</span></a></span></h3>
-                        <canvas id="thesis--orders" class="py-4 h-full">
+                    <div class="thesis--orders flex-1 bg-white p-4 rounded-md border border-slate-200 flex flex-col min-h-[320px]">
+                        <h3 class="text-base font-bold flex items-center gap-2"><span class="material-symbols-outlined text-amber-300 drop-shadow-md">groups</span>Clienti</h3>
+                        <div class="customer--data flex flex-col justify-center items-center flex-1">
+                            <span class="material-symbols-outlined">
+                                folder_open
+                            </span>
+                            <p>Nessun dato.</p>
+                        </div>
                     </div>
                 </div>
                 <div class="thesis--accessori w-full bg-white p-4 rounded-md border border-slate-200">
@@ -44,9 +55,3 @@
         </div>
     </section>
 </div>
-
-<?php
-/* Script per Dashboard */
-wp_enqueue_script('thesis-charts', THESIS_URL . "/app/assets/js/charts.admin.js", array(), null, true);
-
-?>
