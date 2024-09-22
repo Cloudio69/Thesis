@@ -156,54 +156,59 @@ config.forEach((item, index) => {
   };
 });
 
-document.querySelectorAll(".next-step").forEach((button) => {
-  button.onclick = (e) => {
-    if (e.currentTarget.disabled) return;
 
-    if (e.currentTarget.nextElementSibling) {
-      e.currentTarget.nextElementSibling.classList.remove("selected");
-    } else if (e.currentTarget.previousElementSibling) {
-      e.currentTarget.previousElementSibling.classList.remove("selected");
-    }
+const nextStep = () => {
+  document.querySelectorAll(".next-step").forEach((button) => {
+    button.onclick = (e) => {
+      if (e.currentTarget.disabled) return;
 
-    e.currentTarget.classList.add("selected");
-    document
-      .querySelectorAll(".route")
-      .forEach((item) => item.classList.remove("active"));
-    document
-      .querySelector(".thesis--navigation")
-      .children[currentStep + 1].classList.add("active");
-    document
-      .querySelector(".thesis--sidebar")
-      .children[currentStep].classList.add("hidden");
-    document
-      .querySelector(".thesis--sidebar")
-      .children[currentStep + 1].classList.remove("hidden");
-    document
-      .querySelector(".thesis--fragments")
-      .children[currentStep].classList.add("hidden");
-    document
-      .querySelector(".thesis--fragments")
-      .children[currentStep + 1].classList.remove("hidden");
-
-    currentStep++;
-
-    document
-      .querySelectorAll(".route")
-    [currentStep].classList.remove("opacity-50");
-    config[currentStep].isCompleted = true;
-
-    if (currentStep === 5 || currentStep === 6) {
-      document.querySelector(".open-cart-dialog").classList.add("hidden");
-    } else {
-      if (
-        document.querySelector(".open-cart-dialog").classList.contains("hidden")
-      ) {
-        document.querySelector(".open-cart-dialog").classList.remove("hidden");
+      if (e.currentTarget.nextElementSibling) {
+        e.currentTarget.nextElementSibling.classList.remove("selected");
+      } else if (e.currentTarget.previousElementSibling) {
+        e.currentTarget.previousElementSibling.classList.remove("selected");
       }
-    }
-  };
-});
+
+      e.currentTarget.classList.add("selected");
+      document
+        .querySelectorAll(".route")
+        .forEach((item) => item.classList.remove("active"));
+      document
+        .querySelector(".thesis--navigation")
+        .children[currentStep + 1].classList.add("active");
+      document
+        .querySelector(".thesis--sidebar")
+        .children[currentStep].classList.add("hidden");
+      document
+        .querySelector(".thesis--sidebar")
+        .children[currentStep + 1].classList.remove("hidden");
+      document
+        .querySelector(".thesis--fragments")
+        .children[currentStep].classList.add("hidden");
+      document
+        .querySelector(".thesis--fragments")
+        .children[currentStep + 1].classList.remove("hidden");
+
+      currentStep++;
+
+      document
+        .querySelectorAll(".route")
+      [currentStep].classList.remove("opacity-50");
+      config[currentStep].isCompleted = true;
+
+      if (currentStep === 5 || currentStep === 6) {
+        document.querySelector(".open-cart-dialog").classList.add("hidden");
+      } else {
+        if (
+          document.querySelector(".open-cart-dialog").classList.contains("hidden")
+        ) {
+          document.querySelector(".open-cart-dialog").classList.remove("hidden");
+        }
+      }
+    };
+  });
+}
+
+nextStep();
 
 let images = {
   fronte: "/wp-content/plugins/thesis/app/assets/img/mockup-fronte.png",

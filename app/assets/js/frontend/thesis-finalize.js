@@ -86,18 +86,16 @@ const updateCart = async (e) => {
             <h4 class="font-bold text-xl">${rilegatura.nome_rilegatura}</h4>
             <span class='text-sm mt-2'>Colore: ${rilegatura.nome_colore}</span>
             <span class='text-sm'>Variante: ${rilegatura.nome_variante}</span>
-            <span class='text-sm'>Segnalibro: ${
-              rilegatura.nome_segnalibro
-            } (+${parseFloat(rilegatura.prezzo_segnalibro).toFixed(2)})</span>
-            <span class='text-sm mb-2'>Angoli: ${
-              rilegatura.nome_angolo
-            } (+${parseFloat(rilegatura.prezzo_angolo).toFixed(2)})</span>
+            <span class='text-sm'>Segnalibro: ${rilegatura.nome_segnalibro
+        } (+${parseFloat(rilegatura.prezzo_segnalibro).toFixed(2)})</span>
+            <span class='text-sm mb-2'>Angoli: ${rilegatura.nome_angolo
+        } (+${parseFloat(rilegatura.prezzo_angolo).toFixed(2)})</span>
           </div>
           <span class="text-xl font-bold">${rilegatura.qty} x ${(
-        parseFloat(rilegatura.prezzo_rilegatura) +
-        parseFloat(rilegatura.prezzo_segnalibro) +
-        parseFloat(rilegatura.prezzo_angolo)
-      ).toFixed(2)}€</span>
+          parseFloat(rilegatura.prezzo_rilegatura) +
+          parseFloat(rilegatura.prezzo_segnalibro) +
+          parseFloat(rilegatura.prezzo_angolo)
+        ).toFixed(2)}€</span>
         </div>
       `;
 
@@ -106,8 +104,8 @@ const updateCart = async (e) => {
           parseFloat(rilegatura.prezzo_segnalibro) +
           parseFloat(rilegatura.prezzo_angolo)) * rilegatura.qty
         : parseFloat(rilegatura.prezzo_rilegatura) +
-          parseFloat(rilegatura.prezzo_segnalibro) +
-          parseFloat(rilegatura.prezzo_angolo);
+        parseFloat(rilegatura.prezzo_segnalibro) +
+        parseFloat(rilegatura.prezzo_angolo);
 
       let eliminaBtn = document.createElement("button");
       eliminaBtn.innerText = "Elimina";
@@ -144,29 +142,25 @@ const updateCart = async (e) => {
     <h4 class="font-bold text-xl">Pagine</h4>
       <div class="flex justify-between items-start">
         <div class='flex flex-col w-full'>
-        <span class='flex items-center justify-between my-2'><b class='text-xl'>B/N: ${
-          cart.pagine.bn.length
-        }</b> <b class='text-xl'>Colorate: ${
-      cart.pagine.colorate.length
-    }</b></span></span>
+        <span class='flex items-center justify-between my-2'><b class='text-xl'>B/N: ${cart.pagine.bn.length
+      }</b> <b class='text-xl'>Colorate: ${cart.pagine.colorate.length
+      }</b></span></span>
         <span class="text-sm flex items-center justify-between"><b>Costo B/N</b><span>  ${(
-          cart.pagine.prezzo_bn *
-          (cart.pagine.bn.length > 0 ? cart.pagine.bn.length : 0)
-        ).toFixed(2)}€</span></span>
+        cart.pagine.prezzo_bn *
+        (cart.pagine.bn.length > 0 ? cart.pagine.bn.length : 0)
+      ).toFixed(2)}€</span></span>
         <span class="text-sm flex items-center justify-between"><b>Costo Colorate</b><span>  ${(
-          cart.pagine.prezzo_colorate *
-          (cart.pagine.colorate.length > 0 ? cart.pagine.colorate.length : 0)
-        ).toFixed(2)}€</span></span>
-        <span class="text-sm flex items-center justify-between"><b>Costo Formato</b><span>  ${
-          cart.pagine.prezzo_formato
-            ? cart.pagine.prezzo_formato + " €"
-            : "Nessun sovraprezzo"
-        }</span></span>
-        <span class="text-sm flex items-center justify-between"><b>Costo Grammatura</b><span> ${
-          cart.pagine.prezzo_grammatura
-            ? cart.pagine.prezzo_grammatura + " €"
-            : "Nessun sovraprezzo"
-        }</span></span>
+        cart.pagine.prezzo_colorate *
+        (cart.pagine.colorate.length > 0 ? cart.pagine.colorate.length : 0)
+      ).toFixed(2)}€</span></span>
+        <span class="text-sm flex items-center justify-between"><b>Costo Formato</b><span>  ${cart.pagine.prezzo_formato
+        ? cart.pagine.prezzo_formato + " €"
+        : "Nessun sovraprezzo"
+      }</span></span>
+        <span class="text-sm flex items-center justify-between"><b>Costo Grammatura</b><span> ${cart.pagine.prezzo_grammatura
+        ? cart.pagine.prezzo_grammatura + " €"
+        : "Nessun sovraprezzo"
+      }</span></span>
         </div>
       </div>
     `;
@@ -199,16 +193,14 @@ const updateCart = async (e) => {
     cdItem.innerHTML = `
       <div class="flex justify-between items-start">
         <div class='flex flex-col w-full'>
-        <span class="text-xl flex items-center justify-between"><b>CD Serigrafato x ${
-          cart.cd.qty
-        }</b> <span class='font-bold'>${cart.cd.prezzo}€</span></span>
-        ${
-          cart.cd.filenames.length > 0
-            ? cart.cd.filenames
-                .map((filename) => `<li class="text-sm mt-2">${filename}</li>`)
-                .join("")
-            : ""
-        }
+        <span class="text-xl flex items-center justify-between"><b>CD Serigrafato x ${cart.cd.qty
+      }</b> <span class='font-bold'>${cart.cd.prezzo}€</span></span>
+        ${cart.cd.filenames.length > 0
+        ? cart.cd.filenames
+          .map((filename) => `<li class="text-sm mt-2">${filename}</li>`)
+          .join("")
+        : ""
+      }
         </div>
       </div>
     `;
@@ -252,14 +244,17 @@ const updateFinalize = (totale) => {
   );
   const pagineWrapper = document.querySelector(".riepilogo-pagine section");
   const cdWrapper = document.querySelector(".riepilogo-cd section");
-  const totaleWrapper = document.querySelector("#totale");
-  const subtotaleWrapper = document.querySelector("#subtotale");
+  const totaleWrapper = document.querySelectorAll(".totale");
+  const subtotaleWrapper = document.querySelectorAll(".subtotale");
 
   tipologiaWrapper.innerHTML = "";
   rilegatureWrapper.innerHTML = "";
   pagineWrapper.innerHTML = "";
   cdWrapper.innerHTML = "";
-  totaleWrapper.innerHTML = "";
+
+  totaleWrapper.forEach((el) => {
+    el.innerHTML = "";
+  });
 
   const cdDiv = document.createElement("div");
   const pagineDiv = document.createElement("div");
@@ -321,18 +316,16 @@ const updateFinalize = (totale) => {
             <h4 class="font-bold text-xl">${rilegatura.nome_rilegatura}</h4>
             <span class='text-sm mt-2'>Colore: ${rilegatura.nome_colore}</span>
             <span class='text-sm'>Variante: ${rilegatura.nome_variante}</span>
-            <span class='text-sm'>Segnalibro: ${
-              rilegatura.nome_segnalibro
-            } (+${parseFloat(rilegatura.prezzo_segnalibro).toFixed(2)})</span>
-            <span class='text-sm mb-2'>Angoli: ${
-              rilegatura.nome_angolo
-            } (+${parseFloat(rilegatura.prezzo_angolo).toFixed(2)})</span>
+            <span class='text-sm'>Segnalibro: ${rilegatura.nome_segnalibro
+        } (+${parseFloat(rilegatura.prezzo_segnalibro).toFixed(2)})</span>
+            <span class='text-sm mb-2'>Angoli: ${rilegatura.nome_angolo
+        } (+${parseFloat(rilegatura.prezzo_angolo).toFixed(2)})</span>
           </div>
           <span class="text-xl font-bold">${rilegatura.qty} x ${(
-            parseFloat(rilegatura.prezzo_rilegatura) +
-            parseFloat(rilegatura.prezzo_segnalibro) +
-            parseFloat(rilegatura.prezzo_angolo)
-          ).toFixed(2)}€</span>
+          parseFloat(rilegatura.prezzo_rilegatura) +
+          parseFloat(rilegatura.prezzo_segnalibro) +
+          parseFloat(rilegatura.prezzo_angolo)
+        ).toFixed(2)}€</span>
         </div>
       `;
 
@@ -376,27 +369,23 @@ const updateFinalize = (totale) => {
     <h4 class="font-bold text-xl">Pagine</h4>
       <div class="flex justify-between items-start">
         <div class='flex flex-col w-full'>
-        <span class='flex items-center justify-between my-2'><b class='text-xl'>B/N: ${
-          cart.pagine.bn.length
-        }</b> <b class='text-xl'>Colorate: ${
-      cart.pagine.colorate.length
-    }</b></span></span>
+        <span class='flex items-center justify-between my-2'><b class='text-xl'>B/N: ${cart.pagine.bn.length
+      }</b> <b class='text-xl'>Colorate: ${cart.pagine.colorate.length
+      }</b></span></span>
         <span class="text-sm flex items-center justify-between"><b>Costo B/N</b><span>  ${(
-          cart.pagine.prezzo_bn * cart.pagine.bn.length
-        ).toFixed(2)} €</span></span>
+        cart.pagine.prezzo_bn * cart.pagine.bn.length
+      ).toFixed(2)} €</span></span>
         <span class="text-sm flex items-center justify-between"><b>Costo Colorate</b><span>  ${(
-          cart.pagine.prezzo_colorate * cart.pagine.colorate.length
-        ).toFixed(2)} €</span></span>
-        <span class="text-sm flex items-center justify-between"><b>Costo Formato</b><span>  ${
-          cart.pagine.prezzo_formato > 0
-            ? cart.pagine.prezzo_formato + " €"
-            : "Nessun sovraprezzo"
-        }</span></span>
-        <span class="text-sm flex items-center justify-between"><b>Costo Grammatura</b><span> ${
-          cart.pagine.prezzo_grammatura > 0
-            ? cart.pagine.prezzo_grammatura + " €"
-            : "Nessun sovraprezzo"
-        }</span></span>
+        cart.pagine.prezzo_colorate * cart.pagine.colorate.length
+      ).toFixed(2)} €</span></span>
+        <span class="text-sm flex items-center justify-between"><b>Costo Formato</b><span>  ${cart.pagine.prezzo_formato > 0
+        ? cart.pagine.prezzo_formato + " €"
+        : "Nessun sovraprezzo"
+      }</span></span>
+        <span class="text-sm flex items-center justify-between"><b>Costo Grammatura</b><span> ${cart.pagine.prezzo_grammatura > 0
+        ? cart.pagine.prezzo_grammatura + " €"
+        : "Nessun sovraprezzo"
+      }</span></span>
         </div>
       </div>
     `;
@@ -423,16 +412,14 @@ const updateFinalize = (totale) => {
     cdItem.innerHTML = `
       <div class="flex justify-between items-start">
         <div class='flex flex-col w-full'>
-        <span class="text-xl flex items-center justify-between"><b>CD Serigrafato x ${
-          cart.cd.qty
-        }</b> <span class='font-bold'>${cart.cd.prezzo}€</span></span>
-        ${
-          cart.cd.filenames.length > 0
-            ? cart.cd.filenames
-                .map((filename) => `<li class="text-sm mt-2">${filename}</li>`)
-                .join("")
-            : ""
-        }
+        <span class="text-xl flex items-center justify-between"><b>CD Serigrafato x ${cart.cd.qty
+      }</b> <span class='font-bold'>${cart.cd.prezzo}€</span></span>
+        ${cart.cd.filenames.length > 0
+        ? cart.cd.filenames
+          .map((filename) => `<li class="text-sm mt-2">${filename}</li>`)
+          .join("")
+        : ""
+      }
         </div>
       </div>
     `;
@@ -459,9 +446,13 @@ const updateFinalize = (totale) => {
   pagineWrapper.appendChild(pagineDiv);
   cdWrapper.appendChild(cdDiv);
 
-  subtotaleWrapper.textContent = (totale - iva).toFixed(2);
+  subtotaleWrapper.forEach((el) => {
+    el.textContent = (totale - iva).toFixed(2);
+  });
 
-  totaleWrapper.textContent = parseFloat(totale).toFixed(2);
+  totaleWrapper.forEach((el) => {
+    el.textContent = parseFloat(totale).toFixed(2);
+  });
 };
 
 function removeRilegatura(index) {

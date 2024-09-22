@@ -256,8 +256,8 @@ formCD.onsubmit = (e) => {
     qty: formCD.querySelector("[name='quantita_cd']").value,
     filenames: document.querySelectorAll("[data-filename]")
       ? Array.from(document.querySelectorAll("[data-filename]")).map((item) =>
-          item.getAttribute("data-filename")
-        )
+        item.getAttribute("data-filename")
+      )
       : [],
   };
 
@@ -286,6 +286,10 @@ formCD.onsubmit = (e) => {
 selectCD.onchange = (e) => {
   const listWrapper = document.querySelector("#file_list_wrapper");
   const selected = e.currentTarget.value;
+  const submitButton = document.querySelector("#form_cd button[type='submit']");
+  submitButton.disabled = false;
+
+
   if (selected !== "file") {
     if (!listWrapper.classList.contains("opacity-50"))
       listWrapper.classList.add("opacity-50");

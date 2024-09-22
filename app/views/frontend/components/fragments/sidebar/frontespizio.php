@@ -8,7 +8,7 @@
                 <span class="material-symbols-outlined text-[10rem] p-4 rounded-xl border-2">check</span>
                 <b>Procedi</b>
             </div>
-            <label for="upload_frontespizio" class="upload-frontespizio flex flex-col gap-2 opacity-50 hover:opacity-100 transition-opacity items-center border-dashed cursor-pointer">
+            <label for="upload_frontespizio" class="upload-frontespizio flex flex-col gap-2 items-center border-dashed cursor-pointer">
                 <span class="material-symbols-outlined text-[10rem] p-4 rounded-xl border-2">upload</span>
                 <b>Carica frontespizio</b>
                 <input type="file" class="hidden" id="upload_frontespizio" />

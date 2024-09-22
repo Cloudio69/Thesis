@@ -1,5 +1,6 @@
 const checkoutForm = document.querySelector("#checkout_form")
 const submitCheckout = document.querySelector("#submit_checkout")
+const shippingSelect = document.querySelector("#spedizione")
 
 let fieldChecker = {}
 
@@ -65,4 +66,35 @@ checkoutForm.addEventListener("submit", (e) => {
         }
     })
 
+})
+
+
+shippingSelect.addEventListener("change", (e) => {
+    if(e.target.value === "express") {
+        let subtotalField = document.querySelectorAll(".subtotale")[1];
+        let totalField = document.querySelectorAll(".totale")[1];
+        let shippingField = document.querySelector(".spedizione");
+        
+        let currentSubtotal = parseFloat(subtotalField.textContent);
+        let newSubtotal = currentSubtotal + 7.90;
+        subtotalField.textContent = newSubtotal.toFixed(2);
+        shippingField.textContent = "7.90";
+        
+        let vat = newSubtotal * 0.22;
+        let total = newSubtotal + vat;
+        totalField.textContent = total.toFixed(2);
+    } else {
+        let subtotalField = document.querySelectorAll(".subtotale")[1];
+        let totalField = document.querySelectorAll(".totale")[1];
+        let shippingField = document.querySelector(".spedizione");
+        
+        let currentSubtotal = parseFloat(subtotalField.textContent);
+        let newSubtotal = currentSubtotal - 7.90;
+        subtotalField.textContent = newSubtotal.toFixed(2);
+        shippingField.textContent = "0.00";
+        
+        let vat = newSubtotal * 0.22;
+        let total = newSubtotal + vat;
+        totalField.textContent = total.toFixed(2);
+    }
 })
