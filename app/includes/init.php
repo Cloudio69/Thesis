@@ -97,6 +97,7 @@ class Thesis
     {
         global $pagename;
         if ($pagename !== 'configuratore') {
+            wp_enqueue_script('cookie-helper', THESIS_URL . 'app/assets/js/frontend/helper/cookie-helper.js', array(), false, true);
             wp_enqueue_script('thesis-initialize', THESIS_URL . 'app/assets/js/frontend/thesis-initialize.js', array(), false, true);
             wp_enqueue_style('tailwind-css', THESIS_URL . "/app/assets/css/tailwind.css");
         }
