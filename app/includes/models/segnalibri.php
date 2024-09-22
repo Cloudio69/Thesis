@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Classe Segnalibro
+ * 
+ * Questa classe contiene i metodi per la gestione dei segnalibri delle tesi
+ * 
+ * @package Thesis
+ * @subpackage Includes/Models
+ */
+
 class Segnalibro {
 
     public function get_segnalibri($id = null)

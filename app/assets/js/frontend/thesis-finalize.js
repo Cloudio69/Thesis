@@ -19,6 +19,8 @@ forms.forEach((form) => {
   });
 });
 
+let iva = 0;
+
 const updateCart = async (e) => {
   cartWrapper.innerHTML = "";
 
@@ -225,9 +227,14 @@ const updateCart = async (e) => {
     totale += cart.cd.prezzo * cart.cd.qty;
   }
 
-  totaleDiv.innerHTML = `<h3 class='text-2xl mt-4 font-bold flex items-center justify-between w-full'><span>Totale: </span><span>${totale.toFixed(
+  iva = totale * 0.22;
+  let totaleIva = Math.round((totale + iva) * 100) / 100;
+
+  totaleDiv.innerHTML = `<h3 class='text-2xl mt-4 font-bold flex items-center justify-between w-full'><span>Totale: </span><span>${totaleIva.toFixed(
     2
   )}€</span></h3>`;
+
+  totaleDiv.innerHTML += `<h3 class='text-xs mt-2 opacity-50 font-bold flex items-center justify-between w-full'><span>IVA 22%: </span><span>${iva.toFixed(2)}€</span></h3>`;
 
   cartWrapper.appendChild(tipologiaDiv);
   cartWrapper.appendChild(rilegatureDiv);
@@ -235,17 +242,20 @@ const updateCart = async (e) => {
   cartWrapper.appendChild(cdDiv);
   cartWrapper.appendChild(totaleDiv);
 
-  updateFinalize(totale);
+  updateFinalize(totaleIva);
 };
 
 const updateFinalize = (totale) => {
+  const tipologiaWrapper = document.querySelector(".riepilogo-tipologia section");
   const rilegatureWrapper = document.querySelector(
     ".riepilogo-rilegature section"
   );
   const pagineWrapper = document.querySelector(".riepilogo-pagine section");
   const cdWrapper = document.querySelector(".riepilogo-cd section");
   const totaleWrapper = document.querySelector("#totale");
+  const subtotaleWrapper = document.querySelector("#subtotale");
 
+  tipologiaWrapper.innerHTML = "";
   rilegatureWrapper.innerHTML = "";
   pagineWrapper.innerHTML = "";
   cdWrapper.innerHTML = "";
@@ -254,10 +264,42 @@ const updateFinalize = (totale) => {
   const cdDiv = document.createElement("div");
   const pagineDiv = document.createElement("div");
   const rilegatureDiv = document.createElement("div");
+  const tipologiaDiv = document.createElement("div");
 
   rilegatureDiv.classList.add("flex", "flex-col", "gap-4");
   pagineDiv.classList.add("flex", "flex-col", "gap-4");
   cdDiv.classList.add("flex", "flex-col", "gap-4");
+  tipologiaDiv.classList.add("flex", "flex-col", "gap-4");
+
+  if (cart.tipologia) {
+    let tipologiaItem = document.createElement("div");
+    tipologiaItem.classList.add(
+      "flex",
+      "flex-col",
+      "gap-2",
+      "p-4",
+      "bg-white",
+      "border",
+      "rounded-md",
+      "shadow-md"
+    );
+
+    tipologiaItem.innerHTML = `
+      <div class="flex justify-between items-start">
+        <div class='flex flex-col'>
+          <h4 class="font-bold text-xl">Tipologia</h4>
+          <span class='text-sm mt-2'>${cart.tipologia}</span>
+        </div>
+      </div>
+    `;
+
+    tipologiaDiv.appendChild(tipologiaItem);
+  } else {
+    let tipologiaItem = document.createElement("div");
+    tipologiaItem.classList.add("opacity-50");
+    tipologiaItem.innerText = "Nessun elemento";
+    tipologiaDiv.appendChild(tipologiaItem);
+  }
 
   if (cart.rilegature && cart.rilegature.length > 0) {
     cart.rilegature.forEach((rilegatura, index) => {
@@ -412,9 +454,12 @@ const updateFinalize = (totale) => {
     cdDiv.appendChild(cdItem);
   }
 
+  tipologiaWrapper.appendChild(tipologiaDiv);
   rilegatureWrapper.appendChild(rilegatureDiv);
   pagineWrapper.appendChild(pagineDiv);
   cdWrapper.appendChild(cdDiv);
+
+  subtotaleWrapper.textContent = (totale - iva).toFixed(2);
 
   totaleWrapper.textContent = parseFloat(totale).toFixed(2);
 };
@@ -424,3 +469,12 @@ function removeRilegatura(index) {
 
   updateCart();
 }
+
+document.addEventListener("click", (e) => {
+  const thesisCart = document.querySelector(".thesis--cart-dialog");
+  const openCartBtn = document.querySelector(".open-cart-dialog");
+
+  if (!thesisCart.contains(e.target) && !openCartBtn.contains(e.target)) {
+    thesisCart.classList.add("hidden");
+  }
+});

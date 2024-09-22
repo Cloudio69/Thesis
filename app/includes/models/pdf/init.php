@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Classe ThesisProcess
+ * 
+ * Questa classe contiene i metodi per il processamento dei file PDF
+ * 
+ * @package Thesis
+ * @subpackage Includes/Models/PDF
+ * 
+ * 
+ */
+
 class ThesisProcess
 {
     public function process_frontespizio($file_name, $dir)

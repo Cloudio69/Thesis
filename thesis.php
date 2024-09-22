@@ -9,7 +9,7 @@
  * Author: Claudio Caso - Icones
  * Author URI: http://icones.it
  * Text Domain: thesis
- * Domain Path: /i18n
+ * Domain Path: app/i18n
  *
  */
 

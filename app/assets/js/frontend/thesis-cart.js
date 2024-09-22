@@ -7,5 +7,9 @@ closeCart.onclick = () => {
 };
 
 openCart.onclick = () => {
-  cartDialog.classList.remove("hidden");
+  if (cartDialog.classList.contains("hidden")) {
+    cartDialog.classList.remove("hidden");
+  } else {
+    cartDialog.classList.add("hidden");
+  }
 };
