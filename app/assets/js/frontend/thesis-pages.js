@@ -161,8 +161,7 @@ const generaPagine = async () => {
 
     creaPagine();
     generated = true; // Evita di rigenerare le pagine
-    setCookie('thesis_page_generation', 'true', 0);
-
+    setCookie('thesis_page_generation', 'true', 1/720);
   }
 };
 
