@@ -73,7 +73,7 @@ if (typeof init != "undefined" && init) {
             init.forEach((item) => item.removeAttribute("disabled"));
             let res = JSON.parse(response);
             setCookie("thesis_session", res.thesis_session, 1);
-            if(getCoookie('thesis_page_generation')) setCookie('thesis_page_generation', '', 0);
+            if(getCookie('thesis_page_generation')) setCookie('thesis_page_generation', '', 0);
             window.location.href = configuratore;
           },
           error: (error) => {
