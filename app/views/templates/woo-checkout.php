@@ -14,7 +14,7 @@ if (is_user_logged_in()) {
     ?>
                 <div class="user-info flex items-center gap-2">
                     <span class="material-symbols-outlined text-xl">account_circle</span>
-                    <span class="font-bold">Loggato come: <?php echo esc_html($current_user->display_name); ?></span>
+                    <span class="font-bold">Ciao <?php echo esc_html($current_user->display_name); ?>! 🎉</span>
                 </div>
                 <?php
 }
