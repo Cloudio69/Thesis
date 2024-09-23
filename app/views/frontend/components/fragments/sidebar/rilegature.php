@@ -48,7 +48,7 @@
                     <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">arrows_more_up</span>Angoli</h1>
                     <div class="flex gap-4 items-center place-items-center text-center">
                         <select name="angoli" class="p-2 rounded-md">
-                            <option value="" selected disabled>Seleziona gli angoli</option>
+                            <option value="" selected>Seleziona gli angoli</option>
                             <?php
                             $angoli = new Angolo;
                             $angoli = $angoli->get_angoli();
@@ -66,7 +66,7 @@
                     <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">bookmark</span>Segnalibri</h1>
                     <div class="flex gap-4 items-center place-items-center text-center">
                         <select name="segnalibri" class="p-2 rounded-md">
-                            <option value="" selected disabled>Seleziona il segnalibro</option>
+                            <option value="" selected>Seleziona il segnalibro</option>
                             <?php
                             $segnalibri = new Segnalibro;
                             $segnalibri = $segnalibri->get_segnalibri();

@@ -4,7 +4,6 @@ const shippingSelect = document.querySelector("#spedizione")
 
 let fieldChecker = {}
 
-
 const fieldLookup = () => {
     for (const [key, value] of Object.entries(fieldChecker)) {
         let inputField = document.querySelector(`#${key}`)
@@ -70,31 +69,5 @@ checkoutForm.addEventListener("submit", (e) => {
 
 
 shippingSelect.addEventListener("change", (e) => {
-    if(e.target.value === "express") {
-        let subtotalField = document.querySelectorAll(".subtotale")[1];
-        let totalField = document.querySelectorAll(".totale")[1];
-        let shippingField = document.querySelector(".spedizione");
-        
-        let currentSubtotal = parseFloat(subtotalField.textContent);
-        let newSubtotal = currentSubtotal + 7.90;
-        subtotalField.textContent = newSubtotal.toFixed(2);
-        shippingField.textContent = "7.90";
-        
-        let vat = newSubtotal * 0.22;
-        let total = newSubtotal + vat;
-        totalField.textContent = total.toFixed(2);
-    } else {
-        let subtotalField = document.querySelectorAll(".subtotale")[1];
-        let totalField = document.querySelectorAll(".totale")[1];
-        let shippingField = document.querySelector(".spedizione");
-        
-        let currentSubtotal = parseFloat(subtotalField.textContent);
-        let newSubtotal = currentSubtotal - 7.90;
-        subtotalField.textContent = newSubtotal.toFixed(2);
-        shippingField.textContent = "0.00";
-        
-        let vat = newSubtotal * 0.22;
-        let total = newSubtotal + vat;
-        totalField.textContent = total.toFixed(2);
-    }
+    updateCart()
 })
