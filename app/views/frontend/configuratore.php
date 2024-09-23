@@ -25,7 +25,7 @@ if (isset($_COOKIE['thesis_session'])) {
 
 ?>
 <?php
-wp_enqueue_style('tailwind-css', THESIS_URL . "/app/assets/css/tailwind.css");
+wp_enqueue_style('tailwind', THESIS_URL . "/app/assets/css/tailwind.css");
 wp_enqueue_style('thesis-frontend', THESIS_URL . "/app/assets/css/frontend/thesis-frontend.css");
 
 wp_enqueue_script('fabric-js', 'https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js');
