@@ -1,5 +1,5 @@
 <div class="thesis--checkout checkout flex flex-col items-center justify-center w-full">
-    <form method="POST" class="w-full p-4 flex flex-col gap-4 justify-center m-0" id="checkout_form">
+    <form method="POST" class="w-full px-4 flex flex-col gap-4 justify-center m-0" id="checkout_form">
         <div class="dati--personali flex flex-col gap-4 border bg-white shadow-sm rounded-md p-4">
             <h1 class="text-2xl font-bold">Dati personali</h1>
             <div class="mb-4 flex">
