@@ -24,7 +24,7 @@
                                 <h3><?php echo $decodedRilegature[$i]->nome_rilegatura ?></h3>
                                 <span class="!text-sm"><?php echo $decodedRilegature[$i]->prezzo_rilegatura ?> €</span>
                             </div>
-                            <input type="radio" data-nome="<?php echo $decodedRilegature[$i]->nome_rilegatura ?>" data-prezzo="<?php echo $decodedRilegature[$i]->prezzo_rilegatura ?>" data-descrizione="<?php echo htmlspecialchars($decodedRilegature[$i]->descrizione_rilegatura, ENT_QUOTES, 'UTF-8') ?>" name="rilegatura" value="<?php echo $decodedRilegature[$i]->id_rilegatura; ?>" id="<?php echo $decodedRilegature[$i]->id_rilegatura; ?>" class="hidden" />
+                            <input type="radio" data-nome="<?php echo $decodedRilegature[$i]->nome_rilegatura ?>" data-prezzo="<?php echo $decodedRilegature[$i]->prezzo_rilegatura ?>" data-descrizione="<?php echo htmlspecialchars($decodedRilegature[$i]->descrizione_rilegatura, ENT_QUOTES, 'UTF-8') ?>" name="rilegatura" value="<?php echo $decodedRilegature[$i]->id_rilegatura; ?>" id="<?php echo $decodedRilegature[$i]->id_rilegatura; ?>" class="hidden"/>
                         </label>
                     <?php
                     }

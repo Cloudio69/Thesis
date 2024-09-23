@@ -13,7 +13,7 @@ forms.forEach((form) => {
     if (document.querySelector(".placeholder-cart"))
       document.querySelector(".placeholder-cart").classList.add("hidden");
 
-    showToast("Elemento aggiunto al carrello", "success", "check");
+    if(!error) showToast("Elemento aggiunto al carrello", "success", "check");
 
     updateCart(e);
   });
@@ -22,6 +22,7 @@ forms.forEach((form) => {
 let iva = 0;
 
 const updateCart = async (e) => {
+  
   cartWrapper.innerHTML = "";
 
   const cdDiv = document.createElement("div");

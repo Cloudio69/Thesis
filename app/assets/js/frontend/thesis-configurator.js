@@ -17,6 +17,8 @@ let objRilegatura = {
   qty: 0,
 };
 
+error = false;
+
 const showToast = async (message, status, icon) => {
   if (document.querySelector(".toast"))
     document.querySelector(".toast").remove();

@@ -493,11 +493,13 @@ const checkFields = () => {
   let variante = document.querySelector("[name='variante']:checked");
   let colore = document.querySelector("[name='colori_carattere']:checked");
 
-  if (!rilegatura || !variante || !colore) {
-    alert("Devi selezionare tutte le opzioni per procedere con l'ordine.");
+  if (!rilegatura || !variante || !colore){
+    alert("Seleziona una rilegatura, una variante e un colore per il carattere.");
+    error = true;
+    showToast('Compila tutti i campi per procedere.', 'error', 'error_outline');
     return false;
   }
-
+  error = false;
   return true;
 };
 
