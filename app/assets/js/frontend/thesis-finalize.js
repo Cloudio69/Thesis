@@ -83,24 +83,29 @@ const updateCart = async (e) => {
       rilegatureItem.innerHTML = `
         <div class="flex items-start gap-4">
         <div class="flex items-center image">
-          <img src="${rilegatura.rilegatura_thumbnail}" alt="${rilegatura.nome_rilegatura}" class="w-8 h-8 object-cover rounded-md" />
+          <img src="${rilegatura.rilegatura_thumbnail}" alt="${
+        rilegatura.nome_rilegatura
+      }" class="w-fit h-[120px] object-contain rounded-md" />
           </div>
-          <div class='flex flex-col'>
+          <div class='flex flex-col flex-1 pl-6'>
             <h4 class="font-bold text-xl">${rilegatura.nome_rilegatura}</h4>
             <span class='text-sm mt-2'>Colore: ${rilegatura.nome_colore}</span>
             <span class='text-sm'>Variante: ${rilegatura.nome_variante}</span>
             <span class='text-sm'>Segnalibro: ${
               rilegatura.nome_segnalibro
             } (+${parseFloat(rilegatura.prezzo_segnalibro).toFixed(2)})</span>
-            <span class='text-sm mb-2'>Angoli: ${
+            <span class='text-sm'>Angoli: ${
               rilegatura.nome_angolo
             } (+${parseFloat(rilegatura.prezzo_angolo).toFixed(2)})</span>
           </div>
-          <span class="text-xl font-bold">${rilegatura.qty} x ${(
+          <div class="flex flex-col text-xl font-bold self-stretch justify-between rilegatura_actions">
+          <span>${rilegatura.qty} x ${(
         parseFloat(rilegatura.prezzo_rilegatura) +
         parseFloat(rilegatura.prezzo_segnalibro) +
         parseFloat(rilegatura.prezzo_angolo)
-      ).toFixed(2)}€</span>
+      ).toFixed(2)}€
+        </span>
+        </div>
         </div>
       `;
 
@@ -114,10 +119,11 @@ const updateCart = async (e) => {
           parseFloat(rilegatura.prezzo_angolo);
 
       let eliminaBtn = document.createElement("button");
-      eliminaBtn.innerText = "Elimina";
+      eliminaBtn.innerHTML = "<span class='material-symbols-outlined !text-white'>delete</span>";
       eliminaBtn.classList.add(
         "!bg-red-500",
         "text-white",
+        "self-end",
         "p-2",
         "rounded-md"
       );
@@ -125,8 +131,10 @@ const updateCart = async (e) => {
         removeRilegatura(index);
       });
 
-      rilegatureItem.appendChild(eliminaBtn);
       rilegatureDiv.appendChild(rilegatureItem);
+      rilegatureDiv
+        .querySelectorAll(".rilegatura_actions")
+        .forEach((item) => item.appendChild(eliminaBtn));
     });
   }
 
@@ -346,32 +354,38 @@ const updateFinalize = (totale) => {
       rilegatureItem.innerHTML = `
         <div class="flex items-start gap-4">
         <div class="flex items-center image">
-          <img src="${rilegatura.rilegatura_thumbnail}" alt="${rilegatura.nome_rilegatura}" class="w-8 h-8 object-cover rounded-md" />
+          <img src="${rilegatura.rilegatura_thumbnail}" alt="${
+        rilegatura.nome_rilegatura
+      }" class="w-fit h-[120px] object-contain rounded-md" />
           </div>
-          <div class='flex flex-col'>
+          <div class='flex flex-col flex-1 pl-6 self-center'>
             <h4 class="font-bold text-xl">${rilegatura.nome_rilegatura}</h4>
-            <span class='text-sm mt-2'>Colore: ${rilegatura.nome_colore}</span>
+            <span class='text-sm'>Colore: ${rilegatura.nome_colore}</span>
             <span class='text-sm'>Variante: ${rilegatura.nome_variante}</span>
             <span class='text-sm'>Segnalibro: ${
               rilegatura.nome_segnalibro
             } (+${parseFloat(rilegatura.prezzo_segnalibro).toFixed(2)})</span>
-            <span class='text-sm mb-2'>Angoli: ${
+            <span class='text-sm'>Angoli: ${
               rilegatura.nome_angolo
             } (+${parseFloat(rilegatura.prezzo_angolo).toFixed(2)})</span>
           </div>
-          <span class="text-xl font-bold">${rilegatura.qty} x ${(
+         <div class="flex flex-col text-xl font-bold self-stretch justify-between rilegatura_actions">
+          <span>${rilegatura.qty} x ${(
         parseFloat(rilegatura.prezzo_rilegatura) +
         parseFloat(rilegatura.prezzo_segnalibro) +
         parseFloat(rilegatura.prezzo_angolo)
-      ).toFixed(2)}€</span>
+      ).toFixed(2)}€
+        </span>
+        </div>
         </div>
       `;
 
       let eliminaBtn = document.createElement("button");
-      eliminaBtn.innerText = "Elimina";
+      eliminaBtn.innerHTML = "<span class='material-symbols-outlined !text-white'>delete</span>";
       eliminaBtn.classList.add(
         "!bg-red-500",
         "text-white",
+        "self-end",
         "p-2",
         "rounded-md"
       );
@@ -379,8 +393,10 @@ const updateFinalize = (totale) => {
         removeRilegatura(index);
       });
 
-      rilegatureItem.appendChild(eliminaBtn);
       rilegatureDiv.appendChild(rilegatureItem);
+      rilegatureDiv
+        .querySelectorAll(".rilegatura_actions")
+        .forEach((item) => item.appendChild(eliminaBtn));
     });
   } else {
     let rilegatureItem = document.createElement("div");
@@ -486,7 +502,7 @@ const updateFinalize = (totale) => {
     cdDiv.appendChild(cdItem);
 
     let removeCd = document.createElement("button");
-    removeCd.innerText = "Elimina";
+    removeCd.innerHTML = "Elimina";
     removeCd.classList.add("!bg-red-500", "text-white", "p-2", "rounded-md");
     removeCd.addEventListener("click", () => {
       cart.cd = {};
