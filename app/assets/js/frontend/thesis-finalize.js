@@ -81,7 +81,10 @@ const updateCart = async (e) => {
       );
 
       rilegatureItem.innerHTML = `
-        <div class="flex justify-between items-start">
+        <div class="flex items-start gap-4">
+        <div class="flex items-center image">
+          <img src="${rilegatura.rilegatura_thumbnail}" alt="${rilegatura.nome_rilegatura}" class="w-8 h-8 object-cover rounded-md" />
+          </div>
           <div class='flex flex-col'>
             <h4 class="font-bold text-xl">${rilegatura.nome_rilegatura}</h4>
             <span class='text-sm mt-2'>Colore: ${rilegatura.nome_colore}</span>
@@ -341,7 +344,10 @@ const updateFinalize = (totale) => {
       );
 
       rilegatureItem.innerHTML = `
-        <div class="flex justify-between items-start">
+        <div class="flex items-start gap-4">
+        <div class="flex items-center image">
+          <img src="${rilegatura.rilegatura_thumbnail}" alt="${rilegatura.nome_rilegatura}" class="w-8 h-8 object-cover rounded-md" />
+          </div>
           <div class='flex flex-col'>
             <h4 class="font-bold text-xl">${rilegatura.nome_rilegatura}</h4>
             <span class='text-sm mt-2'>Colore: ${rilegatura.nome_colore}</span>

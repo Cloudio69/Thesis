@@ -262,7 +262,7 @@ formOrder.onsubmit = (e) => {
         : "Nessun angolo",
     prezzo_angolo:
       angoli.selectedIndex !== 0 ? angoli.selectedOptions[0].dataset.prezzo : 0,
-    rilegatura_thumbnail: document.querySelector('.thesis--rilegature canvas').toDataURL(), // TODO: Comprire il canvas con l'immagine della rilegatura
+    rilegatura_thumbnail: document.querySelector('.thesis--rilegature canvas').toDataURL("image/jpeg", 0.4), // TODO: Comprire il canvas con l'immagine della rilegatura
     qty: qty.value,
   });
 
