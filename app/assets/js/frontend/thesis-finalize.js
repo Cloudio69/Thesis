@@ -270,7 +270,7 @@ weight
               .map((filename) => `<li class="text-sm mt-2 font-bold">${filename}</li>`)
               .join("")
           : ""
-      }
+      } // TODO: Fix this
       </div>
       </div>
     `;
@@ -535,19 +535,6 @@ weight
     <div class='font-bold cd-actions flex flex-col items-end flex-1 justify-between'><span class="text-sm">${
     cart.cd.qty ? (cart.cd.prezzo * cart.cd.qty).toFixed(2) : cart.cd.prezzo
   }€</span>${removeCd.outerHTML}</div></span>
-    
-    ${
-      cart.cd.filenames.length > 0
-        ? `<span class="text-sm mt-2 font-bold">File aggiuntivi</span>`
-        : ""
-    }
-    ${
-      cart.cd.filenames.length > 0
-        ? cart.cd.filenames
-            .map((filename) => `<li class="text-sm mt-2 font-bold">${filename}</li>`)
-            .join("")
-        : ""
-    }
     </div>
     </div>
   `;
