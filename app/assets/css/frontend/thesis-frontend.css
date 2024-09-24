@@ -118,6 +118,10 @@ label:has(input[type="radio"]:checked) {
   transform: translate(-50%, -50%);
 }
 
+.thesis--fragments{
+  scrollbar-gutter: stable;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

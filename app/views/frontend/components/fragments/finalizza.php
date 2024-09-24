@@ -1,4 +1,4 @@
-<div class="thesis--finalizza grid gap-4 w-full h-full p-4">
+<div class="thesis--finalizza grid gap-4 w-full place-self-start p-4">
     <div class="riepilogo-tipologia p-4 border bg-white flex-1 rounded-md col-span-3"><h1 class="font-bold text-base flex items-center gap-2"><span class="material-symbols-outlined">copy_all</span>Tipologia stampa</h1><section class="py-2"><p class="opacity-50">Nessun elemento.</p></section></div>
     <div class="riepilogo-rilegature p-4 border bg-white flex-1 rounded-md col-span-3"><h1 class="font-bold text-base flex items-center gap-2"><span class="material-symbols-outlined">book_2</span>Rilegature aggiunte</h1><section class="py-2"><p class="opacity-50">Nessun elemento.</p></section></div>
     <div class="riepilogo-pagine p-4 border bg-white flex-1 rounded-md col-span-1"><h1 class="font-bold text-base flex items-center gap-2"><span class="material-symbols-outlined">auto_stories</span>Pagine tesi</h1><section class="py-2"><p class="opacity-50">Nessun elemento.</p></section></div>
