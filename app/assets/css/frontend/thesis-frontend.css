@@ -98,7 +98,7 @@
 
 
 label:has(input[type="radio"]:checked) {
-  outline: 1px solid black;
+  outline: 2px solid #f4b424;
 }
 
 .selected span {
@@ -112,6 +112,10 @@ label:has(input[type="radio"]:checked) {
 
 .fade-out {
   animation: fadeOut 0.5s ease-in-out forwards;
+}
+
+.toast{
+  transform: translate(-50%, -50%);
 }
 
 @keyframes fadeIn {

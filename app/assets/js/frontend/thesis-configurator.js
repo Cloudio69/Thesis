@@ -32,8 +32,8 @@ const showToast = async (message, status, icon) => {
   let bgStatus = mapStatus[status];
 
   let toast = document.createElement("div");
-  toast.className = `toast toast-${status} fixed bottom-0 left-0 m-4 p-4 ${bgStatus} text-white rounded-lg shadow-lg flex items-center gap-4 z-50 fade-in `;
-  toast.innerHTML = `<span class="material-symbols-outlined flex items-center !text-white">${icon}</span><p class="flex font-bold">${message}</p>`;
+  toast.className = `toast toast-${status} fixed top-1/2 left-1/2 m-4 p-6 ${bgStatus} text-white rounded-lg shadow-lg flex items-center gap-4 z-50 fade-in `;
+  toast.innerHTML = `<span class="material-symbols-outlined flex items-center !text-white text-2xl">${icon}</span><p class="flex font-bold text-2xl">${message}</p>`;
   document.body.appendChild(toast);
 
   await new Promise((resolve) => {
@@ -169,7 +169,6 @@ const nextStep = () => {
       } else if (e.currentTarget.previousElementSibling) {
         e.currentTarget.previousElementSibling.classList.remove("selected");
       }
-
       e.currentTarget.classList.add("selected");
       document
         .querySelectorAll(".route")
@@ -196,6 +195,8 @@ const nextStep = () => {
         .querySelectorAll(".route")
       [currentStep].classList.remove("opacity-50");
       config[currentStep].isCompleted = true;
+
+      document.querySelector('.thesis--sidebar').scrollTo(0, 0);
 
       if (currentStep === 5 || currentStep === 6) {
         document.querySelector(".open-cart-dialog").classList.add("hidden");

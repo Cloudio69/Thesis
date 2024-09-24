@@ -13,7 +13,7 @@ forms.forEach((form) => {
     if (document.querySelector(".placeholder-cart"))
       document.querySelector(".placeholder-cart").classList.add("hidden");
 
-    if(!error) showToast("Elemento aggiunto al carrello", "success", "check");
+    if (!error) showToast("Elemento aggiunto al carrello", "success", "check");
 
     updateCart(e);
   });
@@ -22,7 +22,6 @@ forms.forEach((form) => {
 let iva = 0;
 
 const updateCart = async (e) => {
-  
   cartWrapper.innerHTML = "";
 
   const cdDiv = document.createElement("div");
@@ -200,18 +199,32 @@ const updateCart = async (e) => {
     );
     cdItem.innerHTML = `
       <div class="flex justify-between items-start">
-        <div class='flex flex-col w-full'>
-        <span class="text-xl flex items-center justify-between"><b>CD Serigrafato x ${
-          cart.cd.qty
-        }</b> <span class='font-bold'>${cart.cd.prezzo}€</span></span>
-        ${
-          cart.cd.filenames.length > 0
-            ? cart.cd.filenames
-                .map((filename) => `<li class="text-sm mt-2">${filename}</li>`)
-                .join("")
-            : ""
-        }
-        </div>
+      <div class='flex flex-col w-full'>
+      <span class="text-xl flex items-center justify-between"><b>CD Serigrafato x ${
+        cart.cd.qty
+      }</b> <span class='font-bold'>${cart.cd.prezzo}€</span></span>
+      ${
+        Object.values(cart.cd.inputs).some((value) => value !== "")
+          ? `<span class="text-sm mt-2 font-bold">Dati inseriti</span>`
+          : ""
+      }
+      ${Object.entries(cart.cd.inputs)
+        .filter(([key, value]) => value !== "")
+        .map(([key, value]) => `<li class="text-sm mt-2">${key}: ${value}</li>`)
+        .join("")}
+      ${
+        cart.cd.filenames.length > 0
+          ? `<span class="text-sm mt-2 font-bold">File aggiuntivi</span>`
+          : ""
+      }
+      ${
+        cart.cd.filenames.length > 0
+          ? cart.cd.filenames
+              .map((filename) => `<li class="text-sm mt-2">${filename}</li>`)
+              .join("")
+          : ""
+      }
+      </div>
       </div>
     `;
     cdDiv.appendChild(cdItem);
@@ -438,6 +451,22 @@ const updateFinalize = (totale) => {
         <span class="text-xl flex items-center justify-between"><b>CD Serigrafato x ${
           cart.cd.qty
         }</b> <span class='font-bold'>${cart.cd.prezzo}€</span></span>
+        ${
+          Object.values(cart.cd.inputs).some((value) => value !== "")
+            ? `<span class="text-sm mt-2 font-bold">Dati inseriti</span>`
+            : ""
+        }
+        ${Object.entries(cart.cd.inputs)
+          .filter(([key, value]) => value !== "")
+          .map(
+            ([key, value]) => `<li class="text-sm mt-2">${key}: ${value}</li>`
+          )
+          .join("")}
+        ${
+          cart.cd.filenames.length > 0
+            ? `<span class="text-sm mt-2 font-bold">File aggiuntivi</span>`
+            : ""
+        }
         ${
           cart.cd.filenames.length > 0
             ? cart.cd.filenames
