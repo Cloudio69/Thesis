@@ -45,7 +45,7 @@
                     <input type="text" name="nome_universita" id="nome_universita" class="p-2 !rounded-md" required placeholder="Università degli Studi di Milano"/>
                 </div>
                 <div class="flex flex-col">
-                    <label for="nome_matricola" class="text-sm py-2">Nome Facoltà</label>
+                    <label for="nome_facolta" class="text-sm py-2">Nome Facoltà</label>
                     <input type="text" name="nome_facolta" id="nome_facolta" class="p-2 !rounded-md" required placeholder="Facoltà di Ingegneria Informatica"/>
                 </div>
                 <div class="flex flex-col">
