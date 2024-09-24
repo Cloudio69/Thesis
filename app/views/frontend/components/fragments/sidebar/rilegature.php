@@ -24,7 +24,7 @@
                                 <h3><?php echo $decodedRilegature[$i]->nome_rilegatura ?></h3>
                                 <span class="!text-sm"><?php echo $decodedRilegature[$i]->prezzo_rilegatura ?> €</span>
                             </div>
-                            <input type="radio" data-nome="<?php echo $decodedRilegature[$i]->nome_rilegatura ?>" data-prezzo="<?php echo $decodedRilegature[$i]->prezzo_rilegatura ?>" data-descrizione="<?php echo htmlspecialchars($decodedRilegature[$i]->descrizione_rilegatura, ENT_QUOTES, 'UTF-8') ?>" name="rilegatura" value="<?php echo $decodedRilegature[$i]->id_rilegatura; ?>" id="<?php echo $decodedRilegature[$i]->id_rilegatura; ?>" class="hidden" />
+                            <input type="radio" data-nome="<?php echo $decodedRilegature[$i]->nome_rilegatura ?>" data-prezzo="<?php echo $decodedRilegature[$i]->prezzo_rilegatura ?>" data-descrizione="<?php echo htmlspecialchars($decodedRilegature[$i]->descrizione_rilegatura, ENT_QUOTES, 'UTF-8') ?>" name="rilegatura" value="<?php echo $decodedRilegature[$i]->id_rilegatura; ?>" id="<?php echo $decodedRilegature[$i]->id_rilegatura; ?>" class="hidden"/>
                         </label>
                     <?php
                     }
@@ -48,7 +48,7 @@
                     <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">arrows_more_up</span>Angoli</h1>
                     <div class="flex gap-4 items-center place-items-center text-center">
                         <select name="angoli" class="p-2 rounded-md">
-                            <option value="" selected disabled>Seleziona gli angoli</option>
+                            <option value="" selected>Nessun angolo</option>
                             <?php
                             $angoli = new Angolo;
                             $angoli = $angoli->get_angoli();
@@ -66,7 +66,7 @@
                     <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">bookmark</span>Segnalibri</h1>
                     <div class="flex gap-4 items-center place-items-center text-center">
                         <select name="segnalibri" class="p-2 rounded-md">
-                            <option value="" selected disabled>Seleziona il segnalibro</option>
+                            <option value="" selected>Nessun segnalibro</option>
                             <?php
                             $segnalibri = new Segnalibro;
                             $segnalibri = $segnalibri->get_segnalibri();
@@ -83,7 +83,7 @@
                 <div class="quantita flex flex-col gap-4 mt-4">
                     <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">add_shopping_cart</span>Quantità</h1>
                     <div class="flex gap-4 items-center place-items-center text-center">
-                        <input type="number" name="quantita" class="w-24 p-2 rounded-md" value="1" min="1" required />
+                        <input type="number" name="quantita" class="w-24 p-2 !rounded-md" value="1" min="1" required />
                         <button type="submit" class="rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400">AGGIUNGI AL CARRELLO</button>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
                 </div>
             </div>
         </form>
-        <button class="hidden px-6 py-4 fixed left-1/2 bottom-5 next-step w-[160px] rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400" id="prosegui_rilegature">PROSEGUI</button>
+        <button class="hidden px-6 py-4 fixed left-1/2 bottom-5 next-step w-[160px] rounded-md bg-[f4b424] hover:bg-slate-400 text-white border-none focus:bg-yellow-400" id="prosegui_rilegature">PROSEGUI</button>
         <div class="fixed bg-white flex flex-col gap-2 rounded-md p-4 min-w-[15%] max-w-[15%] left-[43%] top-24 m-4 shadow-md">
             <h1 class="font-bold text-lg">Rilegatura</h1>
             <section class="rilegature_riepilogo">

@@ -1,4 +1,4 @@
-<div class="thesis--header fixed w-full z-50 bg-white">
+<div class="thesis--header fixed w-full z-50 bg-white top-0 overflow-auto md:top-auto md:overflow-visible">
     <section class="thesis--navigation flex items-center justify-between divide-x border-b shadow-sm">
         <div id="frontespizio" class="active route flex items-center gap-4 p-4 flex-1 justify-center cursor-pointer">
             <span class="material-symbols-outlined !text-2xl">description</span>

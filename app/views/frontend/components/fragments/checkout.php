@@ -1,24 +1,24 @@
 <div class="thesis--checkout checkout flex flex-col items-center justify-center w-full">
-    <form method="POST" class="w-full p-4 flex flex-col gap-4 justify-center m-0" id="checkout_form">
+    <form method="POST" class="w-full px-4 flex flex-col gap-4 justify-center m-0" id="checkout_form">
         <div class="dati--personali flex flex-col gap-4 border bg-white shadow-sm rounded-md p-4">
             <h1 class="text-2xl font-bold">Dati personali</h1>
             <div class="mb-4 flex">
                 <div class="w-1/2 pr-2">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="nome"><span>Nome</span><span id="nome_error" class="hidden text-red-500 text-xs">Campo non valido</span></label>
-                    <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="nome" type="text" name="nome" required autocomplete="given-name">
+                    <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="nome" type="text" name="nome" required autocomplete="given-name" placeholder="Alberto">
                 </div>
                 <div class="w-1/2 pl-2">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="cognome"><span>Cognome</span><span id="cognome_error" class="hidden text-red-500 text-xs">Campo non valido</span></label>
-                    <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="cognome" type="text" name="cognome" required autocomplete="family-name">
+                    <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="cognome" type="text" name="cognome" required autocomplete="family-name" placeholder="Patella">
                 </div>
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="email"><span>Email</span><span id="email_error" class="hidden text-red-500 text-xs">Campo non valido</span></label>
-                <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="email" type="email" name="email" required autocomplete="email">
+                <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="email" type="email" name="email" required autocomplete="email" placeholder="patella@gmail.com">
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="telefono"><span>Telefono</span><span id="telefono_error" class="hidden text-red-500 text-xs">Campo non valido</span></label>
-                <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="telefono" type="tel" name="telefono" required autocomplete="tel">
+                <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="telefono" type="tel" name="telefono" required autocomplete="tel" placeholder="(+39) 331 ...">
             </div>
         </div>
         <div class="dati--spedizione flex flex-col gap-4 border bg-white shadow-sm rounded-md p-4">
@@ -140,16 +140,16 @@
                 </div>
                 <div class="flex-1">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="indirizzo"><span>Indirizzo</span><span id="indirizzo_error" class="hidden text-red-500 text-xs">Campo non valido</span></label>
-                    <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="indirizzo" type="text" name="indirizzo" required autocomplete="street-address">
+                    <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="indirizzo" type="text" name="indirizzo" required autocomplete="street-address" placeholder="Via Delle Nazioni 4">
                 </div>
                 <div class="flex-1">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="citta"><span>Città</span><span id="citta_error" class="hidden text-red-500 text-xs">Campo non valido</span></label>
-                    <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="citta" type="text" name="citta" required autocomplete="address-level2">
+                    <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="citta" type="text" name="citta" required autocomplete="address-level2" placeholder="Roma">
                 </div>
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="codice_postale"><span>Codice Postale</span><span id="codice_postale_error" class="hidden text-red-500 text-xs">Campo non valido</span></label>
-                <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="codice_postale" type="text" name="codice_postale" required autocomplete="postal-code">
+                <input class="appearance-none !rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="codice_postale" type="text" name="codice_postale" required autocomplete="postal-code" placeholder="00042">
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="spedizione">Spedizione</label>

@@ -3,7 +3,14 @@ const canvas = new fabric.Canvas("cd-canvas", {
   selection: false,
   hoverCursor: "default",
 });
-// Set background color TRANSPARENT
+
+let placeholders = {
+  Relatori: "[Relatori]",
+  Controrelatori: "[Controrelatori]",
+  Studente: "[Studente]",
+  Matricola: "[Matricola]",
+};
+
 canvas.setDimensions({ width: 600, height: 600 });
 
 canvas.backgroundColor = "transparent";
@@ -21,29 +28,46 @@ const img = new fabric.Image.fromURL(
   }
 );
 
-const titoloUni = new fabric.Textbox(
-  "[Nome Università]\n[Facoltà]",
-  {
-    fontFamily: "Inter",
-    fontWeight: "bold",
-    fontSize: 20,
-    originX: "center",
-    originY: "top",
-    left: canvas.width / 2,
-    top: canvas.height * 0.15,
-    selectable: true,
-    hasControls: false,
-    hasBorders: false,
-    lockMovementX: true,
-    lockMovementY: true,
-    textAlign: "center",
-    width: 350,
-    height: 50,
-    hoverCursor: "pointer",
-  }
-);
+const titoloUni = new fabric.Textbox("[Nome Università]", {
+  fontFamily: "Inter",
+  fontWeight: "bold",
+  fontSize: 20,
+  originX: "center",
+  originY: "top",
+  left: canvas.width / 2,
+  top: canvas.height * 0.15,
+  selectable: false,
+  hasControls: false,
+  hasBorders: false,
+  lockMovementX: true,
+  lockMovementY: true,
+  textAlign: "center",
+  width: 350,
+  height: 50,
+  hoverCursor: "pointer",
+});
 
 canvas.add(titoloUni);
+
+const nomeFacolta = new fabric.Textbox("[Facoltà]", {
+  fontFamily: "Inter",
+  fontSize: 20,
+  originX: "center",
+  originY: "top",
+  left: canvas.width / 2,
+  top: canvas.height * 0.2,
+  selectable: false,
+  hasControls: false,
+  hasBorders: false,
+  lockMovementX: true,
+  lockMovementY: true,
+  textAlign: "center",
+  width: 350,
+  height: 50,
+  hoverCursor: "pointer",
+});
+
+canvas.add(nomeFacolta);
 
 const corsoDiLaurea = new fabric.Textbox("[Corso di Laurea]", {
   fontFamily: "Inter",
@@ -52,7 +76,7 @@ const corsoDiLaurea = new fabric.Textbox("[Corso di Laurea]", {
   originY: "top",
   left: canvas.width / 2,
   top: canvas.height * 0.25,
-  selectable: true,
+  selectable: false,
   hasControls: false,
   hasBorders: false,
   lockMovementX: true,
@@ -74,7 +98,7 @@ const titoloTesi = new fabric.Textbox("[TITOLO TESI DI LAUREA]", {
   originY: "center",
   left: canvas.width / 2,
   top: canvas.height * 0.7, // Adjusted top position
-  selectable: true,
+  selectable: false,
   hasControls: false,
   hasBorders: false,
   lockMovementX: true,
@@ -94,7 +118,7 @@ const annoAccademico = new fabric.Textbox("Anno Accademico 20XX/20XX", {
   originY: "bottom",
   left: canvas.width / 2,
   top: canvas.height * 0.95,
-  selectable: true,
+  selectable: false,
   hasControls: false,
   hasBorders: false,
   lockMovementX: true,
@@ -117,7 +141,7 @@ const testoStudente = new fabric.Textbox(
     originY: "center",
     left: canvas.width * 0.05, // Adjusted left position
     top: canvas.height / 2,
-    selectable: true,
+    selectable: false,
     hasControls: false,
     hasBorders: false,
     lockMovementX: true,
@@ -133,7 +157,7 @@ canvas.add(testoStudente);
 // testoRelatore
 
 const testoRelatore = new fabric.Textbox(
-  "Relatore:\n[Nome Cognome]\nContro relatore:\n[Nome Cognome]",
+  "Relatore:\n[Relatore]\nContro relatore:\n[Contro relatore]",
   {
     fontFamily: "Inter",
     fontSize: 16,
@@ -141,7 +165,7 @@ const testoRelatore = new fabric.Textbox(
     originY: "center",
     left: canvas.width * 0.95, // Adjusted left position
     top: canvas.height / 2,
-    selectable: true,
+    selectable: false,
     hasControls: false,
     hasBorders: false,
     lockMovementX: true,
@@ -158,6 +182,14 @@ titoloUni.on("editing:exited", function (e) {
   if (titoloUni.text === "") {
     titoloUni.fontSize = 20;
     titoloUni.text = "[Nome Università]\n[Facoltà]";
+    canvas.renderAll();
+  }
+});
+
+nomeFacolta.on("editing:exited", function (e) {
+  if (nomeFacolta.text === "") {
+    nomeFacolta.fontSize = 20;
+    nomeFacolta.text = "[Facoltà]";
     canvas.renderAll();
   }
 });
@@ -250,6 +282,32 @@ editCd.addEventListener("click", () => {
 formCD.onsubmit = (e) => {
   e.preventDefault();
 
+  const submitButton = formCD.querySelector("button[type='submit']");
+
+  const requiredFields = [
+    "nome_universita",
+    "nome_facolta",
+    "corso_laurea",
+    "titolo_tesi",
+    "anno_accademico",
+    "nome_studente",
+    "numero_matricola",
+    "nome_relatori",
+    "nome_controrelatori",
+  ];
+
+  let allFieldsPopulated = requiredFields.every((field) => {
+    const element = formCD.querySelector(`[name='${field}']`);
+    return element && element.value.trim() !== "";
+  });
+
+  if (!allFieldsPopulated) {
+    alert("Compila tutti i campi obbligatori");
+    return;
+  } else {
+    document.querySelector("#no_cd").click();
+  }
+
   cart.cd = {
     contenuto: selectCD.value,
     prezzo: 10,
@@ -259,6 +317,7 @@ formCD.onsubmit = (e) => {
           item.getAttribute("data-filename")
         )
       : [],
+    inputs: placeholders ? { ...placeholders } : {},
   };
 
   const data = new FormData();
@@ -281,17 +340,44 @@ formCD.onsubmit = (e) => {
       console.error(error);
     },
   });
+
+  formCD.reset();
+
+  titoloUni.text = "[Nome Università]";
+  nomeFacolta.text = "[Facoltà]";
+  corsoDiLaurea.text = "[Corso di Laurea]";
+  titoloTesi.text = "[TITOLO TESI DI LAUREA]";
+  annoAccademico.text = "Anno Accademico\n20XX/20XX";
+  testoStudente.text = "Studente:\n[Nome Cognome]\nMatricola:\n[Matricola]";
+  testoRelatore.text =
+    "Relatore:\n[Nome Cognome]\nContro relatore:\n[Nome Cognome]";
+
+  placeholders = {
+    Relatori: "[Relatori]",
+    Controrelatori: "[Controrelatori]",
+    Studente: "[Studente]",
+    Matricola: "[Matricola]",
+  };
+
+  canvas.renderAll();
 };
 
 selectCD.onchange = (e) => {
   const listWrapper = document.querySelector("#file_list_wrapper");
   const selected = e.currentTarget.value;
+  const submitButton = document.querySelector("#form_cd button[type='submit']");
+  submitButton.disabled = false;
+
   if (selected !== "file") {
-    if (!listWrapper.classList.contains("opacity-50"))
-      listWrapper.classList.add("opacity-50");
+    if (!listWrapper.classList.contains("hidden"))
+      listWrapper.classList.add("hidden");
+    document.querySelector(".formati-accettati").classList.add("hidden");
+
     listWrapper.querySelector("input[type='file']").disabled = true;
   } else {
-    listWrapper.classList.remove("opacity-50");
+    listWrapper.classList.remove("hidden");
+    listWrapper.classList.add("flex");
+    document.querySelector(".formati-accettati").classList.remove("hidden");
     listWrapper.querySelector("input[type='file']").disabled = false;
   }
 };
@@ -403,3 +489,91 @@ fileListCD.onchange = (e) => {
     },
   });
 };
+
+const editorCd = document.querySelector("form_cd");
+
+const textElements = Array.from(
+  document.querySelector("#form_cd").elements
+).filter(
+  (element) => element.type === "text" || element.tagName === "TEXTAREA"
+);
+const canvasElements = [
+  titoloUni,
+  nomeFacolta,
+  corsoDiLaurea,
+  titoloTesi,
+  annoAccademico,
+  testoStudente,
+  testoRelatore,
+];
+
+let textMapping = {
+  nome_universita: titoloUni,
+  nome_facolta: nomeFacolta,
+  corso_laurea: corsoDiLaurea,
+  titolo_tesi: titoloTesi,
+  anno_accademico: annoAccademico,
+  nome_studente: testoStudente,
+  numero_matricola: testoStudente,
+  nome_relatori: testoRelatore,
+  nome_controrelatori: testoRelatore,
+};
+
+textElements.forEach((element) => {
+  element.addEventListener("keyup", function () {
+    if (
+      textMapping[element.name] &&
+      element.name !== "nome_relatore" &&
+      element.name !== "nome_studente"
+    ) {
+      textMapping[element.name].text = element.value;
+      canvas.renderAll();
+
+      if (element.name === "anno_accademico") {
+        textMapping[element.name].text = `Anno Accademico\n ${element.value}`;
+        canvas.renderAll();
+      }
+    }
+
+    if (
+      element.name === "nome_studente" ||
+      element.name === "numero_matricola"
+    ) {
+      if (element.name === "nome_studente") {
+        placeholders["Studente"] = element.value;
+      }
+
+      if (element.name === "numero_matricola") {
+        placeholders["Matricola"] = element.value;
+      }
+
+      textMapping[
+        element.name
+      ].text = `Studente: \n${placeholders["Studente"]}\nMatricola: \n${placeholders["Matricola"]}`;
+      canvas.renderAll();
+    }
+
+    if (
+      element.name === "nome_relatori" ||
+      element.name === "nome_controrelatori"
+    ) {
+      if (element.name === "nome_relatori") {
+        placeholders["Relatori"] = element.value;
+        if (element.value.split(",").length > 1)
+          placeholders["Relatori"] = element.value.split(",").join("\n");
+      }
+
+      if (element.name === "nome_controrelatori") {
+        placeholders["Controrelatori"] = element.value;
+        if (element.value.split(",").length > 1)
+          placeholders["Controrelatori"] = element.value.split(",").join("\n");
+      }
+
+      textMapping[
+        element.name
+      ].text = `Relatore:\n${placeholders["Relatori"]}\nControrelatore:\n${placeholders["Controrelatori"]}`;
+
+      canvas.renderAll();
+    }
+  });
+});

@@ -7,7 +7,7 @@ include_once THESIS_DIR . "app/includes/ajax/public/init.php";
 /**
  * Classe Thesis
  * Questa classe contiene i metodi per l'inizializzazione del plugin
- * 
+ *
  * @package Thesis
  * @subpackage Includes
  */
@@ -21,11 +21,23 @@ class Thesis
         $this->thesis_options();
         $this->thesis_hooks();
         $this->thesis_widgets();
+        // $this->thesis_override_templates();
     }
 
     public function thesis_check_updates()
     {
         // Will be implemented in the future
+    }
+
+    public function thesis_override_templates()
+    {
+        add_filter('woocommerce_locate_template', function ($template, $template_name, $template_path) {
+            $custom_template = THESIS_WOO . '/' . $template_name;
+            if (file_exists($custom_template)) {
+                return $custom_template;
+            }
+            return $template;
+        }, 10, 3);
     }
 
     public function thesis_hooks()
@@ -99,7 +111,7 @@ class Thesis
         if ($pagename !== 'configuratore') {
             wp_enqueue_script('cookie-helper', THESIS_URL . 'app/assets/js/frontend/helper/cookie-helper.js', array(), false, true);
             wp_enqueue_script('thesis-initialize', THESIS_URL . 'app/assets/js/frontend/thesis-initialize.js', array(), false, true);
-            wp_enqueue_style('tailwind-css', THESIS_URL . "/app/assets/css/tailwind.css");
+            wp_enqueue_style('tailwind', THESIS_URL . "/app/assets/css/tailwind.css");
         }
     }
 
@@ -110,6 +122,10 @@ class Thesis
         } else {
             $page_template = '';
         }
+
+        /* if (is_checkout()) {
+            $page_template = THESIS_DIR . 'app/views/templates/woo-checkout.php';
+        } */
 
         return $page_template;
     }
@@ -125,9 +141,8 @@ class Thesis
 
         wp_enqueue_media();
         wp_enqueue_style('thesis-admin', THESIS_URL . "/app/assets/css/thesis.admin.css");
-        wp_enqueue_style('tailwind-css', THESIS_URL . "/app/assets/css/tailwind.css");
+        wp_enqueue_style('tailwind', THESIS_URL . "/app/assets/css/tailwind.css");
         wp_enqueue_script('admin-js', THESIS_URL . "/app/assets/js/thesis.admin.js", array(), null, true);
-        wp_enqueue_script('chart-js', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js');
     }
 
     public function thesis_widgets()

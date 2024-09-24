@@ -1,8 +1,8 @@
 const checkoutForm = document.querySelector("#checkout_form")
 const submitCheckout = document.querySelector("#submit_checkout")
+const shippingSelect = document.querySelector("#spedizione")
 
 let fieldChecker = {}
-
 
 const fieldLookup = () => {
     for (const [key, value] of Object.entries(fieldChecker)) {
@@ -65,4 +65,9 @@ checkoutForm.addEventListener("submit", (e) => {
         }
     })
 
+})
+
+
+shippingSelect.addEventListener("change", (e) => {
+    updateCart()
 })

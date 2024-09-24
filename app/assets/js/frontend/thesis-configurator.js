@@ -17,6 +17,8 @@ let objRilegatura = {
   qty: 0,
 };
 
+error = false;
+
 const showToast = async (message, status, icon) => {
   if (document.querySelector(".toast"))
     document.querySelector(".toast").remove();
@@ -30,8 +32,8 @@ const showToast = async (message, status, icon) => {
   let bgStatus = mapStatus[status];
 
   let toast = document.createElement("div");
-  toast.className = `toast toast-${status} fixed bottom-0 left-0 m-4 p-4 ${bgStatus} text-white rounded-lg shadow-lg flex items-center gap-4 z-50 fade-in `;
-  toast.innerHTML = `<span class="material-symbols-outlined flex items-center !text-white">${icon}</span><p class="flex font-bold">${message}</p>`;
+  toast.className = `toast toast-${status} fixed top-1/2 left-1/2 m-4 p-6 ${bgStatus} text-white rounded-lg shadow-lg flex items-center gap-4 z-50 fade-in `;
+  toast.innerHTML = `<span class="material-symbols-outlined flex items-center !text-white text-2xl">${icon}</span><p class="flex font-bold text-2xl">${message}</p>`;
   document.body.appendChild(toast);
 
   await new Promise((resolve) => {
@@ -156,54 +158,60 @@ config.forEach((item, index) => {
   };
 });
 
-document.querySelectorAll(".next-step").forEach((button) => {
-  button.onclick = (e) => {
-    if (e.currentTarget.disabled) return;
 
-    if (e.currentTarget.nextElementSibling) {
-      e.currentTarget.nextElementSibling.classList.remove("selected");
-    } else if (e.currentTarget.previousElementSibling) {
-      e.currentTarget.previousElementSibling.classList.remove("selected");
-    }
+const nextStep = () => {
+  document.querySelectorAll(".next-step").forEach((button) => {
+    button.onclick = (e) => {
+      if (e.currentTarget.disabled) return;
 
-    e.currentTarget.classList.add("selected");
-    document
-      .querySelectorAll(".route")
-      .forEach((item) => item.classList.remove("active"));
-    document
-      .querySelector(".thesis--navigation")
-      .children[currentStep + 1].classList.add("active");
-    document
-      .querySelector(".thesis--sidebar")
-      .children[currentStep].classList.add("hidden");
-    document
-      .querySelector(".thesis--sidebar")
-      .children[currentStep + 1].classList.remove("hidden");
-    document
-      .querySelector(".thesis--fragments")
-      .children[currentStep].classList.add("hidden");
-    document
-      .querySelector(".thesis--fragments")
-      .children[currentStep + 1].classList.remove("hidden");
-
-    currentStep++;
-
-    document
-      .querySelectorAll(".route")
-    [currentStep].classList.remove("opacity-50");
-    config[currentStep].isCompleted = true;
-
-    if (currentStep === 5 || currentStep === 6) {
-      document.querySelector(".open-cart-dialog").classList.add("hidden");
-    } else {
-      if (
-        document.querySelector(".open-cart-dialog").classList.contains("hidden")
-      ) {
-        document.querySelector(".open-cart-dialog").classList.remove("hidden");
+      if (e.currentTarget.nextElementSibling) {
+        e.currentTarget.nextElementSibling.classList.remove("selected");
+      } else if (e.currentTarget.previousElementSibling) {
+        e.currentTarget.previousElementSibling.classList.remove("selected");
       }
-    }
-  };
-});
+      e.currentTarget.classList.add("selected");
+      document
+        .querySelectorAll(".route")
+        .forEach((item) => item.classList.remove("active"));
+      document
+        .querySelector(".thesis--navigation")
+        .children[currentStep + 1].classList.add("active");
+      document
+        .querySelector(".thesis--sidebar")
+        .children[currentStep].classList.add("hidden");
+      document
+        .querySelector(".thesis--sidebar")
+        .children[currentStep + 1].classList.remove("hidden");
+      document
+        .querySelector(".thesis--fragments")
+        .children[currentStep].classList.add("hidden");
+      document
+        .querySelector(".thesis--fragments")
+        .children[currentStep + 1].classList.remove("hidden");
+
+      currentStep++;
+
+      document
+        .querySelectorAll(".route")
+      [currentStep].classList.remove("opacity-50");
+      config[currentStep].isCompleted = true;
+
+      document.querySelector('.thesis--sidebar').scrollTo(0, 0);
+
+      if (currentStep === 5 || currentStep === 6) {
+        document.querySelector(".open-cart-dialog").classList.add("hidden");
+      } else {
+        if (
+          document.querySelector(".open-cart-dialog").classList.contains("hidden")
+        ) {
+          document.querySelector(".open-cart-dialog").classList.remove("hidden");
+        }
+      }
+    };
+  });
+}
+
+nextStep();
 
 let images = {
   fronte: "/wp-content/plugins/thesis/app/assets/img/mockup-fronte.png",
@@ -254,6 +262,7 @@ formOrder.onsubmit = (e) => {
         : "Nessun angolo",
     prezzo_angolo:
       angoli.selectedIndex !== 0 ? angoli.selectedOptions[0].dataset.prezzo : 0,
+    rilegatura_thumbnail: document.querySelector('.thesis--rilegature canvas').toDataURL("image/jpeg", 0.4), // TODO: Comprire il canvas con l'immagine della rilegatura
     qty: qty.value,
   });
 

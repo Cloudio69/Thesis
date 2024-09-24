@@ -13,7 +13,7 @@ forms.forEach((form) => {
     if (document.querySelector(".placeholder-cart"))
       document.querySelector(".placeholder-cart").classList.add("hidden");
 
-    showToast("Elemento aggiunto al carrello", "success", "check");
+    if (!error) showToast("Elemento aggiunto al carrello", "success", "check");
 
     updateCart(e);
   });
@@ -81,39 +81,49 @@ const updateCart = async (e) => {
       );
 
       rilegatureItem.innerHTML = `
-        <div class="flex justify-between items-start">
-          <div class='flex flex-col'>
+        <div class="flex items-start gap-4">
+        <div class="flex items-center image">
+          <img src="${rilegatura.rilegatura_thumbnail}" alt="${
+        rilegatura.nome_rilegatura
+      }" class="w-fit h-[120px] object-contain rounded-md" />
+          </div>
+          <div class='flex flex-col flex-1 pl-6'>
             <h4 class="font-bold text-xl">${rilegatura.nome_rilegatura}</h4>
             <span class='text-sm mt-2'>Colore: ${rilegatura.nome_colore}</span>
             <span class='text-sm'>Variante: ${rilegatura.nome_variante}</span>
             <span class='text-sm'>Segnalibro: ${
               rilegatura.nome_segnalibro
             } (+${parseFloat(rilegatura.prezzo_segnalibro).toFixed(2)})</span>
-            <span class='text-sm mb-2'>Angoli: ${
+            <span class='text-sm'>Angoli: ${
               rilegatura.nome_angolo
             } (+${parseFloat(rilegatura.prezzo_angolo).toFixed(2)})</span>
           </div>
-          <span class="text-xl font-bold">${rilegatura.qty} x ${(
+          <div class="flex flex-col text-xl font-bold self-stretch justify-between rilegatura_actions">
+          <span>${rilegatura.qty} x ${(
         parseFloat(rilegatura.prezzo_rilegatura) +
         parseFloat(rilegatura.prezzo_segnalibro) +
         parseFloat(rilegatura.prezzo_angolo)
-      ).toFixed(2)}€</span>
+      ).toFixed(2)}€
+        </span>
+        </div>
         </div>
       `;
 
       totale += rilegatura.qty
         ? (parseFloat(rilegatura.prezzo_rilegatura) +
-          parseFloat(rilegatura.prezzo_segnalibro) +
-          parseFloat(rilegatura.prezzo_angolo)) * rilegatura.qty
+            parseFloat(rilegatura.prezzo_segnalibro) +
+            parseFloat(rilegatura.prezzo_angolo)) *
+          rilegatura.qty
         : parseFloat(rilegatura.prezzo_rilegatura) +
           parseFloat(rilegatura.prezzo_segnalibro) +
           parseFloat(rilegatura.prezzo_angolo);
 
       let eliminaBtn = document.createElement("button");
-      eliminaBtn.innerText = "Elimina";
+      eliminaBtn.innerHTML = "<span class='material-symbols-outlined !text-white'>delete</span>";
       eliminaBtn.classList.add(
         "!bg-red-500",
         "text-white",
+        "self-end",
         "p-2",
         "rounded-md"
       );
@@ -121,8 +131,10 @@ const updateCart = async (e) => {
         removeRilegatura(index);
       });
 
-      rilegatureItem.appendChild(eliminaBtn);
       rilegatureDiv.appendChild(rilegatureItem);
+      rilegatureDiv
+        .querySelectorAll(".rilegatura_actions")
+        .forEach((item) => item.appendChild(eliminaBtn));
     });
   }
 
@@ -198,18 +210,32 @@ const updateCart = async (e) => {
     );
     cdItem.innerHTML = `
       <div class="flex justify-between items-start">
-        <div class='flex flex-col w-full'>
-        <span class="text-xl flex items-center justify-between"><b>CD Serigrafato x ${
-          cart.cd.qty
-        }</b> <span class='font-bold'>${cart.cd.prezzo}€</span></span>
-        ${
-          cart.cd.filenames.length > 0
-            ? cart.cd.filenames
-                .map((filename) => `<li class="text-sm mt-2">${filename}</li>`)
-                .join("")
-            : ""
-        }
-        </div>
+      <div class='flex flex-col w-full'>
+      <span class="text-xl flex items-center justify-between"><b>CD Serigrafato x ${
+        cart.cd.qty
+      }</b> <span class='font-bold'>${cart.cd.prezzo}€</span></span>
+      ${
+        Object.values(cart.cd.inputs).some((value) => value !== "")
+          ? `<span class="text-sm mt-2 font-bold">Dati inseriti</span>`
+          : ""
+      }
+      ${Object.entries(cart.cd.inputs)
+        .filter(([key, value]) => value !== "")
+        .map(([key, value]) => `<li class="text-sm mt-2">${key}: ${value}</li>`)
+        .join("")}
+      ${
+        cart.cd.filenames.length > 0
+          ? `<span class="text-sm mt-2 font-bold">File aggiuntivi</span>`
+          : ""
+      }
+      ${
+        cart.cd.filenames.length > 0
+          ? cart.cd.filenames
+              .map((filename) => `<li class="text-sm mt-2">${filename}</li>`)
+              .join("")
+          : ""
+      }
+      </div>
       </div>
     `;
     cdDiv.appendChild(cdItem);
@@ -234,7 +260,9 @@ const updateCart = async (e) => {
     2
   )}€</span></h3>`;
 
-  totaleDiv.innerHTML += `<h3 class='text-xs mt-2 opacity-50 font-bold flex items-center justify-between w-full'><span>IVA 22%: </span><span>${iva.toFixed(2)}€</span></h3>`;
+  totaleDiv.innerHTML += `<h3 class='text-xs mt-2 opacity-50 font-bold flex items-center justify-between w-full'><span>IVA 22%: </span><span>${iva.toFixed(
+    2
+  )}€</span></h3>`;
 
   cartWrapper.appendChild(tipologiaDiv);
   cartWrapper.appendChild(rilegatureDiv);
@@ -246,20 +274,28 @@ const updateCart = async (e) => {
 };
 
 const updateFinalize = (totale) => {
-  const tipologiaWrapper = document.querySelector(".riepilogo-tipologia section");
+  const tipologiaWrapper = document.querySelector(
+    ".riepilogo-tipologia section"
+  );
   const rilegatureWrapper = document.querySelector(
     ".riepilogo-rilegature section"
   );
   const pagineWrapper = document.querySelector(".riepilogo-pagine section");
   const cdWrapper = document.querySelector(".riepilogo-cd section");
-  const totaleWrapper = document.querySelector("#totale");
-  const subtotaleWrapper = document.querySelector("#subtotale");
+  const totaleWrapper = document.querySelectorAll(".totale");
+  const subtotaleWrapper = document.querySelectorAll(".subtotale");
+  const spedizioneWrapper = document.querySelectorAll(".spedizione");
 
   tipologiaWrapper.innerHTML = "";
   rilegatureWrapper.innerHTML = "";
   pagineWrapper.innerHTML = "";
   cdWrapper.innerHTML = "";
-  totaleWrapper.innerHTML = "";
+
+  totaleWrapper.forEach((el) => {
+    el.innerHTML = "";
+  });
+
+  let spedizioneSelect = document.querySelector("#spedizione");
 
   const cdDiv = document.createElement("div");
   const pagineDiv = document.createElement("div");
@@ -316,31 +352,40 @@ const updateFinalize = (totale) => {
       );
 
       rilegatureItem.innerHTML = `
-        <div class="flex justify-between items-start">
-          <div class='flex flex-col'>
+        <div class="flex items-start gap-4">
+        <div class="flex items-center image">
+          <img src="${rilegatura.rilegatura_thumbnail}" alt="${
+        rilegatura.nome_rilegatura
+      }" class="w-fit h-[120px] object-contain rounded-md" />
+          </div>
+          <div class='flex flex-col flex-1 pl-6 self-center'>
             <h4 class="font-bold text-xl">${rilegatura.nome_rilegatura}</h4>
-            <span class='text-sm mt-2'>Colore: ${rilegatura.nome_colore}</span>
+            <span class='text-sm'>Colore: ${rilegatura.nome_colore}</span>
             <span class='text-sm'>Variante: ${rilegatura.nome_variante}</span>
             <span class='text-sm'>Segnalibro: ${
               rilegatura.nome_segnalibro
             } (+${parseFloat(rilegatura.prezzo_segnalibro).toFixed(2)})</span>
-            <span class='text-sm mb-2'>Angoli: ${
+            <span class='text-sm'>Angoli: ${
               rilegatura.nome_angolo
             } (+${parseFloat(rilegatura.prezzo_angolo).toFixed(2)})</span>
           </div>
-          <span class="text-xl font-bold">${rilegatura.qty} x ${(
-            parseFloat(rilegatura.prezzo_rilegatura) +
-            parseFloat(rilegatura.prezzo_segnalibro) +
-            parseFloat(rilegatura.prezzo_angolo)
-          ).toFixed(2)}€</span>
+         <div class="flex flex-col text-xl font-bold self-stretch justify-between rilegatura_actions">
+          <span>${rilegatura.qty} x ${(
+        parseFloat(rilegatura.prezzo_rilegatura) +
+        parseFloat(rilegatura.prezzo_segnalibro) +
+        parseFloat(rilegatura.prezzo_angolo)
+      ).toFixed(2)}€
+        </span>
+        </div>
         </div>
       `;
 
       let eliminaBtn = document.createElement("button");
-      eliminaBtn.innerText = "Elimina";
+      eliminaBtn.innerHTML = "<span class='material-symbols-outlined !text-white'>delete</span>";
       eliminaBtn.classList.add(
         "!bg-red-500",
         "text-white",
+        "self-end",
         "p-2",
         "rounded-md"
       );
@@ -348,8 +393,10 @@ const updateFinalize = (totale) => {
         removeRilegatura(index);
       });
 
-      rilegatureItem.appendChild(eliminaBtn);
       rilegatureDiv.appendChild(rilegatureItem);
+      rilegatureDiv
+        .querySelectorAll(".rilegatura_actions")
+        .forEach((item) => item.appendChild(eliminaBtn));
     });
   } else {
     let rilegatureItem = document.createElement("div");
@@ -427,6 +474,22 @@ const updateFinalize = (totale) => {
           cart.cd.qty
         }</b> <span class='font-bold'>${cart.cd.prezzo}€</span></span>
         ${
+          Object.values(cart.cd.inputs).some((value) => value !== "")
+            ? `<span class="text-sm mt-2 font-bold">Dati inseriti</span>`
+            : ""
+        }
+        ${Object.entries(cart.cd.inputs)
+          .filter(([key, value]) => value !== "")
+          .map(
+            ([key, value]) => `<li class="text-sm mt-2">${key}: ${value}</li>`
+          )
+          .join("")}
+        ${
+          cart.cd.filenames.length > 0
+            ? `<span class="text-sm mt-2 font-bold">File aggiuntivi</span>`
+            : ""
+        }
+        ${
           cart.cd.filenames.length > 0
             ? cart.cd.filenames
                 .map((filename) => `<li class="text-sm mt-2">${filename}</li>`)
@@ -439,7 +502,7 @@ const updateFinalize = (totale) => {
     cdDiv.appendChild(cdItem);
 
     let removeCd = document.createElement("button");
-    removeCd.innerText = "Elimina";
+    removeCd.innerHTML = "Elimina";
     removeCd.classList.add("!bg-red-500", "text-white", "p-2", "rounded-md");
     removeCd.addEventListener("click", () => {
       cart.cd = {};
@@ -459,9 +522,32 @@ const updateFinalize = (totale) => {
   pagineWrapper.appendChild(pagineDiv);
   cdWrapper.appendChild(cdDiv);
 
-  subtotaleWrapper.textContent = (totale - iva).toFixed(2);
+  spedizioneWrapper.forEach((el) => {
+    let spedizione = document.querySelector("#spedizione").value;
 
-  totaleWrapper.textContent = parseFloat(totale).toFixed(2);
+    if (spedizione === "express") {
+      el.textContent = (7.9).toFixed(2);
+      totale += 7.9;
+    } else el.textContent = (0.0).toFixed(2);
+  });
+
+  subtotaleWrapper.forEach((el) => {
+    let spedizione = document.querySelector("#spedizione").value;
+    let subtotale = (totale - iva).toFixed(2);
+
+    if (spedizione !== "express") {
+      el.textContent = subtotale;
+    } else {
+      el.textContent = subtotale;
+      document.querySelector(
+        ".subtotale"
+      ).textContent = `${subtotale} + Express`;
+    }
+  });
+
+  totaleWrapper.forEach((el) => {
+    el.textContent = parseFloat(totale).toFixed(2);
+  });
 };
 
 function removeRilegatura(index) {

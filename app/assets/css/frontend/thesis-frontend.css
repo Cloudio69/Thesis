@@ -11,7 +11,13 @@
 }
 
 * {
+  font-family: 'Inter', sans-serif;
   scroll-behavior: smooth;
+}
+
+[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .material-symbols-outlined {
@@ -92,7 +98,7 @@
 
 
 label:has(input[type="radio"]:checked) {
-  outline: 1px solid black;
+  outline: 2px solid #f4b424;
 }
 
 .selected span {
@@ -106,6 +112,14 @@ label:has(input[type="radio"]:checked) {
 
 .fade-out {
   animation: fadeOut 0.5s ease-in-out forwards;
+}
+
+.toast{
+  transform: translate(-50%, -50%);
+}
+
+.thesis--fragments{
+  scrollbar-gutter: stable;
 }
 
 @keyframes fadeIn {
