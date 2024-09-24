@@ -154,8 +154,8 @@ const generaPagine = async () => {
       );
     };
 
-    for (let i = 0; i < numPages; i += 5) {
-      await generatePagesBatch(i, Math.min(i + 5, numPages));
+    for (let i = 0; i < numPages; i += 20) {
+      await generatePagesBatch(i, Math.min(i + 20, numPages));
       await new Promise((resolve) => setTimeout(resolve, 500));
     }
 

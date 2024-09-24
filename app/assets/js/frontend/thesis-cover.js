@@ -597,7 +597,8 @@ fileUpload.onchange = (e) => {
           console.error(error);
         },
       });
-      window.location.reload();
+      window.onbeforeunload = () => {};
+      window.location.reload(true);
     },
   });
 };
