@@ -83,9 +83,9 @@ const updateCart = async (e) => {
       rilegatureItem.innerHTML = `
         <div class="flex items-start gap-4">
         <div class="flex items-center image">
-          <img src="${rilegatura.rilegatura_thumbnail}" alt="${
+          <img src="${rilegatura.rilegatura_thumbnail}" data-anteprima-rilegatura alt="${
         rilegatura.nome_rilegatura
-      }" class="w-fit h-[120px] object-contain rounded-md" />
+      }" class="w-fit h-[120px] object-contain rounded-md cursor-pointer" />
           </div>
           <div class='flex flex-col flex-1 pl-6'>
             <h4 class="font-bold text-xl">${rilegatura.nome_rilegatura}</h4>
@@ -119,7 +119,8 @@ const updateCart = async (e) => {
           parseFloat(rilegatura.prezzo_angolo);
 
       let eliminaBtn = document.createElement("button");
-      eliminaBtn.innerHTML = "<span class='material-symbols-outlined !text-white'>delete</span>";
+      eliminaBtn.innerHTML =
+        "<span class='material-symbols-outlined !text-white'>delete</span>";
       eliminaBtn.classList.add(
         "!bg-red-500",
         "text-white",
@@ -155,30 +156,38 @@ const updateCart = async (e) => {
     pagineItem.innerHTML = `
     <h4 class="font-bold text-xl">Pagine</h4>
       <div class="flex justify-between items-start">
-        <div class='flex flex-col w-full'>
-        <span class='flex items-center justify-between my-2'><b class='text-xl'>B/N: ${
+        <div class='flex flex-col w-full gap-2'>
+        <span class='flex items-center justify-between my-2'><b class='text-sm rounded-lg bg-neutral-100 px-2 flex items-center gap-2'><img src="/wp-content/plugins/thesis/app/assets/img/svg/black-and-white.svg" class="w-2 h-2">Monocolore: ${
           cart.pagine.bn.length
-        }</b> <b class='text-xl'>Colorate: ${
+        }</b> <b class='text-sm rounded-lg bg-neutral-100 px-2 flex items-center gap-2'><img src="/wp-content/plugins/thesis/app/assets/img/svg/rgb.svg" class="w-2 h-2"> Multicolore: ${
       cart.pagine.colorate.length
-    }</b></span></span>
-        <span class="text-sm flex items-center justify-between"><b>Costo B/N</b><span>  ${(
-          cart.pagine.prezzo_bn *
-          (cart.pagine.bn.length > 0 ? cart.pagine.bn.length : 0)
-        ).toFixed(2)}€</span></span>
-        <span class="text-sm flex items-center justify-between"><b>Costo Colorate</b><span>  ${(
-          cart.pagine.prezzo_colorate *
-          (cart.pagine.colorate.length > 0 ? cart.pagine.colorate.length : 0)
-        ).toFixed(2)}€</span></span>
-        <span class="text-sm flex items-center justify-between"><b>Costo Formato</b><span>  ${
-          cart.pagine.prezzo_formato
-            ? cart.pagine.prezzo_formato + " €"
-            : "Nessun sovraprezzo"
-        }</span></span>
-        <span class="text-sm flex items-center justify-between"><b>Costo Grammatura</b><span> ${
-          cart.pagine.prezzo_grammatura
-            ? cart.pagine.prezzo_grammatura + " €"
-            : "Nessun sovraprezzo"
-        }</span></span>
+    }</b></span></span><hr class="mb-2">
+        <span class="text-sm flex items-center justify-between"><b class="flex items-center gap-2"><span class="material-symbols-outlined">
+print
+</span> Costo Monocolore</b><span>  ${(
+      cart.pagine.prezzo_bn *
+      (cart.pagine.bn.length > 0 ? cart.pagine.bn.length : 0)
+    ).toFixed(2)}€</span></span>
+        <span class="text-sm flex items-center justify-between"><b class="flex items-center gap-2"> <span class="material-symbols-outlined">
+print
+</span> Costo Multicolore</b><span>  ${(
+      cart.pagine.prezzo_colorate *
+      (cart.pagine.colorate.length > 0 ? cart.pagine.colorate.length : 0)
+    ).toFixed(2)}€</span></span>
+        <span class="text-sm flex items-center justify-between"><b class="flex items-center gap-2"><span class="material-symbols-outlined">
+weight
+</span> Costo Formato</b><span>  ${
+      cart.pagine.prezzo_formato
+        ? cart.pagine.prezzo_formato + " €"
+        : "Nessun sovraprezzo"
+    }</span></span>
+        <span class="text-sm flex items-center justify-between"><b class="flex items-center gap-2"><span class="material-symbols-outlined">
+weight
+</span> Costo Grammatura</b><span> ${
+      cart.pagine.prezzo_grammatura
+        ? cart.pagine.prezzo_grammatura + " €"
+        : "Nessun sovraprezzo"
+    }</span></span>
         </div>
       </div>
     `;
@@ -198,6 +207,24 @@ const updateCart = async (e) => {
 
   if (cart.cd.contenuto) {
     let cdItem = document.createElement("div");
+
+    let removeCd = document.createElement("button");
+    removeCd.classList.add(
+      "!bg-red-500",
+      "text-white",
+      "self-end",
+      "p-2",
+      "rounded-md"
+    );
+    removeCd.innerHTML = "<span class='material-symbols-outlined !text-white'>delete</span>";
+    removeCd.addEventListener("click", () => {
+      cart.cd = {};
+      updateCart();
+    });
+
+    
+
+
     cdItem.classList.add(
       "flex",
       "flex-col",
@@ -209,20 +236,29 @@ const updateCart = async (e) => {
       "shadow-md"
     );
     cdItem.innerHTML = `
-      <div class="flex justify-between items-start">
+      <div class="flex justify-between items-start gap-4">
+      <div class="flex items-center image">
+      <div class="cd-thumbnail animate-pulse bg-gray-200 w-24 h-24 rounded-md p-2"></div>
+      </div>
       <div class='flex flex-col w-full'>
-      <span class="text-xl flex items-center justify-between"><b>CD Serigrafato x ${
+      <span class="text-sm flex items-center justify-between"><b>CD Serigrafato x ${
         cart.cd.qty
-      }</b> <span class='font-bold'>${cart.cd.prezzo}€</span></span>
+      }</b></span>
       ${
         Object.values(cart.cd.inputs).some((value) => value !== "")
-          ? `<span class="text-sm mt-2 font-bold">Dati inseriti</span>`
+          ? `<span class="text-xs mt-2 font-bold">Dati inseriti</span>`
           : ""
       }
       ${Object.entries(cart.cd.inputs)
         .filter(([key, value]) => value !== "")
-        .map(([key, value]) => `<li class="text-sm mt-2">${key}: ${value}</li>`)
-        .join("")}
+        .map(([key, value]) => `<p class="text-xs mt-2">${key}: ${value}</p>`)
+        .join("")} 
+      </div>
+      <div class='flex flex-col w-full self-stretch flex-grow-0'>
+      <div class='font-bold cd-actions flex flex-col items-end flex-1 justify-between'><span class="text-sm">${
+      cart.cd.qty ? (cart.cd.prezzo * cart.cd.qty).toFixed(2) : cart.cd.prezzo
+    }€</span>${removeCd.outerHTML}</div></span>
+      
       ${
         cart.cd.filenames.length > 0
           ? `<span class="text-sm mt-2 font-bold">File aggiuntivi</span>`
@@ -231,7 +267,7 @@ const updateCart = async (e) => {
       ${
         cart.cd.filenames.length > 0
           ? cart.cd.filenames
-              .map((filename) => `<li class="text-sm mt-2">${filename}</li>`)
+              .map((filename) => `<li class="text-sm mt-2 font-bold">${filename}</li>`)
               .join("")
           : ""
       }
@@ -239,16 +275,6 @@ const updateCart = async (e) => {
       </div>
     `;
     cdDiv.appendChild(cdItem);
-
-    let removeCd = document.createElement("button");
-    removeCd.classList.add("!bg-red-500", "text-white", "p-2", "rounded-md");
-    removeCd.innerText = "Elimina";
-    removeCd.addEventListener("click", () => {
-      cart.cd = {};
-      updateCart();
-    });
-
-    cdItem.appendChild(removeCd);
 
     totale += cart.cd.prezzo * cart.cd.qty;
   }
@@ -354,9 +380,9 @@ const updateFinalize = (totale) => {
       rilegatureItem.innerHTML = `
         <div class="flex items-start gap-4">
         <div class="flex items-center image">
-          <img src="${rilegatura.rilegatura_thumbnail}" alt="${
+          <img src="${rilegatura.rilegatura_thumbnail}" data-anteprima-rilegatura alt="${
         rilegatura.nome_rilegatura
-      }" class="w-fit h-[120px] object-contain rounded-md" />
+      }" class="w-fit h-[120px] object-contain rounded-md cursor-pointer" />
           </div>
           <div class='flex flex-col flex-1 pl-6 self-center'>
             <h4 class="font-bold text-xl">${rilegatura.nome_rilegatura}</h4>
@@ -381,7 +407,8 @@ const updateFinalize = (totale) => {
       `;
 
       let eliminaBtn = document.createElement("button");
-      eliminaBtn.innerHTML = "<span class='material-symbols-outlined !text-white'>delete</span>";
+      eliminaBtn.innerHTML =
+        "<span class='material-symbols-outlined !text-white'>delete</span>";
       eliminaBtn.classList.add(
         "!bg-red-500",
         "text-white",
@@ -422,28 +449,36 @@ const updateFinalize = (totale) => {
     pagineItem.innerHTML = `
     <h4 class="font-bold text-xl">Pagine</h4>
       <div class="flex justify-between items-start">
-        <div class='flex flex-col w-full'>
-        <span class='flex items-center justify-between my-2'><b class='text-xl'>B/N: ${
+        <div class='flex flex-col w-full gap-2'>
+        <span class='flex items-center justify-between my-2'><b class='text-sm rounded-lg bg-neutral-100 px-2 flex items-center gap-2'><img src="/wp-content/plugins/thesis/app/assets/img/svg/black-and-white.svg" class="w-2 h-2"> Monocolore: ${
           cart.pagine.bn.length
-        }</b> <b class='text-xl'>Colorate: ${
+        }</b> <b class='text-sm rounded-lg bg-neutral-100 px-2 flex items-center gap-2'><img src="/wp-content/plugins/thesis/app/assets/img/svg/rgb.svg" class="w-2 h-2"> Multicolore: ${
       cart.pagine.colorate.length
-    }</b></span></span>
-        <span class="text-sm flex items-center justify-between"><b>Costo B/N</b><span>  ${(
+    }</b></span></span><hr class="mb-2">
+        <span class="text-sm flex items-center justify-between"><b class="flex items-center gap-2"><span class="material-symbols-outlined">
+        print
+        </span> Costo Monocolore</b><span>  ${(
           cart.pagine.prezzo_bn * cart.pagine.bn.length
         ).toFixed(2)} €</span></span>
-        <span class="text-sm flex items-center justify-between"><b>Costo Colorate</b><span>  ${(
+        <span class="text-sm flex items-center justify-between"><b class="flex items-center gap-2"><span class="material-symbols-outlined">
+        print
+        </span> Costo Multicolore</b><span>  ${(
           cart.pagine.prezzo_colorate * cart.pagine.colorate.length
         ).toFixed(2)} €</span></span>
-        <span class="text-sm flex items-center justify-between"><b>Costo Formato</b><span>  ${
-          cart.pagine.prezzo_formato > 0
-            ? cart.pagine.prezzo_formato + " €"
-            : "Nessun sovraprezzo"
-        }</span></span>
-        <span class="text-sm flex items-center justify-between"><b>Costo Grammatura</b><span> ${
-          cart.pagine.prezzo_grammatura > 0
-            ? cart.pagine.prezzo_grammatura + " €"
-            : "Nessun sovraprezzo"
-        }</span></span>
+        <span class="text-sm flex items-center justify-between"><b class="flex items-center gap-2"><span class="material-symbols-outlined">
+weight
+</span> Costo Formato</b><span>  ${
+      cart.pagine.prezzo_formato > 0
+        ? cart.pagine.prezzo_formato + " €"
+        : "Nessun sovraprezzo"
+    }</span></span>
+        <span class="text-sm flex items-center justify-between"><b class="flex items-center gap-2"><span class="material-symbols-outlined">
+weight
+</span> Costo Grammatura</b><span> ${
+      cart.pagine.prezzo_grammatura > 0
+        ? cart.pagine.prezzo_grammatura + " €"
+        : "Nessun sovraprezzo"
+    }</span></span>
         </div>
       </div>
     `;
@@ -457,6 +492,15 @@ const updateFinalize = (totale) => {
 
   if (cart.cd.contenuto) {
     let cdItem = document.createElement("div");
+
+    let removeCd = document.createElement("button");
+    removeCd.innerHTML = "<span class='material-symbols-outlined !text-white'>delete</span>";
+    removeCd.classList.add("!bg-red-500", "text-white", "p-2", "rounded-md");
+    removeCd.addEventListener("click", () => {
+      cart.cd = {};
+      updateCart();
+    });
+
     cdItem.classList.add(
       "flex",
       "flex-col",
@@ -467,49 +511,73 @@ const updateFinalize = (totale) => {
       "rounded-md",
       "shadow-md"
     );
+
     cdItem.innerHTML = `
-      <div class="flex justify-between items-start">
-        <div class='flex flex-col w-full'>
-        <span class="text-xl flex items-center justify-between"><b>CD Serigrafato x ${
-          cart.cd.qty
-        }</b> <span class='font-bold'>${cart.cd.prezzo}€</span></span>
-        ${
-          Object.values(cart.cd.inputs).some((value) => value !== "")
-            ? `<span class="text-sm mt-2 font-bold">Dati inseriti</span>`
-            : ""
-        }
-        ${Object.entries(cart.cd.inputs)
-          .filter(([key, value]) => value !== "")
-          .map(
-            ([key, value]) => `<li class="text-sm mt-2">${key}: ${value}</li>`
-          )
-          .join("")}
-        ${
-          cart.cd.filenames.length > 0
-            ? `<span class="text-sm mt-2 font-bold">File aggiuntivi</span>`
-            : ""
-        }
-        ${
-          cart.cd.filenames.length > 0
-            ? cart.cd.filenames
-                .map((filename) => `<li class="text-sm mt-2">${filename}</li>`)
-                .join("")
-            : ""
-        }
-        </div>
-      </div>
-    `;
+    <div class="flex justify-between items-start gap-4">
+    <div class="flex items-center image">
+    <div class="cd-thumbnail animate-pulse bg-gray-200 w-24 h-24 rounded-md p-2"></div>
+    </div>
+    <div class='flex flex-col w-full'>
+    <span class="text-sm flex items-center justify-between"><b>CD Serigrafato x ${
+      cart.cd.qty
+    }</b></span>
+    ${
+      Object.values(cart.cd.inputs).some((value) => value !== "")
+        ? `<span class="text-xs mt-2 font-bold">Dati inseriti</span>`
+        : ""
+    }
+    ${Object.entries(cart.cd.inputs)
+      .filter(([key, value]) => value !== "")
+      .map(([key, value]) => `<p class="text-xs mt-2">${key}: ${value}</p>`)
+      .join("")} 
+    </div>
+    <div class='flex flex-col w-full self-stretch flex-grow-0'>
+    <div class='font-bold cd-actions flex flex-col items-end flex-1 justify-between'><span class="text-sm">${
+    cart.cd.qty ? (cart.cd.prezzo * cart.cd.qty).toFixed(2) : cart.cd.prezzo
+  }€</span>${removeCd.outerHTML}</div></span>
+    
+    ${
+      cart.cd.filenames.length > 0
+        ? `<span class="text-sm mt-2 font-bold">File aggiuntivi</span>`
+        : ""
+    }
+    ${
+      cart.cd.filenames.length > 0
+        ? cart.cd.filenames
+            .map((filename) => `<li class="text-sm mt-2 font-bold">${filename}</li>`)
+            .join("")
+        : ""
+    }
+    </div>
+    </div>
+  `;
     cdDiv.appendChild(cdItem);
 
-    let removeCd = document.createElement("button");
-    removeCd.innerHTML = "Elimina";
-    removeCd.classList.add("!bg-red-500", "text-white", "p-2", "rounded-md");
-    removeCd.addEventListener("click", () => {
-      cart.cd = {};
-      updateCart();
-    });
-
-    cdItem.appendChild(removeCd);
+    if (cart.cd.filenames.length > 0) {
+      let fileListDrawer = document.createElement("div");
+      fileListDrawer.classList.add(
+        "flex",
+        "flex-col",
+        "gap-2",
+        "p-4",
+        "bg-white",
+        "border",
+        "rounded-md",
+        "shadow-md",
+        "drawer"
+      );
+      fileListDrawer.innerHTML = `
+      <div class="drawer--header flex justify-between items-center">
+      <h4 class="font-bold text-xl">File aggiuntivi</h4>
+      </div>
+      <div class="drawer--content">
+      ${cart.cd.filenames
+        .map((filename) => `<li class="text-sm mt-2">${filename}</li>`)
+        .join("")}
+        </div>
+    `;
+      cdDiv.appendChild(fileListDrawer);
+    }
   } else {
     let cdItem = document.createElement("div");
     cdItem.classList.add("opacity-50");
@@ -548,6 +616,8 @@ const updateFinalize = (totale) => {
   totaleWrapper.forEach((el) => {
     el.textContent = parseFloat(totale).toFixed(2);
   });
+
+  Fancybox.bind("[data-anteprima-rilegatura]")
 };
 
 function removeRilegatura(index) {

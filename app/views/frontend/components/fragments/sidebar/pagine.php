@@ -7,18 +7,18 @@
         <div class="flex items-center justify-around gap-8 my-4">
             <div id="bianco--nero" class="flex flex-col gap-4 items-center flex-1 cursor-pointer ">
                 <span class="text-7xl p-4 animate-pulse rounded-md border-slate-300 border-2 min-w-[200px] min-h-[200px] flex items-center justify-center">0</span>
-                <b>PAGINE BIANCO E NERO</b>
+                <b>PAGINE MONOCOLORE</b>
             </div>
             <div id="colore" class="flex flex-col gap-4 items-center flex-1 cursor-pointer">
                 <span class="text-7xl p-4 animate-pulse rounded-md border-slate-300 border-2 min-w-[200px] min-h-[200px] flex items-center justify-center">0</span>
-                <b>PAGINE A COLORI</b>
+                <b>PAGINE MULTICOLORE</b>
             </div>
         </div>
         <h1 class="flex-1 font-bold mt-4">Azioni Stampa</h1>
         <p class="mb-4">Puoi anche cambiare comodamente la stampa di tutte le pagine con i bottoni sottostanti</p>
         <div class="azioni--massive flex w-full gap-2">
-            <button id="stampa_bn" class="btn--massive bg-slate-50 text-black border border-slate-50 flex-1 p-4 rounded-md flex flex-col items-center justify-center"><img src="/wp-content/plugins/thesis/app/assets/img/svg/black-and-white.svg" class="w-6 h-6" alt="TUTTE BIANCO E NERO"><span>BIANCO E NERO</span></button>
-            <button id="stampa_colori" class="btn--massive bg-slate-50 text-black border border-slate-50 flex-1 p-4 rounded-md flex flex-col items-center justify-center"><img src="/wp-content/plugins/thesis/app/assets/img/svg/rgb.svg" class="w-6 h-6" alt="TUTTE A COLORI"><span>A COLORI</span></button>
+            <button id="stampa_bn" class="btn--massive bg-slate-50 text-black border border-slate-50 flex-1 p-4 rounded-md flex flex-col items-center justify-center"><img src="/wp-content/plugins/thesis/app/assets/img/svg/black-and-white.svg" class="w-6 h-6" alt="TUTTE BIANCO E NERO"><span>TUTTE MONOCOLORE</span></button>
+            <button id="stampa_colori" class="btn--massive bg-slate-50 text-black border border-slate-50 flex-1 p-4 rounded-md flex flex-col items-center justify-center"><img src="/wp-content/plugins/thesis/app/assets/img/svg/rgb.svg" class="w-6 h-6" alt="TUTTE A COLORI"><span>TUTTE MULTICOLORE</span></button>
         </div>
     </section>
     <section>
@@ -50,19 +50,19 @@
             <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">euro_symbol</span>Subtotale</h1>
             <div class="p-4 listino_pagine">
                 <div class="flex space-between gap-2">
-                    <span class="flex-1">Pagine B/N</span>
+                    <span class="flex-1">Pagine Monocolore</span>
                     <span id="subtotale_bn"><b>0</b></span>
                 </div>
                 <div class="flex space-between gap-2">
-                    <span class="flex-1">Pagine a colori</span>
+                    <span class="flex-1">Pagine Multicolore</span>
                     <span id="subtotale_colori"><b>0</b></span>
                 </div>
                 <div class="flex space-between gap-2">
-                    <span class="flex-1">Prezzo pagine B/N</span>
+                    <span class="flex-1">Prezzo pagine monocolore</span>
                     <span id="prezzo_bn"><b><?php echo get_option('prezzo_bn'); ?></b></span>
                 </div>
                 <div class="flex space-between gap-2">
-                    <span class="flex-1">Prezzo pagine a colori</span>
+                    <span class="flex-1">Prezzo pagine multicolore</span>
                     <span id="prezzo_colori"><b><?php echo get_option('prezzo_colori'); ?></b></span>
                 </div>
                 <div class="flex space-between gap-2 border-t mt-2 py-2 totale_pagine">
@@ -73,9 +73,9 @@
         </section>
         <div class="quantita flex flex-col gap-4 mt-4">
             <div class="flex gap-4 items-center place-items-center text-center">
-                <button type="submit" class="rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400 w-full disabled:animate-pulse" disabled>AGGIUNGI AL CARRELLO</button>
+                <button type="submit" class="rounded-md bg-[#f4b424] hover:bg-slate-400 text-white border-none focus:bg-yellow-400 w-full disabled:animate-pulse" disabled>AGGIUNGI AL CARRELLO</button>
             </div>
         </div>
-        <button type="button" id="prosegui_pagine" class="hidden next-step rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400 w-full p-4 mt-4">PROSEGUI</button>
+        <button type="button" id="prosegui_pagine" class="hidden next-step bg-[#f4b424] hover:bg-slate-400 text-white border-none focus:bg-yellow-400 w-full p-4 mt-4 rounded-lg">PROSEGUI</button>
     </form>
 </div>

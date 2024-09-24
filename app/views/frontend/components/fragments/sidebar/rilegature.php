@@ -45,7 +45,7 @@
             </div>
             <div class="section_accessori">
                 <div class="angoli flex flex-col gap-4 mt-4">
-                    <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">arrows_more_up</span>Angoli</h1>
+                    <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">arrows_more_up</span><span>Angoli</span> <span class="text-xs bg-neutral-100 rounded-md px-2 py-1"><?php echo number_format((float)$prezzo_angoli, 2) . "€"?></span></h1>
                     <div class="flex gap-4 items-center place-items-center text-center">
                         <select name="angoli" class="p-2 rounded-md">
                             <option value="" selected>Nessun angolo</option>
@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <div class="segnalibri flex flex-col gap-4 mt-4">
-                    <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">bookmark</span>Segnalibri</h1>
+                    <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">bookmark</span><span>Segnalibri</span> <span class="text-xs bg-neutral-100 rounded-md px-2 py-1 "><?php echo number_format((float)$prezzo_segnalibri, 2) . "€"?></span></h1>
                     <div class="flex gap-4 items-center place-items-center text-center">
                         <select name="segnalibri" class="p-2 rounded-md">
                             <option value="" selected>Nessun segnalibro</option>
@@ -84,7 +84,7 @@
                     <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">add_shopping_cart</span>Quantità</h1>
                     <div class="flex gap-4 items-center place-items-center text-center">
                         <input type="number" name="quantita" class="w-24 p-2 !rounded-md" value="1" min="1" required />
-                        <button type="submit" class="rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400">AGGIUNGI AL CARRELLO</button>
+                        <button type="submit" class="rounded-md bg-[#f4b424] hover:bg-slate-400 text-white border-none focus:bg-yellow-400">AGGIUNGI AL CARRELLO</button>
                     </div>
                 </div>
                 <div class="subtotale_rilegature mt-16 p-4 border border-neutral-300 rounded-md shadow-md">
@@ -96,7 +96,9 @@
                 </div>
             </div>
         </form>
-        <button class="hidden px-6 py-4 fixed left-1/2 bottom-5 next-step w-[160px] rounded-md bg-[f4b424] hover:bg-slate-400 text-white border-none focus:bg-yellow-400" id="prosegui_rilegature">PROSEGUI</button>
+        <button class="hidden px-6 py-2 fixed left-1/2 bottom-5 next-step w-[160px] rounded-3xl bg-[f4b424] hover:bg-slate-400 text-white border-none focus:bg-yellow-400" id="prosegui_rilegature">PROSEGUI <span class="material-symbols-outlined !text-white text-xl">
+arrow_right_alt
+</span></button>
         <div class="fixed bg-white flex flex-col gap-2 rounded-md p-4 min-w-[15%] max-w-[15%] left-[43%] top-24 m-4 shadow-md">
             <h1 class="font-bold text-lg">Rilegatura</h1>
             <section class="rilegature_riepilogo">

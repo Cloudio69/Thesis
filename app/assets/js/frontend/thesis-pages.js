@@ -119,7 +119,7 @@ const generaPagine = async () => {
                 let retry = document.createElement("button");
                 retry.textContent = "RIPROVA";
                 retry.classList.add(
-                  'rounded-md', 'bg-slate-600', 'hover:bg-slate-400', 'text-white', 'border-none', 'focus:bg-yellow-400', 'disabled:animate-pulse', 'px-4', 'py-2', 'mt-4'
+                  'rounded-md', 'bg-[#f4b424]', 'hover:bg-slate-400', 'text-white', 'border-none', 'focus:bg-yellow-400', 'disabled:animate-pulse', 'px-4', 'py-2', 'mt-4'
                 );
                 retry.onclick = () => {
                   retry.disabled = true;
@@ -139,7 +139,7 @@ const generaPagine = async () => {
                 let retry = document.createElement("button");
                 retry.textContent = "RIPROVA";
                 retry.classList.add(
-                  'rounded-md', 'bg-slate-600', 'hover:bg-slate-400', 'text-white', 'border-none', 'focus:bg-yellow-400', 'disabled:animate-pulse', 'px-4', 'py-2', 'mt-4'
+                  'rounded-md', 'bg-[#f4b424]', 'hover:bg-slate-400', 'text-white', 'border-none', 'focus:bg-yellow-400', 'disabled:animate-pulse', 'px-4', 'py-2', 'mt-4'
                 );
                 retry.onclick = () => {
                   retry.disabled = true;

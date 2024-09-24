@@ -57,7 +57,7 @@ if(isset($_POST['submit'])) {
                             <input type="number" min="0.00" step="any" id="accessorio-segnalibri" name="accessorio-segnalibri" class="border border-slate-300 rounded-md p-2 max-w-24" placeholder="€" value="<?php echo get_option('prezzo_segnalibri'); ?>" />
                         </div>
                         <div class="thesis--prezzo-item flex justify-between items-center mb-2">
-                            <label for="accessorio-bn" class="text-sm font-medium">Pagine B/N: </label>
+                            <label for="accessorio-bn" class="text-sm font-medium">Pagine Monocolore: </label>
                             <input type="number" min="0.00" step="any" id="accessorio-bn" name="accessorio-bn" class="border border-slate-300 rounded-md p-2 max-w-24" placeholder="€" value="<?php echo get_option('prezzo_bn'); ?>" />
                         </div>
                         <div class="thesis--prezzo-item flex justify-between items-center mb-2">

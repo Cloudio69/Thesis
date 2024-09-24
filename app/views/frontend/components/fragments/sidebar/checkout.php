@@ -24,5 +24,5 @@
             <span class="text-2xl font-bold">€</span>
         </div>
     </div>
-    <button type="submit" form="checkout_form" id="submit_checkout" class="rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400 w-full">CONTINUA AL PAGAMENTO</button>
+    <button type="submit" form="checkout_form" id="submit_checkout" class="rounded-md bg-[#f4b424] hover:bg-slate-400 text-white border-none focus:bg-yellow-400 w-full">CONTINUA AL PAGAMENTO</button>
 </div>
