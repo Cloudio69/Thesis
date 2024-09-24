@@ -94,7 +94,7 @@
             <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">euro_symbol</span>Subtotale</h1>
             <p class="font-bold text-2xl" id="subtotale_rilegature"><?php echo get_option('prezzo_cd'); ?>€</p>
             </div>
-            <button type="submit" class="rounded-md bg-slate-600 hover:bg-slate-400 text-white border-none focus:bg-yellow-400 w-full" disabled>AGGIUNGI E PROSEGUI</button>
+            <button type="submit" class="rounded-md bg-[#f4b424] hover:bg-slate-400 text-white border-none focus:bg-yellow-400 w-full" disabled>AGGIUNGI E PROSEGUI</button>
             <button type="button" class="rounded-md bg-neutral-300 hover:bg-neutral-400 text-neutral-800 border-none focus:bg-yellow-400 w-full next-step" id="no_cd">NO, GRAZIE</button>
         </form>
 </div>

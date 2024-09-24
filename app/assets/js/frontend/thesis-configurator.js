@@ -293,6 +293,7 @@ formOrder.onsubmit = (e) => {
   `;
 
   document.querySelector("#prosegui_rilegature").classList.remove("hidden");
+  document.querySelector("#prosegui_rilegature").classList.add("flex", "items-center", "gap-2", "justify-center");
   document.querySelector("#prosegui_rilegature").scrollIntoView({ behavior: "smooth" });
 };
 

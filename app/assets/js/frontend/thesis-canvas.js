@@ -35,14 +35,14 @@ const titoloUni = new fabric.Textbox("[Nome Università]", {
   originX: "center",
   originY: "top",
   left: canvas.width / 2,
-  top: canvas.height * 0.15,
+  top: canvas.height * 0.10,
   selectable: false,
   hasControls: false,
   hasBorders: false,
   lockMovementX: true,
   lockMovementY: true,
   textAlign: "center",
-  width: 350,
+  width: 320,
   height: 50,
   hoverCursor: "pointer",
 });
@@ -335,6 +335,22 @@ formCD.onsubmit = (e) => {
     cache: false,
     success: function (response) {
       cart.cd = { ...cart.cd, url: JSON.parse(response).url };
+      document.querySelectorAll(".cd-thumbnail").forEach((item) => {
+        let image = new Image();
+        image.src = cart.cd.url;
+        image.classList.add("fancybox", "cursor-pointer");
+        image.setAttribute("data-cd", "");
+        item.appendChild(image);
+        item.classList.remove("animate-pulse");
+
+        // Initialize Fancybox
+        Fancybox.bind("[data-cd]", {
+          Image: {
+            zoom: false,
+          },
+        });
+      });
+
     },
     error: function (error) {
       console.error(error);
