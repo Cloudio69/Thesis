@@ -16,5 +16,12 @@
         <span class="text-2xl font-bold">€</span>
     </div>
 </div>
-<button type="button" class="rounded-md bg-[#f4b424] hover:bg-slate-400 text-white border-none focus:bg-yellow-400 w-full next-step" id="finalizza">PROCEDI AL CHECKOUT</button>
+<button type="button" class="rounded-md bg-[#f4b424] hover:bg-slate-400 text-white border-none focus:bg-yellow-400 w-full next-step" id="finalizza" disabled>PROCEDI AL CHECKOUT</button>
+<div class="info_finalizzazione rounded-md border mt-2 p-4">
+    <div class="info--header flex justify-start items-center gap-2">
+        <span class="material-symbols-outlined">info</span>
+        <h3 class="text-xl font-bold">Informazioni</h3>
+    </div>
+    <p class="text-sm mt-2 font-bold">Per procedere al checkout devi almeno aggiungere una rilegatura, puoi tornare indietro cliccando sulla barra di navigazione in alto</p>
+</div>
 </div>
