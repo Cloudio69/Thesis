@@ -47,7 +47,7 @@ for ($i = 0; $i < count($decodedRilegature); $i++) {
                 <div class="angoli flex flex-col gap-4 mt-4">
                     <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">arrows_more_up</span><span>Angoli</span> <span class="text-xs bg-neutral-100 rounded-md px-2 py-1"><?php echo "+ " . number_format((float) $prezzo_angoli, 2) . "€" ?></span></h1>
                     <div class="flex gap-4 items-center place-items-center text-center">
-                        <select name="angoli" class="p-2 rounded-md">
+                        <select name="angoli" class="p-2 rounded-md" disabled>
                             <option value="" selected>Nessun angolo</option>
                             <?php
 $angoli = new Angolo;
@@ -65,7 +65,7 @@ foreach ($decodedAngoli as $angolo) {
                 <div class="segnalibri flex flex-col gap-4 mt-4">
                     <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">bookmark</span><span>Segnalibri</span> <span class="text-xs bg-neutral-100 rounded-md px-2 py-1 "><?php echo "+ " . number_format((float) $prezzo_segnalibri, 2) . "€" ?></span></h1>
                     <div class="flex gap-4 items-center place-items-center text-center">
-                        <select name="segnalibri" class="p-2 rounded-md">
+                        <select name="segnalibri" class="p-2 rounded-md" disabled>
                             <option value="" selected>Nessun segnalibro</option>
                             <?php
 $segnalibri = new Segnalibro;

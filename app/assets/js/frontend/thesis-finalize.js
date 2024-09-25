@@ -143,15 +143,17 @@ const updateCart = async (e) => {
     document.querySelector("#finalizza_step button").disabled = true;
     document.querySelector("#finalizza_step .info_finalizzazione").classList.remove("hidden")
 
-    document.querySelector(".thesis--rilegature").innerHTML = `
+    /* document.querySelector(".thesis--rilegature").innerHTML = `
     <div class='flex flex-col items-center justify-center'>
       <span class='material-symbols-outlined text-7xl'>info</span>
       <p class='text-lg text-center'>
-        <b>Rilegatura mancante</b><br>
+        <b class='info-user'>Rilegatura mancante</b><br>
         <p>Per proseguire con il checkout, devi aggiungere almeno una rilegatura</p> <br><br>
       </p>
     </div>
   `;
+    rilegatureForm.reset();
+    window.scrollTo({ top: 0, behavior: 'smooth' }); */
     document.querySelector("#prosegui_rilegature").classList.add("hidden")
   }
 

@@ -5,11 +5,11 @@
         <h2 class="text-xl text-center font-bold p-4">Vuoi aggiungere il CD?</h2>
         <div class="flex items-center justify-center gap-8 cursor-pointer">
             <div id="edit-cd" class="flex flex-col gap-2 items-center">
-                <span class="material-symbols-outlined text-[10rem] md:text-[7rem] sm:text-[4rem] p-4 rounded-xl border-2">check</span>
+                <span class="material-symbols-outlined text-[10rem] p-4 rounded-xl border-2">check</span>
                 <b>SI</b>
             </div>
             <div id="no-cd" class="next-step flex flex-col gap-2 items-center cursor-pointer">
-                <span class="material-symbols-outlined text-[10rem] md:text-[7rem] sm:text-[4rem] p-4 rounded-xl border-2">close</span>
+                <span class="material-symbols-outlined text-[10rem] p-4 rounded-xl border-2">close</span>
                 <b>NO</b>
             </div>
         </div>
@@ -34,6 +34,9 @@
                 <input type="file" name="file_cd" id="file_cd" class="hidden rounded-md" disabled accept=".doc,.docx,.ppt,.pptx,.xls,.xlsx,.mp4,.mp3,.png,.jpg" />
                 <div id="file_list_cd" class="min-h-16 flex flex-col gap-2">
                     <p class="opacity-50">Nessun file selezionato</p>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div class="bg-blue-600 h-2.5 rounded-full w-0" id="progress-bar"></div>
                 </div>
             </div>
             <p class="text-sm opacity-50 hidden formati-accettati">Formati accettati: .doc, .docx, .ppt, .pptx, .xls, .xlsx, .mp4, .mp3, .png, .jpg</p>

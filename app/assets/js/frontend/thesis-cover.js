@@ -142,12 +142,20 @@ const getOpzioni = async () => {
   radioRilegatura.forEach((radio) => {
     radio.onclick = (e) => {
 
+      if(document.querySelector('.info-user')) {
+        document.querySelector('.info-user').innerText = "Seleziona una variante per continuare";
+      }
+
+      if(document.querySelector('#prosegui_rilegature')) document.querySelector("#prosegui_rilegature").classList.remove("motion-safe:animate-bounce");
+
+
       // reset segnalibri, angoli, grammatura and formato
+      document.querySelector("[name='segnalibri']").disabled = false;
       document.querySelector("[name='segnalibri']").value = "";
+
       document.querySelector("[name='angoli']").value = "";
       document.querySelector("[name='grammatura']").value = "";
       document.querySelector("[name='formato']").value = "";
-
 
       if (groupedResults[e.currentTarget.value][0].angoli === "0") {
         document.querySelector("[name='angoli']").disabled = true;
@@ -210,7 +218,24 @@ const getOpzioni = async () => {
 
         varianti.appendChild(varianteWrapper);
 
-        radioVariante.onclick = () => {
+        radioVariante.onclick = async () => {
+
+          const coloriCarattere = document.querySelectorAll("[name='colori_carattere']");
+          if (coloriCarattere.length === 0) {
+            await new Promise((resolve) => {
+              const observer = new MutationObserver((mutations, obs) => {
+                if (document.querySelectorAll("[name='colori_carattere']").length > 0) {
+                  obs.disconnect();
+                  resolve();
+                }
+              });
+              observer.observe(document.body, { childList: true, subtree: true });
+            });
+          }
+          document.querySelectorAll("[name='colori_carattere']").forEach((radio) => {
+            radio.disabled = false;
+          });
+
 
           let canvas = document.createElement("canvas");
           canvas.classList.add(
@@ -346,11 +371,17 @@ const getColori = async (id) => {
         let label = document.createElement("label");
         let radio = document.createElement("input");
 
+        let existingRadio = document.getElementById(`colore-${colore.id_colore_carattere}`);
+        if (existingRadio) {
+          existingRadio.parentElement.remove();
+        }
+
         radio.type = "radio";
         radio.value = colore.id_colore_carattere;
         radio.dataset.hex = colore.hex_colore;
         radio.id = `colore-${colore.id_colore_carattere}`;
         radio.name = "colori_carattere";
+        radio.disabled = true;
 
         radio.className = "hidden";
 

@@ -5,11 +5,11 @@
         <h2 class="text-xl text-center font-bold p-4">Scegli come stampare</h2>
         <div class="flex items-center justify-center gap-8 cursor-pointer">
             <div id="fronte" class="next-step flex flex-col gap-2 items-center">
-                <span class="material-symbols-outlined text-[10rem] md:text-[7rem] sm:text-[4rem] p-4 rounded-xl border-2">menu_book</span>
+                <span class="material-symbols-outlined text-[10rem] p-4 rounded-xl border-2">menu_book</span>
                 <b>FRONTE</b>
             </div>
             <div id="fronte-retro" class="next-step flex flex-col gap-2 items-center cursor-pointer">
-                <span class="material-symbols-outlined text-[10rem] md:text-[7rem] sm:text-[4rem] p-4 rounded-xl border-2">dictionary</span>
+                <span class="material-symbols-outlined text-[10rem] p-4 rounded-xl border-2">dictionary</span>
                 <b>FRONTE/RETRO</b>
             </div>
         </div>

@@ -439,12 +439,20 @@ fileListCD.onchange = (e) => {
     contentType: false,
     cache: false,
     xhr: function () {
-      const xhr = new window.XMLHttpRequest();
+      var xhr = new window.XMLHttpRequest();
       xhr.upload.addEventListener(
         "progress",
         function (evt) {
           if (evt.lengthComputable) {
-            const percentComplete = evt.loaded / evt.total;
+            var percentComplete = evt.loaded / evt.total;
+            percentComplete = Math.round(percentComplete * 100);
+            
+            document.querySelector("#progress-bar").style.width = percentComplete + "%";
+            if (percentComplete === 100) {
+              setTimeout(() => {
+              document.querySelector("#progress-bar").style.width = "0%";
+              }, 2000); // Reset the progress bar after a short delay
+            }
           }
         },
         false

@@ -34,6 +34,7 @@ const showToast = async (message, status, icon) => {
   let toast = document.createElement("div");
   toast.className = `toast toast-${status} fixed top-1/2 left-1/2 m-4 p-6 ${bgStatus} text-white rounded-lg shadow-lg flex items-center gap-4 z-50 fade-in `;
   toast.innerHTML = `<span class="material-symbols-outlined flex items-center !text-white text-2xl">${icon}</span><p class="flex font-bold text-2xl">${message}</p>`;
+  toast.onclick = () => { toast.remove() };
   document.body.appendChild(toast);
 
   await new Promise((resolve) => {
@@ -249,6 +250,10 @@ formOrder.onsubmit = (e) => {
   let segnalibri = document.querySelector("[name='segnalibri']");
   let qty = document.querySelector("[name='quantita']");
 
+  document.querySelector("[name='angoli']").disabled = true;
+  document.querySelector("[name='segnalibri']").disabled = true;
+  if(document.querySelector("#prosegui_rilegature")) document.querySelector('#prosegui_rilegature').classList.add("motion-safe:animate-bounce");
+
   cart.rilegature.push({
     id_rilegatura: rilegatura.value,
     nome_rilegatura: rilegatura.dataset.nome,
@@ -286,10 +291,10 @@ formOrder.onsubmit = (e) => {
   document.querySelector(".thesis--rilegature").replaceChildren();
   document.querySelector(".thesis--rilegature").innerHTML = `
     <div class='flex flex-col items-center justify-center'>
-      <span class='material-symbols-outlined text-7xl motion-safe:animate-bounce'>check</span>
+      <span class='material-symbols-outlined text-7xl'>check</span>
       <p class='text-lg text-center'>
-        <b>Aggiunto al carrello!</b><br>
-        Puoi continuare ad aggiungere altre rilegature! <br><br>
+        <p>Aggiunto al carrello!</p><br>
+        <b class="rounded-md ring-amber-500 ring-2 text-xl p-3 mb-4">Puoi continuare ad aggiungere altre rilegature!</b>
         <b>Oppure clicca su "PROSEGUI"</b>
       </p>
     </div>
