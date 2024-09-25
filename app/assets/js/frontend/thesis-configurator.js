@@ -5,7 +5,7 @@ const cart = {
     colorate: [],
   },
   cd: {},
-  tipologia: ""
+  tipologia: "",
 };
 
 let objRilegatura = {
@@ -113,51 +113,58 @@ document
   .forEach((item) => item.classList.add("hidden"));
 document.querySelector(".thesis--fragments > div").classList.remove("hidden");
 
-config.forEach((item, index) => {
-  if (item.sidebar.id === "frontespizio_step")
-    item.sidebar.classList.remove("hidden");
+const setConfig = () => {
+  config.forEach((item, index) => {
+    if (item.sidebar.id === "frontespizio_step")
+      item.sidebar.classList.remove("hidden");
 
-  if (!item.isCompleted) {
-    item.nav.disabled = "true";
-    item.nav.classList.add("opacity-50");
-  }
-
-  item.nav.onclick = (e) => {
-    if (item.isCompleted === false) return;
-    document
-      .querySelectorAll(".route")
-      .forEach((item) => item.classList.remove("active"));
-    document
-      .querySelectorAll(".thesis--fragments > div")
-      .forEach((item) => item.classList.add("hidden"));
-
-    e.currentTarget.classList.add("active");
-
-    if (
-      e.currentTarget.id === "finalizza" ||
-      e.currentTarget.id === "checkout"
-    ) {
-      document.querySelector(".open-cart-dialog").classList.add("hidden");
-    } else {
-      if (
-        document.querySelector(".open-cart-dialog").classList.contains("hidden")
-      ) {
-        document.querySelector(".open-cart-dialog").classList.remove("hidden");
-      }
+    if (!item.isCompleted) {
+      item.nav.disabled = "true";
+      item.nav.classList.add("opacity-50");
     }
 
-    item.content.classList.remove("hidden");
+    item.nav.onclick = (e) => {
+      if (item.isCompleted === false) return;
+      document
+        .querySelectorAll(".route")
+        .forEach((item) => item.classList.remove("active"));
+      document
+        .querySelectorAll(".thesis--fragments > div")
+        .forEach((item) => item.classList.add("hidden"));
 
-    document
-      .querySelectorAll(".thesis--sidebar > div")
-      .forEach((item) => item.classList.add("hidden"));
+      e.currentTarget.classList.add("active");
 
-    item.sidebar.classList.remove("hidden");
+      if (
+        e.currentTarget.id === "finalizza" ||
+        e.currentTarget.id === "checkout"
+      ) {
+        document.querySelector(".open-cart-dialog").classList.add("hidden");
+      } else {
+        if (
+          document
+            .querySelector(".open-cart-dialog")
+            .classList.contains("hidden")
+        ) {
+          document
+            .querySelector(".open-cart-dialog")
+            .classList.remove("hidden");
+        }
+      }
 
-    currentStep = index;
-  };
-});
+      item.content.classList.remove("hidden");
 
+      document
+        .querySelectorAll(".thesis--sidebar > div")
+        .forEach((item) => item.classList.add("hidden"));
+
+      item.sidebar.classList.remove("hidden");
+
+      currentStep = index;
+    };
+  });
+};
+
+setConfig();
 
 const nextStep = () => {
   document.querySelectorAll(".next-step").forEach((button) => {
@@ -193,23 +200,27 @@ const nextStep = () => {
 
       document
         .querySelectorAll(".route")
-      [currentStep].classList.remove("opacity-50");
+        [currentStep].classList.remove("opacity-50");
       config[currentStep].isCompleted = true;
 
-      document.querySelector('.thesis--sidebar').scrollTo(0, 0);
+      document.querySelector(".thesis--sidebar").scrollTo(0, 0);
 
       if (currentStep === 5 || currentStep === 6) {
         document.querySelector(".open-cart-dialog").classList.add("hidden");
       } else {
         if (
-          document.querySelector(".open-cart-dialog").classList.contains("hidden")
+          document
+            .querySelector(".open-cart-dialog")
+            .classList.contains("hidden")
         ) {
-          document.querySelector(".open-cart-dialog").classList.remove("hidden");
+          document
+            .querySelector(".open-cart-dialog")
+            .classList.remove("hidden");
         }
       }
     };
   });
-}
+};
 
 nextStep();
 
@@ -262,7 +273,9 @@ formOrder.onsubmit = (e) => {
         : "Nessun angolo",
     prezzo_angolo:
       angoli.selectedIndex !== 0 ? angoli.selectedOptions[0].dataset.prezzo : 0,
-    rilegatura_thumbnail: document.querySelector('.thesis--rilegature canvas').toDataURL("image/jpeg", 0.4), // TODO: Comprire il canvas con l'immagine della rilegatura
+    rilegatura_thumbnail: document
+      .querySelector(".thesis--rilegature canvas")
+      .toDataURL("image/jpeg", 0.4), // TODO: Comprire il canvas con l'immagine della rilegatura
     qty: qty.value,
   });
 
@@ -293,8 +306,12 @@ formOrder.onsubmit = (e) => {
   `;
 
   document.querySelector("#prosegui_rilegature").classList.remove("hidden");
-  document.querySelector("#prosegui_rilegature").classList.add("flex", "items-center", "gap-2", "justify-center");
-  document.querySelector("#prosegui_rilegature").scrollIntoView({ behavior: "smooth" });
+  document
+    .querySelector("#prosegui_rilegature")
+    .classList.add("flex", "items-center", "gap-2", "justify-center");
+  document
+    .querySelector("#prosegui_rilegature")
+    .scrollIntoView({ behavior: "smooth" });
 };
 
 let names = [
@@ -321,8 +338,8 @@ const calcoloRilegatura = () => {
       selected = selected.selectedOptions[0];
       selected.dataset.prezzo
         ? (objRilegatura[`prezzo_${name}`] = parseFloat(
-          selected.dataset.prezzo
-        ))
+            selected.dataset.prezzo
+          ))
         : (objRilegatura[`prezzo_${name}`] = 0);
     }
 

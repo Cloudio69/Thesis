@@ -66,7 +66,7 @@ const updateCart = async (e) => {
     tipologiaDiv.appendChild(tipologiaItem);
   }
 
-  if (cart.rilegature && cart.rilegature.length > 0) {
+  if (cart.rilegature && cart.rilegature.length > 0) {    
     cart.rilegature.forEach((rilegatura, index) => {
       let rilegatureItem = document.createElement("div");
       rilegatureItem.classList.add(
@@ -137,6 +137,11 @@ const updateCart = async (e) => {
         .querySelectorAll(".rilegatura_actions")
         .forEach((item) => item.appendChild(eliminaBtn));
     });
+    document.querySelector("#finalizza_step button").disabled = false;
+    document.querySelector("#finalizza_step .info_finalizzazione").classList.add("hidden")
+  } else {
+    document.querySelector("#finalizza_step button").disabled = true;
+    document.querySelector("#finalizza_step .info_finalizzazione").classList.remove("hidden")
   }
 
   if (cart.pagine.prezzo_grammatura >= 0 || cart.pagine.prezzo_formato >= 0) {
@@ -209,6 +214,7 @@ weight
     let cdItem = document.createElement("div");
 
     let removeCd = document.createElement("button");
+    removeCd.setAttribute("onclick", "removecd()")
     removeCd.classList.add(
       "!bg-red-500",
       "text-white",
@@ -217,13 +223,6 @@ weight
       "rounded-md"
     );
     removeCd.innerHTML = "<span class='material-symbols-outlined !text-white'>delete</span>";
-    removeCd.addEventListener("click", () => {
-      cart.cd = {};
-      updateCart();
-    });
-
-    
-
 
     cdItem.classList.add(
       "flex",
@@ -236,44 +235,31 @@ weight
       "shadow-md"
     );
     cdItem.innerHTML = `
-      <div class="flex justify-between items-start gap-4">
-      <div class="flex items-center image">
-      <div class="cd-thumbnail animate-pulse bg-gray-200 w-24 h-24 rounded-md p-2"></div>
-      </div>
-      <div class='flex flex-col w-full'>
-      <span class="text-sm flex items-center justify-between"><b>CD Serigrafato x ${
-        cart.cd.qty
-      }</b></span>
-      ${
-        Object.values(cart.cd.inputs).some((value) => value !== "")
-          ? `<span class="text-xs mt-2 font-bold">Dati inseriti</span>`
-          : ""
-      }
-      ${Object.entries(cart.cd.inputs)
-        .filter(([key, value]) => value !== "")
-        .map(([key, value]) => `<p class="text-xs mt-2">${key}: ${value}</p>`)
-        .join("")} 
-      </div>
-      <div class='flex flex-col w-full self-stretch flex-grow-0'>
-      <div class='font-bold cd-actions flex flex-col items-end flex-1 justify-between'><span class="text-sm">${
-      cart.cd.qty ? (cart.cd.prezzo * cart.cd.qty).toFixed(2) : cart.cd.prezzo
-    }€</span>${removeCd.outerHTML}</div></span>
-      
-      ${
-        cart.cd.filenames.length > 0
-          ? `<span class="text-sm mt-2 font-bold">File aggiuntivi</span>`
-          : ""
-      }
-      ${
-        cart.cd.filenames.length > 0
-          ? cart.cd.filenames
-              .map((filename) => `<li class="text-sm mt-2 font-bold">${filename}</li>`)
-              .join("")
-          : ""
-      } // TODO: Fix this
-      </div>
-      </div>
-    `;
+    <div class="flex justify-between items-start gap-4">
+    <div class="flex items-center image">
+    <div class="cd-thumbnail animate-pulse bg-gray-200 w-24 h-24 rounded-md p-2"></div>
+    </div>
+    <div class='flex flex-col w-full'>
+    <span class="text-sm flex items-center justify-between"><b>CD Serigrafato x ${
+      cart.cd.qty
+    }</b></span>
+    ${
+      Object.values(cart.cd.inputs).some((value) => value !== "")
+        ? `<span class="text-xs mt-2 font-bold">Dati inseriti</span>`
+        : ""
+    }
+    ${Object.entries(cart.cd.inputs)
+      .filter(([key, value]) => value !== "")
+      .map(([key, value]) => `<p class="text-xs mt-2">${key}: ${value}</p>`)
+      .join("")} 
+    </div>
+    <div class='flex flex-col w-full self-stretch flex-grow-0'>
+    <div class='font-bold cd-actions flex flex-col items-end flex-1 justify-between'><span class="text-sm">${
+    cart.cd.qty ? (cart.cd.prezzo * cart.cd.qty).toFixed(2) : cart.cd.prezzo
+  }€</span>${removeCd.outerHTML}</div></span>
+    </div>
+    </div>
+  `;
     cdDiv.appendChild(cdItem);
 
     totale += cart.cd.prezzo * cart.cd.qty;
@@ -496,10 +482,7 @@ weight
     let removeCd = document.createElement("button");
     removeCd.innerHTML = "<span class='material-symbols-outlined !text-white'>delete</span>";
     removeCd.classList.add("!bg-red-500", "text-white", "p-2", "rounded-md");
-    removeCd.addEventListener("click", () => {
-      cart.cd = {};
-      updateCart();
-    });
+    removeCd.setAttribute("onclick", `removecd()`)
 
     cdItem.classList.add(
       "flex",
@@ -611,13 +594,19 @@ function removeRilegatura(index) {
   cart.rilegature.splice(index, 1);
 
   updateCart();
+
+  showToast('Elemento rimosso', 'warning', 'warning')
 }
 
 document.addEventListener("click", (e) => {
   const thesisCart = document.querySelector(".thesis--cart-dialog");
   const openCartBtn = document.querySelector(".open-cart-dialog");
-
+  if (e.target.tagName === "BUTTON") {
+    return;
+  }
   if (!thesisCart.contains(e.target) && !openCartBtn.contains(e.target)) {
     thesisCart.classList.add("hidden");
   }
 });
+
+const removecd = () => { cart.cd = {}; updateCart(); showToast('Elemento rimosso', 'warning', 'warning') }
