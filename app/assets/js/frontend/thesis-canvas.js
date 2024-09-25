@@ -283,7 +283,7 @@ document.querySelector("[name='quantita_cd']").addEventListener("change", (e) =>
   let price = 10 // TODO: add price from remote
   let qty = e.currentTarget.value;
   
-  document.querySelector("#subtotale_cd").innerHTML = (price * qty) + "€"
+  document.querySelector("#subtotale_cd").innerHTML = (price * qty).toFixed(2) + "€"
 })
 
 
