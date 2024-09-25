@@ -536,4 +536,5 @@ const nextStepPagine = document.querySelector("#prosegui_rilegature");
 
 nextStepPagine.addEventListener("click", () => {
   generaPagine();
+  nextStepPagine.classList.add("hidden")
 });

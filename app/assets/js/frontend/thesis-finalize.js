@@ -142,6 +142,17 @@ const updateCart = async (e) => {
   } else {
     document.querySelector("#finalizza_step button").disabled = true;
     document.querySelector("#finalizza_step .info_finalizzazione").classList.remove("hidden")
+
+    document.querySelector(".thesis--rilegature").innerHTML = `
+    <div class='flex flex-col items-center justify-center'>
+      <span class='material-symbols-outlined text-7xl'>info</span>
+      <p class='text-lg text-center'>
+        <b>Rilegatura mancante</b><br>
+        <p>Per proseguire con il checkout, devi aggiungere almeno una rilegatura</p> <br><br>
+      </p>
+    </div>
+  `;
+    document.querySelector("#prosegui_rilegature").classList.add("hidden")
   }
 
   if (cart.pagine.prezzo_grammatura >= 0 || cart.pagine.prezzo_formato >= 0) {
@@ -586,6 +597,24 @@ weight
   totaleWrapper.forEach((el) => {
     el.textContent = parseFloat(totale).toFixed(2);
   });
+
+  if(cart.cd.url) {
+    document.querySelectorAll(".cd-thumbnail").forEach((item) => {
+      let image = new Image();
+      image.src = cart.cd.url;
+      image.classList.add("fancybox", "cursor-pointer");
+      image.setAttribute("data-cd", "");
+      item.appendChild(image);
+      item.classList.remove("animate-pulse");
+
+      // Initialize Fancybox
+      Fancybox.bind("[data-cd]", {
+        Image: {
+          zoom: false,
+        },
+      });
+    });
+  }
 
   Fancybox.bind("[data-anteprima-rilegatura]")
 };
