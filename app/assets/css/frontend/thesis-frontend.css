@@ -69,10 +69,10 @@
   z-index: 50;
 }
 
-.active .step-number{
+.active .step-number {
   border: 1px solid white;
 }
-.step-number{
+.step-number {
   border: 1px solid #f4b424;
 }
 
@@ -158,9 +158,38 @@ label:has(input[type="radio"]:checked) {
   }
 }
 
-
-@media (width <= 1024px){
-  .step-number{
+@media (width <= 1024px) {
+  .step-number {
     display: none;
+  }
+  .thesis--fragments .checkout {
+    padding-top: 17rem;
+  }
+
+  .rilegature .grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .varianti .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .colori_carattere .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width <= 1366px) {
+  .thesis--fragments .checkout {
+    padding-top: 7rem;
+  }
+
+  .rilegature .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .varianti .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .colori_carattere .grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
