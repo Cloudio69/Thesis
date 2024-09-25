@@ -192,4 +192,19 @@ label:has(input[type="radio"]:checked) {
   .colori_carattere .grid {
     grid-template-columns: repeat(3, 1fr);
   }
+
+  .filtri--pagine {
+    flex-direction: column;
+  }
+  .azioni--massive {
+    flex-direction: column;
+  }
+
+  .cd--canvas {
+    scale: 0.8;
+  }
+
+  #prosegui_rilegature{
+    left: 44%;
+  }
 }

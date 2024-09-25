@@ -4,7 +4,7 @@
             <p class="text-sm opacity-50">* L'anteprima viene mostrata a colori</p>
         </b></p>
     <section class="colori--stampa flex flex-col gap-4 justify-center mt-4">
-        <div class="flex items-center justify-around gap-8 my-4">
+        <div class="flex filtri--pagine items-center justify-around gap-8 my-4">
             <div id="bianco--nero" class="flex flex-col gap-4 items-center flex-1 cursor-pointer ">
                 <span class="text-7xl p-4 animate-pulse rounded-md border-slate-300 border-2 min-w-[200px] min-h-[200px] flex items-center justify-center">0</span>
                 <b>PAGINE MONOCOLORE</b>
