@@ -2,8 +2,8 @@
     <section class="thesis--navigation flex items-center justify-between divide-x border-b shadow-sm">
         <div id="frontespizio" class="active route flex items-center gap-4 p-4 flex-1 justify-between cursor-pointer">
         <div class="step-name flex items-center gap-3">
-            <span class="material-symbols-outlined !text-2xl">description</span>
-            <h1 class="font-medium">FRONTESPIZIO</h1>
+            <span class="material-symbols-outlined !text-xl">description</span>
+            <h1 class="font-medium ">FRONTESPIZIO</h1>
         </div>
             <div class="step-number text-xs flex items-center justify-center w-6 h-6 rounded-full border border-[#f4b424] font-bold">
                 1
@@ -11,8 +11,8 @@
         </div>
         <div id="tipologia" class="route flex items-center gap-4 p-4 flex-1 justify-between cursor-pointer">
             <div class="step-name flex items-center gap-3">
-            <span class="material-symbols-outlined !text-2xl">copy_all</span>
-            <h1 class="font-medium">TIPOLOGIA</h1>
+            <span class="material-symbols-outlined !text-xl">copy_all</span>
+            <h1 class="font-medium ">TIPOLOGIA</h1>
             </div>
             <div class="step-number text-xs flex items-center justify-center w-6 h-6 rounded-full font-bold">
                 2
@@ -20,8 +20,8 @@
         </div>
         <div id="rilegature" class="route flex items-center gap-4 p-4 flex-1 justify-between cursor-pointer">
         <div class="step-name flex items-center gap-3">
-            <span class="material-symbols-outlined !text-2xl">book_2</span>
-            <h1 class="font-medium">RILEGATURE</h1>
+            <span class="material-symbols-outlined !text-xl">book_2</span>
+            <h1 class="font-medium ">RILEGATURE</h1>
         </div>
             <div class="step-number text-xs flex items-center justify-center w-6 h-6 rounded-full border border-[#f4b424] font-bold">
                 3
@@ -29,8 +29,8 @@
         </div>
         <div id="pagine" class="route flex items-center gap-4 p-4 flex-1 justify-between cursor-pointer">
         <div class="step-name flex items-center gap-3">
-            <span class="material-symbols-outlined !text-2xl">auto_stories</span>
-            <h1 class="font-medium">PAGINE</h1>
+            <span class="material-symbols-outlined !text-xl">auto_stories</span>
+            <h1 class="font-medium ">PAGINE</h1>
         </div>
             <div class="step-number text-xs flex items-center justify-center w-6 h-6 rounded-full border border-[#f4b424] font-bold">
                 4
@@ -38,8 +38,8 @@
         </div>
         <div id="cd" class="route flex items-center gap-4 p-4 flex-1 justify-between cursor-pointer">
         <div class="step-name flex items-center gap-3">
-            <span class="material-symbols-outlined !text-2xl">album</span>
-            <h1 class="font-medium">CD</h1>
+            <span class="material-symbols-outlined !text-xl">album</span>
+            <h1 class="font-medium ">CD</h1>
         </div>
             <div class="step-number text-xs flex items-center justify-center w-6 h-6 rounded-full border border-[#f4b424] font-bold">
                 5
@@ -47,8 +47,8 @@
         </div>
         <div id="finalizza" class="route flex items-center gap-4 p-4 flex-1 justify-between cursor-pointer">
         <div class="step-name flex items-center gap-3">
-            <span class="material-symbols-outlined !text-2xl">done_all</span>
-            <h1 class="font-medium">FINALIZZA</h1>
+            <span class="material-symbols-outlined !text-xl">done_all</span>
+            <h1 class="font-medium ">FINALIZZA</h1>
         </div>
             <div class="step-number text-xs flex items-center justify-center w-6 h-6 rounded-full border border-[#f4b424] font-bold">
                 6
@@ -56,8 +56,8 @@
         </div>
         <div id="checkout" class="route flex items-center gap-4 p-4 flex-1 justify-between cursor-pointer">
         <div class="step-name flex items-center gap-3">
-            <span class="material-symbols-outlined !text-2xl">shopping_cart_checkout</span>
-            <h1 class="font-medium">CHECKOUT</h1>
+            <span class="material-symbols-outlined !text-xl">shopping_cart_checkout</span>
+            <h1 class="font-medium ">CHECKOUT</h1>
         </div>
             <div class="step-number text-xs flex items-center justify-center w-6 h-6 rounded-full border border-[#f4b424] font-bold">
                 7

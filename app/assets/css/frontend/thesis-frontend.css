@@ -157,3 +157,10 @@ label:has(input[type="radio"]:checked) {
     display: none;
   }
 }
+
+
+@media (width <= 1024px){
+  .step-number{
+    display: none;
+  }
+}

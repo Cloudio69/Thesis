@@ -46,7 +46,7 @@ wp_enqueue_script('cookie-helper', THESIS_URL . 'app/assets/js/frontend/helper/c
     <div class="thesis--wrapper h-full">
         <?php include_once THESIS_DIR . "app/views/frontend/components/header.php";?>
         <div class="thesis--body h-full lg:flex justify-stretch md:flex-col md:flex">
-            <div class="thesis--fragments flex items-center justify-center lg:h-full md:h-[50vh] lg:w-[60%] mt-[4rem] bg-slate-100 overflow-auto">
+            <div class="thesis--fragments flex items-center justify-center lg:h-full md:h-[50vh] lg:w-[60%] mt-[3.5rem] bg-slate-100 overflow-auto">
                 <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/frontespizio.php";?>
                 <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/tipologia.php";?>
                 <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/rilegature.php";?>

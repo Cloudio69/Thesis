@@ -6,7 +6,7 @@
         <form id="rilegature_form" class="flex flex-col gap-4">
             <div class="rilegature flex flex-col gap-4">
                 <h1 class="font-bold text-xl flex gap-2 items-center"><span class="material-symbols-outlined">book_2</span>Rilegature</h1>
-                <div class="grid grid-cols-3 gap-4 items-center place-items-center text-center">
+                <div class="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 items-center place-items-center text-center">
                     <?php
 
                     $prezzo_angoli = get_option('prezzo_angoli');
