@@ -409,6 +409,20 @@ const getColori = async (id) => {
             },
             success: (response) => {
               preloader.remove();
+
+              if(!document
+                .querySelector("[name='variante']:checked")) {
+                  document.querySelector(".thesis--rilegature").innerHTML = `
+                  <div class='flex flex-col items-center justify-center'>
+                    <span class='material-symbols-outlined text-7xl'>info</span>
+                    <p class='text-lg text-center'>
+                      <b>Seleziona una variante</b><br>
+                      <p>Prima di selezionare il colore carattere, seleziona la variante</p> <br><br>
+                    </p>
+                  </div>`;
+                  return
+              }
+
               let canvas = document.querySelector("canvas");
               let context = canvas.getContext("2d");
 
