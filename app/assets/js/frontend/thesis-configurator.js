@@ -286,7 +286,7 @@ formOrder.onsubmit = (e) => {
   document.querySelector(".thesis--rilegature").replaceChildren();
   document.querySelector(".thesis--rilegature").innerHTML = `
     <div class='flex flex-col items-center justify-center'>
-      <span class='material-symbols-outlined text-7xl'>check</span>
+      <span class='material-symbols-outlined text-7xl motion-safe:animate-bounce'>check</span>
       <p class='text-lg text-center'>
         <b>Aggiunto al carrello!</b><br>
         Puoi continuare ad aggiungere altre rilegature! <br><br>

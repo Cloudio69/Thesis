@@ -290,7 +290,8 @@ document.querySelector("[name='quantita_cd']").addEventListener("change", (e) =>
 formCD.onsubmit = (e) => {
   e.preventDefault();
 
-  const submitButton = formCD.querySelector("button[type='submit']");
+  const submitButton = formCD.querySelector("[type='submit']");
+  submitButton.innerText = 'AGGIORNA E PROSEGUI'
 
   const requiredFields = [
     "nome_universita",

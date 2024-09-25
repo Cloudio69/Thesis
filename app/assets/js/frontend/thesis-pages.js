@@ -525,6 +525,9 @@ const formPagine = document.querySelector("#form_pagine");
 formPagine.onsubmit = (e) => {
   e.preventDefault();
 
+  const submitButton = formPagine.querySelector("[type='submit']")
+  submitButton.innerText = "AGGIORNA IL CARRELLO"
+
   let goNext = document.querySelector("#prosegui_pagine");
   if (goNext.classList.contains("hidden")) {
     goNext.classList.remove("hidden");
