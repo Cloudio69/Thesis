@@ -279,6 +279,14 @@ editCd.addEventListener("click", () => {
   document.querySelector(".tipo--stampa-cd").classList.add("hidden");
 });
 
+document.querySelector("[name='quantita_cd']").addEventListener("change", (e) => {
+  let price = 10 // TODO: add price from remote
+  let qty = e.currentTarget.value;
+  
+  price.innerHTML = (price * qty) + "€"
+})
+
+
 formCD.onsubmit = (e) => {
   e.preventDefault();
 
