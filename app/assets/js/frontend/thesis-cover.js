@@ -77,7 +77,7 @@ const rigeneraCanvas = () => {
     getCookie("thesis_session") +
     "/frontespizi/frontespizio_generato-" +
     document.querySelector("[name='colori_carattere']:checked").value +
-    ".png";
+    ".png?v=" + new Date().getTime();
   frontespizioGen.onload = () => {
     context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -113,6 +113,7 @@ const getOpzioni = async () => {
   let opzioni = await jQuery.ajax({
     dataType: "json",
     method: "GET",
+    cache: false,
     url: ajaxurl,
     data: {
       action: "get_options",
@@ -132,7 +133,7 @@ const getOpzioni = async () => {
   for (let property in groupedResults) {
     groupedResults[property].forEach((variante) => {
       let anteprimaVar = new Image();
-      anteprimaVar.src = preload(variante.anteprima_variante);
+      anteprimaVar.src = variante.anteprima_variante;
       variante.anteprima_variante = anteprimaVar;
     });
   }
@@ -266,7 +267,7 @@ const getOpzioni = async () => {
             frontespizioGen.src =
               "/wp-content/plugins/thesis/app/files/" +
               getCookie("thesis_session") +
-              "/frontespizio_generato.png";
+              "/frontespizio_generato.png?v=" + new Date().getTime();
           } else {
             frontespizioGen.src =
               "/wp-content/plugins/thesis/app/files/" +
@@ -274,7 +275,7 @@ const getOpzioni = async () => {
               "/frontespizi/frontespizio_generato-" +
               document.querySelector("[name='colori_carattere']:checked")
                 .value +
-              ".png";
+              ".png?v=" + new Date().getTime();
           }
 
           frontespizioGen.onload = () =>

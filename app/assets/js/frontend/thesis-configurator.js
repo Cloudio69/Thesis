@@ -8,6 +8,8 @@ const cart = {
   tipologia: "",
 };
 
+jQuery.ajaxSetup({ cache: false });
+
 let objRilegatura = {
   prezzo_rilegatura: 0,
   prezzo_grammatura: 0,

@@ -49,6 +49,7 @@ checkoutForm.addEventListener("submit", (e) => {
         type: "POST",
         url: ajaxurl,
         data: formData,
+        cache: false,
         processData: false, // Impedisce a jQuery di trasformare i dati in una stringa di query
         contentType: false, // Impedisce a jQuery di impostare automaticamente il tipo di contenuto
         success: (response) => {

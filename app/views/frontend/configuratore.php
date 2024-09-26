@@ -26,8 +26,10 @@ if (isset($_COOKIE['thesis_session'])) {
         }
     }
 }
-
 ?>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" /> 
+<meta http-equiv="Pragma" content="no-cache"> 
+<meta http-equiv="Expires" content="0"> 
 <?php
 wp_enqueue_style('tailwind', THESIS_URL . "/app/assets/css/tailwind.css");
 wp_enqueue_style('thesis-frontend', THESIS_URL . "/app/assets/css/frontend/thesis-frontend.css");

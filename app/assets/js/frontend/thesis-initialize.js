@@ -49,6 +49,7 @@ if (typeof init != "undefined" && init) {
           processData: false,
           contentType: false,
           type: "POST",
+          cache: false,
           url: ajaxurl,
           data: data,
           xhr: function () {
