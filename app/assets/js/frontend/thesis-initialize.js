@@ -5,7 +5,7 @@ if (typeof init != "undefined" && init) {
     preloader.classList.add(
       "h-full",
       "w-full",
-      "z-[99]",
+      "z-[999]",
       "flex",
       "justify-center",
       "items-center",

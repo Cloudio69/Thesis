@@ -646,6 +646,10 @@ video {
   z-index: 50;
 }
 
+.z-\[999\] {
+  z-index: 999;
+}
+
 .z-\[99\] {
   z-index: 99;
 }
@@ -715,10 +719,6 @@ video {
 
 .mt-8 {
   margin-top: 2rem;
-}
-
-.mt-\[3\.5rem\] {
-  margin-top: 3.5rem;
 }
 
 .block {
@@ -1448,6 +1448,10 @@ video {
   padding-bottom: 1rem;
 }
 
+.pb-6 {
+  padding-bottom: 1.5rem;
+}
+
 .pl-2 {
   padding-left: 0.5rem;
 }
@@ -1462,14 +1466,6 @@ video {
 
 .pt-4 {
   padding-top: 1rem;
-}
-
-.pt-\[4rem\] {
-  padding-top: 4rem;
-}
-
-.pb-6 {
-  padding-bottom: 1.5rem;
 }
 
 .text-left {

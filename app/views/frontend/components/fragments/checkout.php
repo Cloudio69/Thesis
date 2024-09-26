@@ -154,8 +154,8 @@
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="spedizione">Spedizione</label>
                 <select class="appearance-none rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="spedizione" name="spedizione" required autocomplete="shipping">
-                    <option value="standard">Standard</option>
-                    <option value="express">Express</option>
+                    <option value="standard">Standard (Gratuita)</option>
+                    <option value="express">Express (+7.90 €)</option>
                 </select>
             </div>
             <p class="alert text-sm"><b>In 24/48 ore la tesi verrà consegnata</b> all'indirizzo ed alla persona indicata in questa pagina... a patto che i dati siano corretti! Ricorda che la stampa di Rilegature in Carta Riso oppure in Seta comporta almeno un giorno in più di lavorazione.</p>
