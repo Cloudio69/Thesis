@@ -463,7 +463,7 @@ const getColori = async (id) => {
                 getCookie("thesis_session") +
                 "/frontespizi/frontespizio_generato-" +
                 colore.id_colore_carattere +
-                ".png";
+                ".png?v=" + new Date().getTime();
               frontespizioGen.onload = () => {
                 context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -623,7 +623,7 @@ fileUpload.onchange = (e) => {
       frontespizio.src =
         "/wp-content/plugins/thesis/app/files/" +
         getCookie("thesis_session") +
-        "/frontespizio.jpg?" +
+        "/frontespizio.jpg?v=" +
         new Date().getTime();
 
       jQuery.ajax({

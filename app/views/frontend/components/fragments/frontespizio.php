@@ -1,11 +1,11 @@
 <?php
 $session = $_COOKIE['thesis_session'];
-$path_frontespizio = THESIS_URL . "app/files/" . $session . "/frontespizio.jpg";
+$path_frontespizio = THESIS_URL . "app/files/" . $session . "/frontespizio.jpg?v=" . time();
 ?>
 
 
 <div class="thesis--frontespizio frontespizio flex items-center justify-center">
-    <a href="<?php echo $path_frontespizio; ?>" class="flex items-center justify-center" data-fancybox><img class="drop-shadow-md lg:w-[25vw] md:p-4 h-full" src="<?php echo $path_frontespizio; ?>" /></a>
+    <a href="<?php echo $path_frontespizio; ?>" class="flex items-center justify-center" data-frontespizio><img class="drop-shadow-md lg:w-[25vw] md:p-4 h-full" src="<?php echo $path_frontespizio; ?>" /></a>
 </div>
 
 <?php

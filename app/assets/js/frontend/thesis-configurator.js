@@ -104,7 +104,7 @@ const config = [
   },
 ];
 
-const preload = (url) => (new Image().src = url);
+const preload = (url) => (new Image().src = url + "?v=" + Date.now());
 
 document
   .querySelectorAll(".thesis--sidebar > div")
@@ -395,6 +395,3 @@ window.onload = () => {
   // preloader.pause();
 };
 
-// Lightbox
-
-Fancybox.bind("[data-fancybox]");
