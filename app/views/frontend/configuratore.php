@@ -49,10 +49,10 @@ wp_enqueue_script('cookie-helper', THESIS_URL . 'app/assets/js/frontend/helper/c
         <img src=<?php echo THESIS_URL . "app/assets/img/svg/loading.svg" ?> class="animate-spin w-10 h-10" />
         <p class="font-medium">Caricamento...</p>
     </div>
-    <div class="thesis--wrapper h-full">
+    <div class="thesis--wrapper h-full overflow-hidden">
         <?php include_once THESIS_DIR . "app/views/frontend/components/header.php";?>
-        <div class="thesis--body h-full lg:flex justify-stretch md:flex-col md:flex">
-            <div class="thesis--fragments flex items-center justify-center lg:h-full md:h-[50vh] lg:w-[60%] mt-[3.5rem] bg-slate-100 overflow-auto">
+        <div class="thesis--body h-full lg:flex justify-stretch md:flex-col md:flex overflow-hidden">
+            <div class="thesis--fragments flex items-center justify-center lg:h-full md:h-[50vh] lg:w-[60%] bg-slate-100 overflow-auto">
                 <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/frontespizio.php";?>
                 <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/tipologia.php";?>
                 <?php include_once THESIS_DIR . "app/views/frontend/components/fragments/rilegature.php";?>

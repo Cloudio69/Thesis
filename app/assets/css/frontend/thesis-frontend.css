@@ -166,10 +166,7 @@ label:has(input[type="radio"]:checked) {
   .step-number {
     display: none;
   }
-  .thesis--fragments .checkout {
-    padding-top: 17rem;
-  }
-
+  
   .rilegature .grid {
     grid-template-columns: repeat(1, 1fr);
   }
@@ -182,9 +179,6 @@ label:has(input[type="radio"]:checked) {
 }
 
 @media (width <= 1366px) {
-  .thesis--fragments .checkout {
-    padding-top: 7rem;
-  }
 
   .rilegature .grid {
     grid-template-columns: repeat(2, 1fr);
@@ -217,4 +211,5 @@ label:has(input[type="radio"]:checked) {
   .thesis--header{
     overflow: visible;
   }
+
 }
