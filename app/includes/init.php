@@ -21,7 +21,7 @@ class Thesis
         $this->thesis_options();
         $this->thesis_hooks();
         $this->thesis_widgets();
-        // $this->thesis_override_templates();
+        $this->thesis_override_templates();
     }
 
     public function thesis_check_updates()
@@ -123,9 +123,9 @@ class Thesis
             $page_template = '';
         }
 
-        /* if (is_checkout()) {
+        if (is_checkout()) {
             $page_template = THESIS_DIR . 'app/views/templates/woo-checkout.php';
-        } */
+        }
 
         return $page_template;
     }
