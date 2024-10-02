@@ -3,6 +3,24 @@
 <?php
 wp_enqueue_style('tailwind', THESIS_URL . "/app/assets/css/tailwind.css");
 wp_enqueue_style('thesis-frontend', THESIS_URL . "/app/assets/css/frontend/thesis-frontend.css");
+
+$order_key = isset($_GET['key']) ? sanitize_text_field($_GET['key']) : '';
+
+$order_id = wc_get_order_id_by_order_key($order_key);
+$order = wc_get_order($order_id);
+
+if ($order->get_status() === 'trash') {
+    wp_redirect(home_url());
+    exit;
+}
+
+if (strpos($_SERVER['REQUEST_URI'], '/checkout/order-pay') !== 0 && $order->get_status() !== 'pending') {
+    if (strpos($order_key, 'wc_order_') !== 0) {
+        wp_redirect(home_url());
+        exit;
+    }
+}
+
 ?>
 
 <body <?php body_class(); ?>>
@@ -20,7 +38,17 @@ wp_enqueue_style('thesis-frontend', THESIS_URL . "/app/assets/css/frontend/thesi
             <?php
             }
             ?>
-            <a href="/" class="flex items-center gap-2 p-2 bg-white"><span class="!text-black font-bold">ANNULLA</span><span class="material-symbols-outlined !text-black text-xl">close</span></a>
+            <?php
+            if (isset($_GET['delete_order']) && intval($_GET['delete_order']) === $order_id) {
+                wc_get_order($order_id)->delete();
+                wp_redirect(home_url());
+                exit;
+            }
+            ?>
+            <a href="<?php echo esc_url(add_query_arg('delete_order', $order_id)); ?>" class="flex items-center gap-2 p-2 bg-white">
+                <span class="!text-black font-bold">ANNULLA</span>
+                <span class="material-symbols-outlined !text-black text-xl">close</span>
+            </a>
         </header>
         <main class="flex-1 flex flex-col items-center justify-center">
             <?php
@@ -36,16 +64,6 @@ wp_enqueue_style('thesis-frontend', THESIS_URL . "/app/assets/css/frontend/thesi
             ?>
             <?php
             if (is_user_logged_in()) {
-
-                $order_key = isset($_GET['key']) ? sanitize_text_field($_GET['key']) : '';
-
-                if (strpos($order_key, 'wc_order_') !== 0) {
-                    wp_redirect(home_url());
-                    exit;
-                }
-
-                $order_id = wc_get_order_id_by_order_key($order_key);
-                $order = wc_get_order($order_id);
 
                 $order->set_customer_id($current_user->ID);
                 $order->save();

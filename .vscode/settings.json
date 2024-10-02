@@ -1,7 +1,7 @@
 {
-    "intelephense.environment.includePaths": [
-       "C:\\Users\\${env:USERPROFILE}\\Local Sites\\chetesi\\app\\public\\wp-includes",
-       "C:\\Users\\${env:USERPROFILE}\\Local Sites\\chetesi\\app\\public\\wp-content\\plugins\\woocommerce\\includes",
-       "C:\\Users\\${env:USERPROFILE}\\Local Sites\\chetesi\\app\\public\\wp-content\\plugins\\woocommerce"
-    ]
- }
+   "intelephense.environment.includePaths": [
+      "C:\\Users\\Admin\\Local Sites\\chetesi\\app\\public\\wp-includes",
+      "C:\\Users\\Admin\\Local Sites\\chetesi\\app\\public\\wp-content\\plugins\\woocommerce\\includes",
+      "C:\\Users\\Admin\\Local Sites\\chetesi\\app\\public\\wp-content\\plugins\\woocommerce"
+   ]
+}
