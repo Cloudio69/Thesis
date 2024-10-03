@@ -9,9 +9,8 @@
     </div>
 </div>
 <div class="thesis--totale flex justify-between pb-4">
-    <h1 class="font-bold text-2xl">Totale</h1>
+    <h1 class="font-bold text-2xl flex gap-2 items-center"><span>Totale</span><span class="text-xs opacity-50">(IVA già inclusa)</span></h1>
     <div class="flex gap-4 items-center">
-        <span class="text-sm font-bold">IVA 22%</span>
         <span class="text-2xl font-bold totale">0</span>
         <span class="text-2xl font-bold">€</span>
     </div>

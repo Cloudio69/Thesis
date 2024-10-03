@@ -37,11 +37,6 @@ function wc_thesis_create_order($args)
 
     $order->calculate_totals();
 
-    $iva_percentage = 22;
-    $order_total = $order->get_total();
-    $iva_amount = ($order_total * $iva_percentage) / 100;
-
-    $order->set_total($order_total + $iva_amount);
     $order->add_order_note("L'ordine è stato creato, in attesa di conferma definitiva.");
 
 

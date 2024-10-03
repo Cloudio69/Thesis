@@ -278,7 +278,6 @@ weight
     totale += cart.cd.prezzo * cart.cd.qty;
   }
 
-  iva = totale * 0.22;
   let totaleIva = Math.round((totale + iva) * 100) / 100;
 
   totaleDiv.innerHTML = `<h3 class='text-2xl mt-4 font-bold flex items-center justify-between w-full'><span>Totale: </span><span>${totaleIva.toFixed(
