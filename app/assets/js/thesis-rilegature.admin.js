@@ -330,7 +330,8 @@ form.onsubmit = (e) => {
       nome_rilegatura: e.currentTarget.nome_rilegatura.value,
       desc_rilegatura: e.currentTarget.descrizione_rilegatura.value,
       prezzo_rilegatura: parseFloat(e.currentTarget.prezzo_rilegatura.value),
-      angoli: +e.currentTarget.angoli.value,
+      angoli: +e.currentTarget.angoli.checked,
+      segnalibri: +e.currentTarget.segnalibri.checked,
       url_rilegatura: img.src,
     },
   };
