@@ -40,6 +40,7 @@ checkoutForm.addEventListener("submit", (e) => {
     formData.append("indirizzo", checkoutForm.indirizzo.value)
     formData.append("citta", checkoutForm.citta.value)
     formData.append("codice_postale", checkoutForm.codice_postale.value)
+    formData.append('cart', JSON.stringify(cart))
     
     formData.append("action", "validate_user_info")
     formData.append("nonce", nonce)

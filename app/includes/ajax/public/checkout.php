@@ -1,13 +1,16 @@
 <?php 
 
+include_once(THESIS_DIR . 'app/includes/ajax/woocommerce/init.php');
+
 add_action('wp_ajax_validate_user_info', 'validate_user_info');
 add_action('wp_ajax_nopriv_validate_user_info', 'validate_user_info');
+
 
 function validate_user_info() {
 
     $nonce = isset($_POST['nonce']) ? $_POST['nonce'] : '';
 
-    if (!wp_verify_nonce($_POST['nonce'], 'thesis-token')) {
+    if (!wp_verify_nonce($nonce, 'thesis-token')) {
         wp_send_json_error(array('message' => 'Nonce verification failed', 'nonce' => $_POST['nonce']), 403);
     }
 
@@ -21,6 +24,12 @@ function validate_user_info() {
     $indirizzo = sanitize_text_field($_POST['indirizzo']);
     $citta = sanitize_text_field($_POST['citta']);
     $codice_postale = sanitize_text_field($_POST['codice_postale']);
+
+    $cart = isset($_POST['cart']) ? json_decode(stripslashes($_POST['cart']), true) : [];
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        wp_send_json_error(array('message' => 'Errore nel formato del carrello'), 400);
+    }
 
     if (empty($nome)) {
         $errors['nome'] = 'Nome è richiesto';
@@ -54,9 +63,25 @@ function validate_user_info() {
         $errors['codice_postale'] = 'Codice postale è richiesto';
     }
 
+    if(empty($cart)) {
+        $errors['cart'] = 'Carrello è vuoto';
+    }
+
     if (!empty($errors)) {
         wp_send_json_error($errors, 400);
     }
+
+    wc_thesis_create_order([
+        'nome' => $nome,
+        'cognome' => $cognome,
+        'email' => $email,
+        'telefono' => $telefono,
+        'provincia' => $provincia,
+        'indirizzo' => $indirizzo,
+        'citta' => $citta,
+        'codice_postale' => $codice_postale,
+        'cart' => $cart
+    ]);
 
     wp_send_json_success(array("message" => "I campi sono validi"), 200);
 }
