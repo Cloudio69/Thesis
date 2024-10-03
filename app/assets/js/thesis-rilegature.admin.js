@@ -210,6 +210,7 @@ const showOptions = (e) => {
           desc_rilegatura: e.currentTarget.descrizione_rilegatura.value,
           prezzo_rilegatura: e.currentTarget.prezzo_rilegatura.value,
           angoli: +e.currentTarget.angoli.checked,
+          segnalibri: +e.currentTarget.segnalibri.checked,
           url_rilegatura: img.src,
         },
       };

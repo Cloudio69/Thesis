@@ -63,7 +63,7 @@ function wc_thesis_create_cart($cart_items, $order)
 }
 
 function wc_create_cd_product($cart_items, $order) {
-    
+
 }
 
 function wc_create_pagine_product($cart_items, $order)
@@ -116,8 +116,13 @@ function wc_create_rilegature_products($cart_items, $order)
         $rilegatura_db = $rilegatura_db->get_rilegature($rilegatura['id_rilegatura']);
         $rilegatura_db = json_decode($rilegatura_db);
 
+        $variante_db = new Variante;
+        $variante_db = $variante_db->get_variante($rilegatura['id_variante']);
+        $variante_db = json_decode($variante_db);
+
         $nome_rilegatura = $rilegatura_db[0]->nome_rilegatura;
         $prezzo_rilegatura = $rilegatura_db[0]->prezzo_rilegatura;
+        $nome_variante = $variante_db[0]->nome_variante;
         $angoli = isset($rilegatura['id_angolo']) ? $rilegatura['id_angolo'] : 0;
         $segnalibri = isset($rilegatura['id_segnalibro']) ? $rilegatura['id_segnalibro'] : 0;
         //  $immagine = isset($rilegatura['rilegatura_thumbnail']) ? $rilegatura['rilegatura_thumbnail'] : '';
@@ -182,9 +187,13 @@ function wc_create_rilegature_products($cart_items, $order)
             'total' => $totale * $quantity,
         ));
 
+        wc_add_order_item_meta($order_item_id, 'Stampa', $cart_items['tipologia']);
+        wc_add_order_item_meta($order_item_id, 'Variante', $nome_variante);
+
         if($angoli != 0) wc_add_order_item_meta($order_item_id, 'Angoli', $angoli_db[0]->nome_angolo);
         else wc_add_order_item_meta($order_item_id, 'Angoli', 'Nessun angolo');
         if($segnalibri != 0) wc_add_order_item_meta($order_item_id, 'Segnalibro', $segnalibri_db[0]->nome_colore);
         else wc_add_order_item_meta($order_item_id, 'Segnalibro', 'Nessun segnalibro');
     }
+
 }

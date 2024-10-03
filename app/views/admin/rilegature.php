@@ -37,6 +37,10 @@
                     <label for="angoli" class="flex items-center gap-2">Angoli? <span class="text-[10px] opacity-50">Puoi scegliere se la copertina può essere associata agli angoli</span></label>
                     <input type="checkbox" value="1" name="angoli" checked>
                 </div>
+                <div class="flex gap-4 items-center py-4">
+                    <label for="segnalibri" class="flex items-center gap-2">Segnalibri? <span class="text-[10px] opacity-50">Puoi scegliere se la copertina può avere segnalibri</span></label>
+                    <input type="checkbox" value="1" name="segnalibri" checked>
+                </div>
                 <button type="submit" id="submit--rilegature" class="bg-cyan-800 text-white p-2 rounded-md mt-2 disabled:opacity-25">SALVA</button>
                 <button type="reset" id="reset--rilegature" class="bg-cyan-800 text-white p-2 rounded-md mt-2">CANCELLA</button>
             </div>
@@ -61,6 +65,10 @@
                 <div class="flex gap-4 items-center py-4">
                     <label for="angoli" class="flex items-center gap-2">Angoli? <span class="text-[10px] opacity-50">Puoi scegliere se la copertina può essere associata agli angoli</span></label>
                     <input type="checkbox" value="1" name="angoli" checked>
+                </div>
+                <div class="flex gap-4 items-center py-4">
+                    <label for="segnalibri" class="flex items-center gap-2">Segnalibri? <span class="text-[10px] opacity-50">Puoi scegliere se la copertina può avere segnalibri</span></label>
+                    <input type="checkbox" value="1" name="segnalibri" checked>
                 </div>
                 <button type="submit" id="submit--update" class="bg-cyan-800 text-white p-2 rounded-md mt-2 disabled:opacity-25">SALVA</button>
                 <button type="reset" id="reset--update" class="bg-cyan-800 text-white p-2 rounded-md mt-2">CANCELLA</button>

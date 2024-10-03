@@ -37,7 +37,8 @@ function ajax_post_rilegature()
             $data['desc_rilegatura'],
             sanitize_text_field($data['url_rilegatura']),
             sanitize_text_field($data['prezzo_rilegatura']),
-            sanitize_text_field($data['angoli'])
+            sanitize_text_field($data['angoli']),
+            sanitize_text_field($data['segnalibri'])
         );
         wp_send_json_success(json_encode(array("id_query" => $query, "message" => "Inserito correttamente")), 200);
     } catch (Exception $e) {
@@ -85,7 +86,8 @@ function ajax_update_rilegatura()
             $data['desc_rilegatura'],
             sanitize_text_field($data['url_rilegatura']),
             sanitize_text_field($data['prezzo_rilegatura']),
-            $data['angoli']
+            $data['angoli'],
+            $data['segnalibri']
         );
         wp_send_json_success(json_encode(array("results" => $query, "message" => "Aggiornato con successo.")), 200);
     } catch (Exception $e) {

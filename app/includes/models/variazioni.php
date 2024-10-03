@@ -21,6 +21,14 @@ class Variante
             return json_encode($query);
         }
     }
+
+    public function get_variante($id)
+    {
+        global $wpdb;
+        $query = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "thesis_variazioni WHERE id_variante = $id");
+        return json_encode($query);
+    }
+
     public function create_variante($id_rilegatura, $nome_variante, $codice_colore, $anteprima_variante)
     {
         global $wpdb;

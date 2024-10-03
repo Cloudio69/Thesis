@@ -28,6 +28,7 @@ class ThesisDatabase
             anteprima_rilegatura TEXT,
             prezzo_rilegatura DECIMAL(10,2),
             angoli INT DEFAULT 0,
+            segnalibri INT DEFAULT 0,
             PRIMARY KEY (id_rilegatura)
         ) $charset_collate;
 

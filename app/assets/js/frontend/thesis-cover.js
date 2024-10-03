@@ -165,6 +165,13 @@ const getOpzioni = async () => {
         document.querySelector("[name='angoli']").disabled = false;
       }
 
+      if(groupedResults[e.currentTarget.value][0].segnalibri === "0") {
+        document.querySelector("[name='segnalibri']").disabled = true;
+        document.querySelector("[name='segnalibri']").value = "";
+      } else {
+        document.querySelector("[name='segnalibri']").disabled = false;
+      }
+
       if (segnalibroSelect.value !== "") segnalibroSelect.value = "";
 
       let varianti = document.querySelector(".varianti div");
