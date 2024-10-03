@@ -83,7 +83,7 @@ function wc_create_pagine_product($cart_items, $order)
         'total' => get_option('prezzo_bn') * $total_bn_pages,
     ));
 
-    wc_add_order_item_meta($order_item_id, 'Indici pagine: ', implode(', ', $bn_pages));
+    wc_add_order_item_meta($order_item_id, 'Indici pagine', implode(', ', $bn_pages));
 
     $colorate_product = new WC_Product_Simple();
     $colorate_product->set_name('Pagine multicolore');
@@ -95,7 +95,7 @@ function wc_create_pagine_product($cart_items, $order)
         'total' => get_option('prezzo_colori') * $total_colorate_pages,
     ));
 
-    wc_add_order_item_meta($order_item_id, 'Indici pagine: ', implode(', ', $colorate_pages));
+    wc_add_order_item_meta($order_item_id, 'Indici pagine', implode(', ', $colorate_pages));
 }
 
 function wc_create_rilegature_products($cart_items, $order)
