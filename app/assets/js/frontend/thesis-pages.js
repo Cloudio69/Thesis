@@ -186,7 +186,8 @@ const creaPagine = async () => {
     "grid",
     "grid-cols-3",
     "gap-4",
-    "overflow-auto"
+    "overflow-auto",
+    "mb-16"
   );
 
   for (let i = 0; i < numPages; i++) {
@@ -541,3 +542,4 @@ nextStepPagine.addEventListener("click", () => {
   generaPagine();
   nextStepPagine.classList.add("hidden")
 });
+

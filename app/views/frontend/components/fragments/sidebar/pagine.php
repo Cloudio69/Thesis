@@ -1,4 +1,4 @@
-<div id="pagine_step" class="p-12 flex flex-col gap-4">
+<div id="pagine_step" class="p-12 flex flex-col gap-4 mb-12">
     <h1 class="text-3xl font-bold">Scegli il colore di stampa</h1>
     <p>Qui puoi controllare il numero totale di pagine rilevate in bianco e nero e a colori., il processo è automatico dunque potrai riscontrare degli errori. Puoi filtrare le pagine cliccando sui contatori per tipo di stampa<br><br><b>Clicca sui pulsanti per cambiare la modalità di stampa, cliccando sull'immagine ti verrà mostrata l'anteprima* <br><br>
             <p class="text-sm opacity-50">* L'anteprima viene mostrata a colori</p>

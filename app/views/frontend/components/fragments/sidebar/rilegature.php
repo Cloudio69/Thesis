@@ -1,4 +1,4 @@
-<div id="rilegature_step" class="p-12 flex flex-col gap-4">
+<div id="rilegature_step" class="p-12 flex flex-col gap-4 mb-12">
     <h1 class="text-3xl font-bold">Scegli la rilegatura</h1>
     <p>Tutta la libertà che vuoi con CheTesi! Puoi personalizzare la Rilegatura, il suo colore ed il carattere, tipo di carta e grammatura e aggiungere angoli metallici e segnalibro.</p>
     <b>Clicca sopra per visualizzare l'anteprima dettagliata</b>
