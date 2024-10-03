@@ -1,6 +1,6 @@
 <?php
 
-// TODO: Implement this function
+require_once(THESIS_DIR . 'app/includes/generate_pdf.php');
 
 function wc_thesis_create_order($args)
 {
@@ -47,6 +47,51 @@ function wc_thesis_create_order($args)
 
 function wc_thesis_create_cart($cart_items, $order)
 {
+    wc_create_rilegature_products($cart_items, $order);
+    wc_create_pagine_product($cart_items, $order);
+
+    // if(isset($cart_items['cd'])) wc_create_cd_product($cart_items, $order);
+}
+
+function wc_create_cd_product($cart_items, $order) {}
+
+function wc_create_pagine_product($cart_items, $order)
+{
+    $pagine = $cart_items['pagine'];
+
+    $bn_pages = isset($pagine['bn']) ? $pagine['bn'] : array();
+    $colorate_pages = isset($pagine['colorate']) ? $pagine['colorate'] : array();
+
+    $total_bn_pages = count($bn_pages);
+    $total_colorate_pages = count($colorate_pages);
+
+    $bn_product = new WC_Product_Simple();
+    $bn_product->set_name('Pagine monocolore');
+    $bn_product->set_regular_price(get_option('prezzo_bn')); // Set the price per page
+    $bn_product->set_price(get_option('prezzo_bn'));
+
+    $colorate_product = new WC_Product_Simple();
+    $colorate_product->set_name('Pagine multicolore');
+    $colorate_product->set_regular_price(get_option('prezzo_colori')); // Set the price per page
+    $colorate_product->set_price(get_option('prezzo_colori'));
+
+    if ($total_bn_pages > 0) {
+        $order->add_product($bn_product, $total_bn_pages, array(
+            'subtotal' => get_option('prezzo_bn') * $total_bn_pages,
+            'total' => get_option('prezzo_bn') * $total_bn_pages,
+        ));
+    }
+
+    if ($total_colorate_pages > 0) {
+        $order->add_product($colorate_product, $total_colorate_pages, array(
+            'subtotal' => get_option('prezzo_colori') * $total_colorate_pages,
+            'total' => get_option('prezzo_colori') * $total_colorate_pages,
+        ));
+    }
+}
+
+function wc_create_rilegature_products($cart_items, $order)
+{
     foreach ($cart_items['rilegature'] as $rilegatura) {
         $rilegatura_db = new Rilegatura;
         $rilegatura_db = $rilegatura_db->get_rilegature($rilegatura['id_rilegatura']);
@@ -58,7 +103,7 @@ function wc_thesis_create_cart($cart_items, $order)
         $segnalibri = isset($rilegatura['id_segnalibro']) ? $rilegatura['id_segnalibro'] : 0;
 
         //  $immagine = isset($rilegatura['rilegatura_thumbnail']) ? $rilegatura['rilegatura_thumbnail'] : '';
-        
+
         $quantity = $rilegatura['qty'];
 
         $product = new WC_Product_Simple();
@@ -98,6 +143,5 @@ function wc_thesis_create_cart($cart_items, $order)
             'subtotal' => $prezzo_rilegatura * $quantity,
             'total' => $prezzo_rilegatura * $quantity,
         ));
-
     }
 }
