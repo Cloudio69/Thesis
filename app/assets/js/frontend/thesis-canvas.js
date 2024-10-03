@@ -326,7 +326,19 @@ formCD.onsubmit = (e) => {
           item.getAttribute("data-filename")
         )
       : [],
-    inputs: placeholders ? { ...placeholders } : {},
+    inputs: placeholders
+      ? {
+          nome_universita: formCD.querySelector("[name='nome_universita']").value,
+          nome_facolta: formCD.querySelector("[name='nome_facolta']").value,
+          corso_laurea: formCD.querySelector("[name='corso_laurea']").value,
+          titolo_tesi: formCD.querySelector("[name='titolo_tesi']").value,
+          anno_accademico: formCD.querySelector("[name='anno_accademico']").value,
+          nome_studente: formCD.querySelector("[name='nome_studente']").value,
+          numero_matricola: formCD.querySelector("[name='numero_matricola']").value,
+          nome_relatori: formCD.querySelector("[name='nome_relatori']").value,
+          nome_controrelatori: formCD.querySelector("[name='nome_controrelatori']").value,
+        }
+      : {},
   };
 
   const data = new FormData();

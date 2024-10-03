@@ -258,21 +258,21 @@ weight
     }</b></span>
     ${
       Object.values(cart.cd.inputs).some((value) => value !== "")
-        ? `<span class="text-xs mt-2 font-bold">Dati inseriti</span>`
-        : ""
+      ? `<span class="text-xs mt-2 font-bold">Dati inseriti</span>`
+      : ""
     }
     ${Object.entries(cart.cd.inputs)
       .filter(([key, value]) => value !== "")
-      .map(([key, value]) => `<p class="text-xs mt-2">${key}: ${value}</p>`)
+      .map(([key, value]) => `<p class="text-xs mt-2">${key.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}: ${value}</p>`)
       .join("")} 
     </div>
     <div class='flex flex-col w-full self-stretch flex-grow-0'>
     <div class='font-bold cd-actions flex flex-col items-end flex-1 justify-between'><span class="text-sm">${
     cart.cd.qty ? (cart.cd.prezzo * cart.cd.qty).toFixed(2) : cart.cd.prezzo
-  }€</span>${removeCd.outerHTML}</div></span>
+    }€</span>${removeCd.outerHTML}</div></span>
     </div>
     </div>
-  `;
+    `;
     cdDiv.appendChild(cdItem);
 
     totale += cart.cd.prezzo * cart.cd.qty;
@@ -524,7 +524,7 @@ weight
     }
     ${Object.entries(cart.cd.inputs)
       .filter(([key, value]) => value !== "")
-      .map(([key, value]) => `<p class="text-xs mt-2">${key}: ${value}</p>`)
+      .map(([key, value]) => `<p class="text-xs mt-2">${key.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}: ${value}</p>`)
       .join("")} 
     </div>
     <div class='flex flex-col w-full self-stretch flex-grow-0'>

@@ -36,6 +36,15 @@ function wc_thesis_create_order($args)
     $order->set_address($shipping_data, 'shipping');
 
     $order->calculate_totals();
+
+    $iva_percentage = 22;
+    $order_total = $order->get_total();
+    $iva_amount = ($order_total * $iva_percentage) / 100;
+
+    $order->set_total($order_total + $iva_amount);
+    $order->add_order_note("L'ordine è stato creato, in attesa di conferma definitiva.");
+
+
     $order->save();
 
     $order_id = $order->get_id();
@@ -50,10 +59,12 @@ function wc_thesis_create_cart($cart_items, $order)
     wc_create_rilegature_products($cart_items, $order);
     wc_create_pagine_product($cart_items, $order);
 
-    // if(isset($cart_items['cd'])) wc_create_cd_product($cart_items, $order);
+    if(isset($cart_items['cd'])) wc_create_cd_product($cart_items, $order);
 }
 
-function wc_create_cd_product($cart_items, $order) {}
+function wc_create_cd_product($cart_items, $order) {
+    
+}
 
 function wc_create_pagine_product($cart_items, $order)
 {
@@ -109,15 +120,34 @@ function wc_create_rilegature_products($cart_items, $order)
         $prezzo_rilegatura = $rilegatura_db[0]->prezzo_rilegatura;
         $angoli = isset($rilegatura['id_angolo']) ? $rilegatura['id_angolo'] : 0;
         $segnalibri = isset($rilegatura['id_segnalibro']) ? $rilegatura['id_segnalibro'] : 0;
-
         //  $immagine = isset($rilegatura['rilegatura_thumbnail']) ? $rilegatura['rilegatura_thumbnail'] : '';
-
         $quantity = $rilegatura['qty'];
+
+        $totale = $prezzo_rilegatura;
 
         $product = new WC_Product_Simple();
         $product->set_name($nome_rilegatura);
-        $product->set_regular_price($prezzo_rilegatura);
-        $product->set_price($prezzo_rilegatura);
+
+        if($angoli != 0) {
+            $angoli_db = new Angolo;
+            $angoli_db = $angoli_db->get_angoli($angoli);
+            $angoli_db = json_decode($angoli_db);
+
+            $totale += get_option('prezzo_angoli');
+        }
+
+        if($segnalibri != 0) {
+            $segnalibri_db = new Segnalibro;
+            $segnalibri_db = $segnalibri_db->get_segnalibri($segnalibri);
+            $segnalibri_db = json_decode($segnalibri_db);
+
+            $totale += get_option('prezzo_segnalibri');
+        }
+
+        $product->set_regular_price($totale);
+        $product->set_price($totale);
+
+
 
         // TODO: Implement this
 
@@ -148,10 +178,13 @@ function wc_create_rilegature_products($cart_items, $order)
         } */
 
         $order_item_id = $order->add_product($product, $quantity, array(
-            'subtotal' => $prezzo_rilegatura * $quantity,
-            'total' => $prezzo_rilegatura * $quantity,
+            'subtotal' => $totale * $quantity,
+            'total' => $totale * $quantity,
         ));
 
-        wc_add_order_item_meta($order_item_id, 'Angoli', $angoli);
+        if($angoli != 0) wc_add_order_item_meta($order_item_id, 'Angoli', $angoli_db[0]->nome_angolo);
+        else wc_add_order_item_meta($order_item_id, 'Angoli', 'Nessun angolo');
+        if($segnalibri != 0) wc_add_order_item_meta($order_item_id, 'Segnalibro', $segnalibri_db[0]->nome_colore);
+        else wc_add_order_item_meta($order_item_id, 'Segnalibro', 'Nessun segnalibro');
     }
 }

@@ -3,7 +3,7 @@
 
 Per inizializzare il plugin, installa le dependencies con
 
-`cd app && composer require tecnickcom/tcpdf`
+`cd app/vendor && composer require tecnickcom/tcpdf`
 
 Per integrare nuove classe di Tailwind, è necessario eseguire il comando
 
