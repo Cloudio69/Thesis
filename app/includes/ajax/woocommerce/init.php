@@ -45,6 +45,8 @@ function wc_thesis_create_order($args)
     $order_id = $order->get_id();
     $payment_url = $order->get_checkout_payment_url();
 
+    // TODO: Implementare generazione PDF
+
     return wp_send_json_success(array('order_id' => $order_id, 'payment_url' => $payment_url, 'products' => $order->get_item_count()), 200);
 }
 
@@ -54,10 +56,24 @@ function wc_thesis_create_cart($cart_items, $order)
     wc_create_rilegature_products($cart_items, $order);
     wc_create_pagine_product($cart_items, $order);
 
-    if(isset($cart_items['cd'])) wc_create_cd_product($cart_items, $order);
+    if(isset($cd['qty']) < 1 && isset($cd['qty']) != 0) wc_create_cd_product($cart_items, $order);
 }
 
 function wc_create_cd_product($cart_items, $order) {
+
+    $cd = $cart_items['cd'];
+
+    $cd_product = new WC_Product_Simple();
+    $cd_product->set_name('CD Serigrafato');
+    $cd_product->set_regular_price(get_option('prezzo_cd'));
+    $cd_product->set_price(get_option('prezzo_cd'));
+
+    if(isset($cd['qty']) < 1) $cd['qty'] = 1;
+
+    $order_item_id = $order->add_product($cd_product, $cd['qty'], array(
+        'subtotal' => get_option('prezzo_cd') * $cd['qty'],
+        'total' => get_option('prezzo_cd') * $cd['qty'],
+    ));
 
 }
 
