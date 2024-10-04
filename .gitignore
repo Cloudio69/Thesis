@@ -2,3 +2,5 @@ node_modules
 tecnickcom
 files
 vendor/
+composer
+autoload.php

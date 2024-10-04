@@ -6,7 +6,7 @@ module.exports = {
     extend: {},
   },
   plugins: [
-    require('tailwindcss-border-image'),
+    
   ],
 }
 

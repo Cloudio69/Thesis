@@ -2,6 +2,9 @@
 
 require_once(THESIS_DIR . 'app/includes/generate_pdf.php');
 
+$order = null;
+$cart_items = null;
+
 function wc_thesis_create_order($args)
 {
 
@@ -45,9 +48,7 @@ function wc_thesis_create_order($args)
     $order_id = $order->get_id();
     $payment_url = $order->get_checkout_payment_url();
 
-    // TODO: Implementare generazione PDF
-    
-    $pdf = new ThesisSummary($cart_items, $order);
+    new ThesisSummary($cart_items, $order);
 
     return wp_send_json_success(array('order_id' => $order_id, 'payment_url' => $payment_url, 'products' => $order->get_item_count()), 200);
 }
