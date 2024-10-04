@@ -46,6 +46,8 @@ function wc_thesis_create_order($args)
     $payment_url = $order->get_checkout_payment_url();
 
     // TODO: Implementare generazione PDF
+    
+    $pdf = new ThesisSummary($cart_items, $order);
 
     return wp_send_json_success(array('order_id' => $order_id, 'payment_url' => $payment_url, 'products' => $order->get_item_count()), 200);
 }
@@ -56,10 +58,11 @@ function wc_thesis_create_cart($cart_items, $order)
     wc_create_rilegature_products($cart_items, $order);
     wc_create_pagine_product($cart_items, $order);
 
-    if(isset($cd['qty']) < 1 && isset($cd['qty']) != 0) wc_create_cd_product($cart_items, $order);
+    if (isset($cd['qty']) < 1 && isset($cd['qty']) != 0) wc_create_cd_product($cart_items, $order);
 }
 
-function wc_create_cd_product($cart_items, $order) {
+function wc_create_cd_product($cart_items, $order)
+{
 
     $cd = $cart_items['cd'];
 
@@ -68,13 +71,12 @@ function wc_create_cd_product($cart_items, $order) {
     $cd_product->set_regular_price(get_option('prezzo_cd'));
     $cd_product->set_price(get_option('prezzo_cd'));
 
-    if(isset($cd['qty']) < 1) $cd['qty'] = 1;
+    if (isset($cd['qty']) < 1) $cd['qty'] = 1;
 
     $order_item_id = $order->add_product($cd_product, $cd['qty'], array(
         'subtotal' => get_option('prezzo_cd') * $cd['qty'],
         'total' => get_option('prezzo_cd') * $cd['qty'],
     ));
-
 }
 
 function wc_create_pagine_product($cart_items, $order)
@@ -84,11 +86,11 @@ function wc_create_pagine_product($cart_items, $order)
     $bn_pages = isset($pagine['bn']) ? $pagine['bn'] : array();
     $colorate_pages = isset($pagine['colorate']) ? $pagine['colorate'] : array();
 
-    $bn_pages = array_map(function($page) {
+    $bn_pages = array_map(function ($page) {
         return $page + 1;
     }, $bn_pages);
 
-    $colorate_pages = array_map(function($page) {
+    $colorate_pages = array_map(function ($page) {
         return $page + 1;
     }, $colorate_pages);
 
@@ -100,24 +102,30 @@ function wc_create_pagine_product($cart_items, $order)
     $bn_product->set_regular_price(get_option('prezzo_bn')); // Set the price per page
     $bn_product->set_price(get_option('prezzo_bn'));
 
-    $order_item_id = $order->add_product($bn_product, $total_bn_pages, array(
-        'subtotal' => get_option('prezzo_bn') * $total_bn_pages,
-        'total' => get_option('prezzo_bn') * $total_bn_pages,
-    ));
 
-    wc_add_order_item_meta($order_item_id, 'Indici pagine', implode(', ', $bn_pages));
+    if ($total_bn_pages > 0) {
+        $order_item_id = $order->add_product($bn_product, $total_bn_pages, array(
+            'subtotal' => get_option('prezzo_bn') * $total_bn_pages,
+            'total' => get_option('prezzo_bn') * $total_bn_pages,
+        ));
+
+        wc_add_order_item_meta($order_item_id, 'Indici pagine', implode(', ', $bn_pages));
+    }
 
     $colorate_product = new WC_Product_Simple();
     $colorate_product->set_name('Pagine multicolore');
     $colorate_product->set_regular_price(get_option('prezzo_colori')); // Set the price per page
     $colorate_product->set_price(get_option('prezzo_colori'));
-    
-    $order_item_id = $order->add_product($colorate_product, $total_colorate_pages, array(
-        'subtotal' => get_option('prezzo_colori') * $total_colorate_pages,
-        'total' => get_option('prezzo_colori') * $total_colorate_pages,
-    ));
 
-    wc_add_order_item_meta($order_item_id, 'Indici pagine', implode(', ', $colorate_pages));
+    if ($total_colorate_pages > 0) {
+
+        $order_item_id = $order->add_product($colorate_product, $total_colorate_pages, array(
+            'subtotal' => get_option('prezzo_colori') * $total_colorate_pages,
+            'total' => get_option('prezzo_colori') * $total_colorate_pages,
+        ));
+
+        wc_add_order_item_meta($order_item_id, 'Indici pagine', implode(', ', $colorate_pages));
+    }
 }
 
 function wc_create_rilegature_products($cart_items, $order)
@@ -144,7 +152,7 @@ function wc_create_rilegature_products($cart_items, $order)
         $product = new WC_Product_Simple();
         $product->set_name($nome_rilegatura);
 
-        if($angoli != 0) {
+        if ($angoli != 0) {
             $angoli_db = new Angolo;
             $angoli_db = $angoli_db->get_angoli($angoli);
             $angoli_db = json_decode($angoli_db);
@@ -152,7 +160,7 @@ function wc_create_rilegature_products($cart_items, $order)
             $totale += get_option('prezzo_angoli');
         }
 
-        if($segnalibri != 0) {
+        if ($segnalibri != 0) {
             $segnalibri_db = new Segnalibro;
             $segnalibri_db = $segnalibri_db->get_segnalibri($segnalibri);
             $segnalibri_db = json_decode($segnalibri_db);
@@ -201,10 +209,9 @@ function wc_create_rilegature_products($cart_items, $order)
         wc_add_order_item_meta($order_item_id, 'Stampa', $cart_items['tipologia']);
         wc_add_order_item_meta($order_item_id, 'Variante', $nome_variante);
 
-        if($angoli != 0) wc_add_order_item_meta($order_item_id, 'Angoli', $angoli_db[0]->nome_angolo);
+        if ($angoli != 0) wc_add_order_item_meta($order_item_id, 'Angoli', $angoli_db[0]->nome_angolo);
         else wc_add_order_item_meta($order_item_id, 'Angoli', 'Nessun angolo');
-        if($segnalibri != 0) wc_add_order_item_meta($order_item_id, 'Segnalibro', $segnalibri_db[0]->nome_colore);
+        if ($segnalibri != 0) wc_add_order_item_meta($order_item_id, 'Segnalibro', $segnalibri_db[0]->nome_colore);
         else wc_add_order_item_meta($order_item_id, 'Segnalibro', 'Nessun segnalibro');
     }
-
 }

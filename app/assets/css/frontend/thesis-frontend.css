@@ -15,7 +15,12 @@
   scroll-behavior: smooth;
 }
 
-* [disabled], label:has(input[type="radio"]:disabled) {
+a, p, h1, h2, h3, h4, h5, h6, span, label, button, input, select, option {
+  margin: 0;
+}
+
+* [disabled],
+label:has(input[type="radio"]:disabled) {
   cursor: not-allowed;
   opacity: 0.5;
 }
@@ -118,6 +123,17 @@ label:has(input[type="radio"]:checked) {
   outline: 2px solid #f4b424;
 }
 
+.payment_box {
+  background: white !important;
+}
+.payment_box:before {
+  border: 1em solid #ffffff !important;
+  border-right-color: transparent !important;
+  border-left-color: transparent !important;
+  border-top-color: transparent !important;
+}
+
+
 .selected span {
   background: #f4bf24;
   color: white;
@@ -166,7 +182,7 @@ label:has(input[type="radio"]:checked) {
   .step-number {
     display: none;
   }
-  
+
   .rilegature .grid {
     grid-template-columns: repeat(1, 1fr);
   }
@@ -179,7 +195,6 @@ label:has(input[type="radio"]:checked) {
 }
 
 @media (width <= 1366px) {
-
   .rilegature .grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -202,14 +217,13 @@ label:has(input[type="radio"]:checked) {
     scale: 0.8;
   }
 
-  #prosegui_rilegature{
+  #prosegui_rilegature {
     left: 44%;
   }
 }
 
-@media (width > 1366px){
-  .thesis--header{
+@media (width > 1366px) {
+  .thesis--header {
     overflow: visible;
   }
-
 }
