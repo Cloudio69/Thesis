@@ -162,7 +162,7 @@ class ThesisSummary
 
         $formato_id = $pagine['id_formato'];
 
-        if($formato_id == "formato-a4"){
+        if ($formato_id == "formato-a4") {
             $formato = "A4";
         } else {
             $formato = "A3";
@@ -199,12 +199,12 @@ class ThesisSummary
 
         $content .= "
         <div class='pagine rounded-md border border-neutral-100 p-4 my-4'>
-            <h1 class='font-bold text-base m-0'>Totale pagine: ". ($total_bn_pages + $total_colorate_pages) ."</h1>
+            <h1 class='font-bold text-base m-0'>Totale pagine: " . ($total_bn_pages + $total_colorate_pages) . "</h1>
             <ul class='pagine__details my-2'>
                 <li class='pagine__detail'>Pagine monocolore: " . $total_bn_pages . "</li>
                 <li class='pagine__detail'>Pagine multicolore: " . $total_colorate_pages . "</li>
-                <li class='pagine__detail'>Formato: " . $formato . " (+". ($formato != "A4" ? get_option("prezzo_a3") : get_option("prezzo_a4")) .") </li>
-                <li class='pagine__detail'>Grammatura: " . $grammatura . " (+". ($grammatura_db[0]->prezzo_grammatura > 0 ? $grammatura_db[0]->prezzo_grammatura : "0.00") .") </li>
+                <li class='pagine__detail'>Formato: " . $formato . " (+" . ($formato != "A4" ? get_option("prezzo_a3") : get_option("prezzo_a4")) . ") </li>
+                <li class='pagine__detail'>Grammatura: " . $grammatura . " (+" . ($grammatura_db[0]->prezzo_grammatura > 0 ? $grammatura_db[0]->prezzo_grammatura : "0.00") . ") </li>
             </ul>
         </div>
         <div style='page-break-before: always;'></div>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 include_once(THESIS_DIR . 'app/includes/ajax/woocommerce/init.php');
 
@@ -6,7 +6,8 @@ add_action('wp_ajax_validate_user_info', 'validate_user_info');
 add_action('wp_ajax_nopriv_validate_user_info', 'validate_user_info');
 
 
-function validate_user_info() {
+function validate_user_info()
+{
 
     $nonce = isset($_POST['nonce']) ? $_POST['nonce'] : '';
 
@@ -24,6 +25,7 @@ function validate_user_info() {
     $indirizzo = sanitize_text_field($_POST['indirizzo']);
     $citta = sanitize_text_field($_POST['citta']);
     $codice_postale = sanitize_text_field($_POST['codice_postale']);
+    $spedizione = sanitize_text_field($_POST['spedizione']);
 
     $cart = isset($_POST['cart']) ? json_decode(stripslashes($_POST['cart']), true) : [];
 
@@ -63,7 +65,11 @@ function validate_user_info() {
         $errors['codice_postale'] = 'Codice postale è richiesto';
     }
 
-    if(empty($cart)) {
+    if (empty($spedizione)) {
+        $errors['spedizione'] = 'Spedizione è richiesta';
+    }
+
+    if (empty($cart)) {
         $errors['cart'] = 'Carrello è vuoto';
     }
 
@@ -80,6 +86,7 @@ function validate_user_info() {
         'indirizzo' => $indirizzo,
         'citta' => $citta,
         'codice_postale' => $codice_postale,
+        'spedizione' => $spedizione,
         'cart' => $cart
     ]);
 

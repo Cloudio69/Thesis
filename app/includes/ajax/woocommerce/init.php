@@ -38,6 +38,33 @@ function wc_thesis_create_order($args)
     );
     $order->set_address($shipping_data, 'shipping');
 
+    $spedizione = $args['spedizione'];
+
+    $data_store = WC_Data_Store::load('shipping-zone');
+    $raw_zones = $data_store->get_zones();
+    foreach ($raw_zones as $raw_zone) {
+        $zones[] = new WC_Shipping_Zone($raw_zone);
+    }
+    $zones[] = new WC_Shipping_Zone(0);
+
+    foreach ($zones as $zone) {
+        $shipping_methods = $zone->get_shipping_methods();
+        foreach ($shipping_methods as $shipping_method) {
+            $instance = $shipping_method->instance_settings;
+            if ($shipping_method->is_enabled()) {
+                $instance_id = $shipping_method->get_instance_id();
+
+                if ($instance_id == $spedizione) {
+                    $spedizione_obj = new WC_Order_Item_Shipping();
+                    $spedizione_obj->set_method_title($shipping_method->title);
+                    $spedizione_obj->set_instance_id($instance_id);
+                    $spedizione_obj->set_total($shipping_method->cost);
+                    $order->add_item($spedizione_obj);
+                }
+            }
+        }
+    }
+
     $order->calculate_totals();
 
     $order->add_order_note("L'ordine è stato creato, in attesa di conferma definitiva.");
@@ -91,7 +118,7 @@ function wc_create_pagine_product($cart_items, $order)
 
     $formato_id = $pagine['id_formato'];
 
-    if($formato_id == "formato-a4"){
+    if ($formato_id == "formato-a4") {
         $formato = "A4";
     } else {
         $formato = "A3";
@@ -160,8 +187,7 @@ function wc_create_pagine_product($cart_items, $order)
         wc_add_order_item_meta($order_item_id, 'Prezzo', $grammatura_db[0]->prezzo_grammatura . '€ per pagina');
     }
 
-    if($formato == "A3")
-    {
+    if ($formato == "A3") {
         $formatoProduct = new WC_Product_Simple();
         $formatoProduct->set_name("Formato A3");
         $formatoProduct->set_regular_price(get_option('prezzo_a3'));
