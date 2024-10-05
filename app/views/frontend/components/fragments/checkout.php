@@ -167,12 +167,13 @@
                             $shipping_methods = $zone->get_shipping_methods();
                             foreach ($shipping_methods as $shipping_method) {
                                 $instance = $shipping_method->instance_settings;
-                                if(isset($instance) && isset($instance['cost'])) {
-                                    $cost = $instance['cost'];
-                                    echo '<option value="' . $cost . '">' . esc_html($shipping_method->get_title()) . ' (' . wc_price($shipping_method->cost) . ')</option>';
-                                } else {
-                                    $cost = 0.00;
-                                    echo '<option value="' . $cost . '">' . esc_html($shipping_method->get_title()) . ' (' . wc_price($cost) . ')</option>';
+                                if ($shipping_method->is_enabled()) {
+                                    if (isset($instance) && isset($instance['cost'])) {
+                                        $cost = $instance['cost'];
+                                        echo '<option value="' . esc_html($shipping_method->get_instance_id()) . '">' . esc_html($shipping_method->get_title()) . ' (' . wc_price($shipping_method->cost) . ')</option>';
+                                    } else {
+                                        echo '<option value="' . esc_html($shipping_method->get_instance_id()) . '">' . esc_html($shipping_method->get_title()) . ' (' . wc_price(0.00) . ')</option>';
+                                    }
                                 }
                             }
                         }
