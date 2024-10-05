@@ -84,6 +84,19 @@ function wc_create_pagine_product($cart_items, $order)
 {
     $pagine = $cart_items['pagine'];
 
+    $grammatura = $pagine['id_grammatura'];
+    $grammatura_db = new Grammatura;
+    $grammatura_db = $grammatura_db->get_grammature($grammatura);
+    $grammatura_db = json_decode($grammatura_db);
+
+    $formato_id = $pagine['id_formato'];
+
+    if($formato_id == "formato-a4"){
+        $formato = "A4";
+    } else {
+        $formato = "A3";
+    }
+
     $bn_pages = isset($pagine['bn']) ? $pagine['bn'] : array();
     $colorate_pages = isset($pagine['colorate']) ? $pagine['colorate'] : array();
 
@@ -111,6 +124,8 @@ function wc_create_pagine_product($cart_items, $order)
         ));
 
         wc_add_order_item_meta($order_item_id, 'Indici pagine', implode(', ', $bn_pages));
+        if ($grammatura_db[0]->prezzo_grammatura == 0) wc_add_order_item_meta($order_item_id, 'Grammatura', $grammatura_db[0]->nome_grammatura);
+        if ($formato == "A4") wc_add_order_item_meta($order_item_id, 'Formato', $formato);
     }
 
     $colorate_product = new WC_Product_Simple();
@@ -126,6 +141,38 @@ function wc_create_pagine_product($cart_items, $order)
         ));
 
         wc_add_order_item_meta($order_item_id, 'Indici pagine', implode(', ', $colorate_pages));
+        if ($grammatura_db[0]->prezzo_grammatura == 0) wc_add_order_item_meta($order_item_id, 'Grammatura', $grammatura_db[0]->nome_grammatura);
+        if ($formato == "A4") wc_add_order_item_meta($order_item_id, 'Formato', $formato);
+    }
+
+    if ($grammatura_db[0]->prezzo_grammatura != 0) {
+
+        $grammaturaProduct = new WC_Product_Simple();
+        $grammaturaProduct->set_name("Grammatura " . $grammatura_db[0]->nome_grammatura);
+        $grammaturaProduct->set_regular_price($grammatura_db[0]->prezzo_grammatura);
+        $grammaturaProduct->set_price($grammatura_db[0]->prezzo_grammatura);
+
+        $order_item_id = $order->add_product($grammaturaProduct, ($total_bn_pages + $total_colorate_pages), array(
+            'subtotal' => $grammatura_db[0]->prezzo_grammatura * ($total_bn_pages + $total_colorate_pages),
+            'total' => $grammatura_db[0]->prezzo_grammatura * ($total_bn_pages + $total_colorate_pages),
+        ));
+
+        wc_add_order_item_meta($order_item_id, 'Prezzo', $grammatura_db[0]->prezzo_grammatura . '€ per pagina');
+    }
+
+    if($formato == "A3")
+    {
+        $formatoProduct = new WC_Product_Simple();
+        $formatoProduct->set_name("Formato A3");
+        $formatoProduct->set_regular_price(get_option('prezzo_a3'));
+        $formatoProduct->set_price(get_option('prezzo_a3'));
+
+        $order_item_id = $order->add_product($formatoProduct, ($total_bn_pages + $total_colorate_pages), array(
+            'subtotal' => get_option('prezzo_a3') * ($total_bn_pages + $total_colorate_pages),
+            'total' => get_option('prezzo_a3') * ($total_bn_pages + $total_colorate_pages),
+        ));
+
+        wc_add_order_item_meta($order_item_id, 'Prezzo', get_option('prezzo_a3') . '€ per pagina');
     }
 }
 
@@ -140,9 +187,14 @@ function wc_create_rilegature_products($cart_items, $order)
         $variante_db = $variante_db->get_variante($rilegatura['id_variante']);
         $variante_db = json_decode($variante_db);
 
+        $colore_db = new CharColors;
+        $colore_db = $colore_db->get_char_colors($rilegatura['id_colore']);
+        $colore_db = json_decode($colore_db);
+
         $nome_rilegatura = $rilegatura_db[0]->nome_rilegatura;
         $prezzo_rilegatura = $rilegatura_db[0]->prezzo_rilegatura;
         $nome_variante = $variante_db[0]->nome_variante;
+        $colore_carattere = $colore_db[0]->nome_colore;
         $angoli = isset($rilegatura['id_angolo']) ? $rilegatura['id_angolo'] : 0;
         $segnalibri = isset($rilegatura['id_segnalibro']) ? $rilegatura['id_segnalibro'] : 0;
         //  $immagine = isset($rilegatura['rilegatura_thumbnail']) ? $rilegatura['rilegatura_thumbnail'] : '';
@@ -209,6 +261,7 @@ function wc_create_rilegature_products($cart_items, $order)
 
         wc_add_order_item_meta($order_item_id, 'Stampa', $cart_items['tipologia']);
         wc_add_order_item_meta($order_item_id, 'Variante', $nome_variante);
+        wc_add_order_item_meta($order_item_id, 'Colore carattere', $colore_carattere);
 
         if ($angoli != 0) wc_add_order_item_meta($order_item_id, 'Angoli', $angoli_db[0]->nome_angolo);
         else wc_add_order_item_meta($order_item_id, 'Angoli', 'Nessun angolo');

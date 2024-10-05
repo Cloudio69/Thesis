@@ -75,7 +75,7 @@ class ThesisSummary
             </tr>
             <tr>
                 <td class='font-bold border text-xs p-2'>Totale</td>
-                <td class='font-bold border text-xs text-right p-2'>" . $this->order->get_total() . "</td>
+                <td class='font-bold border text-xs text-right p-2'>" . wc_price($this->order->get_total()) . "</td>
             </tr>
             <tr>
                 <td class='font-bold border text-xs p-2'>Stato</td>
@@ -160,15 +160,21 @@ class ThesisSummary
 
         $pagine = $this->cart_items['pagine'];
 
-        $formato = ['formato-a4', 'formato-a3'];
-
         $formato_id = $pagine['id_formato'];
 
-        if ($formato[$formato_id] == 'formato-a4') {
-            $formato = 'A4';
+        if($formato_id == "formato-a4"){
+            $formato = "A4";
         } else {
-            $formato = 'A3';
+            $formato = "A3";
         }
+
+
+        /* if ($formato[$formato_id] == 'formato-a4') {
+            $nome_formato = 'A4';
+        } else {
+            $nome_formato = 'A3';
+        } */
+
 
         $grammatura = $pagine['id_grammatura'];
         $grammatura_db = new Grammatura;
@@ -197,7 +203,7 @@ class ThesisSummary
             <ul class='pagine__details my-2'>
                 <li class='pagine__detail'>Pagine monocolore: " . $total_bn_pages . "</li>
                 <li class='pagine__detail'>Pagine multicolore: " . $total_colorate_pages . "</li>
-                <li class='pagine__detail'>Formato: " . $formato . " (+". ($formato == "A4" ? get_option("prezzo_a4") : get_option("prezzo_a3")) .") </li>
+                <li class='pagine__detail'>Formato: " . $formato . " (+". ($formato != "A4" ? get_option("prezzo_a3") : get_option("prezzo_a4")) .") </li>
                 <li class='pagine__detail'>Grammatura: " . $grammatura . " (+". ($grammatura_db[0]->prezzo_grammatura > 0 ? $grammatura_db[0]->prezzo_grammatura : "0.00") .") </li>
             </ul>
         </div>
