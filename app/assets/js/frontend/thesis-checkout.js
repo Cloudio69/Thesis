@@ -31,6 +31,12 @@ const fieldLookup = () => {
 checkoutForm.addEventListener("submit", (e) => {
     e.preventDefault()
 
+    submitCheckout.classList.add("animate-pulse", "pointer-events-none", "cursor-not-allowed");
+    submitCheckout.innerHTML = "Attendere..."
+    submitCheckout.disabled = true;
+    
+    window.onbeforeunload = null;
+
     let formData = new FormData()
     formData.append("nome", checkoutForm.nome.value)
     formData.append("cognome", checkoutForm.cognome.value)
@@ -55,7 +61,9 @@ checkoutForm.addEventListener("submit", (e) => {
         processData: false, // Impedisce a jQuery di trasformare i dati in una stringa di query
         contentType: false, // Impedisce a jQuery di impostare automaticamente il tipo di contenuto
         success: (response) => {
-            return response
+            let responseData = response.data.payment_url;
+
+            window.location.href = responseData;
         },
         error: (error) => {
             // parse data

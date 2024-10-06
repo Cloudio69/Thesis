@@ -24,11 +24,22 @@ class ThesisSummary
         $this->cart_items = $cart_items;
         $this->session = $_COOKIE['thesis_session'];
 
+        $files = glob(THESIS_DIR . 'app/files/' . $this->session . '/riepilogo_*');
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                unlink($file);
+            }
+        }
+
         $this->generate_summary();
+
+        $this->generate_zip();
     }
 
     private function generate_summary()
     {
+        
+
         $html = "
         <head>
             <style>
@@ -102,25 +113,25 @@ class ThesisSummary
 
         $content = "<hr class='my-6'><h3 class='font-black'>Rilegature</h3>";
 
-        foreach ($this->cart_items['rilegature'] as $rilegatura) {
+        foreach ($this->cart_items->rilegature as $rilegatura) {
             $rilegatura_db = new Rilegatura;
-            $rilegatura_db = $rilegatura_db->get_rilegature($rilegatura['id_rilegatura']);
+            $rilegatura_db = $rilegatura_db->get_rilegature($rilegatura->id_rilegatura);
             $rilegatura_db = json_decode($rilegatura_db);
 
             $variante_db = new Variante;
-            $variante_db = $variante_db->get_variante($rilegatura['id_variante']);
+            $variante_db = $variante_db->get_variante($rilegatura->id_variante);
             $variante_db = json_decode($variante_db);
 
             $colore_db = new CharColors;
-            $colore_db = $colore_db->get_char_colors($rilegatura['id_colore']);
+            $colore_db = $colore_db->get_char_colors($rilegatura->id_colore);
             $colore_db = json_decode($colore_db);
 
             $nome_rilegatura = $rilegatura_db[0]->nome_rilegatura;
             $prezzo_rilegatura = $rilegatura_db[0]->prezzo_rilegatura;
             $nome_variante = $variante_db[0]->nome_variante;
             $colore_carattere = $colore_db[0]->nome_colore;
-            $angoli = isset($rilegatura['id_angolo']) ? $rilegatura['id_angolo'] : 0;
-            $segnalibri = isset($rilegatura['id_segnalibro']) ? $rilegatura['id_segnalibro'] : 0;
+            $angoli = isset($rilegatura->id_angolo) ? $rilegatura->id_angolo : 0;
+            $segnalibri = isset($rilegatura->id_segnalibro) ? $rilegatura->id_segnalibro : 0;
 
             if ($segnalibri != 0) {
                 $segnalibri_db = new Segnalibro;
@@ -139,7 +150,7 @@ class ThesisSummary
             }
 
             //  $immagine = isset($rilegatura['rilegatura_thumbnail']) ? $rilegatura['rilegatura_thumbnail'] : '';
-            $quantity = $rilegatura['qty'];
+            $quantity = $rilegatura->qty;
 
             $totale = $prezzo_rilegatura;
 
@@ -158,9 +169,9 @@ class ThesisSummary
 
         $content .= "<hr class='my-6'><h3 class='font-black'>Pagine</h3>";
 
-        $pagine = $this->cart_items['pagine'];
+        $pagine = $this->cart_items->pagine;
 
-        $formato_id = $pagine['id_formato'];
+        $formato_id = $pagine->id_formato;
 
         if ($formato_id == "formato-a4") {
             $formato = "A4";
@@ -176,15 +187,15 @@ class ThesisSummary
         } */
 
 
-        $grammatura = $pagine['id_grammatura'];
+        $grammatura = $pagine->id_grammatura;
         $grammatura_db = new Grammatura;
         $grammatura_db = $grammatura_db->get_grammature($grammatura);
         $grammatura_db = json_decode($grammatura_db);
 
         $grammatura = $grammatura_db[0]->nome_grammatura;
 
-        $bn_pages = isset($pagine['bn']) ? $pagine['bn'] : array();
-        $colorate_pages = isset($pagine['colorate']) ? $pagine['colorate'] : array();
+        $bn_pages = isset($pagine->bn) ? $pagine->bn : array();
+        $colorate_pages = isset($pagine->colorate) ? $pagine->colorate : array();
 
         $bn_pages = array_map(function ($page) {
             return $page + 1;
@@ -221,7 +232,7 @@ class ThesisSummary
                 </tr>
                 <tr>
                     <td class='border p-2 font-bold'>Tipo di stampa</td>
-                    <td class='border p-2 font-bold'>" . $this->cart_items['tipologia'] . "</td>
+                    <td class='border p-2 font-bold'>" . $this->cart_items->tipologia . "</td>
                 </tr>
             </table>
         </div>
@@ -274,4 +285,44 @@ class ThesisSummary
 
         return $content;
     }
+
+    private function generate_zip()
+    {
+        $zip_files = glob(THESIS_DIR . 'app/files/' . $this->session . '/riepilogo_*.zip');
+        foreach ($zip_files as $zip_file) {
+            if (is_file($zip_file)) {
+                unlink($zip_file);
+            }
+        }
+
+        $zip = new ZipArchive;
+        $zip->open(THESIS_DIR . 'app/files/' . $this->session . '/riepilogo_' . $this->order->get_id() . '.zip', ZipArchive::CREATE);
+
+        $files = glob(THESIS_DIR . 'app/files/' . $this->session . '/riepilogo_*');
+
+        foreach ($files as $file) {
+            $zip->addFile($file, basename($file));
+        }
+
+        $tesi_pdf = THESIS_DIR . 'app/files/' . $this->session . '/tesi.pdf';
+        if (file_exists($tesi_pdf)) {
+            $zip->addFile($tesi_pdf, 'tesi.pdf');
+        }
+
+        $frontespizio = THESIS_DIR . 'app/files/' . $this->session . '/frontespizio.pdf';
+        if (file_exists($frontespizio)) {
+            $zip->addFile($frontespizio, 'frontespizio.pdf');
+        }
+
+        $cd_cover = THESIS_DIR . 'app/files/' . $this->session . '/cd_cover.png';
+        if (file_exists($cd_cover)) {
+            $zip->addFile($cd_cover, 'cd_cover.png');
+        }
+
+        
+
+        $zip->close();
+    }
 }
+
+

@@ -51,6 +51,17 @@ class Thesis
         add_action('wp_footer', array($this, 'add_thesis_id_button'));
         add_action('thesis_clear_event', array($this, 'thesis_clear_function'));
         add_filter('cron_schedules', array($this, 'thesis_clear_interval'));
+        add_action('woocommerce_order_status_pending_to_on-hold', array($this, 'thesis_order_status_change'));
+        add_filter( 'is_protected_meta', '__return_false' ); 
+    }
+
+    public function thesis_order_status_change($order_id)
+    {
+        $order = wc_get_order($order_id);
+      
+        $cart_items = get_post_meta($order_id, '_cart_items', true);
+
+        new ThesisSummary(json_decode($cart_items), $order);
     }
 
     public function thesis_schedule_cron()
@@ -152,7 +163,7 @@ class Thesis
 
     public function add_thesis_id_button()
     {
-        ?>
+?>
         <script>
             const init = document.querySelectorAll(".<?php echo get_option('class_bottone'); ?>")
             const nonce = "<?php echo wp_create_nonce('thesis-token'); ?>"
@@ -161,7 +172,7 @@ class Thesis
             const popupId = <?php echo get_option('popup_id') ? get_option('popup_id') : 68; ?>;
         </script>
 <?php
-}
+    }
 
     public function thesis_options()
     {
@@ -209,7 +220,7 @@ class Thesis
             'manage_options',
             'thesis-rilegature',
             function () {
-                include_once (THESIS_DIR . 'app/views/admin/rilegature.php');
+                include_once(THESIS_DIR . 'app/views/admin/rilegature.php');
             },
             null
         );
@@ -221,7 +232,7 @@ class Thesis
             'manage_options',
             'thesis-ordini',
             function () {
-                include_once (THESIS_DIR . 'app/views/admin/orders.php');
+                include_once(THESIS_DIR . 'app/views/admin/orders.php');
             },
             null
         );
@@ -233,7 +244,7 @@ class Thesis
             'manage_options',
             'thesis-accessori',
             function () {
-                include_once (THESIS_DIR . 'app/views/admin/accessori.php');
+                include_once(THESIS_DIR . 'app/views/admin/accessori.php');
             },
             null
         );
@@ -245,7 +256,7 @@ class Thesis
             'manage_options',
             'thesis-impostazioni',
             function () {
-                include_once (THESIS_DIR . 'app/views/admin/impostazioni.php');
+                include_once(THESIS_DIR . 'app/views/admin/impostazioni.php');
             },
             null
         );

@@ -69,13 +69,12 @@ function wc_thesis_create_order($args)
 
     $order->add_order_note("L'ordine è stato creato, in attesa di conferma definitiva.");
 
+    update_post_meta($order->get_id(), '_cart_items', json_encode($cart_items, true));
 
     $order->save();
 
     $order_id = $order->get_id();
     $payment_url = $order->get_checkout_payment_url();
-
-    new ThesisSummary($cart_items, $order);
 
     return wp_send_json_success(array('order_id' => $order_id, 'payment_url' => $payment_url, 'products' => $order->get_item_count()), 200);
 }
