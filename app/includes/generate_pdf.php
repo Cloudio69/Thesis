@@ -38,7 +38,7 @@ class ThesisSummary
 
     private function generate_summary()
     {
-        
+
 
         $html = "
         <head>
@@ -218,7 +218,6 @@ class ThesisSummary
                 <li class='pagine__detail'>Grammatura: " . $grammatura . " (+" . ($grammatura_db[0]->prezzo_grammatura > 0 ? $grammatura_db[0]->prezzo_grammatura : "0.00") . ") </li>
             </ul>
         </div>
-        <div style='page-break-before: always;'></div>
         <div class='pagine rounded-md border border-neutral-100 p-4'>
         <h1 class='font-bold text-base mb-4'>Indici delle pagine per tipo</h1>
             <table class='pagine__indici w-full border'>
@@ -236,7 +235,27 @@ class ThesisSummary
                 </tr>
             </table>
         </div>
+        <div style='page-break-before: always;'></div>
         ";
+
+        $content .= "<h3 class='font-black my-6'>CD</h3>";
+
+        $cd = $this->cart_items->cd;
+
+        if ($cd) {
+            $content .= "
+            <div class='cd rounded-md border border-neutral-100 p-4 my-4'>
+                <ul class='cd__details'>
+                ";
+            foreach ($cd->inputs as $key => $value) {
+                $content .= "<li class='cd__detail'>" . ucfirst(str_replace('_', ' ', $key)) . ": " . $value . "</li>";
+            }
+
+            $content .= " </ul>
+            </div>
+            <div style='page-break-before: always;'></div>
+            ";
+        }
 
         return $content;
     }
@@ -319,10 +338,8 @@ class ThesisSummary
             $zip->addFile($cd_cover, 'cd_cover.png');
         }
 
-        
+
 
         $zip->close();
     }
 }
-
-

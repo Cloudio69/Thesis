@@ -85,14 +85,15 @@ function wc_thesis_create_cart($cart_items, $order)
 {
     wc_create_rilegature_products($cart_items, $order);
     wc_create_pagine_product($cart_items, $order);
-
-    if (isset($cd['qty']) < 1 && isset($cd['qty']) != 0) wc_create_cd_product($cart_items, $order);
+    wc_create_cd_product($cart_items, $order);
 }
 
 function wc_create_cd_product($cart_items, $order)
 {
 
     $cd = $cart_items['cd'];
+
+    if(!isset($cd)) return;
 
     $cd_product = new WC_Product_Simple();
     $cd_product->set_name('CD Serigrafato');
