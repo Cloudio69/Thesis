@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '56bc7ae62864fd35424ada7cfc26f1340f2589a8',
+        'reference' => '365cfab3d1821b900124a9f2ea008142826f6a00',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '56bc7ae62864fd35424ada7cfc26f1340f2589a8',
+            'reference' => '365cfab3d1821b900124a9f2ea008142826f6a00',
             'dev_requirement' => false,
         ),
         'dompdf/dompdf' => array(

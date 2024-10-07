@@ -52,7 +52,7 @@ class Thesis
         add_action('thesis_clear_event', array($this, 'thesis_clear_function'));
         add_filter('cron_schedules', array($this, 'thesis_clear_interval'));
         add_action('woocommerce_order_status_pending_to_on-hold', array($this, 'thesis_order_status_change'));
-        add_filter( 'is_protected_meta', '__return_false' ); 
+        // add_filter( 'is_protected_meta', '__return_false' ); 
     }
 
     public function thesis_order_status_change($order_id)

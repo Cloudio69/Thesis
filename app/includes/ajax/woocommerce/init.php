@@ -70,6 +70,7 @@ function wc_thesis_create_order($args)
     $order->add_order_note("L'ordine è stato creato, in attesa di conferma definitiva.");
 
     update_post_meta($order->get_id(), '_cart_items', json_encode($cart_items, true));
+    update_post_meta($order->get_id(), '_download_zip', THESIS_URL . 'app/files/' . $_COOKIE['thesis_session'] . '/riepilogo_' . $order->get_id() . '.zip');
 
     $order->save();
 
