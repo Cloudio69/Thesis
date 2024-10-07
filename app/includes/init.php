@@ -52,13 +52,36 @@ class Thesis
         add_action('thesis_clear_event', array($this, 'thesis_clear_function'));
         add_filter('cron_schedules', array($this, 'thesis_clear_interval'));
         add_action('woocommerce_order_status_pending_to_on-hold', array($this, 'thesis_order_status_change'));
+        add_filter('woocommerce_get_order_item_totals', array($this, 'thesis_order_table_info'), 99, 1);
         // add_filter( 'is_protected_meta', '__return_false' ); 
+    }
+
+    public function thesis_order_table_info($total_rows)
+    {
+
+        $new_row = array(
+            'recurr_not' => array(
+            'label' => __('INFO: ', 'woocommerce'),
+            'value'  => 'Il prezzo totale delle pagine è moltiplicato per il numero di rilegature.'
+            )
+        );
+
+        $position = array_search('cart_subtotal', array_keys($total_rows));
+        if ($position !== false) {
+            $total_rows = array_slice($total_rows, 0, $position, true) +
+                  $new_row +
+                  array_slice($total_rows, $position, null, true);
+        } else {
+            $total_rows += $new_row;
+        }
+
+        return $total_rows;
     }
 
     public function thesis_order_status_change($order_id)
     {
         $order = wc_get_order($order_id);
-      
+
         $cart_items = get_post_meta($order_id, '_cart_items', true);
 
         new ThesisSummary(json_decode($cart_items), $order);

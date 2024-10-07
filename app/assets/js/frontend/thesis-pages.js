@@ -271,6 +271,7 @@ const creaPagine = async () => {
 
     pagina.onload = (e) => {
       let rgb = getAverageRGB(e.currentTarget);
+
       if (rgb.r === rgb.g && rgb.g === rgb.b) {
         pagineTipologia.bn.push({ ...rgb, pagina: i });
         document.querySelectorAll(".color-switch")[i].querySelector("img").src =
@@ -278,7 +279,7 @@ const creaPagine = async () => {
         document
           .querySelectorAll(".color-switch")
         [i].parentElement.querySelector("img")
-          .classList.add("grayscale", "Transition-all");
+          .classList.add("grayscale", "transition-all");
       } else {
         pagineTipologia.colorate.push({ ...rgb, pagina: i });
         document.querySelectorAll(".color-switch")[i].querySelector("img").src =
@@ -494,6 +495,8 @@ document.querySelector("[name='formato']").addEventListener("change", (e) => {
 });
 
 const calcoloPagine = () => {
+  totaleRilegature = 0;
+  totaleRilegature = cart.rilegature.reduce((acc, rilegatura) => parseInt(acc + parseInt(rilegatura.qty)), 0);
   let pagineBn = pagineTipologia.bn.length;
   let pagineColorate = pagineTipologia.colorate.length;
   let numPagine = pagineBn + pagineColorate;
@@ -512,8 +515,9 @@ const calcoloPagine = () => {
     (totaleGrammatura = numPagine * prezzoPagine.prezzo_grammatura);
 
   totale = prezzoBn + prezzoColorate + totaleFormato + totaleGrammatura;
-  document.querySelector(".totale_pagine b").textContent =
-    totale.toFixed(2) + " €";
+  document.querySelectorAll(".totale_pagine b").forEach((element) => {
+    element.textContent = (totale).toFixed(2) + "€ x " + totaleRilegature;
+  });
 
   if (totale > 0)
     document.querySelector(

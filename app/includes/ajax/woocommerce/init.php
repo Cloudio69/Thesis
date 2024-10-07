@@ -111,6 +111,11 @@ function wc_create_pagine_product($cart_items, $order)
 {
     $pagine = $cart_items['pagine'];
 
+    $total_rilegature = 0;
+    foreach ($cart_items['rilegature'] as $rilegatura) {
+        $total_rilegature += $rilegatura['qty'];
+    }
+
     $grammatura = $pagine['id_grammatura'];
     $grammatura_db = new Grammatura;
     $grammatura_db = $grammatura_db->get_grammature($grammatura);
@@ -146,8 +151,8 @@ function wc_create_pagine_product($cart_items, $order)
 
     if ($total_bn_pages > 0) {
         $order_item_id = $order->add_product($bn_product, $total_bn_pages, array(
-            'subtotal' => get_option('prezzo_bn') * $total_bn_pages,
-            'total' => get_option('prezzo_bn') * $total_bn_pages,
+            'subtotal' => (get_option('prezzo_bn') * $total_bn_pages) * $total_rilegature,
+            'total' => (get_option('prezzo_bn') * $total_bn_pages) * $total_rilegature,
         ));
 
         wc_add_order_item_meta($order_item_id, 'Indici pagine', implode(', ', $bn_pages));
@@ -163,8 +168,8 @@ function wc_create_pagine_product($cart_items, $order)
     if ($total_colorate_pages > 0) {
 
         $order_item_id = $order->add_product($colorate_product, $total_colorate_pages, array(
-            'subtotal' => get_option('prezzo_colori') * $total_colorate_pages,
-            'total' => get_option('prezzo_colori') * $total_colorate_pages,
+            'subtotal' => (get_option('prezzo_colori') * $total_colorate_pages) * $total_rilegature,
+            'total' => (get_option('prezzo_colori') * $total_colorate_pages) * $total_rilegature,
         ));
 
         wc_add_order_item_meta($order_item_id, 'Indici pagine', implode(', ', $colorate_pages));
@@ -180,8 +185,8 @@ function wc_create_pagine_product($cart_items, $order)
         $grammaturaProduct->set_price($grammatura_db[0]->prezzo_grammatura);
 
         $order_item_id = $order->add_product($grammaturaProduct, ($total_bn_pages + $total_colorate_pages), array(
-            'subtotal' => $grammatura_db[0]->prezzo_grammatura * ($total_bn_pages + $total_colorate_pages),
-            'total' => $grammatura_db[0]->prezzo_grammatura * ($total_bn_pages + $total_colorate_pages),
+            'subtotal' => ($grammatura_db[0]->prezzo_grammatura * ($total_bn_pages + $total_colorate_pages)) * $total_rilegature,
+            'total' => ($grammatura_db[0]->prezzo_grammatura * ($total_bn_pages + $total_colorate_pages)) * $total_rilegature,
         ));
 
         wc_add_order_item_meta($order_item_id, 'Prezzo', $grammatura_db[0]->prezzo_grammatura . '€ per pagina');
@@ -194,8 +199,8 @@ function wc_create_pagine_product($cart_items, $order)
         $formatoProduct->set_price(get_option('prezzo_a3'));
 
         $order_item_id = $order->add_product($formatoProduct, ($total_bn_pages + $total_colorate_pages), array(
-            'subtotal' => get_option('prezzo_a3') * ($total_bn_pages + $total_colorate_pages),
-            'total' => get_option('prezzo_a3') * ($total_bn_pages + $total_colorate_pages),
+            'subtotal' => (get_option('prezzo_a3') * ($total_bn_pages + $total_colorate_pages)) * $total_rilegature,
+            'total' => (get_option('prezzo_a3') * ($total_bn_pages + $total_colorate_pages)) * $total_rilegature,
         ));
 
         wc_add_order_item_meta($order_item_id, 'Prezzo', get_option('prezzo_a3') . '€ per pagina');

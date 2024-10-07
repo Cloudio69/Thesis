@@ -66,7 +66,7 @@
                     <span id="prezzo_colori"><b><?php echo get_option('prezzo_colori'); ?></b></span>
                 </div>
                 <div class="flex space-between gap-2 border-t mt-2 py-2 totale_pagine">
-                    <span class="flex-1">Costo pagine:</span>
+                    <span class="flex-1">Costo pagine (per rilegatura):</span>
                     <span id="totale_pagine"><b>0</b></span>
                 </div>
             </div>

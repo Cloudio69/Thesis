@@ -6,6 +6,8 @@ const cartWrapper = document.querySelector(".thesis--cart-items");
 
 let forms = [rilegatureForm, pagineForm, cdForm];
 
+let totaleRilegature = 0;
+
 forms.forEach((form) => {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -23,6 +25,9 @@ let iva = 0;
 
 const updateCart = async (e) => {
   cartWrapper.innerHTML = "";
+  totaleRilegature = 0;
+
+  totaleRilegature = cart.rilegature.reduce((acc, rilegatura) => parseInt(acc + parseInt(rilegatura.qty)), 0);
 
   const cdDiv = document.createElement("div");
   const pagineDiv = document.createElement("div");
@@ -172,7 +177,7 @@ const updateCart = async (e) => {
     );
 
     pagineItem.innerHTML = `
-    <h4 class="font-bold text-xl">Pagine</h4>
+    <h4 class="font-bold text-xl flex justify-between items-center">Pagine<span class='font-bold text-sm totale_pagine'><b></b></span></h4>
       <div class="flex justify-between items-start">
         <div class='flex flex-col w-full gap-2'>
         <span class='flex items-center justify-between my-2'><b class='text-sm rounded-lg bg-neutral-100 px-2 flex items-center gap-2'><img src="/wp-content/plugins/thesis/app/assets/img/svg/black-and-white.svg" class="w-2 h-2">Monocolore: ${
@@ -183,27 +188,27 @@ const updateCart = async (e) => {
         <span class="text-sm flex items-center justify-between"><b class="flex items-center gap-2"><span class="material-symbols-outlined">
 print
 </span> Costo Monocolore</b><span>  ${(
-      cart.pagine.prezzo_bn *
-      (cart.pagine.bn.length > 0 ? cart.pagine.bn.length : 0)
+      (cart.pagine.prezzo_bn *
+      (cart.pagine.bn.length > 0 ? cart.pagine.bn.length : 0)) * totaleRilegature
     ).toFixed(2)}€</span></span>
         <span class="text-sm flex items-center justify-between"><b class="flex items-center gap-2"> <span class="material-symbols-outlined">
 print
 </span> Costo Multicolore</b><span>  ${(
-      cart.pagine.prezzo_colorate *
-      (cart.pagine.colorate.length > 0 ? cart.pagine.colorate.length : 0)
+      (cart.pagine.prezzo_colorate *
+      (cart.pagine.colorate.length > 0 ? cart.pagine.colorate.length : 0) * totaleRilegature)
     ).toFixed(2)}€</span></span>
         <span class="text-sm flex items-center justify-between"><b class="flex items-center gap-2"><span class="material-symbols-outlined">
 weight
 </span> Costo Formato</b><span>  ${
       cart.pagine.prezzo_formato
-        ? cart.pagine.prezzo_formato + " €"
+        ? cart.pagine.prezzo_formato * totaleRilegature + " €"
         : "Nessun sovraprezzo"
     }</span></span>
         <span class="text-sm flex items-center justify-between"><b class="flex items-center gap-2"><span class="material-symbols-outlined">
 weight
 </span> Costo Grammatura</b><span> ${
       cart.pagine.prezzo_grammatura
-        ? cart.pagine.prezzo_grammatura + " €"
+        ? cart.pagine.prezzo_grammatura * totaleRilegature + " €"
         : "Nessun sovraprezzo"
     }</span></span>
         </div>
@@ -212,11 +217,11 @@ weight
 
     let numPagine = cart.pagine.bn.length + cart.pagine.colorate.length;
     let costoPagine =
-      cart.pagine.prezzo_bn * cart.pagine.bn.length +
-      cart.pagine.prezzo_colorate * cart.pagine.colorate.length;
+      (cart.pagine.prezzo_bn * cart.pagine.bn.length +
+      cart.pagine.prezzo_colorate * cart.pagine.colorate.length) * totaleRilegature;
     costoPagine +=
-      cart.pagine.prezzo_formato * numPagine +
-      cart.pagine.prezzo_grammatura * numPagine;
+      (cart.pagine.prezzo_formato * numPagine +
+      cart.pagine.prezzo_grammatura * numPagine) * totaleRilegature;
 
     totale += costoPagine;
 
@@ -456,25 +461,25 @@ const updateFinalize = (totale) => {
         <span class="text-sm flex items-center justify-between"><b class="flex items-center gap-2"><span class="material-symbols-outlined">
         print
         </span> Costo Monocolore</b><span>  ${(
-          cart.pagine.prezzo_bn * cart.pagine.bn.length
+          (cart.pagine.prezzo_bn * cart.pagine.bn.length) * totaleRilegature
         ).toFixed(2)} €</span></span>
         <span class="text-sm flex items-center justify-between"><b class="flex items-center gap-2"><span class="material-symbols-outlined">
         print
         </span> Costo Multicolore</b><span>  ${(
-          cart.pagine.prezzo_colorate * cart.pagine.colorate.length
+          (cart.pagine.prezzo_colorate * cart.pagine.colorate.length) * totaleRilegature
         ).toFixed(2)} €</span></span>
         <span class="text-sm flex items-center justify-between"><b class="flex items-center gap-2"><span class="material-symbols-outlined">
 weight
 </span> Costo Formato</b><span>  ${
       cart.pagine.prezzo_formato > 0
-        ? cart.pagine.prezzo_formato + " €"
+        ? cart.pagine.prezzo_formato * totaleRilegature + " €"
         : "Nessun sovraprezzo"
     }</span></span>
         <span class="text-sm flex items-center justify-between"><b class="flex items-center gap-2"><span class="material-symbols-outlined">
 weight
 </span> Costo Grammatura</b><span> ${
       cart.pagine.prezzo_grammatura > 0
-        ? cart.pagine.prezzo_grammatura + " €"
+        ? cart.pagine.prezzo_grammatura * totaleRilegature + " €"
         : "Nessun sovraprezzo"
     }</span></span>
         </div>
