@@ -45,6 +45,10 @@
                             $order_customer = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
                             $download_zip = get_post_meta($order_id, '_download_zip', true);
 
+                            if (!empty($download_zip) && !file_exists($download_zip)) {
+                                $download_zip = '';
+                            }
+
                             if (empty($download_zip)) {
                                 $zip = '';
                             } else {
@@ -56,7 +60,7 @@
                                 <td class="border border-slate-200 p-2 text-center"><?php echo $order_id; ?></td>
                                 <td class="border border-slate-200 p-2 font-bold text-center"><?php echo $order_customer; ?></td>
                                 <td class="border border-slate-200 p-2 text-center"><?php echo $order_date; ?></td>
-                                <td class="border border-slate-200 p-2 text-center"><a href="<?php echo $zip; ?>" download class="underline text-center">Download</a></td>
+                                <td class="border border-slate-200 p-2 text-center"><a href="<?php echo $zip != "" ? 'download' : '#' ?>" <?php echo $zip != "" ? 'download' : ''?> class="underline text-center <?php echo $zip == "" ? ' cursor-not-allowed opacity-50' : '' ?>">Download</a></td>
                                 <td class="border border-slate-200 p-2 font-bold text-center text-lg"><?php echo wc_price($order_total); ?></td>
                             </tr>
                         <?php
