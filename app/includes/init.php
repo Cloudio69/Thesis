@@ -238,24 +238,24 @@ class Thesis
 
         add_submenu_page(
             'thesis',
-            'Rilegature',
-            'Rilegature',
-            'manage_options',
-            'thesis-rilegature',
-            function () {
-                include_once(THESIS_DIR . 'app/views/admin/rilegature.php');
-            },
-            null
-        );
-
-        add_submenu_page(
-            'thesis',
             'Ordini',
             'Ordini',
             'manage_options',
             'thesis-ordini',
             function () {
                 include_once(THESIS_DIR . 'app/views/admin/orders.php');
+            },
+            null
+        );
+
+        add_submenu_page(
+            'thesis',
+            'Rilegature',
+            'Rilegature',
+            'manage_options',
+            'thesis-rilegature',
+            function () {
+                include_once(THESIS_DIR . 'app/views/admin/rilegature.php');
             },
             null
         );

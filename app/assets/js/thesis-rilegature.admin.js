@@ -59,6 +59,42 @@ const createElementRilegatura = (rilegatura) => {
   anteprimaRilegatura.src = rilegatura.anteprima_rilegatura;
   optionsButton.dataset.id = rilegatura.id_rilegatura;
 
+  if (descrizioneRilegatura.innerHTML.length > 100) {
+    const fullText = descrizioneRilegatura.innerHTML;
+    descrizioneRilegatura.innerHTML = fullText.substring(0, 100) + "... ";
+    
+    const readMore = document.createElement("a");
+    readMore.href = "#";
+    readMore.innerHTML = "Read more";
+    readMore.classList.add("text-blue-500");
+    readMore.onclick = (e) => {
+      e.preventDefault();
+      descrizioneRilegatura.innerHTML = fullText;
+      descrizioneRilegatura.style.position = "absolute";
+      descrizioneRilegatura.style.backgroundColor = "white";
+      descrizioneRilegatura.style.padding = "10px";
+      descrizioneRilegatura.style.zIndex = "10";
+      
+      const readLess = document.createElement("a");
+      readLess.href = "#";
+      readLess.classList.add("text-blue-500");
+      readLess.innerHTML = "<br>Read less";
+      readLess.onclick = (e) => {
+        e.preventDefault();
+        descrizioneRilegatura.innerHTML = fullText.substring(0, 100) + "... ";
+        descrizioneRilegatura.style.position = "";
+        descrizioneRilegatura.style.backgroundColor = "";
+        descrizioneRilegatura.style.padding = "";
+        descrizioneRilegatura.style.zIndex = "";
+        descrizioneRilegatura.appendChild(readMore);
+      };
+      
+      descrizioneRilegatura.appendChild(readLess);
+    };
+    
+    descrizioneRilegatura.appendChild(readMore);
+  }
+
   optionsButton.onclick = (e) => showOptions(e);
 
   anteprimaRilegatura.classList.add("w-[300px]", "h-[300px]", "object-contain");
@@ -99,7 +135,6 @@ const createElementRilegatura = (rilegatura) => {
     "flex-col",
     "p-4",
     "border",
-    "justify-center",
     "shadow-sm",
     "items-center",
     "relative",
