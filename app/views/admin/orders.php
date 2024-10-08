@@ -45,14 +45,18 @@
                             $order_customer = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
                             $download_zip = get_post_meta($order_id, '_download_zip', true);
 
-                            if (!empty($download_zip) && !file_exists($download_zip)) {
-                                $download_zip = '';
-                            }
-
                             if (empty($download_zip)) {
                                 $zip = '';
                             } else {
                                 $zip = $download_zip;
+                            }
+                            
+
+                            $zip_path = parse_url($zip, PHP_URL_PATH);
+                            if(file_exists(ABSPATH . $zip_path)) {
+                                $zip = $zip;
+                            } else {
+                                $zip = '';
                             }
 
                         ?>
@@ -61,7 +65,7 @@
                                 <td class="border border-slate-200 p-2 font-bold text-center"><?php echo $order_customer; ?></td>
                                 <td class="border border-slate-200 p-2 text-center"><?php echo $order_date; ?></td>
                                 <td class="border border-slate-200 p-2 text-center">
-                                    <a href="<?php echo $zip != "" ? 'download' : '#' ?>" 
+                                    <a href="<?php echo $zip != "" ? $zip : '#' ?>" 
                                        <?php echo $zip != "" ? 'download' : ''?> 
                                        class="underline text-center <?php echo $zip == "" ? ' cursor-not-allowed opacity-50' : '' ?>" 
                                        title="<?php echo $zip == "" ? 'File non disponibile' : 'Scarica il file' ?>">
