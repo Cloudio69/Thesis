@@ -13,6 +13,10 @@
                     <div class="nuovi--clienti flex flex-col"><span class="text-xs font-bold">Nuovi clienti</span><span class="text-3xl font-bold"><?php echo do_shortcode('[new_customers_count]') ?></span></div>
                     <div class="nuovi--ordini flex flex-col"><span class="text-xs font-bold">Nuovi ordini</span><span class="text-3xl font-bold"><?php echo do_shortcode('[new_orders_count]'); ?></span></div>
                     <div class="guadagno flex flex-col"><span class="text-xs font-bold">Guadagno totale</span><span class="text-3xl font-bold"><?php echo do_shortcode('[total_profit]'); ?></span></div>
+                    <div class="woocommerce--analytics flex flex-col">
+                        <span class="text-xs font-bold">Guarda i rapporti</span>
+                        <a href="<?php echo admin_url('admin.php?page=wc-admin&path=/analytics/overview'); ?>" class="text-blue-500 underline">Analytics</a>
+                    </div>
                 </div>
             </div>
             <div class="thesis--manager flex flex-1 gap-4 flex-wrap rounded-md">
