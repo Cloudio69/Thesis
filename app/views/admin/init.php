@@ -54,7 +54,7 @@
                             <?php
                             global $wpdb;
                             $orders = $wpdb->get_results("
-                                SELECT ID, date_created_gmt, total_amount AS order_total
+                                SELECT ID, billing_email, date_created_gmt, total_amount AS order_total
                                 FROM {$wpdb->prefix}wc_orders
                                 ORDER BY date_created_gmt DESC
                                 LIMIT 10
@@ -67,7 +67,8 @@
                                     echo '<li class="flex items-center justify-between p-4 bg-neutral-100 rounded-md w-full shadow-md">';
                                     echo '<a href="' . esc_url($order_link) . '" class="flex-1 flex items-center justify-between">';
                                     echo '<strong>ID #: ' . esc_html($order->ID) . '</strong>';
-                                    echo '<strong>Totale: ' . esc_html(number_format($order->order_total, 2)) . '</strong><br>';
+                                    echo '<strong>' . esc_html($order->billing_email) . '</strong><br>';
+                                    echo '<strong>' . esc_html(number_format($order->order_total, 2)) . '€</strong><br>';
                                     echo '<span>Ordinato il: <strong>' . esc_html(date('Y-m-d', strtotime($order->date_created_gmt))) . '</strong></span>';
                                     echo '</a>';
                                     echo '</li>';
