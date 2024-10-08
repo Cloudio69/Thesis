@@ -360,7 +360,6 @@ pageFilter.forEach((item) => {
 
     e.currentTarget.querySelector("span").classList.add("active");
 
-    // if is already filtered remove the filter
     if (!filtered) {
       filtered = true;
 
