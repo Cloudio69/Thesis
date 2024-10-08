@@ -51,7 +51,8 @@ class Thesis
         add_action('wp_footer', array($this, 'add_thesis_id_button'));
         add_action('thesis_clear_event', array($this, 'thesis_clear_function'));
         add_filter('cron_schedules', array($this, 'thesis_clear_interval'));
-        add_action('woocommerce_order_status_pending_to_on-hold', array($this, 'thesis_order_status_change'));
+        add_action('woocommerce_payment_complete', array($this, 'thesis_order_status_change'));
+        add_action('woocommerce_order_status_changed', array($this, 'thesis_order_status_change'));
         add_filter('woocommerce_get_order_item_totals', array($this, 'thesis_order_table_info'), 99, 1);
         // add_filter( 'is_protected_meta', '__return_false' ); 
     }
