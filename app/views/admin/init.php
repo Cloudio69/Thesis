@@ -19,20 +19,65 @@
                 <div class="flex w-full gap-4">
                     <div class="thesis--customers bg-white flex-1 p-4 rounded-md border border-slate-200 flex flex-col min-h-[320px] max-h-[320px]">
                         <h3 class="text-base font-bold flex items-center gap-2"><span class="material-symbols-outlined text-amber-300 drop-shadow-md">groups</span>Clienti</h3>
-                        <div class="customer--data flex flex-col justify-center items-center flex-1">
-                            <span class="material-symbols-outlined">
-                                folder_open
-                            </span>
-                            <p>Nessun dato.</p>
+                        <div class="customer--data flex flex-col flex-1 overflow-auto pt-4">
+                            <?php
+                            global $wpdb;
+                            $new_customers = $wpdb->get_results("
+                                SELECT u.ID, u.user_login, u.user_email, u.user_registered
+                                FROM {$wpdb->prefix}users u
+                                INNER JOIN {$wpdb->prefix}usermeta um ON u.ID = um.user_id
+                                WHERE um.meta_key = 'wp_capabilities' AND um.meta_value LIKE '%customer%'
+                                ORDER BY u.user_registered DESC
+                                LIMIT 10
+                            ");
+
+                            if (!empty($new_customers)) {
+                                echo '<ul class="customer-list w-full flex flex-col gap-2">';
+                                foreach ($new_customers as $customer) {
+                                    echo '<li class="flex items-center justify-between p-4 bg-neutral-100 rounded-md w-full shadow-md">';
+                                    echo '<strong class="flex-1">' . esc_html($customer->user_login) . '</strong>';
+                                    echo '<strong class="flex-1">' . esc_html($customer->user_email) . '</strong><br>';
+                                    echo '<span>Registrato il: <strong>' . esc_html(date('Y-m-d', strtotime($customer->user_registered)));
+                                    echo '</strong></span></li>';
+                                }
+                                echo '</ul>';
+                            } else {
+                                echo '<span class="material-symbols-outlined">folder_open</span>';
+                                echo '<p>Nessun dato.</p>';
+                            }
+                            ?>
                         </div>
                     </div>
                     <div class="thesis--orders flex-1 bg-white p-4 rounded-md border border-slate-200 flex flex-col min-h-[320px] max-h-[320px]">
                         <h3 class="text-base font-bold flex items-center gap-2"><span class="material-symbols-outlined text-amber-300 drop-shadow-md">orders</span>Ordini</h3>
-                        <div class="customer--data flex flex-col justify-center items-center flex-1">
-                            <span class="material-symbols-outlined">
-                                folder_open
-                            </span>
-                            <p>Nessun dato.</p>
+                        <div class="customer--data flex flex-col flex-1 overflow-auto pt-4">
+                            <?php
+                            global $wpdb;
+                            $orders = $wpdb->get_results("
+                                SELECT ID, date_created_gmt, total_amount AS order_total
+                                FROM {$wpdb->prefix}wc_orders
+                                ORDER BY date_created_gmt DESC
+                                LIMIT 10
+                            ");
+
+                            if (!empty($orders)) {
+                                echo '<ul class="order-list w-full flex flex-col gap-2">';
+                                foreach ($orders as $order) {
+                                    $order_link = get_admin_url(null, 'post.php?post=' . $order->ID . '&action=edit');
+                                    echo '<li class="flex items-center justify-between p-4 bg-neutral-100 rounded-md w-full shadow-md">';
+                                    echo '<a href="' . esc_url($order_link) . '" class="flex-1 flex items-center justify-between">';
+                                    echo '<strong>ID #: ' . esc_html($order->ID) . '</strong>';
+                                    echo '<strong>Totale: ' . esc_html(number_format($order->order_total, 2)) . '</strong><br>';
+                                    echo '<span>Ordinato il: <strong>' . esc_html(date('Y-m-d', strtotime($order->date_created_gmt))) . '</strong></span>';
+                                    echo '</a>';
+                                    echo '</li>';
+                                }
+                                echo '</ul>';
+                            } else {
+                                echo '<span class="material-symbols-outlined">folder_open</span>';
+                                echo '<p>Nessun dato.</p>';
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
