@@ -60,7 +60,14 @@
                                 <td class="border border-slate-200 p-2 text-center"><?php echo $order_id; ?></td>
                                 <td class="border border-slate-200 p-2 font-bold text-center"><?php echo $order_customer; ?></td>
                                 <td class="border border-slate-200 p-2 text-center"><?php echo $order_date; ?></td>
-                                <td class="border border-slate-200 p-2 text-center"><a href="<?php echo $zip != "" ? 'download' : '#' ?>" <?php echo $zip != "" ? 'download' : ''?> class="underline text-center <?php echo $zip == "" ? ' cursor-not-allowed opacity-50' : '' ?>">Download</a></td>
+                                <td class="border border-slate-200 p-2 text-center">
+                                    <a href="<?php echo $zip != "" ? 'download' : '#' ?>" 
+                                       <?php echo $zip != "" ? 'download' : ''?> 
+                                       class="underline text-center <?php echo $zip == "" ? ' cursor-not-allowed opacity-50' : '' ?>" 
+                                       title="<?php echo $zip == "" ? 'File non disponibile' : 'Scarica il file' ?>">
+                                       Download
+                                    </a>
+                                </td>
                                 <td class="border border-slate-200 p-2 font-bold text-center text-lg"><?php echo wc_price($order_total); ?></td>
                             </tr>
                         <?php
