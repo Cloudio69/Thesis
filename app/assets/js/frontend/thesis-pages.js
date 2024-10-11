@@ -59,7 +59,6 @@ let numPages = 0,
   generated = false;
 
 const generaPagine = async () => {
-
   if (!generated) {
     let getNumPages = await jQuery.ajax({
       dataType: "json",
@@ -76,7 +75,11 @@ const generaPagine = async () => {
 
     numPages = JSON.parse(getNumPages.data).results;
 
-    if (getCookie('thesis_page_generation') === 'true') {
+    if (numPages === 0) {
+      throw new Error("No pages returned from the server.");
+    }
+
+    if (getCookie("thesis_page_generation") === "true") {
       creaPagine();
       updateColorCounter();
       generated = true;
@@ -103,9 +106,25 @@ const generaPagine = async () => {
               },
             },
             success: () => {
-              // Evita di far rimbalzare il progresso
-              if (pageIndex > counter) counter = pageIndex;
-              progresso.textContent = `Pagina ${counter + 1} di ${numPages}`;
+              if (progresso) {
+                progresso.replaceChildren();
+
+                if (pageIndex > counter) counter = pageIndex;
+                progresso.textContent = `Pagina ${counter + 1} di ${numPages}`;
+              } else {
+                let container = document.querySelector(".thesis--pagine");
+                container.replaceChildren();
+
+                let progresso = document.createElement("p");
+                let loadingSvg = document.createElement("img");
+                loadingSvg.src =
+                  "/wp-content/plugins/thesis/app/assets/img/svg/loading.svg";
+                loadingSvg.classList.add("loading-svg");
+                progresso.appendChild(loadingSvg);
+                progresso.classList.add("text-center", "text-xl", "mb-4");
+                progresso.textContent = `Pagina ${counter + 1} di ${numPages}`;
+                container.appendChild(progresso);
+              }
             },
             statusCode: {
               404: function () {
@@ -119,7 +138,16 @@ const generaPagine = async () => {
                 let retry = document.createElement("button");
                 retry.textContent = "RIPROVA";
                 retry.classList.add(
-                  'rounded-md', 'bg-[#f4b424]', 'hover:bg-slate-400', 'text-white', 'border-none', 'focus:bg-yellow-400', 'disabled:animate-pulse', 'px-4', 'py-2', 'mt-4'
+                  "rounded-md",
+                  "bg-[#f4b424]",
+                  "hover:bg-slate-400",
+                  "text-white",
+                  "border-none",
+                  "focus:bg-yellow-400",
+                  "disabled:animate-pulse",
+                  "px-4",
+                  "py-2",
+                  "mt-4"
                 );
                 retry.onclick = () => {
                   retry.disabled = true;
@@ -139,7 +167,16 @@ const generaPagine = async () => {
                 let retry = document.createElement("button");
                 retry.textContent = "RIPROVA";
                 retry.classList.add(
-                  'rounded-md', 'bg-[#f4b424]', 'hover:bg-slate-400', 'text-white', 'border-none', 'focus:bg-yellow-400', 'disabled:animate-pulse', 'px-4', 'py-2', 'mt-4'
+                  "rounded-md",
+                  "bg-[#f4b424]",
+                  "hover:bg-slate-400",
+                  "text-white",
+                  "border-none",
+                  "focus:bg-yellow-400",
+                  "disabled:animate-pulse",
+                  "px-4",
+                  "py-2",
+                  "mt-4"
                 );
                 retry.onclick = () => {
                   retry.disabled = true;
@@ -161,7 +198,7 @@ const generaPagine = async () => {
 
     creaPagine();
     generated = true; // Evita di rigenerare le pagine
-    setCookie('thesis_page_generation', 'true', 1/720);
+    setCookie("thesis_page_generation", "true", 1 / 720);
   }
 };
 
@@ -278,7 +315,7 @@ const creaPagine = async () => {
           assets.bn;
         document
           .querySelectorAll(".color-switch")
-        [i].parentElement.querySelector("img")
+          [i].parentElement.querySelector("img")
           .classList.add("grayscale", "transition-all");
       } else {
         pagineTipologia.colorate.push({ ...rgb, pagina: i });
@@ -495,7 +532,10 @@ document.querySelector("[name='formato']").addEventListener("change", (e) => {
 
 const calcoloPagine = () => {
   totaleRilegature = 0;
-  totaleRilegature = cart.rilegature.reduce((acc, rilegatura) => parseInt(acc + parseInt(rilegatura.qty)), 0);
+  totaleRilegature = cart.rilegature.reduce(
+    (acc, rilegatura) => parseInt(acc + parseInt(rilegatura.qty)),
+    0
+  );
   let pagineBn = pagineTipologia.bn.length;
   let pagineColorate = pagineTipologia.colorate.length;
   let numPagine = pagineBn + pagineColorate;
@@ -515,7 +555,7 @@ const calcoloPagine = () => {
 
   totale = prezzoBn + prezzoColorate + totaleFormato + totaleGrammatura;
   document.querySelectorAll(".totale_pagine b").forEach((element) => {
-    element.textContent = (totale).toFixed(2) + "€ x " + totaleRilegature;
+    element.textContent = totale.toFixed(2) + "€ x " + totaleRilegature;
   });
 
   if (totale > 0)
@@ -529,8 +569,8 @@ const formPagine = document.querySelector("#form_pagine");
 formPagine.onsubmit = (e) => {
   e.preventDefault();
 
-  const submitButton = formPagine.querySelector("[type='submit']")
-  submitButton.innerText = "AGGIORNA IL CARRELLO"
+  const submitButton = formPagine.querySelector("[type='submit']");
+  submitButton.innerText = "AGGIORNA IL CARRELLO";
 
   let goNext = document.querySelector("#prosegui_pagine");
   if (goNext.classList.contains("hidden")) {
@@ -543,6 +583,5 @@ const nextStepPagine = document.querySelector("#prosegui_rilegature");
 
 nextStepPagine.addEventListener("click", () => {
   generaPagine();
-  nextStepPagine.classList.add("hidden")
+  nextStepPagine.classList.add("hidden");
 });
-

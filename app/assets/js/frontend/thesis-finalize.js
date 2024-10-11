@@ -326,6 +326,21 @@ const updateFinalize = (totale) => {
 
   let spedizioneSelect = document.querySelector("#spedizione");
 
+  spedizioneSelect.addEventListener("change", (e) => {
+    let spedizione = e.target.selectedOptions[0].dataset.prezzo;
+    let subtotale = document.querySelector(".subtotale").textContent;
+    let totale = parseFloat(subtotale) + parseFloat(spedizione);
+
+    subtotaleWrapper.forEach((el) => {
+      el.textContent = parseFloat(subtotale).toFixed(2);
+    });
+
+    totaleWrapper.forEach((el) => {
+      el.textContent = parseFloat(totale).toFixed(2);
+    });
+
+  });
+
   const cdDiv = document.createElement("div");
   const pagineDiv = document.createElement("div");
   const rilegatureDiv = document.createElement("div");
@@ -578,26 +593,16 @@ weight
   cdWrapper.appendChild(cdDiv);
 
   spedizioneWrapper.forEach((el) => {
-    let spedizione = document.querySelector("#spedizione").value;
+    let spedizione = document.querySelector("#spedizione").selectedOptions[0].dataset.prezzo;
 
-    if (spedizione === "express") {
-      el.textContent = (7.9).toFixed(2);
-      totale += 7.9;
-    } else el.textContent = (0.0).toFixed(2);
+    el.textContent = parseFloat(spedizione).toFixed(2);
   });
 
   subtotaleWrapper.forEach((el) => {
-    let spedizione = document.querySelector("#spedizione").value;
+    let spedizione = document.querySelector("#spedizione").selectedOptions[0].dataset.prezzo;
     let subtotale = (totale - iva).toFixed(2);
 
-    if (spedizione !== "express") {
-      el.textContent = subtotale;
-    } else {
-      el.textContent = subtotale;
-      document.querySelector(
-        ".subtotale"
-      ).textContent = `${subtotale} + Express`;
-    }
+    el.textContent = parseFloat(subtotale).toFixed(2);
   });
 
   totaleWrapper.forEach((el) => {

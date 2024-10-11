@@ -24,7 +24,7 @@ if (strpos($_SERVER['REQUEST_URI'], '/checkout/order-pay') !== 0 && $order->get_
 ?>
 
 <body <?php body_class(); ?>>
-    <div class="thesis--wrapper h-full flex flex-col justify-center items-center">
+    <div class="thesis--wrapper h-full flex flex-col">
         <header class="thesis--header bg-white w-full top-0 flex justify-between items-center z-[99] px-6 py-4">
             <h1 class="text-xl font-bold m-0">Checkout</h1>
             <?php

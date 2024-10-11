@@ -1,6 +1,6 @@
 <?php wp_enqueue_style('tailwind'); ?>
 <?php wp_enqueue_style('thesis-frontend', THESIS_URL . "/app/assets/css/frontend/thesis-frontend.css"); ?>
-<div class="wrapper flex p-16 gap-6">
+<div class="wrapper flex p-16 gap-6 h-full">
 	<div class="order--table w-1/2">
 		<?php
 		$order_id = absint(get_query_var('order-pay'));
@@ -15,19 +15,25 @@
 				foreach ($order->get_items() as $item_id => $item) {
 					$product = $item->get_product();
 					?>
-					<div class="bg-neutral-100 rounded-md p-4">
+					<div class="bg-white border rounded-md p-4">
 						<div>
 							<?php
-							echo esc_html($item->get_name());
+							echo '<span class="text-xl font-bold">' . esc_html($item->get_name()) . '</span>';
 							echo ' <strong class="product-quantity">&times; ' . esc_html($item->get_quantity()) . '</strong>';
 							?>
 						</div>
 						
-						<div class="order-item-meta">
+						<div class="order-item-meta text-sm flex-col flex gap-2 border-b py-4 my-2">
 							<?php
 							$meta_data = $item->get_formatted_meta_data('_', true);
 							foreach ($meta_data as $meta_id => $meta) {
-								echo '<p><strong>' . esc_html($meta->display_key) . ':</strong> ' . wp_kses_post($meta->display_value) . '</p>';
+								if($meta->display_value !== ""){
+									if ($meta->display_key !== 'Indici pagine') {
+										echo "<div class='flex gap-2'>";
+										echo '<p><strong>' . esc_html($meta->display_key) . ':</strong> ' . wp_kses_post($meta->display_value) . '</p>';
+										echo "</div>";
+									}
+								}
 							}
 							?>
 						</div>
@@ -46,14 +52,14 @@
 		}
 		?>
 		<hr class="my-4">
-		<div class="total text-3xl mb-4 font-bold py-4">
+		<div class="total text-3xl mb-4 font-bold p-4 bg-white border rounded-md !sticky bottom-0 w-full">
 			<?php esc_html_e('Totale', 'woocommerce'); ?>:
 				<?php echo wp_kses_post($order->get_formatted_order_total()); ?>
  		</div>
 	</div>
 	<div class="order--actions w-1/2">
-	<form id="order_review" method="post">
-		<div id="payment" class="!bg-neutral-100 flex flex-col">
+	<form id="order_review" method="post" class="!sticky top-24">
+		<div id="payment" class="!bg-zinc-50 !border !rounded-md p-4 flex flex-col">
 			<h1 class="font-bold text-xl p-4 !m-0">Scegli un metodo di pagamento</h1>
 			<?php if ($order->needs_payment()) : ?>
 				<ul class="wc_payment_methods payment_methods methods">
@@ -77,7 +83,9 @@
 
 				<?php do_action('woocommerce_pay_order_before_submit'); ?>
 
-				<?php echo apply_filters('woocommerce_pay_order_button_html', '<button type="submit" class="!bg-black !text-white hover:!bg-neutral-800 hover:!text-white focus:!ring-1 focus:ring-offset-2 focus:!ring-neutral-900 !border-none' . esc_attr(wc_wp_theme_get_element_class_name('button') ? ' ' . wc_wp_theme_get_element_class_name('button') : '') . '" id="place_order" value="' . esc_attr($order_button_text) . '" data-value="' . esc_attr($order_button_text) . '">' . esc_html($order_button_text) . '</button>'); // @codingStandardsIgnoreLine 
+				<?php 
+				$order_button_text = "Completa il pagamento";
+				echo apply_filters('woocommerce_pay_order_button_html', '<button type="submit" class="!bg-black !text-white hover:!bg-neutral-800 hover:!text-white focus:!ring-1 focus:ring-offset-2 focus:!ring-neutral-900 !border-none' . esc_attr(wc_wp_theme_get_element_class_name('button') ? ' ' . wc_wp_theme_get_element_class_name('button') : '') . '" id="place_order" value="' . esc_attr($order_button_text) . '" data-value="' . esc_attr($order_button_text) . '">' . esc_html($order_button_text) . '</button>');
 				?>
 
 				<?php do_action('woocommerce_pay_order_after_submit'); ?>

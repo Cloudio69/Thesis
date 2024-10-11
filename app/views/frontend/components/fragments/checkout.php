@@ -170,9 +170,9 @@
                                 if ($shipping_method->is_enabled()) {
                                     if (isset($instance) && isset($instance['cost'])) {
                                         $cost = $instance['cost'];
-                                        echo '<option value="' . esc_html($shipping_method->get_instance_id()) . '">' . esc_html($shipping_method->get_title()) . ' (' . wc_price($shipping_method->cost) . ')</option>';
+                                        echo '<option data-prezzo='. $cost .' value="' . esc_html($shipping_method->get_instance_id()) . '">' . esc_html($shipping_method->get_title()) . ' (' . wc_price($shipping_method->cost) . ')</option>';
                                     } else {
-                                        echo '<option value="' . esc_html($shipping_method->get_instance_id()) . '">' . esc_html($shipping_method->get_title()) . ' (' . wc_price(0.00) . ')</option>';
+                                        echo '<option data-prezzo='. 0 .' value="' . esc_html($shipping_method->get_instance_id()) . '">' . esc_html($shipping_method->get_title()) . ' (' . wc_price(0.00) . ')</option>';
                                     }
                                 }
                             }

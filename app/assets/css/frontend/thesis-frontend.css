@@ -159,6 +159,14 @@ label:has(input[type="radio"]:checked) {
   border: 2px solid #f4b424;
 }
 
+.stripe-cards-icon{
+  display: none;
+}
+
+.woocommerce{
+  width: 100%;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
