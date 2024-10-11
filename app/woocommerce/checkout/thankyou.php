@@ -51,7 +51,9 @@ if ($order) : ?>
                 </ul>
             </div>
             <div class="order-received-wrapper flex w-full p-4 gap-4 h-full">
+                
                 <div class="order-details-grid flex flex-col gap-4 w-1/2">
+                <h1 class="text-3xl font-bold">Dettagli ordine</h1>
                     <?php
                     foreach ($order->get_items() as $item_id => $item) {
                         $product = $item->get_product();

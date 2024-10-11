@@ -235,27 +235,27 @@ class ThesisSummary
                 </tr>
             </table>
         </div>
-        <div style='page-break-before: always;'></div>
         ";
-
-        $content .= "<h3 class='font-black my-6'>CD</h3>";
 
         $cd = $this->cart_items->cd;
 
-        if ($cd) {
+        
+            $content .= "<h3 class='font-black my-6'>CD</h3>";
             $content .= "
             <div class='cd rounded-md border border-neutral-100 p-4 my-4'>
                 <ul class='cd__details'>
                 ";
-            foreach ($cd->inputs as $key => $value) {
-                $content .= "<li class='cd__detail'>" . ucfirst(str_replace('_', ' ', $key)) . ": " . $value . "</li>";
+            if (!empty((array) $cd->inputs)) {
+                foreach ($cd->inputs as $key => $value) {
+                    $content .= "<li class='cd__detail'>" . ucfirst(str_replace('_', ' ', $key)) . ": " . $value . "</li>";
+                }
+            } else {
+                $content .= "<li class='cd__detail'>Nessun dettaglio aggiuntivo</li>";
             }
 
             $content .= " </ul>
             </div>
-            <div style='page-break-before: always;'></div>
             ";
-        }
 
         return $content;
     }
