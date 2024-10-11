@@ -1,5 +1,4 @@
 node_modules
 tecnickcom
 files
-composer
-/app/vendor/vendor
+vendor
