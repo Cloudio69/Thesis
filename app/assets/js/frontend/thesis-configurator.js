@@ -36,7 +36,9 @@ const showToast = async (message, status, icon) => {
   let toast = document.createElement("div");
   toast.className = `toast toast-${status} fixed top-1/2 left-1/2 m-4 p-6 ${bgStatus} text-white rounded-lg shadow-lg flex items-center gap-4 z-50 fade-in `;
   toast.innerHTML = `<span class="material-symbols-outlined flex items-center !text-white text-2xl">${icon}</span><p class="flex font-bold text-2xl">${message}</p>`;
-  toast.onclick = () => { toast.remove() };
+  toast.onclick = () => {
+    toast.remove();
+  };
   document.body.appendChild(toast);
 
   await new Promise((resolve) => {
@@ -254,7 +256,10 @@ formOrder.onsubmit = (e) => {
 
   document.querySelector("[name='angoli']").disabled = true;
   document.querySelector("[name='segnalibri']").disabled = true;
-  if(document.querySelector("#prosegui_rilegature")) document.querySelector('#prosegui_rilegature').classList.add("motion-safe:animate-bounce");
+  if (document.querySelector("#prosegui_rilegature"))
+    document
+      .querySelector("#prosegui_rilegature")
+      .classList.add("motion-safe:animate-bounce");
 
   cart.rilegature.push({
     id_rilegatura: rilegatura.value,
@@ -383,6 +388,13 @@ names.forEach((name) => {
 /* Preloader */
 
 window.onload = () => {
+  if (window.innerWidth < 1024) {
+    document.querySelector(
+      "#preloader"
+    ).innerHTML = `<span class="material-symbols-outlined text-7xl">error</span><p class="text-xl font-bold text-center">Il configuratore non è disponibile su dispositivi mobili.</p>`;
+    return;
+  }
+
   let preloader = gsap.fromTo(
     "#preloader",
     { opacity: 1 },
@@ -396,4 +408,3 @@ window.onload = () => {
 
   // preloader.pause();
 };
-
