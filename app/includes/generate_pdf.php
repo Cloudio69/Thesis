@@ -239,7 +239,7 @@ class ThesisSummary
 
         $cd = $this->cart_items->cd;
 
-        
+        if (!empty((array) $cd)) {
             $content .= "<h3 class='font-black my-6'>CD</h3>";
             $content .= "
             <div class='cd rounded-md border border-neutral-100 p-4 my-4'>
@@ -247,7 +247,7 @@ class ThesisSummary
                 ";
             if (!empty((array) $cd->inputs)) {
                 foreach ($cd->inputs as $key => $value) {
-                    $content .= "<li class='cd__detail'>" . ucfirst(str_replace('_', ' ', $key)) . ": " . $value . "</li>";
+                    $content .= "<li class='cd__detail'><b>" . ucfirst(str_replace('_', ' ', $key)) . "</b>: " . $value . "</li>";
                 }
             } else {
                 $content .= "<li class='cd__detail'>Nessun dettaglio aggiuntivo</li>";
@@ -256,7 +256,7 @@ class ThesisSummary
             $content .= " </ul>
             </div>
             ";
-
+        }
         return $content;
     }
 

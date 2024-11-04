@@ -34,7 +34,11 @@ checkoutForm.addEventListener("submit", (e) => {
     submitCheckout.classList.add("animate-pulse", "pointer-events-none", "cursor-not-allowed");
     submitCheckout.innerHTML = "Attendere..."
     submitCheckout.disabled = true;
-    
+
+    let cartObject = Object.fromEntries(
+        Object.entries(cart).filter(([key, value]) => value && Object.keys(value).length > 0)
+    )
+
     window.onbeforeunload = null;
 
     let formData = new FormData()
@@ -47,7 +51,7 @@ checkoutForm.addEventListener("submit", (e) => {
     formData.append("citta", checkoutForm.citta.value)
     formData.append("codice_postale", checkoutForm.codice_postale.value)
     formData.append("spedizione", shippingSelect.value);
-    formData.append('cart', JSON.stringify(cart))
+    formData.append('cart', JSON.stringify(cartObject))
     
     formData.append("action", "validate_user_info")
     formData.append("nonce", nonce)

@@ -76,6 +76,17 @@ const generaPagine = async () => {
     numPages = JSON.parse(getNumPages.data).results;
 
     if (numPages === 0) {
+      let container = document.querySelector(".thesis--pagine");
+      container.replaceChildren();
+      container.innerHTML = `<span class='material-symbols-outlined text-8xl !text-red-500'>error</span><p class='text-center'>Impossibile generare pagine, riprova con un altro file altrimenti contatta l'assistenza</p>`;
+      let retry = document.createElement("button");
+      retry.textContent = "TORNA ALLA HOME";
+      retry.classList.add("rounded-md", "bg-red-500", "hover:bg-slate-400", "text-white", "border-none", "focus:bg-yellow-400", "disabled:animate-pulse", "px-4", "py-2", "mt-4");
+      retry.onclick = () => {
+        window.location.href = "/";
+      };
+
+      container.appendChild(retry);
       throw new Error("No pages returned from the server.");
     }
 

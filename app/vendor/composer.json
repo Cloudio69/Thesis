@@ -1,5 +1,7 @@
 {
+    "type": "wordpress-plugin",
     "require": {
         "dompdf/dompdf": "^3.0"
-    }
+    },
+    "prefer-stable": true
 }
