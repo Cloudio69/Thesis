@@ -51,9 +51,9 @@ if ($order) : ?>
                 </ul>
             </div>
             <div class="order-received-wrapper flex w-full p-4 gap-4 h-full">
-                
+
                 <div class="order-details-grid flex flex-col gap-4 w-1/2">
-                <h1 class="text-3xl font-bold">Dettagli ordine</h1>
+                    <h1 class="text-3xl font-bold">Dettagli ordine</h1>
                     <?php
                     foreach ($order->get_items() as $item_id => $item) {
                         $product = $item->get_product();
@@ -96,13 +96,33 @@ if ($order) : ?>
                         $shipping_fields = $order->get_address('shipping');
                         foreach ($shipping_fields as $key => $value) {
                             if (!empty($value)) {
-                                echo '<p><strong>' . esc_html(ucwords(str_replace('_', ' ', $key ))) . ':</strong> ' . esc_html($value) . '</p>';
+                                echo '<p><strong>' . esc_html__(ucwords(str_replace('_', ' ', $key)), 'woocommerce') . ':</strong> ' . esc_html($value) . '</p>';
                             }
                         }
                         ?>
 
                     </div>
+
+                    <div class="woocommerce-total-paid">
+                        <h2 class="mt-4 font-bold"><?php esc_html_e('Riepilogo pagamento', 'woocommerce'); ?></h2>
+                        <div class="p-4 rounded-md border mt-4">
+                            <p><strong><?php esc_html_e('Subtotal:', 'woocommerce'); ?></strong> <?php echo wp_kses_post($order->get_subtotal_to_display()); ?></p>
+                            <p><strong><?php esc_html_e('Shipping:', 'woocommerce'); ?></strong> <?php echo wp_kses_post($order->get_shipping_to_display()); ?></p>
+                            <?php
+                            $coupons = $order->get_coupon_codes();
+                            if (!empty($coupons)) {
+                                foreach ($coupons as $coupon_code) {
+                                    $coupon = new WC_Coupon($coupon_code);
+                                    $discount_amount = $coupon->get_amount();
+                                    echo '<p><strong>' . esc_html__('Coupon:', 'woocommerce') . '</strong> ' . esc_html($coupon_code) . ' - ' . wc_price($discount_amount) . '</p>';
+                                }
+                            }
+                            ?>
+                            <p><strong><?php esc_html_e('Total:', 'woocommerce'); ?></strong> <?php echo wp_kses_post($order->get_formatted_order_total()); ?></p>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         <?php endif; ?>
 
