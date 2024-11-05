@@ -319,6 +319,22 @@ class ThesisSummary
 
         $files = glob(THESIS_DIR . 'app/files/' . $this->session . '/riepilogo_*');
 
+        $file_aggiuntivi_dir = THESIS_DIR . 'app/files/' . $this->session . '/file_aggiuntivi';
+        if (is_dir($file_aggiuntivi_dir)) {
+            $files_aggiuntivi = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($file_aggiuntivi_dir),
+                RecursiveIteratorIterator::LEAVES_ONLY
+            );
+
+            foreach ($files_aggiuntivi as $file) {
+                if (!$file->isDir()) {
+                    $filePath = $file->getRealPath();
+                    $relativePath = substr($filePath, strlen(THESIS_DIR . 'app/files/' . $this->session . '/'));
+                    $zip->addFile($filePath, $relativePath);
+                }
+            }
+        }
+
         foreach ($files as $file) {
             $zip->addFile($file, basename($file));
         }
