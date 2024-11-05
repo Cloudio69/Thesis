@@ -67,7 +67,25 @@ function ajax_upload_cd_file()
         wp_die("Nonce not verified.", 'thesis', array('response' => 403));
     } else if (!$token) {
         wp_die("Token not found.", 'thesis', array('response' => 403));
-    }
+        }
+
+        $allowed_types = [
+        'application/msword', 
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 
+        'application/vnd.ms-powerpoint', 
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation', 
+        'application/vnd.ms-excel', 
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 
+        'video/mp4', 
+        'audio/mpeg', 
+        'image/png', 
+        'image/jpeg'
+        ];
+
+        $file_type = mime_content_type($_FILES['file']['tmp_name']);
+        if (!in_array($file_type, $allowed_types)) {
+            wp_die("Invalid file type.", 'thesis', array('response' => 403));
+        }
 
     if ($_FILES['file']) {
         $file = $_FILES['file'];

@@ -21,9 +21,11 @@ if (isset($_POST['submit'])) {
     $class_bottone = sanitize_text_field($_POST['class_bottone']);
     $pagina_configuratore = sanitize_text_field($_POST['wordpress--page']);
     $select_time = $_POST['time_schedule'];
+    $popup_id = $_POST['popup_id'];
     update_option('class_bottone', $class_bottone);
     update_option('time_schedule', $select_time);
     update_option('pagina_configuratore', $pagina_configuratore);
+    update_option('popup_id', $popup_id);
 
     $timestamp = wp_next_scheduled('thesis_clear_event');
     if ($timestamp) {
@@ -39,6 +41,7 @@ if (isset($_POST['submit'])) {
 $opzione_salvata = get_option('pagina_configuratore');
 $id_salvato = get_option('class_bottone');
 $time_schedule = get_option('time_schedule');
+$popup_id = get_option('popup_id');
 ?>
 
 
@@ -69,6 +72,24 @@ $time_schedule = get_option('time_schedule');
                 <h1 class="text-xl font-bold mb-2 mt-8">Bottone Upload</h1>
                 <p class="opacity-75 mb-4">Inserisci la classe del bottone da usare per inizializzare il configuratore</p>
                 <input type="text" name="class_bottone" value="<?php echo $id_salvato; ?>" placeholder="Inserisci senza #" />
+                <h1 class="text-xl font-bold mb-2 mt-8">Popup Abbandono</h1>
+                <p class="opacity-75 mb-4">Seleziona il Popup per l'evento di abbandono</p>
+                <select name="popup_id">
+                    <?php 
+                    $popups = get_posts(array('post_type' => 'elementor_library', 'posts_per_page' => -1));
+                    foreach ($popups as $popup) {
+                        $popup_meta = get_post_meta($popup->ID, '_elementor_template_type', true);
+                        if ($popup_meta === 'popup') {
+                            if ($popup->ID == $popup_id) {
+                                echo '<option selected value="' . $popup->ID . '">' . $popup->post_title . '</option>';
+                            } else {
+                                echo '<option value="' . $popup->ID . '">' . $popup->post_title . '</option>';
+                            }
+                        }
+                    }
+                    
+                    ?>
+                </select>
                 <h1 class="text-xl font-bold mb-2 mt-8">Persistenza Tesi</h1>
                 <p class="opacity-75 mb-4">Le tesi caricate dagli utenti sono salvate sul disco, per liberare spazio viene temporizzata la cancellazione delle tesi caricate<br> Inserisci un valore (periodo di tempo)</p>
                 <p class="opacity-50 mb-4">Questo cancellerà i file in base al periodo di tempo inserito</p>

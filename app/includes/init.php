@@ -62,16 +62,16 @@ class Thesis
 
         $new_row = array(
             'recurr_not' => array(
-            'label' => __('INFO: ', 'woocommerce'),
-            'value'  => 'Il prezzo totale delle pagine è moltiplicato per il numero di rilegature.'
+                'label' => __('INFO: ', 'woocommerce'),
+                'value'  => 'Il prezzo totale delle pagine è moltiplicato per il numero di rilegature.'
             )
         );
 
         $position = array_search('cart_subtotal', array_keys($total_rows));
         if ($position !== false) {
             $total_rows = array_slice($total_rows, 0, $position, true) +
-                  $new_row +
-                  array_slice($total_rows, $position, null, true);
+                $new_row +
+                array_slice($total_rows, $position, null, true);
         } else {
             $total_rows += $new_row;
         }
@@ -187,15 +187,15 @@ class Thesis
 
     public function add_thesis_id_button()
     {
-?>
+    ?>
         <script>
             const init = document.querySelectorAll(".<?php echo get_option('class_bottone'); ?>")
             const nonce = "<?php echo wp_create_nonce('thesis-token'); ?>"
             const ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
             const configuratore = "<?php echo get_option('pagina_configuratore') ?>"
-            const popupId = <?php echo get_option('popup_id') ? get_option('popup_id') : 68; ?>;
+            const popupId = <?php echo get_option('popup_id') ?>;
         </script>
-<?php
+    <?php
     }
 
     public function thesis_options()
@@ -203,9 +203,11 @@ class Thesis
         add_option('pagina_configuratore', 'configuratore');
         add_option('class_bottone', 'configuratore');
         add_option('time_schedule', 'monthly');
+        add_option('popup_id', '68');
         register_setting('thesis_impostazioni', 'pagina_configuratore');
         register_setting('thesis_impostazioni', 'class_bottone');
         register_setting('thesis_impostazioni', 'time_schedule');
+        register_setting('thesis_impostazioni', 'popup_id');
 
         // Prezzi settings
         add_option('prezzo_angoli', '4');

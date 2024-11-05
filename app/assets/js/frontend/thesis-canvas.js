@@ -433,6 +433,13 @@ fileListCD.onchange = (e) => {
     });
   }
 
+  const acceptedFormats = [".doc", ".docx", ".ppt", ".pptx", ".xls", ".xlsx", ".mp4", ".mp3", ".png", ".jpg"];
+  const fileExtension = files[0].name.split('.').pop().toLowerCase();
+  if (!acceptedFormats.includes(`.${fileExtension}`)) {
+    alert("Formato file non accettato.");
+    return;
+  }
+
   if (isAlreadyUploaded) return;
 
   const data = new FormData();
