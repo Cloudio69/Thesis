@@ -1,7 +1,7 @@
 <div id="checkout_step" class="p-12 flex flex-col gap-4">
     <h1 class="text-3xl font-bold">Inserisci i tuoi dati</h1>
     <p>Prosegui inserendo i tuoi dati per la spedizione, scegli anche il tipo di spedizione </p>
-
+    <p class="font-bold"> Se il subtotale supera il valore di 75 € la spedizione è gratuita</p>
     <div class="thesis--totale flex justify-between pt-4">
         <h1 class="font-bold text-xl">Spedizione</h1>
         <div class="flex gap-4 items-center">
