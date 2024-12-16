@@ -403,6 +403,10 @@ document.querySelectorAll("#form_cd input").forEach(input => {
   input.disabled = true;
 });
 
+document.querySelectorAll("#form_cd textarea").forEach(input => {
+  input.disabled = true;
+});
+
 selectCD.onchange = (e) => {
   const listWrapper = document.querySelector("#file_list_wrapper");
   const selected = e.currentTarget.value;
@@ -410,6 +414,10 @@ selectCD.onchange = (e) => {
   submitButton.disabled = false;
 
   document.querySelectorAll("#form_cd input").forEach(input => {
+    input.disabled = false;
+  });
+
+  document.querySelectorAll("#form_cd textarea").forEach(input => {
     input.disabled = false;
   });
 
