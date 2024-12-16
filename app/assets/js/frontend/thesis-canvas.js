@@ -399,11 +399,19 @@ formCD.onsubmit = (e) => {
   canvas.renderAll();
 };
 
+document.querySelectorAll("#form_cd input").forEach(input => {
+  input.disabled = true;
+});
+
 selectCD.onchange = (e) => {
   const listWrapper = document.querySelector("#file_list_wrapper");
   const selected = e.currentTarget.value;
   const submitButton = document.querySelector("#form_cd button[type='submit']");
   submitButton.disabled = false;
+
+  document.querySelectorAll("#form_cd input").forEach(input => {
+    input.disabled = false;
+  });
 
   if (selected !== "file") {
     if (!listWrapper.classList.contains("hidden"))

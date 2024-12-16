@@ -15,14 +15,11 @@
         </div>
     </section>
     <form class="hidden mt-4 flex-col gap-4" id="form_cd">
-            <h1 class="font-bold text-xl">
-                Puoi cliccare sui testi presenti sul CD a sinistra per modificarli
-            </h1>
             <p>
                 Dopo aver cambiato il contenuto del CD, clicca su "Aggiungi al carrello" per confermare le modifiche
             </p>
-            <div class="flex flex-col gap-4 mt-4">
-                <label for="contenuto">Contenuto del disco:</label>
+            <div class="flex flex-col gap-4 mt-4 ring-2 ring-amber-500 p-4 rounded-md">
+                <label class="font-bold" for="contenuto">Contenuto del disco:</label>
                 <select name="contenuto" id="contenuto" class="p-2 rounded-md" required>
                     <option value="" selected disabled>Seleziona il contenuto del CD</option>
                     <option value="tesi">Solo la tesi</option>
