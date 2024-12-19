@@ -602,6 +602,9 @@ weight
     let spedizione = document.querySelector("#spedizione").selectedOptions[0].dataset.prezzo;
     let subtotale = (totale - iva).toFixed(2);
 
+    if(subtotale < 75) document.querySelector("[data-id='spedizione_gratuita']").disabled = true;
+    else document.querySelector("[data-id='spedizione_gratuita']").disabled = false;
+    
     el.textContent = parseFloat(subtotale).toFixed(2);
   });
 
