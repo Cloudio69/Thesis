@@ -17,9 +17,12 @@
         <h1 class="flex-1 font-bold mt-4">Azioni Stampa</h1>
         <p class="mb-4">Puoi anche cambiare comodamente la stampa di tutte le pagine con i bottoni sottostanti</p>
         <div class="azioni--massive flex w-full gap-2">
-            <button id="stampa_bn" class="btn--massive bg-slate-50 text-black border border-slate-50 flex-1 p-4 rounded-md flex flex-col items-center justify-center"><img src="/wp-content/plugins/thesis/app/assets/img/svg/black-and-white.svg" class="w-6 h-6" alt="TUTTE BIANCO E NERO"><span>TUTTE MONOCOLORE</span></button>
-            <button id="stampa_colori" class="btn--massive bg-slate-50 text-black border border-slate-50 flex-1 p-4 rounded-md flex flex-col items-center justify-center"><img src="/wp-content/plugins/thesis/app/assets/img/svg/rgb.svg" class="w-6 h-6" alt="TUTTE A COLORI"><span>TUTTE MULTICOLORE</span></button>
+            <button id="stampa_bn" class="btn--massive hover:bg-amber-400 bg-slate-50 text-black border border-slate-50 flex-1 p-4 rounded-md flex flex-col items-center justify-center"><img src="/wp-content/plugins/thesis/app/assets/img/svg/black-and-white.svg" class="w-6 h-6" alt="TUTTE BIANCO E NERO"><span>TUTTE MONOCOLORE</span></button>
+            <button id="stampa_colori" class="btn--massive hover:bg-amber-400 bg-slate-50 text-black border border-slate-50 flex-1 p-4 rounded-md flex flex-col items-center justify-center"><img src="/wp-content/plugins/thesis/app/assets/img/svg/rgb.svg" class="w-6 h-6" alt="TUTTE A COLORI"><span>TUTTE MULTICOLORE</span></button>
         </div>
+        <!-- <div class="azioni--massive flex w-full gap-2">
+            <button disabled id="annulla_azioni" class="btn--massive hover:bg-amber-400 bg-slate-50 text-black border border-slate-50 flex-1 p-4 rounded-md flex gap-4 items-center justify-center"><img src="/wp-content/plugins/thesis/app/assets/img/svg/undo.svg" class="w-6 h-6 text-black" alt="ANNULLA AZIONI"><span>ANNULLA AZIONI</span></button>
+        </div> -->
     </section>
     <section>
     <form id="form_pagine">

@@ -9,6 +9,11 @@ let prezzoPagine = {
   id_formato: null,
 };
 
+let pagine = {
+  bn: [],
+  colorate: [],
+}
+
 function getAverageRGB(imgEl) {
   var blockSize = 5, // only visit every 5 pixels
     defaultRGB = { r: 0, g: 0, b: 0 }, // for non-supporting envs
@@ -81,7 +86,18 @@ const generaPagine = async () => {
       container.innerHTML = `<span class='material-symbols-outlined text-8xl !text-red-500'>error</span><p class='text-center'>Impossibile generare pagine, riprova con un altro file altrimenti contatta l'assistenza</p>`;
       let retry = document.createElement("button");
       retry.textContent = "TORNA ALLA HOME";
-      retry.classList.add("rounded-md", "bg-red-500", "hover:bg-slate-400", "text-white", "border-none", "focus:bg-yellow-400", "disabled:animate-pulse", "px-4", "py-2", "mt-4");
+      retry.classList.add(
+        "rounded-md",
+        "bg-red-500",
+        "hover:bg-slate-400",
+        "text-white",
+        "border-none",
+        "focus:bg-yellow-400",
+        "disabled:animate-pulse",
+        "px-4",
+        "py-2",
+        "mt-4"
+      );
       retry.onclick = () => {
         window.location.href = "/";
       };
@@ -161,11 +177,7 @@ const generaPagine = async () => {
                   "mt-4"
                 );
                 retry.onclick = () => {
-                  retry.disabled = true;
-                  setTimeout(() => {
-                    retry.disabled = false;
-                  }, 5000);
-                  generaPagine();
+                  window.location.reload();
                 };
 
                 container.appendChild(retry);
@@ -190,8 +202,7 @@ const generaPagine = async () => {
                   "mt-4"
                 );
                 retry.onclick = () => {
-                  retry.disabled = true;
-                  generaPagine();
+                  window.location.reload();
                 };
 
                 container.appendChild(retry);
@@ -203,7 +214,7 @@ const generaPagine = async () => {
     };
 
     await generatePagesBatch(0, numPages);
-   
+
     creaPagine();
     generated = true; // Evita di rigenerare le pagine
     setCookie("thesis_page_generation", "true", 1 / 720);
@@ -242,6 +253,10 @@ const creaPagine = async () => {
     colorSwitch.dataset.pagina = i;
 
     colorSwitch.addEventListener("click", (e) => {
+
+      if(!generated) return;
+
+      document.querySelector("#annulla_azioni").removeAttribute("disabled");
       let numPagina = e.currentTarget.dataset.pagina;
       let colorSrc = new URL(e.currentTarget.querySelector("img").src);
 
@@ -263,6 +278,8 @@ const creaPagine = async () => {
             1
           )[0]
         );
+
+
       } else {
         e.currentTarget.querySelector("img").src = assets.bn;
         pagineTipologia.bn.push(
@@ -273,6 +290,8 @@ const creaPagine = async () => {
             1
           )[0]
         );
+
+
         if (
           !e.currentTarget.parentElement
             .querySelector("img")
@@ -330,6 +349,12 @@ const creaPagine = async () => {
         document.querySelectorAll(".color-switch")[i].querySelector("img").src =
           assets.rgb;
       }
+
+      /* TODO */ 
+
+      /* if (pagine.bn.length === 0 && pagine.colorate.length === 0) {
+        pagine = structuredClone(pagineTipologia);
+      } */
 
       updateColorCounter();
     };
@@ -392,6 +417,7 @@ let pageFilter = [
   document.querySelector("#bianco--nero"),
   document.querySelector("#colore"),
 ];
+
 let filtered = false;
 
 pageFilter.forEach((item) => {
@@ -453,11 +479,34 @@ let massiveActions = [
   document.querySelector("#stampa_bn"),
 ];
 
+
+/* TODO */
+
+/* document.querySelector("#annulla_azioni").onclick = (e) => {
+  e.preventDefault();
+
+  if (!generated) return;
+
+  document.querySelector("#annulla_azioni").setAttribute("disabled", "true");
+
+  document.querySelectorAll(".color-switch").forEach((item) => {
+    item.querySelector("img").src = assets.rgb;
+    item.parentElement.querySelector("img").classList.remove("grayscale");
+  });
+
+  pagineTipologia.colorate = pagine.colorate;
+  pagineTipologia.bn = pagine.bn;
+
+  updateColorCounter();
+}; */
+
 massiveActions.forEach((item) => {
   item.onclick = (e) => {
     e.preventDefault();
 
     if (!generated) return;
+
+    document.querySelector("#annulla_azioni").removeAttribute("disabled");
 
     let color = e.currentTarget.id === "stampa_colori" ? "colorate" : "bn";
 
