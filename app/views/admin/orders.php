@@ -42,7 +42,11 @@
                             $order_id = $order->get_id();
                             $order_total = $order->get_total();
                             $order_date = $order->get_date_created()->date('d-m-Y H:i');
-                            $order_customer = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+                            if ($order instanceof WC_Order) {
+                                $order_customer = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+                            } else {
+                                $order_customer = 'Non specificato (Rimborsato)';
+                            }
                             $download_zip = get_post_meta($order_id, '_download_zip', true);
 
                             if (empty($download_zip)) {
