@@ -30,7 +30,7 @@
                             'limit' => $orders_per_page,
                             'orderby' => 'date',
                             'order' => 'DESC',
-                            'status' => array('on-hold', 'completed'),
+                            'status' => array('on-hold', 'completed', 'processing'),
                             'paged' => $page
                         ));
 
