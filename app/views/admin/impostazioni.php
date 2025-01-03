@@ -75,6 +75,7 @@ $popup_id = get_option('popup_id');
                 <h1 class="text-xl font-bold mb-2 mt-8">Popup Abbandono</h1>
                 <p class="opacity-75 mb-4">Seleziona il Popup per l'evento di abbandono</p>
                 <select name="popup_id">
+                    <option value="">Nessun Popup</option>
                     <?php 
                     $popups = get_posts(array('post_type' => 'elementor_library', 'posts_per_page' => -1));
                     foreach ($popups as $popup) {

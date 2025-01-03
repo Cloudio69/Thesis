@@ -27,7 +27,10 @@ const updateCart = async (e) => {
   cartWrapper.innerHTML = "";
   totaleRilegature = 0;
 
-  totaleRilegature = cart.rilegature.reduce((acc, rilegatura) => parseInt(acc + parseInt(rilegatura.qty)), 0);
+  totaleRilegature = cart.rilegature.reduce(
+    (acc, rilegatura) => parseInt(acc + parseInt(rilegatura.qty)),
+    0
+  );
 
   const cdDiv = document.createElement("div");
   const pagineDiv = document.createElement("div");
@@ -71,7 +74,7 @@ const updateCart = async (e) => {
     tipologiaDiv.appendChild(tipologiaItem);
   }
 
-  if (cart.rilegature && cart.rilegature.length > 0) {    
+  if (cart.rilegature && cart.rilegature.length > 0) {
     cart.rilegature.forEach((rilegatura, index) => {
       let rilegatureItem = document.createElement("div");
       rilegatureItem.classList.add(
@@ -88,7 +91,9 @@ const updateCart = async (e) => {
       rilegatureItem.innerHTML = `
         <div class="flex items-start gap-4">
         <div class="flex items-center image">
-          <img src="${rilegatura.rilegatura_thumbnail}" data-anteprima-rilegatura alt="${
+          <img src="${
+            rilegatura.rilegatura_thumbnail
+          }" data-anteprima-rilegatura alt="${
         rilegatura.nome_rilegatura
       }" class="w-fit h-[120px] object-contain rounded-md cursor-pointer" />
           </div>
@@ -143,10 +148,14 @@ const updateCart = async (e) => {
         .forEach((item) => item.appendChild(eliminaBtn));
     });
     document.querySelector("#finalizza_step button").disabled = false;
-    document.querySelector("#finalizza_step .info_finalizzazione").classList.add("hidden")
+    document
+      .querySelector("#finalizza_step .info_finalizzazione")
+      .classList.add("hidden");
   } else {
     document.querySelector("#finalizza_step button").disabled = true;
-    document.querySelector("#finalizza_step .info_finalizzazione").classList.remove("hidden")
+    document
+      .querySelector("#finalizza_step .info_finalizzazione")
+      .classList.remove("hidden");
 
     /* document.querySelector(".thesis--rilegature").innerHTML = `
     <div class='flex flex-col items-center justify-center'>
@@ -159,7 +168,7 @@ const updateCart = async (e) => {
   `;
     rilegatureForm.reset();
     window.scrollTo({ top: 0, behavior: 'smooth' }); */
-    document.querySelector("#prosegui_rilegature").classList.add("hidden")
+    document.querySelector("#prosegui_rilegature").classList.add("hidden");
   }
 
   if (cart.pagine.prezzo_grammatura >= 0 || cart.pagine.prezzo_formato >= 0) {
@@ -188,14 +197,16 @@ const updateCart = async (e) => {
         <span class="text-sm flex items-center justify-between"><b class="flex items-center gap-2"><span class="material-symbols-outlined">
 print
 </span> Costo Monocolore</b><span>  ${(
-      (cart.pagine.prezzo_bn *
-      (cart.pagine.bn.length > 0 ? cart.pagine.bn.length : 0)) * totaleRilegature
+      cart.pagine.prezzo_bn *
+      (cart.pagine.bn.length > 0 ? cart.pagine.bn.length : 0) *
+      totaleRilegature
     ).toFixed(2)}€</span></span>
         <span class="text-sm flex items-center justify-between"><b class="flex items-center gap-2"> <span class="material-symbols-outlined">
 print
 </span> Costo Multicolore</b><span>  ${(
-      (cart.pagine.prezzo_colorate *
-      (cart.pagine.colorate.length > 0 ? cart.pagine.colorate.length : 0) * totaleRilegature)
+      cart.pagine.prezzo_colorate *
+      (cart.pagine.colorate.length > 0 ? cart.pagine.colorate.length : 0) *
+      totaleRilegature
     ).toFixed(2)}€</span></span>
         <span class="text-sm flex items-center justify-between"><b class="flex items-center gap-2"><span class="material-symbols-outlined">
 weight
@@ -218,10 +229,12 @@ weight
     let numPagine = cart.pagine.bn.length + cart.pagine.colorate.length;
     let costoPagine =
       (cart.pagine.prezzo_bn * cart.pagine.bn.length +
-      cart.pagine.prezzo_colorate * cart.pagine.colorate.length) * totaleRilegature;
+        cart.pagine.prezzo_colorate * cart.pagine.colorate.length) *
+      totaleRilegature;
     costoPagine +=
       (cart.pagine.prezzo_formato * numPagine +
-      cart.pagine.prezzo_grammatura * numPagine) * totaleRilegature;
+        cart.pagine.prezzo_grammatura * numPagine) *
+      totaleRilegature;
 
     totale += costoPagine;
 
@@ -232,7 +245,7 @@ weight
     let cdItem = document.createElement("div");
 
     let removeCd = document.createElement("button");
-    removeCd.setAttribute("onclick", "removecd()")
+    removeCd.setAttribute("onclick", "removecd()");
     removeCd.classList.add(
       "!bg-red-500",
       "text-white",
@@ -240,7 +253,8 @@ weight
       "p-2",
       "rounded-md"
     );
-    removeCd.innerHTML = "<span class='material-symbols-outlined !text-white'>delete</span>";
+    removeCd.innerHTML =
+      "<span class='material-symbols-outlined !text-white'>delete</span>";
 
     cdItem.classList.add(
       "flex",
@@ -263,17 +277,22 @@ weight
     }</b></span>
     ${
       Object.values(cart.cd.inputs).some((value) => value !== "")
-      ? `<span class="text-xs mt-2 font-bold">Dati inseriti</span>`
-      : ""
+        ? `<span class="text-xs mt-2 font-bold">Dati inseriti</span>`
+        : ""
     }
     ${Object.entries(cart.cd.inputs)
       .filter(([key, value]) => value !== "")
-      .map(([key, value]) => `<p class="text-xs mt-2">${key.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}: ${value}</p>`)
+      .map(
+        ([key, value]) =>
+          `<p class="text-xs mt-2">${key
+            .replace(/_/g, " ")
+            .replace(/\b\w/g, (char) => char.toUpperCase())}: ${value}</p>`
+      )
       .join("")} 
     </div>
     <div class='flex flex-col w-full self-stretch flex-grow-0'>
     <div class='font-bold cd-actions flex flex-col items-end flex-1 justify-between'><span class="text-sm">${
-    cart.cd.qty ? (cart.cd.prezzo * cart.cd.qty).toFixed(2) : cart.cd.prezzo
+      cart.cd.qty ? (cart.cd.prezzo * cart.cd.qty).toFixed(2) : cart.cd.prezzo
     }€</span>${removeCd.outerHTML}</div></span>
     </div>
     </div>
@@ -338,7 +357,6 @@ const updateFinalize = (totale) => {
     totaleWrapper.forEach((el) => {
       el.textContent = parseFloat(totale).toFixed(2);
     });
-
   });
 
   const cdDiv = document.createElement("div");
@@ -398,7 +416,9 @@ const updateFinalize = (totale) => {
       rilegatureItem.innerHTML = `
         <div class="flex items-start gap-4">
         <div class="flex items-center image">
-          <img src="${rilegatura.rilegatura_thumbnail}" data-anteprima-rilegatura alt="${
+          <img src="${
+            rilegatura.rilegatura_thumbnail
+          }" data-anteprima-rilegatura alt="${
         rilegatura.nome_rilegatura
       }" class="w-fit h-[120px] object-contain rounded-md cursor-pointer" />
           </div>
@@ -476,12 +496,16 @@ const updateFinalize = (totale) => {
         <span class="text-sm flex items-center justify-between"><b class="flex items-center gap-2"><span class="material-symbols-outlined">
         print
         </span> Costo Monocolore</b><span>  ${(
-          (cart.pagine.prezzo_bn * cart.pagine.bn.length) * totaleRilegature
+          cart.pagine.prezzo_bn *
+          cart.pagine.bn.length *
+          totaleRilegature
         ).toFixed(2)} €</span></span>
         <span class="text-sm flex items-center justify-between"><b class="flex items-center gap-2"><span class="material-symbols-outlined">
         print
         </span> Costo Multicolore</b><span>  ${(
-          (cart.pagine.prezzo_colorate * cart.pagine.colorate.length) * totaleRilegature
+          cart.pagine.prezzo_colorate *
+          cart.pagine.colorate.length *
+          totaleRilegature
         ).toFixed(2)} €</span></span>
         <span class="text-sm flex items-center justify-between"><b class="flex items-center gap-2"><span class="material-symbols-outlined">
 weight
@@ -512,9 +536,10 @@ weight
     let cdItem = document.createElement("div");
 
     let removeCd = document.createElement("button");
-    removeCd.innerHTML = "<span class='material-symbols-outlined !text-white'>delete</span>";
+    removeCd.innerHTML =
+      "<span class='material-symbols-outlined !text-white'>delete</span>";
     removeCd.classList.add("!bg-red-500", "text-white", "p-2", "rounded-md");
-    removeCd.setAttribute("onclick", `removecd()`)
+    removeCd.setAttribute("onclick", `removecd()`);
 
     cdItem.classList.add(
       "flex",
@@ -543,13 +568,18 @@ weight
     }
     ${Object.entries(cart.cd.inputs)
       .filter(([key, value]) => value !== "")
-      .map(([key, value]) => `<p class="text-xs mt-2">${key.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}: ${value}</p>`)
+      .map(
+        ([key, value]) =>
+          `<p class="text-xs mt-2">${key
+            .replace(/_/g, " ")
+            .replace(/\b\w/g, (char) => char.toUpperCase())}: ${value}</p>`
+      )
       .join("")} 
     </div>
     <div class='flex flex-col w-full self-stretch flex-grow-0'>
     <div class='font-bold cd-actions flex flex-col items-end flex-1 justify-between'><span class="text-sm">${
-    cart.cd.qty ? (cart.cd.prezzo * cart.cd.qty).toFixed(2) : cart.cd.prezzo
-  }€</span>${removeCd.outerHTML}</div></span>
+      cart.cd.qty ? (cart.cd.prezzo * cart.cd.qty).toFixed(2) : cart.cd.prezzo
+    }€</span>${removeCd.outerHTML}</div></span>
     </div>
     </div>
   `;
@@ -593,18 +623,40 @@ weight
   cdWrapper.appendChild(cdDiv);
 
   spedizioneWrapper.forEach((el) => {
-    let spedizione = document.querySelector("#spedizione").selectedOptions[0].dataset.prezzo;
+    let spedizione =
+      document.querySelector("#spedizione").selectedOptions[0].dataset.prezzo;
 
     el.textContent = parseFloat(spedizione).toFixed(2);
   });
 
   subtotaleWrapper.forEach((el) => {
-    let spedizione = document.querySelector("#spedizione").selectedOptions[0].dataset.prezzo;
+    let spedizione =
+      document.querySelector("#spedizione").selectedOptions[0].dataset.prezzo;
     let subtotale = (totale - iva).toFixed(2);
 
-    if(subtotale < 75) document.querySelector("[data-id='spedizione_gratuita']").disabled = true;
-    else document.querySelector("[data-id='spedizione_gratuita']").disabled = false;
-    
+    if (subtotale < 75) {
+      document.querySelector("[data-id='spedizione_gratuita']").disabled = true;
+
+      if (document.querySelector("#spedizione").classList.contains("hidden"))
+        document.querySelector("#spedizione").classList.remove("hidden");
+
+      if(!document.querySelector(".free--shipping").classList.contains("hidden"))
+        document.querySelector(".free--shipping").classList.add("hidden");
+      
+    } else {
+      document.querySelector(
+        "[data-id='spedizione_gratuita']"
+      ).disabled = false;
+      document.querySelector("[data-id='spedizione_gratuita']").selected =
+        "selected";
+
+      if (!document.querySelector("#spedizione").classList.contains("hidden"))
+        document.querySelector("#spedizione").classList.add("hidden");
+
+      if(document.querySelector(".free--shipping").classList.contains("hidden"))
+        document.querySelector(".free--shipping").classList.remove("hidden");
+    }
+
     el.textContent = parseFloat(subtotale).toFixed(2);
   });
 
@@ -612,7 +664,7 @@ weight
     el.textContent = parseFloat(totale).toFixed(2);
   });
 
-  if(cart.cd.url) {
+  if (cart.cd.url) {
     document.querySelectorAll(".cd-thumbnail").forEach((item) => {
       let image = new Image();
       image.src = cart.cd.url;
@@ -630,7 +682,7 @@ weight
     });
   }
 
-  Fancybox.bind("[data-anteprima-rilegatura]")
+  Fancybox.bind("[data-anteprima-rilegatura]");
 };
 
 function removeRilegatura(index) {
@@ -638,7 +690,7 @@ function removeRilegatura(index) {
 
   updateCart();
 
-  showToast('Elemento rimosso', 'warning', 'warning')
+  showToast("Elemento rimosso", "warning", "warning");
 }
 
 document.addEventListener("click", (e) => {
@@ -652,4 +704,8 @@ document.addEventListener("click", (e) => {
   }
 });
 
-const removecd = () => { cart.cd = {}; updateCart(); showToast('Elemento rimosso', 'warning', 'warning') }
+const removecd = () => {
+  cart.cd = {};
+  updateCart();
+  showToast("Elemento rimosso", "warning", "warning");
+};

@@ -52,24 +52,13 @@ if (strpos($_SERVER['REQUEST_URI'], '/checkout/order-pay') !== 0 && $order->get_
         </header>
         <main class="flex-1 flex flex-col items-center justify-center">
             <?php
-            if (!is_user_logged_in()) {
-            ?>
-                <div class="thesis--register h-full flex items-center justify-center flex-1">
-                    <?php
-                    echo do_shortcode('[woocommerce_my_account]');
-                    ?>
-                </div>
-            <?php
-            }
-            ?>
-            <?php
             if (is_user_logged_in()) {
-
                 $order->set_customer_id($current_user->ID);
                 $order->save();
-
-                echo do_shortcode('[woocommerce_checkout]');
             }
+
+            echo do_shortcode('[woocommerce_checkout]');
+            
             ?>
         </main>
     </div>
