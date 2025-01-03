@@ -188,6 +188,7 @@
 
                     ?>
                 </select>
+                <h4 class="free--shipping mt-4">Spedizione gratuita 🎉</h4>
             </div>
             <p class="alert text-sm"><b>In 24/48 ore la tesi verrà consegnata</b> all'indirizzo ed alla persona indicata in questa pagina... a patto che i dati siano corretti! Ricorda che la stampa di Rilegature in Carta Riso oppure in Seta comporta almeno un giorno in più di lavorazione.</p>
         </div>
