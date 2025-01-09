@@ -46,7 +46,6 @@ function wc_thesis_create_order($args)
         return wp_send_json_error('Invalid JSON in spedizione' . var_dump($spedizione), 400);
     }
 
-
     $shipping_title = $spedizione->title;
     $shipping_method = $spedizione->instance;
     $shipping_zone = $spedizione->zone;
@@ -66,15 +65,21 @@ function wc_thesis_create_order($args)
     $shipping_item->set_method_title($shipping_method->title);
     $shipping_item->set_method_id($shipping_method->method_id);
     $shipping_item->set_instance_id($shipping_method->instance_id);
-    $shipping_item->set_total($shipping_method->cost);
 
     if ($order->get_total() > 75) {
         $shipping_item->set_total(0);
+    } else {
+        $shipping_item->set_total($shipping_method->cost);
     }
-
+    
     $order->add_item($shipping_item);
     
     $order->calculate_totals();
+
+    if($order->get_total() > 75){
+        $order->set_shipping_total(0);
+        $order->set_total($order->get_total() - $shipping_method->cost);
+    }
 
     $order->add_order_note("L'ordine è stato creato, in attesa di conferma definitiva.");
 
