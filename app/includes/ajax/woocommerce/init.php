@@ -68,6 +68,10 @@ function wc_thesis_create_order($args)
     $shipping_item->set_instance_id($shipping_method->instance_id);
     $shipping_item->set_total($shipping_method->cost);
 
+    if ($order->get_total() > 75) {
+        $shipping_item->set_total(0);
+    }
+
     $order->add_item($shipping_item);
     
     $order->calculate_totals();

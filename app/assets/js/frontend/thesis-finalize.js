@@ -623,7 +623,11 @@ weight
   spedizioneWrapper.forEach((el) => {
     let spedizione = document.querySelector("#spedizione").value;
 
-    el.textContent = parseFloat(spedizione).toFixed(2);
+    if(subtotaleWrapper[0].textContent < 75) {
+      el.textContent = parseFloat(spedizione).toFixed(2);
+    } else {
+      el.textContent = "0.00";
+    }
   });
 
   subtotaleWrapper.forEach((el) => {
@@ -632,8 +636,8 @@ weight
     if (subtotale < 75) {
       /* document.querySelector("[data-id='spedizione_gratuita']").disabled = true; */
 
-      if (document.querySelector("#spedizione").classList.contains("hidden"))
-        document.querySelector("#spedizione").classList.remove("hidden");
+      if (document.querySelector(".calcola--spedizione").classList.contains("hidden"))
+        document.querySelector(".calcola--spedizione").classList.remove("hidden");
 
       if (
         !document.querySelector(".free--shipping").classList.contains("hidden")
@@ -646,8 +650,8 @@ weight
       document.querySelector("[data-id='spedizione_gratuita']").selected =
         "selected"; */
 
-      if (!document.querySelector("#spedizione").classList.contains("hidden"))
-        document.querySelector("#spedizione").classList.add("hidden");
+      if (!document.querySelector(".calcola--spedizione").classList.contains("hidden"))
+        document.querySelector(".calcola--spedizione").classList.add("hidden");
 
       if (
         document.querySelector(".free--shipping").classList.contains("hidden")
@@ -655,14 +659,18 @@ weight
         document.querySelector(".free--shipping").classList.remove("hidden");
     }
 
-    console.log(subtotale);
-
     el.textContent = parseFloat(subtotale).toFixed(2);
   });
 
   let spedizione = document.querySelector("#spedizione").value;
 
-  totale += parseFloat(spedizione);
+  if(subtotaleWrapper[0].textContent < 75) {
+    totale += parseFloat(spedizione);
+  } else {
+    spedizione = 0;
+    document.querySelector(".spedizione").textContent = "0.00";
+  }
+
 
   totaleWrapper.forEach((el) => {
     el.textContent = parseFloat(totale).toFixed(2);
