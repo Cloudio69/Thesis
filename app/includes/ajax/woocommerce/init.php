@@ -42,8 +42,6 @@ function wc_thesis_create_order($args)
 
     $spedizione = json_decode(stripslashes($spedizione));
 
-    var_dump($spedizione);
-
     if (json_last_error() !== JSON_ERROR_NONE) {
         return wp_send_json_error('Invalid JSON in spedizione' . var_dump($spedizione), 400);
     }
