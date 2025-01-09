@@ -40,26 +40,38 @@ function wc_thesis_create_order($args)
 
     $spedizione = $args['spedizione'];
 
-    $shipping_title = $spedizione['title'];
-    $shipping_method = $spedizione['instance'];
-    $shipping_zone = $spedizione['zone'];
+    $spedizione = json_decode(stripslashes($spedizione));
+
+    var_dump($spedizione);
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        return wp_send_json_error('Invalid JSON in spedizione' . var_dump($spedizione), 400);
+    }
 
 
-    /**
-     * TODO: Implement this
-     * 
-     * Add shipping to the order based on instance id and zone
-     * 
-     */
+    $shipping_title = $spedizione->title;
+    $shipping_method = $spedizione->instance;
+    $shipping_zone = $spedizione->zone;
+   
+    $shipping = new WC_Shipping_Zones();
+    $shipping = $shipping->get_zone($shipping_zone);
+    $shipping_methods = $shipping->get_shipping_methods();
 
+    $shipping_method = array_filter($shipping_methods, function ($method) use ($shipping_method) {
+        return $method->instance_id == $shipping_method;
+    });
 
-    $order->add_shipping(array(
-        'method_title' => $shipping_title,
-        'method_id' => $shipping_method,
-        'taxes' => array(),
-        'zone' => $shipping_zone
-    ));
+    $shipping_method = array_values($shipping_method)[0];
 
+    $shipping_item = new WC_Order_Item_Shipping();
+
+    $shipping_item->set_method_title($shipping_method->title);
+    $shipping_item->set_method_id($shipping_method->method_id);
+    $shipping_item->set_instance_id($shipping_method->instance_id);
+    $shipping_item->set_total($shipping_method->cost);
+
+    $order->add_item($shipping_item);
+    
     $order->calculate_totals();
 
     $order->add_order_note("L'ordine è stato creato, in attesa di conferma definitiva.");
