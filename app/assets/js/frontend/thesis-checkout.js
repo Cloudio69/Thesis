@@ -1,6 +1,7 @@
 const checkoutForm = document.querySelector("#checkout_form")
 const submitCheckout = document.querySelector("#submit_checkout")
 const shippingSelect = document.querySelector("#spedizione")
+const shippingMethod = document.querySelector("#metodo_spedizione")
 
 let fieldChecker = {}
 
@@ -50,7 +51,7 @@ checkoutForm.addEventListener("submit", (e) => {
     formData.append("indirizzo", checkoutForm.indirizzo.value)
     formData.append("citta", checkoutForm.citta.value)
     formData.append("codice_postale", checkoutForm.codice_postale.value)
-    formData.append("spedizione", shippingSelect.value);
+    formData.append("spedizione", JSON.stringify({ "title": shippingSelect.value, "instance": shippingMethod.dataset.instance, "zone": shippingMethod.dataset.zone }));
     formData.append('cart', JSON.stringify(cartObject))
     
     formData.append("action", "validate_user_info")
@@ -83,6 +84,46 @@ checkoutForm.addEventListener("submit", (e) => {
 })
 
 
-shippingSelect.addEventListener("change", (e) => {
-    updateCart()
+document.querySelector('.calcola--spedizione').addEventListener("click", (e) => {
+    e.preventDefault();
+
+    e.currentTarget.disabled = true;
+
+    let formData = new FormData()
+    formData.append("action", "thesis_get_shipping_cost")
+    formData.append("nonce", nonce)
+    formData.append('codice_postale', checkoutForm.codice_postale.value)
+    formData.append('provincia', checkoutForm.provincia.value)
+    formData.append('citta', checkoutForm.citta.value)
+
+    jQuery.ajax({
+        type: "POST",
+        url: ajaxurl,
+        data: formData,
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: (response) => {
+            let responseData = response.data.shipping_cost;
+            let responseMethod = response.data.shipping_method;
+            let shippingCost = document.querySelector("#spedizione")
+            let shippingMethod = document.querySelector("#metodo_spedizione")
+
+            shippingCost.value = responseData;
+
+            if (responseMethod) {
+                shippingMethod.value = responseMethod.method_title ? responseMethod.method_title : "";
+                shippingMethod.dataset.instance = responseMethod.instance_id ? responseMethod.instance_id : "";
+            }
+
+            shippingMethod.dataset.zone = response.data.zone_id;
+
+            document.querySelector('.calcola--spedizione').disabled = false;
+
+            updateCart();
+        },
+        error: (error) => {
+            console.log(error)
+        }
+    })
 })

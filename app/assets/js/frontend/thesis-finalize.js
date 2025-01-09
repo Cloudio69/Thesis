@@ -343,22 +343,20 @@ const updateFinalize = (totale) => {
     el.innerHTML = "";
   });
 
-  let spedizioneSelect = document.querySelector("#spedizione");
+  /* let spedizioneSelect = document.querySelector("#spedizione");
 
-  spedizioneSelect.addEventListener("change", (e) => {
-    let spedizione = e.target.selectedOptions[0].dataset.prezzo;
-    let subtotale = document.querySelector(".subtotale").textContent;
-    let totale = parseFloat(subtotale) + parseFloat(spedizione);
+  let spedizione = spedizioneSelect.value;
+  let subtotale = document.querySelector(".subtotale").textContent;
+  totale = parseFloat(subtotale) + parseFloat(spedizione);
 
-    subtotaleWrapper.forEach((el) => {
-      el.textContent = parseFloat(subtotale).toFixed(2);
-    });
-
-    totaleWrapper.forEach((el) => {
-      el.textContent = parseFloat(totale).toFixed(2);
-    });
+  subtotaleWrapper.forEach((el) => {
+    el.textContent = parseFloat(subtotale).toFixed(2);
   });
 
+  totaleWrapper.forEach((el) => {
+    el.textContent = parseFloat(totale).toFixed(2);
+  });
+ */
   const cdDiv = document.createElement("div");
   const pagineDiv = document.createElement("div");
   const rilegatureDiv = document.createElement("div");
@@ -623,42 +621,48 @@ weight
   cdWrapper.appendChild(cdDiv);
 
   spedizioneWrapper.forEach((el) => {
-    let spedizione =
-      document.querySelector("#spedizione").selectedOptions[0].dataset.prezzo;
+    let spedizione = document.querySelector("#spedizione").value;
 
     el.textContent = parseFloat(spedizione).toFixed(2);
   });
 
   subtotaleWrapper.forEach((el) => {
-    let spedizione =
-      document.querySelector("#spedizione").selectedOptions[0].dataset.prezzo;
     let subtotale = (totale - iva).toFixed(2);
 
     if (subtotale < 75) {
-      document.querySelector("[data-id='spedizione_gratuita']").disabled = true;
+      /* document.querySelector("[data-id='spedizione_gratuita']").disabled = true; */
 
       if (document.querySelector("#spedizione").classList.contains("hidden"))
         document.querySelector("#spedizione").classList.remove("hidden");
 
-      if(!document.querySelector(".free--shipping").classList.contains("hidden"))
+      if (
+        !document.querySelector(".free--shipping").classList.contains("hidden")
+      )
         document.querySelector(".free--shipping").classList.add("hidden");
-      
     } else {
-      document.querySelector(
+      /* document.querySelector(
         "[data-id='spedizione_gratuita']"
       ).disabled = false;
       document.querySelector("[data-id='spedizione_gratuita']").selected =
-        "selected";
+        "selected"; */
 
       if (!document.querySelector("#spedizione").classList.contains("hidden"))
         document.querySelector("#spedizione").classList.add("hidden");
 
-      if(document.querySelector(".free--shipping").classList.contains("hidden"))
+      if (
+        document.querySelector(".free--shipping").classList.contains("hidden")
+      )
         document.querySelector(".free--shipping").classList.remove("hidden");
     }
 
+    console.log(subtotale);
+
     el.textContent = parseFloat(subtotale).toFixed(2);
   });
+
+  let spedizione = document.querySelector("#spedizione").value;
+
+  totale += parseFloat(spedizione);
 
   totaleWrapper.forEach((el) => {
     el.textContent = parseFloat(totale).toFixed(2);

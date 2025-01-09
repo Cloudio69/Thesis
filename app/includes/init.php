@@ -52,7 +52,8 @@ class Thesis
         add_action('thesis_clear_event', array($this, 'thesis_clear_function'));
         add_filter('cron_schedules', array($this, 'thesis_clear_interval'));
         add_action('woocommerce_payment_complete', array($this, 'thesis_order_status_change'));
-        add_action('woocommerce_order_status_changed', array($this, 'thesis_order_status_change'));
+        add_action('woocommerce_order_status_on-hold', array($this, 'thesis_order_status_change'));
+        // add_action('woocommerce_order_status_changed', array($this, 'thesis_order_status_change'));
         add_filter('woocommerce_get_order_item_totals', array($this, 'thesis_order_table_info'), 99, 1);
         // add_filter( 'is_protected_meta', '__return_false' ); 
     }
@@ -82,6 +83,12 @@ class Thesis
     public function thesis_order_status_change($order_id)
     {
         $order = wc_get_order($order_id);
+
+        if ($order->get_payment_method() === 'bacs') {
+            $order->update_status('on-hold');
+        } else {
+            $order->update_status('processing');
+        }
 
         $cart_items = get_post_meta($order_id, '_cart_items', true);
 

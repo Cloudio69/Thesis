@@ -256,7 +256,7 @@ const creaPagine = async () => {
 
       if(!generated) return;
 
-      document.querySelector("#annulla_azioni").removeAttribute("disabled");
+      // document.querySelector("#annulla_azioni").removeAttribute("disabled");
       let numPagina = e.currentTarget.dataset.pagina;
       let colorSrc = new URL(e.currentTarget.querySelector("img").src);
 
@@ -506,7 +506,7 @@ massiveActions.forEach((item) => {
 
     if (!generated) return;
 
-    document.querySelector("#annulla_azioni").removeAttribute("disabled");
+    // document.querySelector("#annulla_azioni").removeAttribute("disabled");
 
     let color = e.currentTarget.id === "stampa_colori" ? "colorate" : "bn";
 

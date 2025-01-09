@@ -153,41 +153,9 @@
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="spedizione">Spedizione</label>
-                <select class="appearance-none rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none !border-neutral-200" id="spedizione" name="spedizione" required autocomplete="shipping">
-                    <?php
-                    $data_store = WC_Data_Store::load('shipping-zone');
-                    $raw_zones = $data_store->get_zones();
-                    foreach ($raw_zones as $raw_zone) {
-                        $zones[] = new WC_Shipping_Zone($raw_zone);
-                    }
-                    $zones[] = new WC_Shipping_Zone(0);
-
-                    if (!empty($zones)) {
-                        foreach ($zones as $zone) {
-                            $shipping_methods = $zone->get_shipping_methods();
-                            foreach ($shipping_methods as $shipping_method) {
-                                $instance = $shipping_method->instance_settings;
-                                if ($shipping_method->is_enabled()) {
-                                    if (isset($instance) && isset($instance['cost'])) {
-                                        $cost = $instance['cost'];
-                                        $title = $instance['title'];
-                                        echo '<option data-id="'. strtolower(str_replace(' ', '_', $title)) . '" data-prezzo='. $cost .' value="' . esc_html($shipping_method->get_instance_id()) . '">' . esc_html($shipping_method->get_title()) . ' (' . wc_price($shipping_method->cost) . ')</option>';
-                                    } else {
-                                        $title = $instance['title'];
-                                        echo '<option data-id="'. strtolower(str_replace(' ', '_', $title)) . '" data-prezzo=0 value="' . esc_html($shipping_method->get_instance_id()) . '">' . esc_html($shipping_method->get_title()) . ' (' . wc_price(0.00) . ')</option>';
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                    ?>
-                        <option value="standard">Ritiro in sede (Gratuita)</option>
-                        <option value="express">Express (+7.90 €)</option>
-                    <?php
-                    }
-
-                    ?>
-                </select>
+                <input type="hidden" name="spedizione" id="spedizione" value="0" class="hidden">
+                <input type="hidden" name="metodo_spedizione" id="metodo_spedizione" value="" data-zone="" data-instance="" class="hidden">
+                <button type="button" class="calcola--spedizione hover:bg-amber-400 bg-slate-50 focus:bg-amber-400 text-black border border-slate-50 flex-1 p-4 rounded-md flex flex-col items-center justify-center"> CALCOLA SPEDIZIONE </button>
                 <h4 class="free--shipping mt-4">Spedizione gratuita 🎉</h4>
             </div>
             <p class="alert text-sm"><b>In 24/48 ore la tesi verrà consegnata</b> all'indirizzo ed alla persona indicata in questa pagina... a patto che i dati siano corretti! Ricorda che la stampa di Rilegature in Carta Riso oppure in Seta comporta almeno un giorno in più di lavorazione.</p>

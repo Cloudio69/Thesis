@@ -4,6 +4,8 @@ include_once(THESIS_DIR . 'app/includes/ajax/woocommerce/init.php');
 
 add_action('wp_ajax_validate_user_info', 'validate_user_info');
 add_action('wp_ajax_nopriv_validate_user_info', 'validate_user_info');
+add_action('wp_ajax_thesis_get_shipping_cost', 'get_shipping_cost');
+add_action('wp_ajax_nopriv_thesis_get_shipping_cost', 'get_shipping_cost');
 
 
 function validate_user_info()
@@ -91,4 +93,158 @@ function validate_user_info()
     ]);
 
     wp_send_json_success(array("message" => "I campi sono validi"), 200);
+}
+
+function get_shipping_cost()
+{
+    $nonce = isset($_POST['nonce']) ? $_POST['nonce'] : '';
+
+    if (!wp_verify_nonce($nonce, 'thesis-token')) {
+        wp_send_json_error(array('message' => 'Nonce verification failed', 'nonce' => $_POST['nonce']), 403);
+    }
+
+    $zones_store = WC_Data_Store::load('shipping-zone');
+
+    $zones = $zones_store->get_zones();
+
+    $zip_code = $_POST['codice_postale'];
+    $city = $_POST['citta'];
+    $province = $_POST['provincia'];
+
+    $shipping_cost = 0;
+
+    $check_disagiate = check_zone_disagiate($zip_code);
+
+    $check_isole = check_zone_isole($province);
+
+    if ($check_disagiate) {
+        wp_send_json_success(array(
+            'zone_id' => $check_disagiate['zone_id'],
+            'zone_name' => $check_disagiate['zone_name'],
+            'shipping_cost' => $check_disagiate['shipping_cost']
+        ), 200);
+    } else if ($check_isole) {
+        wp_send_json_success(array(
+            'zone_id' => $check_isole['zone_id'],
+            'zone_name' => $check_isole['zone_name'],
+            'shipping_cost' => $check_isole['shipping_cost']
+        ), 200);
+    }
+
+    if ($shipping_cost == 0) {
+        foreach ($zones as $zone) {
+            if (strpos(strtolower($zone->zone_name), 'italia') !== false) {
+                $shipping_methods = WC_Shipping_Zones::get_zone($zone->zone_id)->get_shipping_methods();
+                foreach ($shipping_methods as $method) {
+                    if ($method->id == 'flat_rate') {
+                        $shipping_cost = $method->cost;
+                        return wp_send_json_success(array(
+                            'zone_id' => $zone->zone_id,
+                            'zone_name' => $zone->zone_name,
+                            'shipping_cost' => $shipping_cost,
+                            'shipping_method' =>
+                            array(
+                                'method_id' => $method->id,
+                                'method_title' => $method->title,
+                                'instance_id' => $method->instance_id,
+                                'cost' => $method->cost
+                            )
+
+                        ), 200);
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+function check_zone_disagiate($zip_code)
+{
+
+    $zones_store = WC_Data_Store::load('shipping-zone');
+
+    $zones = $zones_store->get_zones();
+
+    $zone_id = 0;
+
+    foreach ($zones as $zone) {
+        $zone_locations = WC_Shipping_Zones::get_zone($zone->zone_id)->get_zone_locations();
+        foreach ($zone_locations as $location) {
+            if ($location->type == 'postcode' && $location->code == $zip_code) {
+                if (strpos(strtolower($zone->zone_name), 'disagiat') !== false) {
+                    $zone_id = $zone->zone_id;
+                    break;
+                }
+            }
+        }
+    }
+
+    if ($zone_id == 0) {
+        return;
+    }
+
+    $shipping_methods = WC_Shipping_Zones::get_zone($zone_id)->get_shipping_methods();
+
+    foreach ($shipping_methods as $method) {
+        if ($method->id == 'flat_rate') {
+            $shipping_cost = $method->cost;
+            return array(
+                'zone_id' => $zone->zone_id,
+                'zone_name' => $zone->zone_name,
+                'shipping_cost' => $shipping_cost,
+                'shipping_method' => array(
+                    'method_id' => $method->id,
+                    'method_title' => $method->title,
+                    'instance_id' => $method->instance_id,
+                    'cost' => $method->cost
+                )
+            );
+        }
+    }
+}
+
+function check_zone_isole($province)
+{
+
+    $zones_store = WC_Data_Store::load('shipping-zone');
+
+    $zones = $zones_store->get_zones();
+
+    $zone_id = 0;
+
+    foreach ($zones as $zone) {
+        $zone_locations = WC_Shipping_Zones::get_zone($zone->zone_id)->get_zone_locations();
+        foreach ($zone_locations as $location) {
+            if (strpos(strtolower($zone->zone_name), 'isole') !== false) {
+                if ($location->type == 'state' && $location->code == "IT:" . $province) {
+                    $zone_id = $zone->zone_id;
+                    break 2;
+                }
+            }
+        }
+    }
+
+    if ($zone_id == 0) {
+        return;
+    }
+
+    $shipping_methods = WC_Shipping_Zones::get_zone($zone_id)->get_shipping_methods();
+
+    foreach ($shipping_methods as $method) {
+        if ($method->id == 'flat_rate') {
+            $shipping_cost = $method->cost;
+            return array(
+                'zone_id' => $zone->zone_id,
+                'zone_name' => $zone->zone_name,
+                'shipping_cost' => $shipping_cost,
+                'shipping_method' => array(
+                    'method_id' => $method->id,
+                    'method_title' => $method->title,
+                    'instance_id' => $method->instance_id,
+                    'cost' => $method->cost
+                )
+            );
+        }
+    }
 }

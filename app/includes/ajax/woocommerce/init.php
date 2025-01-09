@@ -40,31 +40,38 @@ function wc_thesis_create_order($args)
 
     $spedizione = $args['spedizione'];
 
-    $data_store = WC_Data_Store::load('shipping-zone');
-    $raw_zones = $data_store->get_zones();
-    foreach ($raw_zones as $raw_zone) {
-        $zones[] = new WC_Shipping_Zone($raw_zone);
-    }
-    $zones[] = new WC_Shipping_Zone(0);
+    $spedizione = json_decode(stripslashes($spedizione));
 
-    foreach ($zones as $zone) {
-        $shipping_methods = $zone->get_shipping_methods();
-        foreach ($shipping_methods as $shipping_method) {
-            $instance = $shipping_method->instance_settings;
-            if ($shipping_method->is_enabled()) {
-                $instance_id = $shipping_method->get_instance_id();
+    var_dump($spedizione);
 
-                if ($instance_id == $spedizione) {
-                    $spedizione_obj = new WC_Order_Item_Shipping();
-                    $spedizione_obj->set_method_title($shipping_method->title);
-                    $spedizione_obj->set_instance_id($instance_id);
-                    $spedizione_obj->set_total($shipping_method->cost);
-                    $order->add_item($spedizione_obj);
-                }
-            }
-        }
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        return wp_send_json_error('Invalid JSON in spedizione' . var_dump($spedizione), 400);
     }
 
+
+    $shipping_title = $spedizione->title;
+    $shipping_method = $spedizione->instance;
+    $shipping_zone = $spedizione->zone;
+   
+    $shipping = new WC_Shipping_Zones();
+    $shipping = $shipping->get_zone($shipping_zone);
+    $shipping_methods = $shipping->get_shipping_methods();
+
+    $shipping_method = array_filter($shipping_methods, function ($method) use ($shipping_method) {
+        return $method->instance_id == $shipping_method;
+    });
+
+    $shipping_method = array_values($shipping_method)[0];
+
+    $shipping_item = new WC_Order_Item_Shipping();
+
+    $shipping_item->set_method_title($shipping_method->title);
+    $shipping_item->set_method_id($shipping_method->method_id);
+    $shipping_item->set_instance_id($shipping_method->instance_id);
+    $shipping_item->set_total($shipping_method->cost);
+
+    $order->add_item($shipping_item);
+    
     $order->calculate_totals();
 
     $order->add_order_note("L'ordine è stato creato, in attesa di conferma definitiva.");
@@ -93,7 +100,7 @@ function wc_create_cd_product($cart_items, $order)
 
     $cd = $cart_items['cd'];
 
-    if(!isset($cd)) return;
+    if (!isset($cd)) return;
 
     $cd_product = new WC_Product_Simple();
     $cd_product->set_name('CD Serigrafato');
