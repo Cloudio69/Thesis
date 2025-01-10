@@ -87,8 +87,7 @@ checkoutForm.addEventListener("submit", (e) => {
     if (
       shippingSelect.value == "" ||
       shippingMethod.dataset.instance == "" ||
-      (shippingMethod.dataset.zone == "" &&
-        document.querySelector(".subtotale").textContent < 75)
+      shippingMethod.dataset.zone == ""
     ) {
       alert("Calcola il costo della spedizione prima di procedere");
       submitCheckout.classList.remove(
