@@ -74,7 +74,7 @@ const rigeneraCanvas = () => {
   let frontespizioGen = new Image();
   frontespizioGen.src =
     "/wp-content/plugins/thesis/app/files/" +
-    getCookie("thesis_session") +
+    TGetCookie("thesis_session") +
     "/frontespizi/frontespizio_generato-" +
     document.querySelector("[name='colori_carattere']:checked").value +
     ".png?v=" + new Date().getTime();
@@ -273,12 +273,12 @@ const getOpzioni = async () => {
           if (!document.querySelector("[name='colori_carattere']:checked")) {
             frontespizioGen.src =
               "/wp-content/plugins/thesis/app/files/" +
-              getCookie("thesis_session") +
+              TGetCookie("thesis_session") +
               "/frontespizio_generato.png?v=" + new Date().getTime();
           } else {
             frontespizioGen.src =
               "/wp-content/plugins/thesis/app/files/" +
-              getCookie("thesis_session") +
+              TGetCookie("thesis_session") +
               "/frontespizi/frontespizio_generato-" +
               document.querySelector("[name='colori_carattere']:checked")
                 .value +
@@ -441,7 +441,7 @@ const getColori = async (id) => {
             data: {
               action: "genera_frontespizio",
               data: {
-                uuid: getCookie("thesis_session"),
+                uuid: TGetCookie("thesis_session"),
                 rgb: hexToRgb(hex),
                 id: colore.id_colore_carattere,
               },
@@ -468,7 +468,7 @@ const getColori = async (id) => {
               let frontespizioGen = new Image();
               frontespizioGen.src =
                 "/wp-content/plugins/thesis/app/files/" +
-                getCookie("thesis_session") +
+                TGetCookie("thesis_session") +
                 "/frontespizi/frontespizio_generato-" +
                 colore.id_colore_carattere +
                 ".png?v=" + new Date().getTime();
@@ -630,7 +630,7 @@ fileUpload.onchange = (e) => {
       let frontespizio = document.querySelector(".thesis--frontespizio img");
       frontespizio.src =
         "/wp-content/plugins/thesis/app/files/" +
-        getCookie("thesis_session") +
+        TGetCookie("thesis_session") +
         "/frontespizio.jpg?v=" +
         new Date().getTime();
 
@@ -640,7 +640,7 @@ fileUpload.onchange = (e) => {
         data: {
           action: "clear_all_frontespizi",
           data: {
-            uuid: getCookie("thesis_session"),
+            uuid: TGetCookie("thesis_session"),
           },
         },
         success: (response) => {

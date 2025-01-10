@@ -344,7 +344,7 @@ formCD.onsubmit = (e) => {
   const data = new FormData();
   data.append("action", "upload_cd_cover");
   data.append("nonce", nonce);
-  data.append("thesis_session", getCookie("thesis_session"));
+  data.append("thesis_session", TGetCookie("thesis_session"));
   data.append("canvas", canvas.toDataURL());
 
   jQuery.ajax({
@@ -461,7 +461,7 @@ fileListCD.onchange = (e) => {
   const data = new FormData();
   data.append("action", "upload_cd_file");
   data.append("nonce", nonce);
-  data.append("thesis_session", getCookie("thesis_session"));
+  data.append("thesis_session", TGetCookie("thesis_session"));
   data.append("file", files[0]);
 
   // Upload file with ajax where action is upload_cd_file
@@ -523,7 +523,7 @@ fileListCD.onchange = (e) => {
 
         data.append("action", "remove_cd_file");
         data.append("nonce", nonce);
-        data.append("thesis_session", getCookie("thesis_session"));
+        data.append("thesis_session", TGetCookie("thesis_session"));
         data.append("filename", filename);
 
         jQuery.ajax({

@@ -71,7 +71,7 @@ const generaPagine = async () => {
       url: ajaxurl,
       data: {
         action: "get_num_pagine",
-        uuid: getCookie("thesis_session"),
+        uuid: TGetCookie("thesis_session"),
       },
       success: (response) => {
         return JSON.parse(response.data);
@@ -106,7 +106,7 @@ const generaPagine = async () => {
       throw new Error("No pages returned from the server.");
     }
 
-    if (getCookie("thesis_page_generation") === "true") {
+    if (TGetCookie("thesis_page_generation") === "true") {
       creaPagine();
       updateColorCounter();
       generated = true;
@@ -128,7 +128,7 @@ const generaPagine = async () => {
             data: {
               action: "genera_pagine",
               data: {
-                uuid: getCookie("thesis_session"),
+                uuid: TGetCookie("thesis_session"),
                 num_pagina: pageIndex,
               },
             },
@@ -217,7 +217,7 @@ const generaPagine = async () => {
 
     creaPagine();
     generated = true; // Evita di rigenerare le pagine
-    setCookie("thesis_page_generation", "true", 1 / 720);
+    TSetCookie("thesis_page_generation", "true", 1 / 720);
   }
 };
 
@@ -328,7 +328,7 @@ const creaPagine = async () => {
     let pagina = new Image();
     pagina.src =
       "/wp-content/plugins/thesis/app/files/" +
-      getCookie("thesis_session") +
+      TGetCookie("thesis_session") +
       "/pagine/pagina-" +
       i +
       ".jpg";

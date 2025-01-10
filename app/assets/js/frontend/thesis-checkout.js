@@ -83,20 +83,23 @@ checkoutForm.addEventListener("submit", (e) => {
   formData.append("citta", checkoutForm.citta.value);
   formData.append("codice_postale", checkoutForm.codice_postale.value);
 
-  if (
-    shippingSelect.value == "" ||
-    shippingMethod.dataset.instance == "" ||
-    shippingMethod.dataset.zone == ""
-  ) {
-    alert("Calcola il costo della spedizione prima di procedere");
-    submitCheckout.classList.remove(
-      "animate-pulse",
-      "pointer-events-none",
-      "cursor-not-allowed"
-    );
-    submitCheckout.innerHTML = "CONTINUA AL PAGAMENTO";
-    submitCheckout.disabled = false;
-    return;
+  if (document.querySelector(".spedizione").textContent < 75) {
+    if (
+      shippingSelect.value == "" ||
+      shippingMethod.dataset.instance == "" ||
+      (shippingMethod.dataset.zone == "" &&
+        document.querySelector(".subtotale").textContent < 75)
+    ) {
+      alert("Calcola il costo della spedizione prima di procedere");
+      submitCheckout.classList.remove(
+        "animate-pulse",
+        "pointer-events-none",
+        "cursor-not-allowed"
+      );
+      submitCheckout.innerHTML = "CONTINUA AL PAGAMENTO";
+      submitCheckout.disabled = false;
+      return;
+    }
   }
 
   formData.append(
@@ -186,38 +189,38 @@ document
     });
   });
 
+const objectRitiro = {
+  provincia: "BA",
+  indirizzo: "Via Re David, 180",
+  citta: "Bari",
+  codice_postale: "70125",
+};
 
-  const objectRitiro = {
-    provincia: "BA",
-    indirizzo: "Via Re David, 180",
-    citta: "Bari",
-    codice_postale: "70125",
-  }
+document.querySelector(".ritiro--sede").addEventListener("click", (e) => {
+  e.preventDefault();
 
-  document.querySelector(".ritiro--sede").addEventListener("click", (e) => {
-    e.preventDefault();
+  checkoutForm.provincia.value = objectRitiro.provincia;
+  checkoutForm.indirizzo.value = objectRitiro.indirizzo;
+  checkoutForm.citta.value = objectRitiro.citta;
+  checkoutForm.codice_postale.value = objectRitiro.codice_postale;
 
-    checkoutForm.provincia.value = objectRitiro.provincia;
-    checkoutForm.indirizzo.value = objectRitiro.indirizzo;
-    checkoutForm.citta.value = objectRitiro.citta;
-    checkoutForm.codice_postale.value = objectRitiro.codice_postale;
+  document.querySelector("#spedizione").value = 0;
+  document.querySelector("#metodo_spedizione").value = "Ritiro in sede";
+  document.querySelector("#metodo_spedizione").dataset.instance = 3;
+  document.querySelector("#metodo_spedizione").dataset.zone = 1;
 
-    document.querySelector("#spedizione").value = 0;
-    document.querySelector("#metodo_spedizione").value = "Ritiro in sede";
-    document.querySelector("#metodo_spedizione").dataset.instance = 3;
-    document.querySelector("#metodo_spedizione").dataset.zone = 1;
-
-    updateCart();
-
-  });
+  updateCart();
+});
 
 const resetShippingFields = () => {
-    document.querySelector("#spedizione").value = "";
-    document.querySelector("#metodo_spedizione").value = "";
-    document.querySelector("#metodo_spedizione").dataset.instance = "";
-    document.querySelector("#metodo_spedizione").dataset.zone = "";
+  document.querySelector("#spedizione").value = "";
+  document.querySelector("#metodo_spedizione").value = "";
+  document.querySelector("#metodo_spedizione").dataset.instance = "";
+  document.querySelector("#metodo_spedizione").dataset.zone = "";
 };
 
 ["provincia", "indirizzo", "citta", "codice_postale"].forEach((field) => {
-    document.querySelector(`#${field}`).addEventListener("change", resetShippingFields);
+  document
+    .querySelector(`#${field}`)
+    .addEventListener("change", resetShippingFields);
 });
