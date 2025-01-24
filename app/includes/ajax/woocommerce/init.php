@@ -46,7 +46,6 @@ function wc_thesis_create_order($args)
         return wp_send_json_error('Invalid JSON in spedizione' . var_dump($spedizione), 400);
     }
 
-
     $shipping_title = $spedizione->title;
     $shipping_method = $spedizione->instance;
     $shipping_zone = $spedizione->zone;
@@ -66,15 +65,21 @@ function wc_thesis_create_order($args)
     $shipping_item->set_method_title($shipping_method->title);
     $shipping_item->set_method_id($shipping_method->method_id);
     $shipping_item->set_instance_id($shipping_method->instance_id);
-    $shipping_item->set_total($shipping_method->cost);
 
     if ($order->get_total() > 75) {
         $shipping_item->set_total(0);
+    } else {
+        $shipping_item->set_total($shipping_method->cost);
     }
-
+    
     $order->add_item($shipping_item);
     
     $order->calculate_totals();
+
+    if($order->get_total() > 75){
+        $order->set_shipping_total(0);
+        $order->set_total($order->get_total() - $shipping_method->cost);
+    }
 
     $order->add_order_note("L'ordine è stato creato, in attesa di conferma definitiva.");
 
@@ -108,6 +113,9 @@ function wc_create_cd_product($cart_items, $order)
     $cd_product->set_name('CD Serigrafato');
     $cd_product->set_regular_price(get_option('prezzo_cd'));
     $cd_product->set_price(get_option('prezzo_cd'));
+
+    $random_sku = 'CD-' . wp_generate_password(8, false, false);
+    $cd_product->set_sku($random_sku);
 
     if (isset($cd['qty']) < 1) $cd['qty'] = 1;
 
@@ -158,6 +166,8 @@ function wc_create_pagine_product($cart_items, $order)
     $bn_product->set_regular_price(get_option('prezzo_bn')); // Set the price per page
     $bn_product->set_price(get_option('prezzo_bn'));
 
+    $random_sku = 'PAG-' . wp_generate_password(8, false, false);
+    $bn_product->set_sku($random_sku);
 
     if ($total_bn_pages > 0) {
         $order_item_id = $order->add_product($bn_product, $total_bn_pages, array(
@@ -174,6 +184,9 @@ function wc_create_pagine_product($cart_items, $order)
     $colorate_product->set_name('Pagine multicolore');
     $colorate_product->set_regular_price(get_option('prezzo_colori')); // Set the price per page
     $colorate_product->set_price(get_option('prezzo_colori'));
+
+    $random_sku = 'PAG-' . wp_generate_password(8, false, false);
+    $colorate_product->set_sku($random_sku);
 
     if ($total_colorate_pages > 0) {
 
@@ -194,6 +207,9 @@ function wc_create_pagine_product($cart_items, $order)
         $grammaturaProduct->set_regular_price($grammatura_db[0]->prezzo_grammatura);
         $grammaturaProduct->set_price($grammatura_db[0]->prezzo_grammatura);
 
+        $random_sku = 'PAG-' . wp_generate_password(8, false, false);
+        $grammaturaProduct->set_sku($random_sku);
+
         $order_item_id = $order->add_product($grammaturaProduct, ($total_bn_pages + $total_colorate_pages), array(
             'subtotal' => ($grammatura_db[0]->prezzo_grammatura * ($total_bn_pages + $total_colorate_pages)) * $total_rilegature,
             'total' => ($grammatura_db[0]->prezzo_grammatura * ($total_bn_pages + $total_colorate_pages)) * $total_rilegature,
@@ -207,6 +223,9 @@ function wc_create_pagine_product($cart_items, $order)
         $formatoProduct->set_name("Formato A3");
         $formatoProduct->set_regular_price(get_option('prezzo_a3'));
         $formatoProduct->set_price(get_option('prezzo_a3'));
+
+        $random_sku = 'PAG-' . wp_generate_password(8, false, false);
+        $formatoProduct->set_sku($random_sku);
 
         $order_item_id = $order->add_product($formatoProduct, ($total_bn_pages + $total_colorate_pages), array(
             'subtotal' => (get_option('prezzo_a3') * ($total_bn_pages + $total_colorate_pages)) * $total_rilegature,
@@ -264,6 +283,9 @@ function wc_create_rilegature_products($cart_items, $order)
 
         $product->set_regular_price($totale);
         $product->set_price($totale);
+
+        $random_sku = 'RIL-' . wp_generate_password(8, false, false);
+        $product->set_sku($random_sku);
 
 
 

@@ -9,16 +9,21 @@ $order_key = isset($_GET['key']) ? sanitize_text_field($_GET['key']) : '';
 $order_id = wc_get_order_id_by_order_key($order_key);
 $order = wc_get_order($order_id);
 
-if ($order->get_status() === 'trash') {
-    wp_redirect(home_url());
-    exit;
-}
-
-if (strpos($_SERVER['REQUEST_URI'], '/checkout/order-pay') !== 0 && $order->get_status() !== 'pending') {
-    if (strpos($order_key, 'wc_order_') !== 0) {
+if ($order) {
+    if ($order->get_status() === 'trash') {
         wp_redirect(home_url());
         exit;
     }
+
+    if (strpos($_SERVER['REQUEST_URI'], '/checkout/order-pay') !== 0 && $order->get_status() !== 'pending') {
+        if (strpos($order_key, 'wc_order_') !== 0) {
+            wp_redirect(home_url());
+            exit;
+        }
+    }
+} else {
+    wp_redirect(home_url('/error-page'));
+    exit;
 }
 
 ?>

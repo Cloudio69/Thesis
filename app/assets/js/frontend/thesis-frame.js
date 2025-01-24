@@ -9,7 +9,7 @@ const generaFrontespizio = () => {
         data: {
             action: "genera_frontespizio",
             data: {
-                uuid: getCookie("thesis_session"),
+                uuid: TGetCookie("thesis_session"),
                 rgb: [192, 192, 192],
             },
         },

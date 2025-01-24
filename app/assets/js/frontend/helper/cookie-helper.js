@@ -1,10 +1,10 @@
-const getCookie = (name) => {
+const TGetCookie = (name) => {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
-const setCookie = (name, value, days) => {
+const TSetCookie = (name, value, days) => {
   let expires = "";
   if (days) {
     const date = new Date();

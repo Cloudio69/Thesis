@@ -155,8 +155,12 @@
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="spedizione">Spedizione</label>
                 <input type="hidden" name="spedizione" id="spedizione" value="0" class="hidden">
                 <input type="hidden" name="metodo_spedizione" id="metodo_spedizione" value="" data-zone="" data-instance="" class="hidden">
-                <button type="button" class="calcola--spedizione hover:bg-amber-400 bg-slate-50 focus:bg-amber-400 text-black border border-slate-50 flex-1 p-4 rounded-md flex flex-col items-center justify-center"> CALCOLA SPEDIZIONE </button>
-                <h4 class="free--shipping mt-4">Spedizione gratuita 🎉</h4>
+                <div class="flex items-center gap-4">
+                    <h4 class="free--shipping">Spedizione gratuita 🎉</h4>
+                    <button type="button" class="calcola--spedizione hover:bg-amber-400 bg-slate-50 focus:bg-amber-400 text-black border border-slate-50 flex-1 p-4 rounded-md flex flex-col items-center justify-center"> CALCOLA SPEDIZIONE </button>
+                        OPPURE
+                    <button type="button" class="ritiro--sede hover:bg-amber-400 bg-slate-50 focus:bg-amber-400 text-black border border-slate-50 flex-1 p-4 rounded-md flex flex-col items-center justify-center"> RITIRA IN SEDE (GRATUITO) </button>
+                </div>   
             </div>
             <p class="alert text-sm"><b>In 24/48 ore la tesi verrà consegnata</b> all'indirizzo ed alla persona indicata in questa pagina... a patto che i dati siano corretti! Ricorda che la stampa di Rilegature in Carta Riso oppure in Seta comporta almeno un giorno in più di lavorazione.</p>
         </div>

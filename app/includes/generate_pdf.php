@@ -129,6 +129,7 @@ class ThesisSummary
             $nome_rilegatura = $rilegatura_db[0]->nome_rilegatura;
             $prezzo_rilegatura = $rilegatura_db[0]->prezzo_rilegatura;
             $nome_variante = $variante_db[0]->nome_variante;
+            $codice_colore = $variante_db[0]->codice_colore;
             $colore_carattere = $colore_db[0]->nome_colore;
             $angoli = isset($rilegatura->id_angolo) ? $rilegatura->id_angolo : 0;
             $segnalibri = isset($rilegatura->id_segnalibro) ? $rilegatura->id_segnalibro : 0;
@@ -156,7 +157,7 @@ class ThesisSummary
 
             $content .= "
             <div class='rilegatura rounded-md border border-neutral-100 p-4 my-4'>
-                <h1 class='font-bold text-base m-0'><span class=''>" . $quantity . " x</span> " . $nome_rilegatura . "</h1>
+                <h1 class='font-bold text-base m-0'><span class=''>" . $quantity . " x</span> " . $nome_rilegatura . " (". $codice_colore . ") ". "</h1>
                 <ul class='rilegatura__details'>
                     <li class='rilegatura__detail'>Variante: " . $nome_variante . "</li>
                     <li class='rilegatura__detail'>Colore carattere: " . $colore_carattere . "</li>

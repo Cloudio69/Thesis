@@ -40,6 +40,7 @@
 
                         foreach ($orders as $order) {
                             $order_id = $order->get_id();
+							$order_permalink = get_admin_url() . "post.php?post=" . $order_id . "&action=edit";
                             $order_total = $order->get_total();
                             $order_date = $order->get_date_created()->date('d-m-Y H:i');
                             if ($order instanceof WC_Order) {
@@ -65,8 +66,8 @@
 
                         ?>
                             <tr class="">
-                                <td class="border border-slate-200 p-2 text-center"><?php echo $order_id; ?></td>
-                                <td class="border border-slate-200 p-2 font-bold text-center"><?php echo $order_customer; ?></td>
+								<td class="border border-slate-200 p-2 text-center font-bold"><a href="<?php echo $order_permalink; ?>"><?php echo $order_id; ?></a></td>
+								<td class="border border-slate-200 p-2 font-bold text-center"><a href="<?php echo $order_permalink; ?>"><?php echo $order_customer; ?></a></td>
                                 <td class="border border-slate-200 p-2 text-center"><?php echo $order_date; ?></td>
                                 <td class="border border-slate-200 p-2 text-center">
                                     <a href="<?php echo $zip != "" ? $zip : '#' ?>" 

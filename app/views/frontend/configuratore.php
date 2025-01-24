@@ -4,7 +4,7 @@
     header("Pragma: no-cache");
 
     if(isset($_GET['thesis_session'])){
-        setcookie('thesis_session', $_GET['thesis_session'], time() + (86400 * 30), "/");
+        TSetCookie('thesis_session', $_GET['thesis_session'], time() + (86400 * 30), "/");
         header("Location: /configuratore");
     }
 ?>
