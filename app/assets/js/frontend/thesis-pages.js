@@ -213,7 +213,9 @@ const generaPagine = async () => {
       );
     };
 
-    await generatePagesBatch(0, numPages);
+    for (let i = 0; i < numPages; i += 20) {
+      await generatePagesBatch(i, Math.min(i + 20, numPages));
+    }
 
     creaPagine();
     generated = true; // Evita di rigenerare le pagine
