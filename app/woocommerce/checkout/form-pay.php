@@ -3,15 +3,34 @@
 
 <?php
 if (isset($_POST['coupon_code']) && !empty($_POST['coupon_code'])) {
-
 	$order_id = absint(get_query_var('order-pay'));
 	$order = wc_get_order($order_id);
 
 	$coupon_code = sanitize_text_field($_POST['coupon_code']);
 
-	$order->apply_coupon($coupon_code);
+	if (!$order->get_items('fee')) {
+		$coupon = new WC_Coupon($coupon_code);
 
-	$order->calculate_totals();
+		if ($coupon->get_discount_type() === 'percent') {
+			$discount_amount = ($order->get_total() * $coupon->get_amount()) / 100;
+		} else {
+			$discount_amount = $coupon->get_amount();
+		}
+		
+		$discount_item = new WC_Order_Item_Fee();
+
+		$discount_item->set_name('Coupon: ' . $coupon->get_code());
+		$discount_item->set_amount(-$discount_amount);
+		$discount_item->set_total(-$discount_amount);
+
+		$order->add_item($discount_item);
+
+		$order->apply_coupon($coupon_code);
+
+		$order->calculate_totals();
+		$order->save();
+	}
+
 }
 ?>
 <div class="wrapper flex p-16 gap-6 h-full">
@@ -72,22 +91,18 @@ if (isset($_POST['coupon_code']) && !empty($_POST['coupon_code'])) {
 			<div class="coupons-used mt-4">
 				<h3 class="font-bold text-lg mb-2"><?php esc_html_e('Coupon usati', 'woocommerce'); ?></h3>
 				<?php
-				$coupons = $order->get_coupon_codes();
-				if (!empty($coupons)) {
-					foreach ($coupons as $coupon_code) {
-						$coupon = new WC_Coupon($coupon_code);
-				?>
-						<div class="flex justify-between !items-center bg-gray-100 p-2 rounded-md mb-2">
-							<span class="capitalize text-xl"><?php echo esc_html($coupon_code); ?></span>
-							<form method="post" class="remove-coupon-form !m-0">
-								<input type="hidden" name="remove_coupon" value="<?php echo esc_attr($coupon_code); ?>" />
-								<button type="submit" class="!bg-black !text-white hover:!bg-neutral-800 hover:!text-white focus:!ring-1 focus:ring-offset-2 focus:!ring-neutral-900 !border-none"><?php esc_html_e('Remove', 'woocommerce'); ?></button>
-							</form>
-						</div>
-				<?php
+				if ($order->get_items('fee')) {
+					foreach ($order->get_items('fee') as $item_id => $item) {
+						if ($item->get_total() < 0) {
+							echo '<div class="flex justify-between !items-center bg-gray-100 p-2 rounded-md mb-2 gap-2">';
+							echo '<p class="capitalize text-xl flex-1"><strong>' . esc_html($item->get_name()) . '</strong></p>';
+							echo '<p>' . wc_price($item->get_total()) . '</p>';
+							echo '<form method="post" class="remove-coupon-form !m-0"><button type="submit" name="remove_coupon" value="' . esc_attr($item->get_name()) . '" class="!bg-black !text-white hover:!bg-neutral-800 hover:!text-white focus:!ring-1 focus:ring-offset-2 focus:!ring-neutral-900 !border-none">Rimuovi</button></form>';
+							echo '</div>';
+						}
 					}
 				} else {
-					echo '<p class="text-xl opacity-50">' . esc_html__('Nessun coupon usato.', 'woocommerce') . '</p>';
+					echo '<p>' . esc_html__('No coupons used.', 'woocommerce') . '</p>';
 				}
 				?>
 			</div>
@@ -95,7 +110,16 @@ if (isset($_POST['coupon_code']) && !empty($_POST['coupon_code'])) {
 			<?php
 			if (isset($_POST['remove_coupon']) && !empty($_POST['remove_coupon'])) {
 				$coupon_code = sanitize_text_field($_POST['remove_coupon']);
-				$order->remove_coupon($coupon_code);
+
+				foreach ($order->get_coupon_codes() as $coupon_code) {
+					$order->remove_coupon($coupon_code);
+				}
+				foreach ($order->get_items('fee') as $item_id => $item) {
+					if ($item->get_name() === $coupon_code) {
+						$order->remove_item($item_id);
+					}
+				}
+				$order->save();
 				$order->calculate_totals();
 				echo '<meta http-equiv="refresh" content="0">';
 			}
@@ -140,19 +164,20 @@ if (isset($_POST['coupon_code']) && !empty($_POST['coupon_code'])) {
 					</div>
 				</div>
 			</form>
-
-			<div class="coupon-form mt-6 p-4 bg-white border rounded-md">
-				<h2 class="font-bold text-xl mb-2"><?php esc_html_e('Inserisci coupon', 'woocommerce'); ?></h2>
-				<p class="mb-4">Se possiedi un codice, puoi ricevere uno sconto inserendolo qui sotto</p>
-				<form class="flex gap-2" method="post">
-					<p class="form-row form-row-first">
-						<input type="text" name="coupon_code" class="input-text" placeholder="<?php esc_attr_e('Coupon code', 'woocommerce'); ?>" id="coupon_code" value="" />
-					</p>
-					<p class="form-row form-row-last">
-						<button type="submit" class="button" name="apply_coupon" value="<?php esc_attr_e('Apply coupon', 'woocommerce'); ?>"><?php esc_html_e('Apply coupon', 'woocommerce'); ?></button>
-					</p>
-				</form>
-			</div>
+			<?php if (!$order->get_coupon_codes() && !$order->get_items('fee')) : ?>
+				<div class="coupon-form mt-6 p-4 bg-white border rounded-md">
+					<h2 class="font-bold text-xl mb-2"><?php esc_html_e('Inserisci coupon', 'woocommerce'); ?></h2>
+					<p class="mb-4">Se possiedi un codice, puoi ricevere uno sconto inserendolo qui sotto</p>
+					<form class="flex gap-2" method="post">
+						<p class="form-row form-row-first">
+							<input type="text" name="coupon_code" class="input-text" placeholder="<?php esc_attr_e('Coupon code', 'woocommerce'); ?>" id="coupon_code" value="" />
+						</p>
+						<p class="form-row form-row-last">
+							<button type="submit" class="button" name="apply_coupon" value="<?php esc_attr_e('Apply coupon', 'woocommerce'); ?>"><?php esc_html_e('Apply coupon', 'woocommerce'); ?></button>
+						</p>
+					</form>
+				</div>
+			<?php endif; ?>
 		</div>
 	</div>
 
