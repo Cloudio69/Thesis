@@ -117,19 +117,7 @@ function get_shipping_cost()
 
     $check_isole = check_zone_isole($province);
 
-    if ($check_disagiate) {
-        wp_send_json_success(array(
-            'zone_id' => $check_disagiate['zone_id'],
-            'zone_name' => $check_disagiate['zone_name'],
-            'shipping_cost' => $check_disagiate['shipping_cost']
-        ), 200);
-    } else if ($check_isole) {
-        wp_send_json_success(array(
-            'zone_id' => $check_isole['zone_id'],
-            'zone_name' => $check_isole['zone_name'],
-            'shipping_cost' => $check_isole['shipping_cost']
-        ), 200);
-    }
+    
 
     if ($shipping_cost == 0) {
         foreach ($zones as $zone) {
@@ -138,19 +126,30 @@ function get_shipping_cost()
                 foreach ($shipping_methods as $method) {
                     if ($method->id == 'flat_rate') {
                         $shipping_cost = $method->cost;
-                        return wp_send_json_success(array(
-                            'zone_id' => $zone->zone_id,
-                            'zone_name' => $zone->zone_name,
-                            'shipping_cost' => $shipping_cost,
-                            'shipping_method' =>
-                            array(
-                                'method_id' => $method->id,
-                                'method_title' => $method->title,
-                                'instance_id' => $method->instance_id,
-                                'cost' => $method->cost
-                            )
+                        
+                        $res = [];
 
-                        ), 200);
+                        if (is_array($check_disagiate) && count($check_disagiate) > 0) {
+                            $res = $check_disagiate;
+                        } else if (is_array($check_isole) && count($check_isole) > 0) {
+                            $res = $check_isole;
+                        } else {
+                            $res = [
+                                'zone_id' => $zone->zone_id,
+                                'zone_name' => $zone->zone_name,
+                                'shipping_cost' => $shipping_cost,
+                                    'shipping_method' => [
+                                    'method_id' => $method->id,
+                                    'method_title' => $method->title,
+                                    'instance_id' => $method->instance_id,
+                                    'cost' => $method->cost,
+                                ],
+                            ];
+                        }
+                        
+                        $response = $res;
+                        
+                        return wp_send_json_success($response, 200);
                     }
                 }
             }
